@@ -270,19 +270,8 @@ HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 //=================================================================================================
 void Uninit(void)
 {
-	if (g_pD3DDevice != NULL)
-	{
-		//デバイスの開放
-		g_pD3DDevice->Release();
-		g_pD3DDevice = NULL;
-	}
-
-	if (g_pD3D != NULL)
-	{
-		//Direct3Dオブジェクトの開放
-		g_pD3D->Release();
-		g_pD3D = NULL;
-	}
+	SAFE_RELEASE(g_pD3DDevice);
+	SAFE_RELEASE(g_pD3D);
 }
 
 //=================================================================================================
