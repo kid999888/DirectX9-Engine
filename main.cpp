@@ -17,14 +17,25 @@
 #define CLASS_NAME			"ƒTƒ“ƒvƒ‹"
 #define WINDOW_NAME			"ƒEƒBƒ“ƒhƒE•\Ž¦"
 
+//FVF’è‹`
+#define FVF_VERTEX_2D (D3DFVF_XYZRHW | D3DFVF_DIFFUSE | D3DFVF_TEX1 )			//2Dƒ|ƒŠƒSƒ“‚Ì’¸“_î•ñ
+
+//ƒeƒNƒXƒ`ƒƒƒtƒ@ƒCƒ‹ƒpƒX
+#define TEXTUREFILENAME000	        "Data\\Texture\\kobeni.png"	
+
 //=================================================================================================
 //		ƒvƒƒgƒ^ƒCƒvéŒ¾                                  
 //=================================================================================================
 LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow);         //ƒQ[ƒ€ƒ[ƒv‰Šúˆ—
-void Uninit(void);                                                  //ƒQ[ƒ€ƒ[ƒvŒãˆ—
+void Uninit(void);                                                  //ƒQ[ƒ€ƒ[ƒvI—¹ˆ—
 void Update(void);                                                  //ƒQ[ƒ€ƒ[ƒvXVˆ—
 void Draw(void);                                                    //ƒQ[ƒ€ƒ[ƒv•`‰æˆ—
+
+bool InitPolygon(void);												//ƒ|ƒŠƒSƒ“‰Šúˆ—
+void UninitPolygon(void);											//ƒ|ƒŠƒSƒ“I—¹ˆ—
+void UpdatePolygon(void);											//ƒ|ƒŠƒSƒ“XVˆ—
+void DrawPolygon(void);												//ƒ|ƒŠƒSƒ“•`‰æˆ—
 
 //=================================================================================================
 //@@@ƒOƒ[ƒoƒ‹•Ï”                                    
@@ -33,9 +44,19 @@ LPDIRECT3D9        g_pD3D = NULL;                                   //DirectXƒCƒ
 LPDIRECT3DDEVICE9  g_pD3DDevice = NULL;                             //ƒfƒoƒCƒX‚ÌIDirect3Device9ƒCƒ“ƒ^ƒtƒF[ƒX
 static HWND g_hWnd;
 
+LPDIRECT3DTEXTURE9 g_pTexture[1] = { NULL };					//ƒ}ƒCƒtƒŒƒ€ƒeƒNƒXƒ`ƒƒŠÇ—
+
 //=================================================================================================
 //@@@\‘¢‘Ì’è‹`                                         
 //=================================================================================================
+typedef struct
+{
+	D3DXVECTOR4 pos;            //XYZWÀ•W
+	D3DCOLOR color;				//’¸“_F
+	D3DXVECTOR2 texcoord;       //ƒeƒNƒXƒ`ƒƒÀ•W
+
+}VERTEX_2D;
+
 
 //=================================================================================================
 //@@@ƒƒCƒ“ŠÖ”                                        
@@ -262,16 +283,20 @@ HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 		}
 	}
 
+	InitPolygon();					//ƒ|ƒŠƒSƒ“‰Šúˆ—
+	
+
 	return true;
 }
 
 //=================================================================================================
-//@@@ƒQ[ƒ€ƒ[ƒvŒãˆ—
+//@@@ƒQ[ƒ€ƒ[ƒvI—¹ˆ—
 //=================================================================================================
 void Uninit(void)
 {
 	SAFE_RELEASE(g_pD3DDevice);
 	SAFE_RELEASE(g_pD3D);
+	UninitPolygon();				//ƒ|ƒŠƒSƒ“I—¹ˆ—
 }
 
 //=================================================================================================
@@ -294,11 +319,75 @@ void Draw(void)
 	//Direct3D‚É‚æ‚é•`‰æ‚ÌŠJŽn
 	if (SUCCEEDED(g_pD3DDevice->BeginScene()))
 	{
+		//ƒ|ƒŠƒSƒ“•`‰æ
+		DrawPolygon();
 		//Present‚ÌI—¹ˆ—
 		g_pD3DDevice->EndScene();
 	}
 	//Present‚ÌI—¹ˆ—
 	g_pD3DDevice->Present(NULL, NULL, NULL, NULL);
+}
+
+//=================================================================================================
+//@@@ƒ|ƒŠƒSƒ“‰Šúˆ—
+//=================================================================================================
+bool InitPolygon(void)
+{
+	HRESULT hr;
+
+	hr = D3DXCreateTextureFromFile(
+		g_pD3DDevice,
+		TEXTUREFILENAME000,
+		&g_pTexture[0]);
+
+	if (FAILED(hr))
+	{
+		MessageBox(NULL, "ƒGƒ‰[", "ƒeƒNƒXƒ`ƒƒ‚ª“Ç‚Ýž‚ß‚È‚¢B", MB_OK);
+		return false;
+	}
+
+	return true;
+}
+
+//=================================================================================================
+//@@@ƒ|ƒŠƒSƒ“I—¹ˆ—
+//=================================================================================================
+void UninitPolygon(void)
+{
+	SAFE_RELEASE(g_pTexture[0]);
+}
+
+//=================================================================================================
+//@@@ƒ|ƒŠƒSƒ“XVˆ—
+//=================================================================================================
+void UpdatePolygon(void)
+{
+}
+
+//=================================================================================================
+//@@@ƒ|ƒŠƒSƒ“•`‰æˆ—
+//=================================================================================================
+void DrawPolygon(void)
+{
+	VERTEX_2D vtx[] = {
+	//’¸“_À•Wî•ñ
+	{ D3DXVECTOR4(100.0f ,100.0f, 1.0f,1.0f),D3DCOLOR_RGBA(255,255,255,255),D3DXVECTOR2(0.0f,0.0f) },          //XÀ•WAYÀ•WAZÀ•WAŒõW•ª—Ê(•K‚¸1.0f‚É“ü‚ê‚é)AF
+	{ D3DXVECTOR4(400.0f, 100.0f, 1.0f,1.0f),D3DCOLOR_RGBA(255,255,255,255),D3DXVECTOR2(1.0f,0.0f) },
+	{ D3DXVECTOR4(400.0f, 400.0f, 1.0f,1.0f),D3DCOLOR_RGBA(255,255,255,255),D3DXVECTOR2(1.0f,1.0f) },
+	{ D3DXVECTOR4(100.0f, 400.0f, 1.0f,1.0f),D3DCOLOR_RGBA(255,255,255,255),D3DXVECTOR2(0.0f,1.0f) },
+	};
+
+	//FVF(¡‚©‚çŽg—p‚·‚é’¸“_î•ñ)‚ÌÝ’è
+	g_pD3DDevice->SetFVF(FVF_VERTEX_2D);
+
+	//ƒeƒNƒXƒ`ƒƒ“\‚è•t‚¯‚é
+	g_pD3DDevice->SetTexture(0, g_pTexture[0]);
+
+	g_pD3DDevice->DrawPrimitiveUP(          //d—v
+		D3DPT_TRIANGLEFAN,				    //•`‰æ‚Ìƒ‚[ƒh
+		2,                                  //ƒ|ƒŠƒSƒ“”
+		&vtx[0],                            //À•Wî•ñ
+		sizeof(VERTEX_2D));					//À•Wî•ñ‚Ìƒƒ‚ƒŠ’·‚³
 }
 
 //=================================================================================================
