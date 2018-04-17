@@ -221,6 +221,7 @@ void CScene3D::Update(void)
 void CScene3D::Draw(void)
 {
 	LPDIRECT3DDEVICE9 pDevice = GetD3DDevice();
+	///saasad
 
 	//Šg‘åk¬s—ñ‚ğì‚é
 	D3DXMatrixScaling(&g_mtxWorldS, 1.0f, 1.0f, 1.0f);
