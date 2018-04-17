@@ -28,7 +28,6 @@ public:
 private:
 	D3DXVECTOR3 m_Position;					
 	LPDIRECT3DTEXTURE9 m_Texture;					//頂点バッファ管理するメモ帳
-
 };
 
 #endif
