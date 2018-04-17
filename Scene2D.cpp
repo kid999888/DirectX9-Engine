@@ -92,13 +92,6 @@ void CScene2D::Draw(void)
 	{ D3DXVECTOR4(m_Position.x, m_Position.y + 300.0f, m_Position.z,1.0f),D3DCOLOR_RGBA(255,255,255,255),D3DXVECTOR2(0.0f,1.0f) },
 	};
 
-	/*VERTEX_2D vertex[4];
-	vertex[0].pos = (m_Position.x, m_Position.y, m_Position.z);
-	vertex[1].pos = ;
-	vertex[2].pos = ;
-	vertex[3].pos = ;*/
-
-
 	//FVF(¡‚©‚çŽg—p‚·‚é’¸“_î•ñ)‚ÌÝ’è
 	pDevice->SetFVF(FVF_VERTEX_2D);
 
