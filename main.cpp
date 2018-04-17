@@ -33,7 +33,7 @@ void Draw(void);                                                    //ゲームロー
 LPDIRECT3D9        g_pD3D = NULL;                                   //DirectXインターフェース
 LPDIRECT3DDEVICE9  g_pD3DDevice = NULL;                             //デバイスのIDirect3Device9インタフェース
 static HWND g_hWnd;
-CScene2D g_Scene2D;
+CScene2D *g_Scene2D;
 
 //=================================================================================================
 //　　　構造体定義                                         
@@ -264,7 +264,8 @@ HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 		}
 	}
 	
-	g_Scene2D.Init();
+	g_Scene2D = new CScene2D();
+	g_Scene2D->Init();
 
 	return true;
 }
@@ -276,7 +277,8 @@ void Uninit(void)
 {
 	SAFE_RELEASE(g_pD3DDevice);
 	SAFE_RELEASE(g_pD3D);
-	g_Scene2D.Uninit();
+	g_Scene2D->Uninit();
+	delete g_Scene2D;
 }
 
 //=================================================================================================
@@ -284,7 +286,7 @@ void Uninit(void)
 //=================================================================================================
 void Update(void)
 {
-	g_Scene2D.Update();
+	g_Scene2D->Update();
 }
 
 //=================================================================================================
@@ -301,7 +303,7 @@ void Draw(void)
 	if (SUCCEEDED(g_pD3DDevice->BeginScene()))
 	{
 		//ポリゴン描画
-		g_Scene2D.Draw();
+		g_Scene2D->Draw();
 		//Presentの終了処理
 		g_pD3DDevice->EndScene();
 	}
