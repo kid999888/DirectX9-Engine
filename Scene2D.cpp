@@ -89,7 +89,7 @@ void CScene2D::Draw(void)
 	{ D3DXVECTOR4(m_Position.x, m_Position.y, m_Position.z,1.0f),D3DCOLOR_RGBA(255,255,255,255),D3DXVECTOR2(0.0f,0.0f) },          //X座標、Y座標、Z座標、光W分量(必ず1.0fに入れる)、色
 	{ D3DXVECTOR4(m_Position.x + 200.0f, m_Position.y, m_Position.z,1.0f),D3DCOLOR_RGBA(255,255,255,255),D3DXVECTOR2(1.0f,0.0f) },
 	{ D3DXVECTOR4(m_Position.x + 200.0f, m_Position.y + 200.0f, m_Position.z,1.0f),D3DCOLOR_RGBA(255,255,255,255),D3DXVECTOR2(1.0f,1.0f) },
-	{ D3DXVECTOR4(m_Position.x, m_Position.y + 300.0f, m_Position.z,1.0f),D3DCOLOR_RGBA(255,255,255,255),D3DXVECTOR2(0.0f,1.0f) },
+	{ D3DXVECTOR4(m_Position.x, m_Position.y + 200.0f, m_Position.z,1.0f),D3DCOLOR_RGBA(255,255,255,255),D3DXVECTOR2(0.0f,1.0f) },
 	};
 
 	//FVF(今から使用する頂点情報)の設定

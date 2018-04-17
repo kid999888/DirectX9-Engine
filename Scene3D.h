@@ -1,32 +1,41 @@
 //=================================================================================================
 //                                                        
-//　　　2Dポリゴンプログラム[Scene2D.h]                   
+//　　　3Dポリゴンプログラム[Scene3D.h]                   
 //      Author:王暁晨(AT-13A-281 04)　2018.04.17      
 //                                                        
 //=================================================================================================
-#ifndef _POLYGON_H_                                                 //2重インクルード防止のマクロ定義
-#define _POLYGON_H_
+#ifndef _POLYGON3D_H_                                                 //2重インクルード防止のマクロ定義
+#define _POLYGON3D_H_
 #include"main.h"
 //=================================================================================================
 //　　　マクロ定義                                        
 //=================================================================================================
 
 //=================================================================================================
-//　　　2Dポリゴンクラス                                       
+//　　　3Dポリゴンクラス                                       
 //=================================================================================================
-class CScene2D
+class CScene3D
 {
 public:
-	CScene2D();										//2Dポリゴンコンストラクタ
-	~CScene2D();									//2Dポリゴンデストラクタ
+	CScene3D();										//2Dポリゴンコンストラクタ
+	~CScene3D();									//2Dポリゴンデストラクタ
 	bool Init(void);								//2Dポリゴン初期処理
 	void Uninit(void);								//2Dポリゴン終了処理
 	void Update(void);								//2Dポリゴン更新処理
 	void Draw(void);								//2Dポリゴン描画処理
 
 private:
-	D3DXVECTOR3 m_Position;					
-	LPDIRECT3DTEXTURE9 m_Texture;					//頂点バッファ管理するメモ帳
+	D3DXVECTOR3 m_Position;
+	LPDIRECT3DTEXTURE9 m_Texture;							//頂点バッファ管理するメモ帳
+	LPDIRECT3DVERTEXBUFFER9 m_pVertexBuffer;			//頂点バッファ管理するメモ帳
+	LPDIRECT3DINDEXBUFFER9 m_pIndexBuffer;			//インデックスバッファ管理するメモ
+	D3DXMATRIX g_mtxWorld;									//ワールド行列変数
+	D3DXMATRIX g_mtxWorldR;									//ワールド キューブの回転行列
+	D3DXMATRIX g_mtxWorldRX;								//ワールド キューブのX方向回転行列
+	D3DXMATRIX g_mtxWorldRY;								//ワールド キューブのY方向回転行列
+	D3DXMATRIX g_mtxWorldRZ;								//ワールド キューブのZ方向回転行列
+	D3DXMATRIX g_mtxWorldT;									//ワールド キューブの平行移動行列
+	D3DXMATRIX g_mtxWorldS;									//ワールド キューブの平行移動行列
 };
 
 #endif

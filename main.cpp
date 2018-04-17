@@ -11,6 +11,7 @@
 #include"main.h"
 #include<windows.h>
 #include "Scene2D.h"
+#include "Scene3D.h"
 
 //=================================================================================================
 //		マクロ定義                                        
@@ -32,8 +33,25 @@ void Draw(void);                                                    //ゲームロー
 //=================================================================================================
 LPDIRECT3D9        g_pD3D = NULL;                                   //DirectXインターフェース
 LPDIRECT3DDEVICE9  g_pD3DDevice = NULL;                             //デバイスのIDirect3Device9インタフェース
+
+static D3DXMATRIX g_mtxView;			//ビュー行列変数
+static D3DXMATRIX g_mtxProjection;		//プロジェクション行列変数;
+
+//ビュー行列の要素
+static D3DXVECTOR3 eye(0.0f, 6.0f, -10.0f);	//カメラの場所
+static D3DXVECTOR3 at(0.0f, 0.0f, 0.0f);		//注視点
+static D3DXVECTOR3 up(0.0f, 1.0f, 0.0f);		//上の場所
+
+//上ベクトル
+static D3DXVECTOR3 vUpVector(0, 1, 0);
+//前ベクトル
+static D3DXVECTOR3 vFrontVector(0, 0, 1);
+//右ベクトル
+static D3DXVECTOR3 vRightVector(1, 0, 0);
+
 static HWND g_hWnd;
 CScene2D *g_Scene2D;
+CScene3D *g_Scene3D;
 
 //=================================================================================================
 //　　　構造体定義                                         
@@ -266,6 +284,8 @@ HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 	
 	g_Scene2D = new CScene2D();
 	g_Scene2D->Init();
+	g_Scene3D = new CScene3D();
+	g_Scene3D->Init();
 
 	return true;
 }
@@ -279,6 +299,8 @@ void Uninit(void)
 	SAFE_RELEASE(g_pD3D);
 	g_Scene2D->Uninit();
 	delete g_Scene2D;
+	g_Scene3D->Uninit();
+	delete g_Scene3D;
 }
 
 //=================================================================================================
@@ -287,6 +309,7 @@ void Uninit(void)
 void Update(void)
 {
 	g_Scene2D->Update();
+	g_Scene3D->Update();
 }
 
 //=================================================================================================
@@ -302,8 +325,10 @@ void Draw(void)
 	//Direct3Dによる描画の開始
 	if (SUCCEEDED(g_pD3DDevice->BeginScene()))
 	{
-		//ポリゴン描画
+		//2Dポリゴン描画
 		g_Scene2D->Draw();
+		//3Dポリゴン描画
+		g_Scene3D->Draw();
 		//Presentの終了処理
 		g_pD3DDevice->EndScene();
 	}
@@ -311,6 +336,67 @@ void Draw(void)
 	g_pD3DDevice->Present(NULL, NULL, NULL, NULL);
 }
 
+//=================================================================================================
+//　　　カメラ情報更新処理                                        
+//=================================================================================================
+void UpdateCamera(void)
+{
+	LPDIRECT3DDEVICE9 pDevice = GetD3DDevice();
+
+	// ビュー変換行列作成
+		D3DXMatrixLookAtLH(&g_mtxView, &eye, &at, &up);
+
+	//プロジェクション行列作成
+	D3DXMatrixPerspectiveFovLH(&g_mtxProjection,
+		D3DX_PI / 3,								//or D3DXToRadian(60)
+		(float)SCREEN_WIDTH / SCREEN_HEIGHT,		//
+		0.1f,										//
+		1000.0f);									//
+
+													//ビュー、プロジェクション行列の設定
+	pDevice->SetTransform(D3DTS_VIEW, &g_mtxView);
+	pDevice->SetTransform(D3DTS_PROJECTION, &g_mtxProjection);
+
+
+	//マテリアル設定
+	D3DMATERIAL9 mat;
+	ZeroMemory(&mat, sizeof(mat));
+	mat.Diffuse.r = 1.0f;
+	mat.Diffuse.g = 1.0f;
+	mat.Diffuse.b = 1.0f;
+	mat.Diffuse.a = 1.0f;
+	//マテリアルに追加
+
+	mat.Ambient.r = 0.9f;
+	mat.Ambient.g = 0.0f;
+	mat.Ambient.b = 0.0f;
+	mat.Ambient.a = 1.0f;
+	pDevice->SetMaterial(&mat);
+
+	//ライトの設定
+	D3DLIGHT9 light;
+	ZeroMemory(&light, sizeof(light));
+	light.Type = D3DLIGHT_DIRECTIONAL;
+	D3DXVECTOR3 vecDir(1.0f, -1.0f, 0.0f);							//ライトベクトル
+	D3DXVec3Normalize((D3DXVECTOR3*)&light.Direction, &vecDir);
+	light.Diffuse.r = 1.0f;
+	light.Diffuse.g = 1.0f;
+	light.Diffuse.b = 1.0f;
+	light.Diffuse.a = 1.0f;
+	//ライトに追加
+	light.Ambient.r = 1.0f;
+	light.Ambient.g = 1.0f;
+	light.Ambient.b = 1.0f;
+	light.Ambient.a = 1.0f;
+
+	pDevice->SetLight(0, &light);
+	pDevice->LightEnable(0, TRUE);
+	//グローバルアンビエントの設定
+	pDevice->SetRenderState(
+		D3DRS_AMBIENT,
+		D3DXCOLOR(0.3f, 0.3f, 0.3f, 1.0f)
+	);
+}
 
 //=================================================================================================
 //　　　D3DDeviceの伝達
