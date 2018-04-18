@@ -1,6 +1,6 @@
 //=================================================================================================
 //                                                        
-//　　　3Dポリゴンプログラム[Scene3D.cpp]                   
+//　　　3Dキューブクラスプログラム[Scene3D.cpp]                   
 //      Author:王暁晨(AT-13A-281 04)　2018.04.17      
 //                                                        
 //=================================================================================================
@@ -26,25 +26,28 @@ typedef struct
 }VERTEX_3D;
 
 //=================================================================================================
-//　　　3Dポリゴンコンストラクタ                                       
+//　　　3Dキューブクラスコンストラクタ                                       
 //=================================================================================================
 CScene3D::CScene3D()
 {
-	/*m_Position = D3DXVECTOR3(100.0f, 100.0f, 1.0f);
-	m_Texture = NULL;
+	m_vePosition = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	m_fRotX = 0.0f;
+	m_fRotY = 0.0f;
+	m_fRotZ = 0.0f;
+	m_pTexture = NULL;
 	m_pVertexBuffer = NULL;
-	m_pIndexBuffer = NULL;*/
+	m_pIndexBuffer = NULL;
 }
 
 //=================================================================================================
-//　　　3Dポリゴンデストラクタ                                     
+//　　　3Dキューブクラスデストラクタ                                     
 //=================================================================================================
 CScene3D::~CScene3D()
 {
 }
 
 //=================================================================================================
-//　　　3Dポリゴン初期処理                                     
+//　　　3Dキューブクラス初期処理                                     
 //=================================================================================================
 bool CScene3D::Init(void)
 {
@@ -54,7 +57,7 @@ bool CScene3D::Init(void)
 	hr[0] = D3DXCreateTextureFromFile(
 		pDevice,
 		TEXTUREFILENAME000,
-		&m_Texture);
+		&m_pTexture);
 
 	if (FAILED(hr[0]))
 	{
@@ -198,53 +201,53 @@ bool CScene3D::Init(void)
 }
 
 //=================================================================================================
-//　　　2Dポリゴン終了処理                                     
+//　　　3Dキューブクラス終了処理                                     
 //=================================================================================================
 void CScene3D::Uninit(void)
 {
 	SAFE_RELEASE(m_pVertexBuffer);
 	SAFE_RELEASE(m_pIndexBuffer);
-	SAFE_RELEASE(m_Texture);
+	SAFE_RELEASE(m_pTexture);
 }
 
 //=================================================================================================
-//　　　2Dポリゴン更新処理                                     
+//　　　3Dキューブクラス更新処理                                     
 //=================================================================================================
 void CScene3D::Update(void)
 {
 	UpdateCamera();
+	//m_fRotX += 0.0f;
+	m_fRotY += 0.05f;
+	//m_fRotZ += 0.0f;
 }
 
 //=================================================================================================
-//　　　2Dポリゴン描画処理                                     
+//　　　3Dキューブクラス描画処理                                     
 //=================================================================================================
 void CScene3D::Draw(void)
 {
 	LPDIRECT3DDEVICE9 pDevice = GetD3DDevice();
-	///saasad
 
 	//拡大縮小行列を作る
-	D3DXMatrixScaling(&g_mtxWorldS, 1.0f, 1.0f, 1.0f);
+	D3DXMatrixScaling(&m_mtxWorldS, 1.0f, 1.0f, 1.0f);
 
 	//回転行列を作る
-	D3DXMatrixRotationX(&g_mtxWorldRX, 0.0f);
-	D3DXMatrixRotationY(&g_mtxWorldRY, 0.0f);
-	D3DXMatrixRotationZ(&g_mtxWorldRZ, 0.0f);
+	D3DXMatrixRotationX(&m_mtxWorldRX, m_fRotX);
+	D3DXMatrixRotationY(&m_mtxWorldRY, m_fRotY);
+	D3DXMatrixRotationZ(&m_mtxWorldRZ, m_fRotZ);
 
-	/*g_fRotX[nCount] += rx;
-	g_fRotY[nCount] += ry;
-	g_fRotZ[nCount] += rz;*/
+	
 
 	//回転行列を合成	
-	D3DXMatrixMultiply(&g_mtxWorldR, &g_mtxWorldRX, &g_mtxWorldRY);
-	D3DXMatrixMultiply(&g_mtxWorldR, &g_mtxWorldR, &g_mtxWorldRZ);
+	D3DXMatrixMultiply(&m_mtxWorldR, &m_mtxWorldRX, &m_mtxWorldRY);
+	D3DXMatrixMultiply(&m_mtxWorldR, &m_mtxWorldR, &m_mtxWorldRZ);
 
 	//平行移動行列の作り方
-	D3DXMatrixTranslation(&g_mtxWorldT, 0.0f, 0.0f, 0.0f);
+	D3DXMatrixTranslation(&m_mtxWorldT, m_vePosition.x, m_vePosition.y, m_vePosition.z);
 
 	//行列成	
-	D3DXMatrixMultiply(&g_mtxWorld, &g_mtxWorldS, &g_mtxWorldR);
-	D3DXMatrixMultiply(&g_mtxWorld, &g_mtxWorld, &g_mtxWorldT);
+	D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorldS, &m_mtxWorldR);
+	D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &m_mtxWorldT);
 
 
 	pDevice->SetStreamSource(0,
@@ -257,30 +260,20 @@ void CScene3D::Draw(void)
 	pDevice->SetFVF(FVF_VERTEX_3D);
 
 	//ライトOFF
-	//pDevice->SetRenderState(D3DRS_LIGHTING,FALSE);
+	pDevice->SetRenderState(D3DRS_LIGHTING,TRUE);
 
 	//ワールド行列の設定
-	pDevice->SetTransform(D3DTS_WORLD, &g_mtxWorld);
+	pDevice->SetTransform(D3DTS_WORLD, &m_mtxWorld);
 
 
 	//テクスチャ貼り付ける
-	pDevice->SetTexture(0, m_Texture);
+	pDevice->SetTexture(0, m_pTexture);
 
 	pDevice->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
 
 	pDevice->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
 
 	pDevice->SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_LINEAR);
-
-	//pDevice->DrawIndexedPrimitiveUP(
-	//	D3DPT_TRIANGLELIST,			//Primitive描画タイプ
-	//	0,							//インデックスの最小値	
-	//	24,							//頂点の数
-	//	12,							//描画するのポリゴン（三角形）の数
-	//	&index[0],					//インデックスデータの先頭アドレス
-	//	D3DFMT_INDEX16,				//インデックスデータフォーマット（DWORDの場合はINDEX32）
-	//	&v[0],						//ヴァーテックスデータの先頭アドレス
-	//	sizeof(VERTEX_3D));			//ヴァーテックスデータのサイズ
 
 	//バッファ使い方
 	pDevice->DrawIndexedPrimitive(

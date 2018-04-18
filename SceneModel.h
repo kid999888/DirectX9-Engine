@@ -1,11 +1,11 @@
 //=================================================================================================
 //                                                        
-//　　　3Dキューブクラスプログラム[Scene3D.h]                   
+//　　　3Dモデルクラスプログラム[SceneModel.h]                   
 //      Author:王暁晨(AT-13A-281 04)　2018.04.17      
 //                                                        
 //=================================================================================================
-#ifndef _SCENE3D_H_                                                 //2重インクルード防止のマクロ定義
-#define _SCENE3D_H_
+#ifndef _SCENEMODEL_H_                                                 //2重インクルード防止のマクロ定義
+#define _SCENEMODEL_H_
 #include"main.h"
 //=================================================================================================
 //　　　マクロ定義                                        
@@ -14,21 +14,24 @@
 //=================================================================================================
 //　　　3Dポリゴンクラス                                       
 //=================================================================================================
-class CScene3D
+class CSceneModel
 {
 public:
-	CScene3D();												//3Dキューブクラスコンストラクタ
-	~CScene3D();											//3Dキューブクラスデストラクタ
-	bool Init(void);										//3Dキューブクラス初期処理
-	void Uninit(void);										//3Dキューブクラス終了処理
-	void Update(void);										//3Dキューブクラス更新処理
-	void Draw(void);										//3Dキューブクラス描画処理
+	CSceneModel();											//3Dモデルクラスコンストラクタ
+	~CSceneModel();											//3Dモデルクラスデストラクタ
+	bool Init(void);										//3Dモデルクラス初期処理
+	void Uninit(void);										//3Dモデルクラス終了処理
+	void Update(void);										//3Dモデルクラス更新処理
+	void Draw(void);										//3Dモデルクラス描画処理
 
 private:
-	D3DXVECTOR3 m_vePosition;								//3Dキューブの位置
-	LPDIRECT3DTEXTURE9 m_pTexture;							//頂点バッファ管理するメモ帳
-	LPDIRECT3DVERTEXBUFFER9 m_pVertexBuffer;				//頂点バッファ管理するメモ帳
-	LPDIRECT3DINDEXBUFFER9 m_pIndexBuffer;					//インデックスバッファ管理するメモ
+	D3DXVECTOR3 m_vePosition;								//3Dモデルの位置
+	LPDIRECT3DTEXTURE9 m_p3DTexture;						//頂点バッファ管理するメモ帳
+	LPD3DXMESH m_pMesh;										//メッシュを受け取る変数
+	DWORD  m_nMaterialNum;									//Xモデルのマテリアル数
+	LPD3DXBUFFER m_pMaterial;								//Xモデルのマテリアル情報
+	int m_nMaterialPointNum;								//マテリアルポインタの番号
+	D3DXVECTOR3 m_XmodelAt;									//Xモデルの注視点
 	D3DXMATRIX m_mtxWorld;									//ワールド行列変数
 	D3DXMATRIX m_mtxWorldR;									//ワールド キューブの回転行列
 	D3DXMATRIX m_mtxWorldRX;								//ワールド キューブのX方向回転行列

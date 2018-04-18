@@ -12,6 +12,7 @@
 #include<windows.h>
 #include "Scene2D.h"
 #include "Scene3D.h"
+#include "SceneModel.h"
 
 //=================================================================================================
 //		マクロ定義                                        
@@ -52,6 +53,7 @@ static D3DXVECTOR3 vRightVector(1, 0, 0);
 static HWND g_hWnd;
 CScene2D *g_Scene2D;
 CScene3D *g_Scene3D;
+CSceneModel *g_SceneModel;
 
 //=================================================================================================
 //　　　構造体定義                                         
@@ -286,6 +288,8 @@ HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 	g_Scene2D->Init();
 	g_Scene3D = new CScene3D();
 	g_Scene3D->Init();
+	g_SceneModel = new CSceneModel();
+	g_SceneModel->Init();
 
 	return true;
 }
@@ -301,6 +305,8 @@ void Uninit(void)
 	delete g_Scene2D;
 	g_Scene3D->Uninit();
 	delete g_Scene3D;
+	g_SceneModel->Uninit();
+	delete g_SceneModel;
 }
 
 //=================================================================================================
@@ -310,6 +316,7 @@ void Update(void)
 {
 	g_Scene2D->Update();
 	g_Scene3D->Update();
+	g_SceneModel->Update();
 }
 
 //=================================================================================================
@@ -329,6 +336,9 @@ void Draw(void)
 		g_Scene2D->Draw();
 		//3Dポリゴン描画
 		g_Scene3D->Draw();
+		//3Dポリゴン描画
+		g_SceneModel->Draw();
+
 		//Presentの終了処理
 		g_pD3DDevice->EndScene();
 	}
