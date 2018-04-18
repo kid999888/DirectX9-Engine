@@ -34,7 +34,7 @@ CSceneModel::CSceneModel()
 	m_fRotX = 0.0f;
 	m_fRotY = 0.0f;
 	m_fRotZ = 0.0f;
-	m_p3DTexture = NULL;
+	m_pTexture = NULL;
 }
 
 //=================================================================================================
@@ -57,7 +57,6 @@ bool CSceneModel::Init(void)
 	m_pMesh = NULL;
 	m_nMaterialNum = 0;
 	m_pMaterial = NULL;
-	m_nMaterialPointNum = 0;
 	m_nMaterialPointNum = 0;
 
 	LPD3DXBUFFER pAdjacencyBuffer;
@@ -95,7 +94,7 @@ bool CSceneModel::Init(void)
 		hr = D3DXCreateTextureFromFile(
 			pDevice,
 			pMaterial->pTextureFilename,
-			&m_p3DTexture);
+			&m_pTexture);
 
 		if (FAILED(hr))
 		{
@@ -141,7 +140,7 @@ void CSceneModel::Uninit(void)
 {
 	SAFE_RELEASE(m_pMesh);
 	SAFE_RELEASE(m_pMaterial);
-	SAFE_RELEASE(m_p3DTexture);
+	SAFE_RELEASE(m_pTexture);
 }
 
 //=================================================================================================
@@ -197,7 +196,7 @@ void CSceneModel::Draw(void)
 
 	//描画
 	//テクスチャ貼り付ける
-	pDevice->SetTexture(0, m_p3DTexture);
+	pDevice->SetTexture(0, m_pTexture);
 	//マテリアル設定（テクスチャ含む）
 	m_pMesh->DrawSubset(0);
 }

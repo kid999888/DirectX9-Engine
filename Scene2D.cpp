@@ -30,8 +30,8 @@ typedef struct
 //=================================================================================================
 CScene2D::CScene2D()
 {
-	m_Position = D3DXVECTOR3(100.0f, 100.0f, 1.0f);
-	m_Texture = NULL;
+	m_vePosition = D3DXVECTOR3(100.0f, 100.0f, 1.0f);
+	m_pTexture = NULL;
 }
 
 //=================================================================================================
@@ -52,7 +52,7 @@ bool CScene2D::Init(void)
 	hr = D3DXCreateTextureFromFile(
 		pDevice,
 		TEXTUREFILENAME000,
-		&m_Texture);
+		&m_pTexture);
 
 	if (FAILED(hr))
 	{
@@ -68,7 +68,7 @@ bool CScene2D::Init(void)
 //=================================================================================================
 void CScene2D::Uninit(void)
 {
-	SAFE_RELEASE(m_Texture);
+	SAFE_RELEASE(m_pTexture);
 }
 
 //=================================================================================================
@@ -86,17 +86,17 @@ void CScene2D::Draw(void)
 	LPDIRECT3DDEVICE9 pDevice = GetD3DDevice();
 	VERTEX_2D vtx[] = {
 	//頂点座標情報
-	{ D3DXVECTOR4(m_Position.x, m_Position.y, m_Position.z,1.0f),D3DCOLOR_RGBA(255,255,255,255),D3DXVECTOR2(0.0f,0.0f) },          //X座標、Y座標、Z座標、光W分量(必ず1.0fに入れる)、色
-	{ D3DXVECTOR4(m_Position.x + 200.0f, m_Position.y, m_Position.z,1.0f),D3DCOLOR_RGBA(255,255,255,255),D3DXVECTOR2(1.0f,0.0f) },
-	{ D3DXVECTOR4(m_Position.x + 200.0f, m_Position.y + 200.0f, m_Position.z,1.0f),D3DCOLOR_RGBA(255,255,255,255),D3DXVECTOR2(1.0f,1.0f) },
-	{ D3DXVECTOR4(m_Position.x, m_Position.y + 200.0f, m_Position.z,1.0f),D3DCOLOR_RGBA(255,255,255,255),D3DXVECTOR2(0.0f,1.0f) },
+	{ D3DXVECTOR4(m_vePosition.x, m_vePosition.y, m_vePosition.z,1.0f),D3DCOLOR_RGBA(255,255,255,255),D3DXVECTOR2(0.0f,0.0f) },          //X座標、Y座標、Z座標、光W分量(必ず1.0fに入れる)、色
+	{ D3DXVECTOR4(m_vePosition.x + 200.0f, m_vePosition.y, m_vePosition.z,1.0f),D3DCOLOR_RGBA(255,255,255,255),D3DXVECTOR2(1.0f,0.0f) },
+	{ D3DXVECTOR4(m_vePosition.x + 200.0f, m_vePosition.y + 200.0f, m_vePosition.z,1.0f),D3DCOLOR_RGBA(255,255,255,255),D3DXVECTOR2(1.0f,1.0f) },
+	{ D3DXVECTOR4(m_vePosition.x, m_vePosition.y + 200.0f, m_vePosition.z,1.0f),D3DCOLOR_RGBA(255,255,255,255),D3DXVECTOR2(0.0f,1.0f) },
 	};
 
 	//FVF(今から使用する頂点情報)の設定
 	pDevice->SetFVF(FVF_VERTEX_2D);
 
 	//テクスチャ貼り付ける
-	pDevice->SetTexture(0, m_Texture);
+	pDevice->SetTexture(0, m_pTexture);
 
 	pDevice->DrawPrimitiveUP(			//重要
 		D3DPT_TRIANGLEFAN,				//描画のモード
