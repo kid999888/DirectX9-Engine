@@ -17,10 +17,11 @@
 class CScene
 {
 public:
-	virtual void Init(void) { };						//オブジェクト初期処理
+	virtual bool Init(void) { return true; };						//オブジェクト初期処理
 	virtual void Uninit(void) = 0;						//オブジェクト終了処理
 	virtual void Update(void) = 0;						//オブジェクト更新処理
 	virtual void Draw(void) = 0;						//オブジェクト描画処理
+	void SetPosition(D3DXVECTOR3 vePosition);			//オブジェクトの位置設定
 
 protected:
 	D3DXVECTOR3 m_vePosition;							//オブジェクトの位置
