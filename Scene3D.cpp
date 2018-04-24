@@ -15,6 +15,11 @@
 #define TEXTUREFILENAME000	        "Data\\Texture\\horoCube.png"	
 
 //=================================================================================================
+//　　　グローバル変数                                    
+//=================================================================================================
+static CMaterial *g_Material;
+
+//=================================================================================================
 //　　　構造体定義                                         
 //=================================================================================================
 typedef struct
@@ -197,6 +202,10 @@ bool CScene3D::Init(void)
 
 	m_pIndexBuffer->Unlock();
 
+	//インスタンス生成
+	g_Material = new CMaterial();
+	
+
 	return true;
 }
 
@@ -208,6 +217,7 @@ void CScene3D::Uninit(void)
 	SAFE_RELEASE(m_pVertexBuffer);
 	SAFE_RELEASE(m_pIndexBuffer);
 	SAFE_RELEASE(m_pTexture);
+	delete g_Material;
 }
 
 //=================================================================================================
@@ -215,7 +225,7 @@ void CScene3D::Uninit(void)
 //=================================================================================================
 void CScene3D::Update(void)
 {
-	UpdateCamera();
+	g_Material->Update();
 	//m_fRotX += 0.0f;
 	m_fRotY += 0.05f;
 	//m_fRotZ += 0.0f;
@@ -235,8 +245,6 @@ void CScene3D::Draw(void)
 	D3DXMatrixRotationX(&m_mtxWorldRX, m_fRotX);
 	D3DXMatrixRotationY(&m_mtxWorldRY, m_fRotY);
 	D3DXMatrixRotationZ(&m_mtxWorldRZ, m_fRotZ);
-
-	
 
 	//回転行列を合成	
 	D3DXMatrixMultiply(&m_mtxWorldR, &m_mtxWorldRX, &m_mtxWorldRY);

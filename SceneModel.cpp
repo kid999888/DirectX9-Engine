@@ -11,19 +11,13 @@
 //=================================================================================================
 //モデルファイルパス
 #define MODELFILENAME000	        "Data\\Model\\roboModel.x"	
-
 //テクスチャファイルパス
 #define TEXTUREFILENAME000	        "Data\\Texture\\00tex_master.png"	
 
 //=================================================================================================
 //　　　グローバル変数                                    
 //=================================================================================================
-//デフォルトベクトル
-static D3DXVECTOR3 vFrontVector(0, 0, 1);			//前ベクトル
-
-//=================================================================================================
-//　　　構造体定義                                         
-//=================================================================================================
+static CMaterial *g_Material;
 
 //=================================================================================================
 //　　　3Dモデルクラスコンストラクタ                                       
@@ -130,6 +124,9 @@ bool CSceneModel::Init(void)
 		return false;
 	}
 
+	//インスタンス生成
+	g_Material = new CMaterial();
+
 	return true;
 }
 
@@ -141,6 +138,7 @@ void CSceneModel::Uninit(void)
 	SAFE_RELEASE(m_pMesh);
 	SAFE_RELEASE(m_pMaterial);
 	SAFE_RELEASE(m_pTexture);
+	delete g_Material;
 }
 
 //=================================================================================================
@@ -148,7 +146,7 @@ void CSceneModel::Uninit(void)
 //=================================================================================================
 void CSceneModel::Update(void)
 {
-	UpdateCamera();
+	g_Material->Update();
 	//m_fRotX += 0.0f;
 	m_fRotY -= 0.05f;
 	//m_fRotZ += 0.0f;
@@ -182,7 +180,7 @@ void CSceneModel::Draw(void)
 
 	//ワールド行列
 	D3DXMATRIX Vec;
-	D3DXMatrixTranslation(&Vec, vFrontVector.x, vFrontVector.y, vFrontVector.z);
+	D3DXMatrixTranslation(&Vec, v3In.x, v3In.y, v3In.z);
 	D3DXMatrixMultiply(&Vec, &Vec, &m_mtxWorld);
 
 	m_XmodelAt = D3DXVECTOR3(Vec._41, Vec._42, Vec._43);

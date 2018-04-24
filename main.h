@@ -12,6 +12,9 @@
 //=================================================================================================
 #include<d3d9.h>
 #include<d3dx9.h>
+#include "Camera.h"
+#include "Light.h"
+#include "Material.h"
 
 //=================================================================================================
 //　　　マクロ定義                                        
@@ -19,6 +22,23 @@
 #define SAFE_RELEASE(p) if(p){ p->Release(); p=NULL; }		//安全リリースマクロ
 #define SCREEN_WIDTH		(800)							//スクリーンの幅
 #define SCREEN_HEIGHT		(600)							//スクリーンの高さ
+//デフォルトベクトル
+static const D3DXVECTOR4 v4One(1, 1, 1, 1);
+static const D3DXVECTOR3 v3One(1, 1, 1);
+static const D3DXVECTOR2 v2One(1, 1);
+static const D3DXVECTOR3 v3Right(1, 0, 0);
+static const D3DXVECTOR3 v3Down(0, -1, 0);
+static const D3DXVECTOR3 v3In(0, 0, 1);
+static const D3DXVECTOR3 v3Left(-1, 0, 0);
+static const D3DXVECTOR3 v3Up(0, 1, 0);
+static const D3DXVECTOR3 v3Out(0, 0, -1);
+static const D3DXVECTOR2 v2Right(1, 0);
+static const D3DXVECTOR2 v2Down(0, 1);
+static const D3DXVECTOR2 v2Left(-1, 0);
+static const D3DXVECTOR2 v2Up(0, -1);
+static const D3DXVECTOR4 v4Zero(0, 0, 0, 0);
+static const D3DXVECTOR3 v3Zero(0, 0, 0);
+static const D3DXVECTOR2 v2Zero(0, 0);
 
 void UpdateCamera(void);
 LPDIRECT3DDEVICE9 GetD3DDevice(void);						//D3DDeviceの伝達

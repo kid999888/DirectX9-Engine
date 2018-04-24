@@ -26,7 +26,6 @@ public:
 	void Draw(void);										//3Dモデルクラス描画処理
 
 private:
-
 	LPD3DXMESH m_pMesh;										//メッシュを受け取る変数
 	DWORD  m_nMaterialNum;									//Xモデルのマテリアル数
 	LPD3DXBUFFER m_pMaterial;								//Xモデルのマテリアル情報

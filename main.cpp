@@ -51,9 +51,12 @@ static D3DXVECTOR3 vFrontVector(0, 0, 1);
 static D3DXVECTOR3 vRightVector(1, 0, 0);
 
 static HWND g_hWnd;
+
 CScene2D *g_Scene2D;
 CScene3D *g_Scene3D;
 CSceneModel *g_SceneModel;
+CCamera *g_Camera;
+CLight *g_Light;
 
 //=================================================================================================
 //　　　構造体定義                                         
@@ -194,7 +197,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			break;
 		}
 
-
+		
 
 		}
 		break;
@@ -283,13 +286,16 @@ HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 			}
 		}
 	}
-	
+	g_Camera = new CCamera();
+	g_Light = new CLight();
 	g_Scene2D = new CScene2D();
 	g_Scene2D->Init();
 	g_Scene3D = new CScene3D();
 	g_Scene3D->Init();
 	g_SceneModel = new CSceneModel();
 	g_SceneModel->Init();
+	
+	
 
 	return true;
 }
@@ -299,14 +305,16 @@ HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 //=================================================================================================
 void Uninit(void)
 {
-	SAFE_RELEASE(g_pD3DDevice);
-	SAFE_RELEASE(g_pD3D);
+	delete g_Camera;
+	delete g_Light;
 	g_Scene2D->Uninit();
 	delete g_Scene2D;
 	g_Scene3D->Uninit();
 	delete g_Scene3D;
 	g_SceneModel->Uninit();
 	delete g_SceneModel;
+	SAFE_RELEASE(g_pD3DDevice);
+	SAFE_RELEASE(g_pD3D);
 }
 
 //=================================================================================================
@@ -317,6 +325,10 @@ void Update(void)
 	g_Scene2D->Update();
 	g_Scene3D->Update();
 	g_SceneModel->Update();
+
+
+
+	
 }
 
 //=================================================================================================
@@ -332,12 +344,15 @@ void Draw(void)
 	//Direct3Dによる描画の開始
 	if (SUCCEEDED(g_pD3DDevice->BeginScene()))
 	{
+		g_Camera->Update();
+		g_Light->Update();
 		//2Dポリゴン描画
 		g_Scene2D->Draw();
 		//3Dポリゴン描画
 		g_Scene3D->Draw();
 		//3Dポリゴン描画
 		g_SceneModel->Draw();
+		
 
 		//Presentの終了処理
 		g_pD3DDevice->EndScene();
@@ -354,7 +369,7 @@ void UpdateCamera(void)
 	LPDIRECT3DDEVICE9 pDevice = GetD3DDevice();
 
 	// ビュー変換行列作成
-		D3DXMatrixLookAtLH(&g_mtxView, &eye, &at, &up);
+	D3DXMatrixLookAtLH(&g_mtxView, &eye, &at, &up);
 
 	//プロジェクション行列作成
 	D3DXMatrixPerspectiveFovLH(&g_mtxProjection,

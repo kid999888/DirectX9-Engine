@@ -151,14 +151,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Light.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Material.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Scene2D.cpp" />
     <ClCompile Include="Scene3D.cpp" />
     <ClCompile Include="SceneModel.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Camera.h" />
+    <ClInclude Include="Light.h" />
     <ClInclude Include="main.h" />
+    <ClInclude Include="Material.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Scene2D.h" />
     <ClInclude Include="Scene3D.h" />
