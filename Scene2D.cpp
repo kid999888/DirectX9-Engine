@@ -47,7 +47,7 @@ CScene2D::~CScene2D()
 bool CScene2D::Init(void)
 {
 	HRESULT hr;
-	LPDIRECT3DDEVICE9 pDevice = GetD3DDevice();
+	LPDIRECT3DDEVICE9 pDevice = CRenderer::GetD3DDevice();
 	m_pTexture = new LPDIRECT3DTEXTURE9[1];
 
 	hr = D3DXCreateTextureFromFile(
@@ -85,7 +85,7 @@ void CScene2D::Update(void)
 //=================================================================================================
 void CScene2D::Draw(void)
 {
-	LPDIRECT3DDEVICE9 pDevice = GetD3DDevice();
+	LPDIRECT3DDEVICE9 pDevice = CRenderer::GetD3DDevice();
 	VERTEX_2D vtx[] = {
 	//頂点座標情報
 	{ D3DXVECTOR4(m_vePosition.x, m_vePosition.y, m_vePosition.z,1.0f),D3DCOLOR_RGBA(255,255,255,255),D3DXVECTOR2(0.0f,0.0f) },          //X座標、Y座標、Z座標、光W分量(必ず1.0fに入れる)、色

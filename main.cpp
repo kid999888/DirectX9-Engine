@@ -32,8 +32,8 @@ void Draw(void);                                                    //ゲームロー
 //=================================================================================================
 //　　　グローバル変数                                    
 //=================================================================================================
-LPDIRECT3D9        g_pD3D = NULL;                                   //DirectXインターフェース
-LPDIRECT3DDEVICE9  g_pD3DDevice = NULL;                             //デバイスのIDirect3Device9インタフェース
+//LPDIRECT3D9        g_pD3D = NULL;                                   //DirectXインターフェース
+//LPDIRECT3DDEVICE9  g_pD3DDevice = NULL;                             //デバイスのIDirect3Device9インタフェース
 
 static D3DXMATRIX g_mtxView;			//ビュー行列変数
 static D3DXMATRIX g_mtxProjection;		//プロジェクション行列変数;
@@ -232,59 +232,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 //=================================================================================================
 HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 {
-	//Direct3Dオブジェクトの作成
-	g_pD3D = Direct3DCreate9(D3D_SDK_VERSION);
-	if (g_pD3D == NULL)
-	{
-		return E_FAIL;
-	}
-
-	//現在のデイスプレイモードを
-	D3DDISPLAYMODE d3ddm;
-
-	if (FAILED(g_pD3D->GetAdapterDisplayMode(D3DADAPTER_DEFAULT, &d3ddm)))
-	{
-		return E_FAIL;
-
-	}
-
-	//デバイスのプレゼンテーション
-	D3DPRESENT_PARAMETERS d3dpp;                                      //デバイスをつくっみ
-	ZeroMemory(&d3dpp, sizeof(d3dpp));                                //d3dppのメモリに初期化
-	d3dpp.BackBufferWidth = SCREEN_WIDTH;                             //スクリーンの幅
-	d3dpp.BackBufferHeight = SCREEN_HEIGHT;                           //スクリーンの高さ
-	d3dpp.BackBufferFormat = d3ddm.Format;                            //バック・バッファのフォーマット(ディスプレイ・フォーマットの指定ｖ)
-	d3dpp.BackBufferCount = 1;                                        //前のものと後ろのもの交換する
-	d3dpp.SwapEffect = D3DSWAPEFFECT_DISCARD;                         //スワップ・エフェクト
-	d3dpp.EnableAutoDepthStencil = TRUE;                              //3D描画モード
-	d3dpp.AutoDepthStencilFormat = D3DFMT_D16;                        //
-	d3dpp.Windowed = bWindow;                                         //ウインドウモードを指定
-	d3dpp.FullScreen_RefreshRateInHz = D3DPRESENT_RATE_DEFAULT;       //Full screen のFPSコントロール
-	d3dpp.PresentationInterval = D3DPRESENT_INTERVAL_DEFAULT;         //描画FPS固定
-
-	//デバイスオブジェクトの生成
-	//[デバイス作成制御]<描画>と<頂点処理>を
-	// HALモードで3Dデバイス作成
-	if (FAILED(g_pD3D->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hWnd,
-		D3DCREATE_HARDWARE_VERTEXPROCESSING | D3DCREATE_MULTITHREADED, &d3dpp, &g_pD3DDevice)))
-	{
-		if (FAILED(g_pD3D->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hWnd,
-			D3DCREATE_MIXED_VERTEXPROCESSING | D3DCREATE_MULTITHREADED, &d3dpp, &g_pD3DDevice)))
-		{
-			// REFモードで3Dデバイス作成
-			if (FAILED(g_pD3D->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_REF, hWnd,
-				D3DCREATE_HARDWARE_VERTEXPROCESSING | D3DCREATE_MULTITHREADED, &d3dpp, &g_pD3DDevice)))
-			{
-				if (FAILED(g_pD3D->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_REF, hWnd,
-					D3DCREATE_SOFTWARE_VERTEXPROCESSING | D3DCREATE_MULTITHREADED, &d3dpp, &g_pD3DDevice)))
-				{
-					// 3Dデバイス作成失敗(このグラフィックボードではDirectXが使えない)
-					g_pD3D->Release();
-					return false;
-				}
-			}
-		}
-	}
+	//DirectX初期化クラス初期処理
+	CRenderer::Init(hWnd, bWindow);
 	g_Camera = new CCamera();
 	g_Light = new CLight();
 	g_Scene2D = new CScene2D();
@@ -310,9 +259,8 @@ void Uninit(void)
 	delete g_Scene3D;
 	g_SceneModel->Uninit();
 	delete g_SceneModel;
-	//
-	SAFE_RELEASE(g_pD3DDevice);
-	SAFE_RELEASE(g_pD3D);
+	//DirectX初期化クラス終了処理
+	CRenderer::Uninit();
 }
 
 //=================================================================================================
@@ -330,13 +278,11 @@ void Update(void)
 //=================================================================================================
 void Draw(void)
 {
-	//描画初期化
-	g_pD3DDevice->Clear(
-		0, NULL, (D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER), D3DCOLOR_RGBA(32, 64, 192, 100), 1.0f, 0    //色は白と黒選択ないほうが
-	);
+	//DirectX初期化クラス描画開始処理 
+	CRenderer::DrawBegin();
 
 	//Direct3Dによる描画の開始
-	if (SUCCEEDED(g_pD3DDevice->BeginScene()))
+	if (SUCCEEDED(CRenderer::GetD3DDevice()->BeginScene()))
 	{
 		g_Camera->Update();
 		g_Light->Update();
@@ -347,16 +293,8 @@ void Draw(void)
 		//3Dポリゴン描画
 		g_SceneModel->Draw();
 		//Presentの終了処理
-		g_pD3DDevice->EndScene();
+		CRenderer::GetD3DDevice()->EndScene();
 	}
-	//Presentの終了処理
-	g_pD3DDevice->Present(NULL, NULL, NULL, NULL);
-}
-
-//=================================================================================================
-//　　　D3DDeviceの伝達
-//=================================================================================================
-LPDIRECT3DDEVICE9 GetD3DDevice(void)
-{
-	return g_pD3DDevice;                                            //D3DDeviceの伝達
+	//DirectX初期化クラス描画終了処理 
+	CRenderer::DrawEnd();
 }

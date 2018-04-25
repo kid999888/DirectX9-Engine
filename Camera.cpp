@@ -33,7 +33,7 @@ CCamera::~CCamera()
 //=================================================================================================
 void CCamera::Update(void)
 {
-	LPDIRECT3DDEVICE9 pDevice = GetD3DDevice();
+	LPDIRECT3DDEVICE9 pDevice = CRenderer::GetD3DDevice();
 
 	// ÉrÉÖÅ[ïœä∑çsóÒçÏê¨
 	D3DXMatrixLookAtLH(&m_mtxView, &m_eye, &m_at, &m_up);

@@ -45,7 +45,7 @@ CSceneModel::~CSceneModel()
 bool CSceneModel::Init(void)
 {
 
-	LPDIRECT3DDEVICE9 pDevice = GetD3DDevice();
+	LPDIRECT3DDEVICE9 pDevice = CRenderer::GetD3DDevice();
 	//ÉÅÉìÉoÅ[ïœêîèâä˙âª 
 	
 	m_pMesh = NULL;
@@ -160,7 +160,7 @@ void CSceneModel::Update(void)
 //=================================================================================================
 void CSceneModel::Draw(void)
 {
-	LPDIRECT3DDEVICE9 pDevice = GetD3DDevice();
+	LPDIRECT3DDEVICE9 pDevice = CRenderer::GetD3DDevice();
 
 	//ägëÂèkè¨çsóÒÇçÏÇÈ
 	D3DXMatrixScaling(&m_mtxWorldS, 0.3f, 0.3f, 0.3f);
@@ -196,8 +196,8 @@ void CSceneModel::Draw(void)
 	//LightSet(D3DXVECTOR3(1.0f, -1.0f, 0.0f), FCOLOR{ 0.8f,0.8f,0.8f,1.0f }, FCOLOR{ 0.8f,0.8f,0.8f,1.0f }, FCOLOR{ 0.3f,0.3f,0.3f,1.0f });
 
 	//ï`âÊ
-	int nCount = 0;
-	/*for (nCount = 0;nCount < m_nMaterialNum;nCount++)
+	/*int nCount = 0;
+	for (nCount = 0;nCount < m_nMaterialNum;nCount++)
 	{
 
 	}*/

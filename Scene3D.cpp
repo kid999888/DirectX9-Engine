@@ -57,7 +57,7 @@ CScene3D::~CScene3D()
 bool CScene3D::Init(void)
 {
 	HRESULT hr[2];
-	LPDIRECT3DDEVICE9 pDevice = GetD3DDevice();
+	LPDIRECT3DDEVICE9 pDevice = CRenderer::GetD3DDevice();
 	m_pTexture = new LPDIRECT3DTEXTURE9[1];
 
 	hr[0] = D3DXCreateTextureFromFile(
@@ -240,7 +240,7 @@ void CScene3D::Update(void)
 //=================================================================================================
 void CScene3D::Draw(void)
 {
-	LPDIRECT3DDEVICE9 pDevice = GetD3DDevice();
+	LPDIRECT3DDEVICE9 pDevice = CRenderer::GetD3DDevice();
 
 	//ägëÂèkè¨çsóÒÇçÏÇÈ
 	D3DXMatrixScaling(&m_mtxWorldS, 1.0f, 1.0f, 1.0f);

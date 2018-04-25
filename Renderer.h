@@ -17,15 +17,15 @@
 class CRenderer
 {
 public:
-	CRenderer();											//DirectX初期化クラスコンストラクタ
-	~CRenderer();											//DirectX初期化クラスデストラクタ
-	bool Init(HWND hWnd, BOOL bWindow);						//DirectX初期化クラス初期処理
-	void Uninit(void);										//DirectX初期化クラス終了処理
-	void Update(void);										//DirectX初期化クラス更新処理
-	void Draw(void);										//DirectX初期化クラス描画処理
-
-protected:
+	static bool Init(HWND hWnd, BOOL bWindow);				//DirectX初期化クラス初期処理
+	static void Uninit(void);								//DirectX初期化クラス終了処理
+	static void DrawBegin(void);							//DirectX初期化クラス描画開始処理
+	static void DrawEnd(void);								//DirectX初期化クラス描画終了処理
+	static LPDIRECT3DDEVICE9  GetD3DDevice(void);				//D3DDeviceの伝達
+	
+private:
+	static LPDIRECT3D9        m_pD3D;						//DirectXインターフェース
+	static LPDIRECT3DDEVICE9  m_pD3DDevice;					//デバイスのIDirect3Device9インタフェース
 	
 };
-
 #endif

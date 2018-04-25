@@ -29,7 +29,7 @@ CMaterial::~CMaterial()
 //=================================================================================================
 void CMaterial::Update(void)
 {
-	LPDIRECT3DDEVICE9 pDevice = GetD3DDevice();
+	LPDIRECT3DDEVICE9 pDevice = CRenderer::GetD3DDevice();
 
 	//É}ÉeÉäÉAÉãê›íË
 	D3DMATERIAL9 mat;

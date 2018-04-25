@@ -12,6 +12,7 @@
 //=================================================================================================
 #include<d3d9.h>
 #include<d3dx9.h>
+#include"Renderer.h"
 #include "Camera.h"
 #include "Light.h"
 #include "Material.h"
@@ -41,7 +42,5 @@ static const D3DXVECTOR2 v2Up(0, -1);
 static const D3DXVECTOR4 v4Zero(0, 0, 0, 0);
 static const D3DXVECTOR3 v3Zero(0, 0, 0);
 static const D3DXVECTOR2 v2Zero(0, 0);
-
-LPDIRECT3DDEVICE9 GetD3DDevice(void);						//D3DDevice‚Ì“`’B
 
 #endif		//_MAIN_H_
