@@ -353,68 +353,6 @@ void Draw(void)
 }
 
 //=================================================================================================
-//　　　カメラ情報更新処理                                        
-//=================================================================================================
-void UpdateCamera(void)
-{
-	LPDIRECT3DDEVICE9 pDevice = GetD3DDevice();
-
-	// ビュー変換行列作成
-	D3DXMatrixLookAtLH(&g_mtxView, &eye, &at, &up);
-
-	//プロジェクション行列作成
-	D3DXMatrixPerspectiveFovLH(&g_mtxProjection,
-		D3DX_PI / 3,								//or D3DXToRadian(60)
-		(float)SCREEN_WIDTH / SCREEN_HEIGHT,		//
-		0.1f,										//
-		1000.0f);									//
-
-													//ビュー、プロジェクション行列の設定
-	pDevice->SetTransform(D3DTS_VIEW, &g_mtxView);
-	pDevice->SetTransform(D3DTS_PROJECTION, &g_mtxProjection);
-
-
-	//マテリアル設定
-	D3DMATERIAL9 mat;
-	ZeroMemory(&mat, sizeof(mat));
-	mat.Diffuse.r = 1.0f;
-	mat.Diffuse.g = 1.0f;
-	mat.Diffuse.b = 1.0f;
-	mat.Diffuse.a = 1.0f;
-	//マテリアルに追加
-
-	mat.Ambient.r = 0.9f;
-	mat.Ambient.g = 0.0f;
-	mat.Ambient.b = 0.0f;
-	mat.Ambient.a = 1.0f;
-	pDevice->SetMaterial(&mat);
-
-	//ライトの設定
-	D3DLIGHT9 light;
-	ZeroMemory(&light, sizeof(light));
-	light.Type = D3DLIGHT_DIRECTIONAL;
-	D3DXVECTOR3 vecDir(1.0f, -1.0f, 0.0f);							//ライトベクトル
-	D3DXVec3Normalize((D3DXVECTOR3*)&light.Direction, &vecDir);
-	light.Diffuse.r = 1.0f;
-	light.Diffuse.g = 1.0f;
-	light.Diffuse.b = 1.0f;
-	light.Diffuse.a = 1.0f;
-	//ライトに追加
-	light.Ambient.r = 1.0f;
-	light.Ambient.g = 1.0f;
-	light.Ambient.b = 1.0f;
-	light.Ambient.a = 1.0f;
-
-	pDevice->SetLight(0, &light);
-	pDevice->LightEnable(0, TRUE);
-	//グローバルアンビエントの設定
-	pDevice->SetRenderState(
-		D3DRS_AMBIENT,
-		D3DXCOLOR(0.3f, 0.3f, 0.3f, 1.0f)
-	);
-}
-
-//=================================================================================================
 //　　　D3DDeviceの伝達
 //=================================================================================================
 LPDIRECT3DDEVICE9 GetD3DDevice(void)

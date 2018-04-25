@@ -28,7 +28,7 @@ CSceneModel::CSceneModel()
 	m_fRotX = 0.0f;
 	m_fRotY = 0.0f;
 	m_fRotZ = 0.0f;
-	m_pTexture = NULL;
+	m_pTexture = nullptr;
 }
 
 //=================================================================================================
