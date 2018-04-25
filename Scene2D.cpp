@@ -31,7 +31,7 @@ typedef struct
 CScene2D::CScene2D()
 {
 	m_vePosition = D3DXVECTOR3(100.0f, 100.0f, 1.0f);
-	m_pTexture = NULL;
+	m_pTexture = nullptr;
 }
 
 //=================================================================================================
@@ -48,11 +48,12 @@ bool CScene2D::Init(void)
 {
 	HRESULT hr;
 	LPDIRECT3DDEVICE9 pDevice = GetD3DDevice();
+	m_pTexture = new LPDIRECT3DTEXTURE9[1];
 
 	hr = D3DXCreateTextureFromFile(
 		pDevice,
 		TEXTUREFILENAME000,
-		&m_pTexture);
+		m_pTexture);
 
 	if (FAILED(hr))
 	{
@@ -68,7 +69,8 @@ bool CScene2D::Init(void)
 //=================================================================================================
 void CScene2D::Uninit(void)
 {
-	SAFE_RELEASE(m_pTexture);
+	//SAFE_RELEASE(&m_pTexture);
+	SAFE_DELETE_ARRAY(m_pTexture);
 }
 
 //=================================================================================================
@@ -96,7 +98,7 @@ void CScene2D::Draw(void)
 	pDevice->SetFVF(FVF_VERTEX_2D);
 
 	//テクスチャ貼り付ける
-	pDevice->SetTexture(0, m_pTexture);
+	pDevice->SetTexture(0, *m_pTexture);
 
 	pDevice->DrawPrimitiveUP(			//重要
 		D3DPT_TRIANGLEFAN,				//描画のモード

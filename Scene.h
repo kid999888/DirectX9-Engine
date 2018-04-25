@@ -25,7 +25,17 @@ public:
 
 protected:
 	D3DXVECTOR3 m_vePosition;							//オブジェクトの位置
-	LPDIRECT3DTEXTURE9 m_pTexture;						//テクスチャ管理するメモ帳
+	LPDIRECT3DTEXTURE9* m_pTexture;						//テクスチャ管理するメモ帳
+	D3DXMATRIX m_mtxWorld;								//オブジェクトワールド行列変数
+	D3DXMATRIX m_mtxWorldR;								//オブジェクトワールド キューブの回転行列
+	D3DXMATRIX m_mtxWorldRX;							//オブジェクトワールド キューブのX方向回転行列
+	D3DXMATRIX m_mtxWorldRY;							//オブジェクトワールド キューブのY方向回転行列
+	D3DXMATRIX m_mtxWorldRZ;							//オブジェクトワールド キューブのZ方向回転行列
+	D3DXMATRIX m_mtxWorldT;								//オブジェクトワールド キューブの平行移動行列
+	D3DXMATRIX m_mtxWorldS;								//オブジェクトワールド キューブの平行移動行列
+	float m_fRotX;										//オブジェクトのX回転
+	float m_fRotY;										//オブジェクトのY回転
+	float m_fRotZ;										//オブジェクトのZ回転
 };
 
 #endif

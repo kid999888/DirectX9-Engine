@@ -19,7 +19,9 @@
 //=================================================================================================
 //　　　マクロ定義                                        
 //=================================================================================================
-#define SAFE_RELEASE(p) if(p){ p->Release(); p=NULL; }		//安全リリースマクロ
+#define SAFE_RELEASE(p)			if(p){ p->Release(); p=NULL; }					//安全リリースマクロ
+#define SAFE_DELETE(p)			if(p){ delete      (p); (p) = nullptr; }		//安全消しマクロ
+#define SAFE_DELETE_ARRAY(p)	if(p){ delete[]    (p); (p) = nullptr; }		//安全配列消しマクロ
 #define SCREEN_WIDTH		(800)							//スクリーンの幅
 #define SCREEN_HEIGHT		(600)							//スクリーンの高さ
 //デフォルトベクトル

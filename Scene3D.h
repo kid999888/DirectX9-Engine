@@ -28,16 +28,6 @@ public:
 private:
 	LPDIRECT3DVERTEXBUFFER9 m_pVertexBuffer;				//頂点バッファ管理するメモ帳
 	LPDIRECT3DINDEXBUFFER9 m_pIndexBuffer;					//インデックスバッファ管理するメモ
-	D3DXMATRIX m_mtxWorld;									//ワールド行列変数
-	D3DXMATRIX m_mtxWorldR;									//ワールド キューブの回転行列
-	D3DXMATRIX m_mtxWorldRX;								//ワールド キューブのX方向回転行列
-	D3DXMATRIX m_mtxWorldRY;								//ワールド キューブのY方向回転行列
-	D3DXMATRIX m_mtxWorldRZ;								//ワールド キューブのZ方向回転行列
-	D3DXMATRIX m_mtxWorldT;									//ワールド キューブの平行移動行列
-	D3DXMATRIX m_mtxWorldS;									//ワールド キューブの平行移動行列
-	float m_fRotX;											//3DキューブのX回転
-	float m_fRotY;											//3DキューブのY回転
-	float m_fRotZ;											//3DキューブのZ回転
 };
 
 #endif

@@ -81,14 +81,16 @@ bool CSceneModel::Init(void)
 
 	//Xモデルのマテリアル情報を読み込む
 	LPD3DXMATERIAL pMaterial = (LPD3DXMATERIAL)m_pMaterial->GetBufferPointer();
+	m_pTexture = new LPDIRECT3DTEXTURE9[1];
 
-	for (int nCounts = 0; nCounts < m_nMaterialNum;nCounts++)
+	int nCount = 0;
+	for (nCount = 0; nCount < m_nMaterialNum;nCount++)
 	{
 		pDevice->SetMaterial(&pMaterial->MatD3D);
 		hr = D3DXCreateTextureFromFile(
 			pDevice,
 			pMaterial->pTextureFilename,
-			&m_pTexture);
+			m_pTexture);
 
 		if (FAILED(hr))
 		{
@@ -137,7 +139,8 @@ void CSceneModel::Uninit(void)
 {
 	SAFE_RELEASE(m_pMesh);
 	SAFE_RELEASE(m_pMaterial);
-	SAFE_RELEASE(m_pTexture);
+	//SAFE_RELEASE(m_pTexture);
+	SAFE_DELETE_ARRAY(m_pTexture);
 	delete g_Material;
 }
 
@@ -193,8 +196,13 @@ void CSceneModel::Draw(void)
 	//LightSet(D3DXVECTOR3(1.0f, -1.0f, 0.0f), FCOLOR{ 0.8f,0.8f,0.8f,1.0f }, FCOLOR{ 0.8f,0.8f,0.8f,1.0f }, FCOLOR{ 0.3f,0.3f,0.3f,1.0f });
 
 	//描画
+	int nCount = 0;
+	/*for (nCount = 0;nCount < m_nMaterialNum;nCount++)
+	{
+
+	}*/
 	//テクスチャ貼り付ける
-	pDevice->SetTexture(0, m_pTexture);
+	pDevice->SetTexture(0, *m_pTexture);
 	//マテリアル設定（テクスチャ含む）
 	m_pMesh->DrawSubset(0);
 }
