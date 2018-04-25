@@ -42,7 +42,6 @@ static const D3DXVECTOR4 v4Zero(0, 0, 0, 0);
 static const D3DXVECTOR3 v3Zero(0, 0, 0);
 static const D3DXVECTOR2 v2Zero(0, 0);
 
-void UpdateCamera(void);
 LPDIRECT3DDEVICE9 GetD3DDevice(void);						//D3DDevice‚Ì“`’B
 
 #endif		//_MAIN_H_

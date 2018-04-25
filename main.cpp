@@ -114,7 +114,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	MSG msg;											//メッセージを受け取る変数
 
 
-														//ゲームロープ
+	//ゲームロープ
 	DWORD dwCurrentTime = timeGetTime();                       //今の時間
 	DWORD dwFPSLastTime = 0;                                   //前のフレームの時間
 
@@ -166,7 +166,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 
 	Uninit();                                           //後処理
 
-														//終了 戻り値設定
+	//終了 戻り値設定
 	return (int)msg.wParam;
 }
 
@@ -239,7 +239,6 @@ HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 		return E_FAIL;
 	}
 
-
 	//現在のデイスプレイモードを
 	D3DDISPLAYMODE d3ddm;
 
@@ -295,8 +294,6 @@ HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 	g_SceneModel = new CSceneModel();
 	g_SceneModel->Init();
 	
-	
-
 	return true;
 }
 
@@ -325,10 +322,6 @@ void Update(void)
 	g_Scene2D->Update();
 	g_Scene3D->Update();
 	g_SceneModel->Update();
-
-
-
-	
 }
 
 //=================================================================================================
@@ -352,8 +345,6 @@ void Draw(void)
 		g_Scene3D->Draw();
 		//3Dポリゴン描画
 		g_SceneModel->Draw();
-		
-
 		//Presentの終了処理
 		g_pD3DDevice->EndScene();
 	}
