@@ -10,9 +10,7 @@
 //		マクロ定義                                        
 //=================================================================================================
 //モデルファイルパス
-#define MODELFILENAME000	        "Data\\Model\\roboModel.x"	
-//テクスチャファイルパス
-#define TEXTUREFILENAME000	        "Data\\Texture\\00tex_master.png"	
+#define MODELFILENAME000	        "Data\\Model\\cart.x"	
 
 //=================================================================================================
 //　　　グローバル変数                                    
@@ -81,7 +79,7 @@ bool CSceneModel::Init(void)
 
 	//Xモデルのマテリアル情報を読み込む
 	LPD3DXMATERIAL pMaterial = (LPD3DXMATERIAL)m_pMaterial->GetBufferPointer();
-	m_pTexture = new LPDIRECT3DTEXTURE9[1];
+	m_pTexture = new LPDIRECT3DTEXTURE9[m_nMaterialNum];
 
 	int nCount = 0;
 	for (nCount = 0; nCount < m_nMaterialNum;nCount++)
@@ -90,7 +88,7 @@ bool CSceneModel::Init(void)
 		hr = D3DXCreateTextureFromFile(
 			pDevice,
 			pMaterial->pTextureFilename,
-			m_pTexture);
+			&m_pTexture[nCount]);
 
 		if (FAILED(hr))
 		{
@@ -139,7 +137,6 @@ void CSceneModel::Uninit(void)
 {
 	SAFE_RELEASE(m_pMesh);
 	SAFE_RELEASE(m_pMaterial);
-	//SAFE_RELEASE(m_pTexture);
 	SAFE_DELETE_ARRAY(m_pTexture);
 	delete g_Material;
 }
@@ -151,7 +148,7 @@ void CSceneModel::Update(void)
 {
 	g_Material->Update();
 	//m_fRotX += 0.0f;
-	m_fRotY -= 0.05f;
+	m_fRotY -= 0.01f;
 	//m_fRotZ += 0.0f;
 }
 
@@ -163,7 +160,7 @@ void CSceneModel::Draw(void)
 	LPDIRECT3DDEVICE9 pDevice = CRenderer::GetD3DDevice();
 
 	//拡大縮小行列を作る
-	D3DXMatrixScaling(&m_mtxWorldS, 0.3f, 0.3f, 0.3f);
+	D3DXMatrixScaling(&m_mtxWorldS, 1.0f, 1.0f, 1.0f);
 
 	//回転行列を作る
 	D3DXMatrixRotationX(&m_mtxWorldRX, m_fRotX);
@@ -196,13 +193,13 @@ void CSceneModel::Draw(void)
 	//LightSet(D3DXVECTOR3(1.0f, -1.0f, 0.0f), FCOLOR{ 0.8f,0.8f,0.8f,1.0f }, FCOLOR{ 0.8f,0.8f,0.8f,1.0f }, FCOLOR{ 0.3f,0.3f,0.3f,1.0f });
 
 	//描画
-	/*int nCount = 0;
+	int nCount = 0;
 	for (nCount = 0;nCount < m_nMaterialNum;nCount++)
 	{
-
-	}*/
-	//テクスチャ貼り付ける
-	pDevice->SetTexture(0, *m_pTexture);
-	//マテリアル設定（テクスチャ含む）
-	m_pMesh->DrawSubset(0);
+		//テクスチャ貼り付ける
+		pDevice->SetTexture(0, m_pTexture[nCount]);
+		//マテリアル設定（テクスチャ含む）
+		m_pMesh->DrawSubset(nCount);
+	}
+	
 }

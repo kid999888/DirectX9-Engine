@@ -219,7 +219,6 @@ void CScene3D::Uninit(void)
 {
 	SAFE_RELEASE(m_pVertexBuffer);
 	SAFE_RELEASE(m_pIndexBuffer);
-	//SAFE_RELEASE(m_pTexture);
 	SAFE_DELETE_ARRAY(m_pTexture);
 	delete g_Material;
 }

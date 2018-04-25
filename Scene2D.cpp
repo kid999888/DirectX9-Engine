@@ -69,7 +69,6 @@ bool CScene2D::Init(void)
 //=================================================================================================
 void CScene2D::Uninit(void)
 {
-	//SAFE_RELEASE(&m_pTexture);
 	SAFE_DELETE_ARRAY(m_pTexture);
 }
 
