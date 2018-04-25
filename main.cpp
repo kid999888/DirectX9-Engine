@@ -310,6 +310,7 @@ void Uninit(void)
 	delete g_Scene3D;
 	g_SceneModel->Uninit();
 	delete g_SceneModel;
+	//
 	SAFE_RELEASE(g_pD3DDevice);
 	SAFE_RELEASE(g_pD3D);
 }
