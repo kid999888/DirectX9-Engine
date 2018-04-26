@@ -176,9 +176,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	{
 	case WM_DESTROY: PostQuitMessage(0);										//ウインドウを閉じてのメッセージ
 		break;
-
-
-
 	case WM_KEYDOWN:
 		switch (wParam)
 		{
@@ -221,7 +218,35 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		}
 		break;
 	}
+	//
+	case WM_SETCURSOR:
+	{
+		if (LOWORD(lParam) == HTCLIENT)
+		{
+			SetCursor(NULL);
+			CRenderer::GetD3DDevice()->ShowCursor(false);
 
+			return true;
+		}
+		break;
+	}
+	case WM_NCPAINT:
+	{
+		HDC hdc;
+		hdc = GetDCEx(hWnd, (HRGN)wParam, DCX_WINDOW | DCX_INTERSECTRGN);
+		// Paint into this DC
+		InvalidateRect(hWnd, 0, false);
+		UpdateWindow(hWnd);
+
+		ReleaseDC(hWnd, hdc);
+		break;
+	}
+	case WM_PAINT:
+	{
+		InvalidateRect(hWnd, 0, false);
+		UpdateWindow(hWnd);
+		break;
+	}
 	default: break;                                     //他の場合はswitchに出し
 	}
 	return DefWindowProc(hWnd, uMsg, wParam, lParam);
