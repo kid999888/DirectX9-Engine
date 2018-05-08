@@ -32,31 +32,13 @@ void Draw(void);                                                    //ゲームロー
 //=================================================================================================
 //　　　グローバル変数                                    
 //=================================================================================================
-//LPDIRECT3D9        g_pD3D = NULL;                                   //DirectXインターフェース
-//LPDIRECT3DDEVICE9  g_pD3DDevice = NULL;                             //デバイスのIDirect3Device9インタフェース
-
-static D3DXMATRIX g_mtxView;			//ビュー行列変数
-static D3DXMATRIX g_mtxProjection;		//プロジェクション行列変数;
-
-//ビュー行列の要素
-static D3DXVECTOR3 eye(0.0f, 6.0f, -10.0f);	//カメラの場所
-static D3DXVECTOR3 at(0.0f, 0.0f, 0.0f);		//注視点
-static D3DXVECTOR3 up(0.0f, 1.0f, 0.0f);		//上の場所
-
-//上ベクトル
-static D3DXVECTOR3 vUpVector(0, 1, 0);
-//前ベクトル
-static D3DXVECTOR3 vFrontVector(0, 0, 1);
-//右ベクトル
-static D3DXVECTOR3 vRightVector(1, 0, 0);
-
 static HWND g_hWnd;
 
-CScene2D *g_Scene2D;
-CScene3D *g_Scene3D;
-CSceneModel *g_SceneModel;
-CCamera *g_Camera;
-CLight *g_Light;
+CScene2D		*g_Scene2D;
+CScene3D		*g_Scene3D;
+CSceneModel		*g_SceneModel;
+CCamera			*g_Camera;
+CLight			*g_Light;
 
 //=================================================================================================
 //　　　構造体定義                                         
@@ -155,9 +137,6 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 				Update();
 				//描画処理
 				Draw();
-
-
-
 			}
 		}
 	}
@@ -193,8 +172,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			}
 			break;
 		}
-
-		
 
 		}
 		break;
