@@ -210,3 +210,13 @@ void CSceneModel::Draw(void)
 	}
 	
 }
+
+//=================================================================================================
+//　　　3Dモデルクラスのインスタンス生成                                    
+//=================================================================================================
+CSceneModel * CSceneModel::Create(void)
+{
+	CSceneModel *SceneModel = new CSceneModel();
+	SceneModel->Init();
+	return SceneModel;
+}

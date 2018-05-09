@@ -23,6 +23,7 @@ public:
 	void Uninit(void);								//2Dポリゴン終了処理
 	void Update(void);								//2Dポリゴン更新処理
 	void Draw(void);								//2Dポリゴン描画処理
+	static CScene2D * Create(void);					//2Dポリゴンのインスタンス生成
 
 private:
 

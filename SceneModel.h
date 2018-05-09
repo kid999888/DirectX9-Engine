@@ -23,6 +23,7 @@ public:
 	void Uninit(void);										//3Dモデルクラス終了処理
 	void Update(void);										//3Dモデルクラス更新処理
 	void Draw(void);										//3Dモデルクラス描画処理
+	static CSceneModel * Create(void);						//3Dモデルクラスのインスタンス生成
 
 private:
 	LPD3DXMESH m_pMesh;										//メッシュを受け取る変数

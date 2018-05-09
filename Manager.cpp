@@ -29,12 +29,9 @@ bool CManager::Init( HWND hWnd, BOOL bWindow)
 	CRenderer::Init(hWnd, bWindow);
 	m_Camera = new CCamera();
 	m_Light = new CLight();
-	m_Scene2D = new CScene2D();
-	m_Scene2D->Init();
-	m_Scene3D = new CScene3D();
-	m_Scene3D->Init();
-	m_SceneModel = new CSceneModel();
-	m_SceneModel->Init();
+	m_Scene2D = CScene2D::Create();
+	m_Scene3D = CScene3D::Create();
+	m_SceneModel = CSceneModel::Create();
 
 	return true;
 }

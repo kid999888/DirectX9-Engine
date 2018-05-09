@@ -23,6 +23,7 @@ public:
 	void Uninit(void);										//3Dキューブクラス終了処理
 	void Update(void);										//3Dキューブクラス更新処理
 	void Draw(void);										//3Dキューブクラス描画処理
+	static CScene3D * Create(void);							//3Dキューブのインスタンス生成
 
 private:
 	LPDIRECT3DVERTEXBUFFER9 m_pVertexBuffer;				//頂点バッファ管理するメモ帳
