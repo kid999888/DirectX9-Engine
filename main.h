@@ -12,10 +12,6 @@
 //=================================================================================================
 #include<d3d9.h>
 #include<d3dx9.h>
-#include"Renderer.h"
-#include "Camera.h"
-#include "Light.h"
-#include "Material.h"
 
 //=================================================================================================
 //　　　マクロ定義                                        
@@ -25,6 +21,7 @@
 #define SAFE_DELETE_ARRAY(p)	if(p){ delete[]    (p); (p) = nullptr; }		//安全配列消しマクロ
 #define SCREEN_WIDTH		(800)							//スクリーンの幅
 #define SCREEN_HEIGHT		(600)							//スクリーンの高さ
+
 //デフォルトベクトル
 static const D3DXVECTOR4 v4One(1, 1, 1, 1);
 static const D3DXVECTOR3 v3One(1, 1, 1);

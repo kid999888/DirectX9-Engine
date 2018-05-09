@@ -9,10 +9,8 @@
 //　　　ヘッダファイル           
 //=================================================================================================
 #include"main.h"
+#include "Manager.h"
 #include<windows.h>
-#include "Scene2D.h"
-#include "Scene3D.h"
-#include "SceneModel.h"
 
 //=================================================================================================
 //		マクロ定義                                        
@@ -24,21 +22,11 @@
 //		プロトタイプ宣言                                  
 //=================================================================================================
 LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
-HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow);         //ゲームロープ初期処理
-void Uninit(void);                                                  //ゲームロープ終了処理
-void Update(void);                                                  //ゲームロープ更新処理
-void Draw(void);                                                    //ゲームロープ描画処理
 
 //=================================================================================================
 //　　　グローバル変数                                    
 //=================================================================================================
 static HWND g_hWnd;
-
-CScene2D		*g_Scene2D;
-CScene3D		*g_Scene3D;
-CSceneModel		*g_SceneModel;
-CCamera			*g_Camera;
-CLight			*g_Light;
 
 //=================================================================================================
 //　　　構造体定義                                         
@@ -100,8 +88,9 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	DWORD dwCurrentTime = timeGetTime();                       //今の時間
 	DWORD dwFPSLastTime = 0;                                   //前のフレームの時間
 
-															   //初期処理
-	if (!Init(hInstance, g_hWnd, TRUE))
+	
+	//初期処理
+	if (!CManager::Init(g_hWnd, TRUE))
 	{
 		MessageBox(g_hWnd, "エラー", "初期が", MB_OK);
 		return -1;
@@ -134,16 +123,16 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 			{
 				dwFPSLastTime = dwCurrentTime;
 				//更新処理
-				Update();
+				CManager::Update();
 				//描画処理
-				Draw();
+				CManager::Draw();
 			}
 		}
 	}
 
 	timeEndPeriod(1);									//分解能を戻す
 
-	Uninit();                                           //後処理
+	CManager::Uninit();                                //後処理
 
 	//終了 戻り値設定
 	return (int)msg.wParam;
@@ -227,76 +216,4 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	default: break;                                     //他の場合はswitchに出し
 	}
 	return DefWindowProc(hWnd, uMsg, wParam, lParam);
-}
-
-//=================================================================================================
-//　　　ゲームロープ初期処理
-//=================================================================================================
-HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
-{
-	//DirectX初期化クラス初期処理
-	CRenderer::Init(hWnd, bWindow);
-	g_Camera = new CCamera();
-	g_Light = new CLight();
-	g_Scene2D = new CScene2D();
-	g_Scene2D->Init();
-	g_Scene3D = new CScene3D();
-	g_Scene3D->Init();
-	g_SceneModel = new CSceneModel();
-	g_SceneModel->Init();
-	
-	return true;
-}
-
-//=================================================================================================
-//　　　ゲームロープ終了処理
-//=================================================================================================
-void Uninit(void)
-{
-	delete g_Camera;
-	delete g_Light;
-	g_Scene2D->Uninit();
-	delete g_Scene2D;
-	g_Scene3D->Uninit();
-	delete g_Scene3D;
-	g_SceneModel->Uninit();
-	delete g_SceneModel;
-	//DirectX初期化クラス終了処理
-	CRenderer::Uninit();
-}
-
-//=================================================================================================
-//　　　ゲームロープ更新処理
-//=================================================================================================
-void Update(void)
-{
-	g_Scene2D->Update();
-	g_Scene3D->Update();
-	g_SceneModel->Update();
-}
-
-//=================================================================================================
-//　　　ゲームロープ描画処理
-//=================================================================================================
-void Draw(void)
-{
-	//DirectX初期化クラス描画開始処理 
-	CRenderer::DrawBegin();
-
-	//Direct3Dによる描画の開始
-	if (SUCCEEDED(CRenderer::GetD3DDevice()->BeginScene()))
-	{
-		g_Camera->Update();
-		g_Light->Update();
-		//2Dポリゴン描画
-		g_Scene2D->Draw();
-		//3Dポリゴン描画
-		g_Scene3D->Draw();
-		//3Dポリゴン描画
-		g_SceneModel->Draw();
-		//Presentの終了処理
-		CRenderer::GetD3DDevice()->EndScene();
-	}
-	//DirectX初期化クラス描画終了処理 
-	CRenderer::DrawEnd();
 }
