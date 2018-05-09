@@ -16,9 +16,7 @@
 //=================================================================================================
 CCamera *CManager::m_Camera = NULL;
 CLight *CManager::m_Light = NULL;
-CScene2D *CManager::m_Scene2D = NULL;
-CScene3D *CManager::m_Scene3D = NULL;
-CSceneModel *CManager::m_SceneModel = NULL;
+CScene *CManager::m_Scene[3] = {NULL};
 
 //=================================================================================================
 //　　　マネージャークラス初期処理         
@@ -29,9 +27,12 @@ bool CManager::Init( HWND hWnd, BOOL bWindow)
 	CRenderer::Init(hWnd, bWindow);
 	m_Camera = new CCamera();
 	m_Light = new CLight();
-	m_Scene2D = CScene2D::Create();
+	/*m_Scene2D = CScene2D::Create();
 	m_Scene3D = CScene3D::Create();
-	m_SceneModel = CSceneModel::Create();
+	m_SceneModel = CSceneModel::Create();*/
+	m_Scene[0] = CScene2D::Create();
+	m_Scene[1] = CScene3D::Create();
+	m_Scene[2] = CSceneModel::Create();
 
 	return true;
 }
@@ -43,12 +44,14 @@ void CManager::Uninit(void)
 {
 	delete m_Camera;
 	delete m_Light;
-	m_Scene2D->Uninit();
-	delete m_Scene2D;
-	m_Scene3D->Uninit();
-	delete m_Scene3D;
-	m_SceneModel->Uninit();
-	delete m_SceneModel;
+	//シーンオブジェクトの解放
+	int nCount = 0;
+	for (nCount = 0;nCount < 3;nCount++)
+	{
+		m_Scene[nCount]->Uninit();
+
+	}
+
 	//DirectX初期化クラス終了処理
 	CRenderer::Uninit();
 }
@@ -58,9 +61,12 @@ void CManager::Uninit(void)
 //=================================================================================================
 void CManager::Update(void)
 {
-	m_Scene2D->Update();
-	m_Scene3D->Update();
-	m_SceneModel->Update();
+	//シーンオブジェクトの更新
+	int nCount = 0;
+	for (nCount = 0;nCount < 3;nCount++)
+	{
+		m_Scene[nCount]->Update();
+	}
 }
 
 //=================================================================================================
@@ -76,12 +82,12 @@ void CManager::Draw(void)
 	{
 		m_Camera->Update();
 		m_Light->Update();
-		//2Dポリゴン描画
-		m_Scene2D->Draw();
-		//3Dポリゴン描画
-		m_Scene3D->Draw();
-		//3Dポリゴン描画
-		m_SceneModel->Draw();
+		//シーンオブジェクトの描画
+		int nCount = 0;
+		for (nCount = 0;nCount < 3;nCount++)
+		{
+			m_Scene[nCount]->Draw();
+		}
 		//Presentの終了処理
 		CRenderer::GetD3DDevice()->EndScene();
 	}

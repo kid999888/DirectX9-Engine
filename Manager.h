@@ -29,9 +29,7 @@ public:
 private:
 	static CCamera *m_Camera;
 	static CLight *m_Light;
-	static CScene2D *m_Scene2D;
-	static CScene3D *m_Scene3D;
-	static CSceneModel *m_SceneModel;
+	static CScene *m_Scene[3];
 };
 
 #endif
