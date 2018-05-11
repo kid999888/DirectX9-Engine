@@ -22,10 +22,10 @@ public:
 	void Update(void);									//カメラクラス更新処理
 
 private:
-	D3DXVECTOR3 m_eye;					//カメラの場所
-	D3DXVECTOR3 m_at;						//注視点
-	D3DXVECTOR3 m_up;						//上の場所
-	D3DXMATRIX m_mtxView;									//
-	D3DXMATRIX m_mtxProjection;								//
+	D3DXVECTOR3 m_eye;									//カメラの場所
+	D3DXVECTOR3 m_at;									//注視点
+	D3DXVECTOR3 m_up;									//上の場所
+	D3DXMATRIX m_mtxView;								//ビュー行列
+	D3DXMATRIX m_mtxProjection;							//プロジェクション行列
 };
 #endif
