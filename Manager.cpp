@@ -27,9 +27,6 @@ bool CManager::Init( HWND hWnd, BOOL bWindow)
 	CRenderer::Init(hWnd, bWindow);
 	m_Camera = new CCamera();
 	m_Light = new CLight();
-	/*m_Scene2D = CScene2D::Create();
-	m_Scene3D = CScene3D::Create();
-	m_SceneModel = CSceneModel::Create();*/
 	m_Scene[0] = CScene2D::Create();
 	m_Scene[1] = CScene3D::Create();
 	m_Scene[2] = CSceneModel::Create();
@@ -49,9 +46,7 @@ void CManager::Uninit(void)
 	for (nCount = 0;nCount < 3;nCount++)
 	{
 		m_Scene[nCount]->Uninit();
-
 	}
-
 	//DirectX‰Šú‰»ƒNƒ‰ƒXI—¹ˆ—
 	CRenderer::Uninit();
 }
