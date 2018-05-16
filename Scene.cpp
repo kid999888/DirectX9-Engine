@@ -8,25 +8,25 @@
 //=================================================================================================
 //　　　ヘッダファイル           
 //=================================================================================================
-#include "Scene.h"
+#include"Scene.h"
 #include"main.h"
 
 //=================================================================================================
 //　　　インスタンス実体化          
 //=================================================================================================
-CScene *CScene::m_Scene[] = { NULL };
+CScene *CScene::m_Scene[3][10] = { NULL };
 
 //=================================================================================================
 //　　　ヘッダファイル           
 //=================================================================================================
-CScene::CScene()
+CScene::CScene(int nPriorty)
 {
 	int nCount = 0;
 	for (nCount = 0;nCount < 10;nCount++)
 	{
-		if (m_Scene[nCount] == NULL)
+		if (m_Scene[nPriorty][nCount] == NULL)
 		{
-			m_Scene[nCount]=this;
+			m_Scene[nPriorty][nCount]=this;
 			break;
 		}
 	}
@@ -38,11 +38,15 @@ CScene::CScene()
 void CScene::UpdateAll(void)
 {
 	int nCount = 0;
-	for (nCount = 0;nCount < 10;nCount++)
+	int nCountPriority = 0;
+	for (nCountPriority = 0;nCountPriority < 3;nCountPriority++)
 	{
-		if (m_Scene[nCount] != NULL)
+		for (nCount = 0;nCount < 10;nCount++)
 		{
-			m_Scene[nCount]->Update();
+			if (m_Scene[nCountPriority][nCount] != NULL)
+			{
+				m_Scene[nCountPriority][nCount]->Update();
+			}
 		}
 	}
 }
@@ -53,11 +57,15 @@ void CScene::UpdateAll(void)
 void CScene::DrawAll(void)
 {
 	int nCount = 0;
-	for (nCount = 0;nCount < 10;nCount++)
+	int nCountPriority = 0;
+	for (nCountPriority = 0;nCountPriority < 3;nCountPriority++)
 	{
-		if (m_Scene[nCount] != NULL)
+		for (nCount = 0;nCount < 10;nCount++)
 		{
-			m_Scene[nCount]->Draw();
+			if (m_Scene[nCountPriority][nCount] != NULL)
+			{
+				m_Scene[nCountPriority][nCount]->Draw();
+			}
 		}
 	}
 }
@@ -68,11 +76,15 @@ void CScene::DrawAll(void)
 void CScene::ReleaseAll(void)
 {
 	int nCount = 0;
-	for (nCount = 0;nCount < 10;nCount++)
+	int nCountPriority = 0;
+	for (nCountPriority = 0;nCountPriority < 3;nCountPriority++)
 	{
-		if (m_Scene[nCount] != NULL)
+		for (nCount = 0;nCount < 10;nCount++)
 		{
-			m_Scene[nCount]->Release();
+			if (m_Scene[nCountPriority][nCount] != NULL)
+			{
+				m_Scene[nCountPriority][nCount]->Release();
+			}
 		}
 	}
 }
@@ -91,14 +103,19 @@ void CScene::SetPosition(D3DXVECTOR3 vePosition)
 void CScene::Release(void)
 {
 	int nCount = 0;
-	for (nCount = 0;nCount < 10;nCount++)
+	int nCountPriority = 0;
+	for (nCountPriority = 0;nCountPriority < 3;nCountPriority++)
 	{
-		if (m_Scene[nCount] == this)
+		for (nCount = 0;nCount < 10;nCount++)
 		{
-			m_Scene[nCount] == NULL;
-			Uninit();
-			delete this;
-			break;
+			if (m_Scene[nCountPriority][nCount] == this)
+			{
+				m_Scene[nCountPriority][nCount] == NULL;
+				Uninit();
+				delete this;
+				break;
+			}
 		}
 	}
+	
 }

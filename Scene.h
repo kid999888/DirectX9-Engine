@@ -7,9 +7,6 @@
 #ifndef _SCENE_H_                                                 //2重インクルード防止のマクロ定義
 #define _SCENE_H_
 #include"main.h"
-//=================================================================================================
-//　　　マクロ定義                                        
-//=================================================================================================
 
 //=================================================================================================
 //　　　オブジェクト処理クラス                                       
@@ -17,7 +14,7 @@
 class CScene
 {
 public:
-	CScene();
+	CScene(int nPriorty);
 	virtual ~CScene() {};
 	virtual bool Init(void) { return true; };			//オブジェクト初期処理
 	virtual void Uninit(void) = 0;						//オブジェクト終了処理
@@ -28,7 +25,7 @@ public:
 	static void UpdateAll(void);						//オブジェクト全体更新処理
 	static void DrawAll(void);							//オブジェクト全体描画処理	
 	static void ReleaseAll(void);						//オブジェクトの全体リリース処理
-	static CScene *m_Scene[10];							//シーンの管理メンバー関数
+	static CScene *m_Scene[3][10];						//シーンの管理メンバー関数
 
 protected:
 	D3DXVECTOR3 m_vePosition;							//オブジェクトの位置
