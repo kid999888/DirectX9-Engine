@@ -12,6 +12,7 @@
 #include"Camera.h"
 #include"Light.h"
 #include"Material.h"
+#include"Scene.h"
 #include"Scene2D.h"
 #include"Scene3D.h"
 #include"SceneModel.h"
@@ -29,7 +30,7 @@ public:
 private:
 	static CCamera *m_Camera;
 	static CLight *m_Light;
-	static CScene *m_Scene[3];
+	
 };
 
 #endif

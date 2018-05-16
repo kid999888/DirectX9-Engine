@@ -17,7 +17,7 @@
 class CScene
 {
 public:
-	CScene() {};
+	CScene();
 	virtual ~CScene() {};
 	virtual bool Init(void) { return true; };			//オブジェクト初期処理
 	virtual void Uninit(void) = 0;						//オブジェクト終了処理
@@ -25,6 +25,10 @@ public:
 	virtual void Draw(void) = 0;						//オブジェクト描画処理
 	void SetPosition(D3DXVECTOR3 vePosition);			//オブジェクトの位置設定
 	void Release(void);									//オブジェクトのリリース
+	static void UpdateAll(void);						//オブジェクト全体更新処理
+	static void DrawAll(void);							//オブジェクト全体描画処理	
+	static void ReleaseAll(void);						//オブジェクトの全体リリース処理
+	static CScene *m_Scene[10];							//シーンの管理メンバー関数
 
 protected:
 	D3DXVECTOR3 m_vePosition;							//オブジェクトの位置

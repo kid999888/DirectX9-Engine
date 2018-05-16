@@ -8,7 +8,7 @@
 //=================================================================================================
 //　　　ヘッダファイル           
 //=================================================================================================
-#include "Manager.h"
+#include"Manager.h"
 #include"main.h"
 
 //=================================================================================================
@@ -16,7 +16,6 @@
 //=================================================================================================
 CCamera *CManager::m_Camera = NULL;
 CLight *CManager::m_Light = NULL;
-CScene *CManager::m_Scene[3] = {NULL};
 
 //=================================================================================================
 //　　　マネージャークラス初期処理         
@@ -27,9 +26,9 @@ bool CManager::Init( HWND hWnd, BOOL bWindow)
 	CRenderer::Init(hWnd, bWindow);
 	m_Camera = new CCamera();
 	m_Light = new CLight();
-	m_Scene[0] = CScene2D::Create();
-	m_Scene[1] = CScene3D::Create();
-	m_Scene[2] = CSceneModel::Create();
+	CScene2D::Create();
+	CScene3D::Create();
+	CSceneModel::Create();
 
 	return true;
 }
@@ -42,11 +41,7 @@ void CManager::Uninit(void)
 	delete m_Camera;
 	delete m_Light;
 	//シーンオブジェクトの解放
-	int nCount = 0;
-	for (nCount = 0;nCount < 3;nCount++)
-	{
-		m_Scene[nCount]->Uninit();
-	}
+	CScene::ReleaseAll();
 	//DirectX初期化クラス終了処理
 	CRenderer::Uninit();
 }
@@ -57,11 +52,7 @@ void CManager::Uninit(void)
 void CManager::Update(void)
 {
 	//シーンオブジェクトの更新
-	int nCount = 0;
-	for (nCount = 0;nCount < 3;nCount++)
-	{
-		m_Scene[nCount]->Update();
-	}
+	CScene::UpdateAll();
 }
 
 //=================================================================================================
@@ -78,11 +69,7 @@ void CManager::Draw(void)
 		m_Camera->Update();
 		m_Light->Update();
 		//シーンオブジェクトの描画
-		int nCount = 0;
-		for (nCount = 0;nCount < 3;nCount++)
-		{
-			m_Scene[nCount]->Draw();
-		}
+		CScene::DrawAll();
 		//Presentの終了処理
 		CRenderer::GetD3DDevice()->EndScene();
 	}
