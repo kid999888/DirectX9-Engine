@@ -10,6 +10,7 @@
 //=================================================================================================
 #include"main.h"
 #include"Manager.h"
+#include"input.h"
 
 //=================================================================================================
 //		マクロ定義                                        
@@ -94,9 +95,10 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 		MessageBox(g_hWnd, "エラー", "初期が", MB_OK);
 		return -1;
 	}
+	InitKeyboard(hInstance, g_hWnd);							//入力処理の初期化
 
 
-	timeBeginPeriod(1);									      //分解能を設定
+	timeBeginPeriod(1);											//分解能を設定
 
 	for (;;)
 	{
@@ -123,6 +125,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 				dwFPSLastTime = dwCurrentTime;
 				//更新処理
 				CManager::Update();
+				UpdateKeyboard();						//入力処理の更新処理(無くてもいい)
 				//描画処理
 				CManager::Draw();
 			}
@@ -131,7 +134,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 
 	timeEndPeriod(1);									//分解能を戻す
 
-	CManager::Uninit();                                //後処理
+	CManager::Uninit();									//後処理
+	UninitKeyboard();									//入力処理の終了処理
 
 	//終了 戻り値設定
 	return (int)msg.wParam;

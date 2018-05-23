@@ -7,6 +7,20 @@
 #ifndef _SCENE_H_                                                 //2重インクルード防止のマクロ定義
 #define _SCENE_H_
 #include"main.h"
+#include"Material.h"
+
+//=================================================================================================
+//　　　列挙体                                      
+//=================================================================================================
+enum SCENE_TYPE
+{
+	SCENE_TYPE_NONE,
+	SCENE_TYPE_2D,
+	SCENE_TYPE_3D,
+	SCENE_TYPE_PLAYER,
+	SCENE_TYPE_ENEMY,
+	SCENE_TYPE_BULLET,
+};
 
 //=================================================================================================
 //　　　オブジェクト処理クラス                                       
@@ -26,10 +40,16 @@ public:
 	static void DrawAll(void);							//オブジェクト全体描画処理	
 	static void ReleaseAll(void);						//オブジェクトの全体リリース処理
 	static CScene *m_Scene[3][10];						//シーンの管理メンバー関数
+	SCENE_TYPE m_Type;
+	SCENE_TYPE GetType(void)
+	{
+		return this->m_Type;
+	};
 
 protected:
 	D3DXVECTOR3 m_vePosition;							//オブジェクトの位置
 	LPDIRECT3DTEXTURE9* m_pTexture;						//テクスチャ管理するメモ帳
+	CMaterial *m_Material;								//マテリアルの管理するメモ帳
 	D3DXMATRIX m_mtxWorld;								//オブジェクトワールド行列変数
 	D3DXMATRIX m_mtxWorldR;								//オブジェクトワールド キューブの回転行列
 	D3DXMATRIX m_mtxWorldRX;							//オブジェクトワールド キューブのX方向回転行列
@@ -41,5 +61,6 @@ protected:
 	float m_fRotY;										//オブジェクトのY回転
 	float m_fRotZ;										//オブジェクトのZ回転
 };
+
 
 #endif

@@ -28,7 +28,10 @@ bool CManager::Init( HWND hWnd, BOOL bWindow)
 	m_Light = new CLight();
 	CScene2D::Create();
 	CScene3D::Create();
-	CSceneModel::Create();
+	/*CSceneModel::Create();*/
+	CField::Create();
+	CPlayer::Create(D3DXVECTOR3(0.0f,0.0f,0.0f));
+	CPlayer::Create(D3DXVECTOR3(0.0f, 1.0f, 0.0f));
 
 	return true;
 }
