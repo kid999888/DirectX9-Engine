@@ -11,6 +11,7 @@
 #include"main.h"
 #include"Manager.h"
 #include"input.h"
+#include <crtdbg.h>
 
 //=================================================================================================
 //		マクロ定義                                        
@@ -37,6 +38,8 @@ static HWND g_hWnd;
 //=================================================================================================
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)					//int Main(void)と同じ
 {
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_CHECK_ALWAYS_DF | _CRTDBG_LEAK_CHECK_DF);
+
 	//構造体宣言
 	WNDCLASSEX wcex = {
 		sizeof(WNDCLASSEX),								//構造体のサイズ

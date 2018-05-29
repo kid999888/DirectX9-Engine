@@ -34,7 +34,7 @@ CPlayer::~CPlayer()
 bool CPlayer::Init(void)
 {
 	m_pPlayer = CSceneModel::Create();
-	m_pPlayer->SetPosition(D3DXVECTOR3(m_vePosition.x, m_vePosition.y, m_vePosition.z));
+	m_pPlayer->SetPosition(m_vePosition);
 	return true;
 }
 
@@ -46,12 +46,13 @@ void CPlayer::Update(void)
 {
 	if (GetKeyboardPress(DIK_LEFT))
 	{
-
+		m_vePosition += v3Left;
 	}
 	if (GetKeyboardPress(DIK_RIGHT))
 	{
-
+		m_vePosition += v3Right;
 	}
+	m_pPlayer->SetPosition(m_vePosition);
 
 }
 
