@@ -22,13 +22,13 @@ public:
 		m_fRotY = 0.0f;
 		m_fRotZ = 0.0f;
 		m_pTexture = nullptr;
-	};												//フィールドコンストラクタ
-	~CPlayer();										//フィールドデストラクタ
-	bool Init(void);								//フィールド初期処理
-	void Uninit(void);								//フィールド終了処理
-	void Update(void);								//フィールド更新処理
-	void Draw(void);								//フィールド描画処理
-	static CPlayer * Create(D3DXVECTOR3 vePosition);					//フィールドのインスタンス生成
+	};												//プレーヤーコンストラクタ
+	~CPlayer();										//プレーヤーデストラクタ
+	bool Init(void);								//プレーヤー初期処理
+	void Uninit(void);								//プレーヤー終了処理
+	void Update(void);								//プレーヤー更新処理
+	void Draw(void);								//プレーヤー描画処理
+	static CPlayer * Create(D3DXVECTOR3 vePosition);					//プレーヤーのインスタンス生成
 
 private:
 	CSceneModel * m_pPlayer;
