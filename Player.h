@@ -21,6 +21,7 @@ public:
 		m_fRotX = 0.0f;
 		m_fRotY = 0.0f;
 		m_fRotZ = 0.0f;
+		m_fMoveSpeed = 0.2f;
 		m_pTexture = nullptr;
 	};												//プレーヤーコンストラクタ
 	~CPlayer();										//プレーヤーデストラクタ
@@ -32,6 +33,7 @@ public:
 
 private:
 	CSceneModel * m_pPlayer;
+	float m_fMoveSpeed;
 };
 
 #endif

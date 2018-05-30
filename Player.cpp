@@ -58,11 +58,11 @@ void CPlayer::Update(void)
 {
 	if (GetKeyboardPress(DIK_LEFT))
 	{
-		m_vePosition += v3Left;
+		m_vePosition += v3Left * m_fMoveSpeed;
 	}
 	if (GetKeyboardPress(DIK_RIGHT))
 	{
-		m_vePosition += v3Right;
+		m_vePosition += v3Right * m_fMoveSpeed;
 	}
 	m_pPlayer->SetPosition(m_vePosition);
 

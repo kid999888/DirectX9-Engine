@@ -190,13 +190,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		}
 		break;
 	}
-	//
+	//マウスの表示設定
 	case WM_SETCURSOR:
 	{
 		if (LOWORD(lParam) == HTCLIENT)
 		{
-			SetCursor(NULL);
-			CRenderer::GetD3DDevice()->ShowCursor(false);
+			//SetCursor(NULL);								//マウスの消す
+			CRenderer::GetD3DDevice()->ShowCursor(true);	//falseはマウスを表示されない
 
 			return true;
 		}

@@ -89,18 +89,41 @@ bool CField::Init(void)
 	m_FiledIndexNumber = (nCx * 2 + 1) * (nCy - 1) + ((nCy - 2) * 1);										//インデックス数
 	m_FiledPrimitiveNumber = m_FiledIndexNumber - 2;								//Primitive数
 
-
-	VERTEX_3D vMeshFiledPos[2048] = {};
+	//頂点情報管理メモ帳（仮）
+	VERTEX_3D *pvMeshFiledPos;
+	pvMeshFiledPos = new VERTEX_3D[m_FiledPosNumber];
 
 	for (nZ = 0;nZ < nCy;nZ++)
 	{
 		for (nX = 0;nX < nCx;nX++)
 		{
-			vMeshFiledPos[nCount] = {
+			pvMeshFiledPos[nCount] = {
 				D3DXVECTOR3(fStartX + (fSizeX * nX), fStartY, fStartZ - (fSizeZ * nZ)), D3DXVECTOR3(0.0f, 1.0f, 0.0f), D3DCOLOR_RGBA(255, 255, 255, 255), D3DXVECTOR2((fSizeX * nX),(fSizeZ * nZ))
 			};
-			vMeshFiledPos[nCount].pos.y = g_FieldHeight[nZ][nX];
+			pvMeshFiledPos[nCount].pos.y = g_FieldHeight[nZ][nX];
+			
 			nCount++;
+		}
+	}
+
+	//法線の凹凸として自動計算
+	for (nZ = 1;nZ < (nCy - 1);nZ++)
+	{
+		for (nX = 1;nX < (nCx - 1);nX++)
+		{
+			D3DXVECTOR3 vx, nx, vz, nz, n;
+			vx = pvMeshFiledPos[nZ * nCx + (nX + 1)].pos - pvMeshFiledPos[nZ * nCx + (nX - 1)].pos;
+			nx.x = -vx.y;
+			nx.y = vx.x;
+			nx.z = 0.0f;
+
+			vz = pvMeshFiledPos[nX * nCy + (nZ + 1)].pos - pvMeshFiledPos[nX * nCy + (nZ - 1)].pos;
+			nz.x = -vz.y;
+			nz.y = vz.x;
+			nz.z = 0.0f;
+			n = nx + nz;
+			D3DXVec3Normalize(&n,&n);
+			pvMeshFiledPos[nZ * nCx + (nX + 1)].fs = n;
 		}
 	}
 
@@ -188,7 +211,10 @@ bool CField::Init(void)
 
 	//頂点情報をpVに書き入れる
 	//①今までの配列を使用…PVにVの内容コピーする。（memcpy使用して）
-	memcpy(&pV[0], &vMeshFiledPos[0], sizeof(VERTEX_3D) * m_FiledPosNumber);
+	memcpy(&pV[0], &pvMeshFiledPos[0], sizeof(VERTEX_3D) * m_FiledPosNumber);
+
+	//頂点情報管理メモ帳（仮）の消す
+	SAFE_DELETE_ARRAY(pvMeshFiledPos);
 
 	//②直接書く
 
@@ -206,7 +232,8 @@ bool CField::Init(void)
 	//②直接書く^
 
 	m_pIndexBuffer->Unlock();
-
+	
+	
 
 	return true;
 }
