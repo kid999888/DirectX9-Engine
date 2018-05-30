@@ -9,9 +9,6 @@
 //　　　ヘッダファイル           
 //=================================================================================================
 #include"Scene3D.h"
-#include"main.h"
-#include<d3d9.h>
-#include<d3dx9.h>
 #include"Material.h"
 #include"Renderer.h"
 

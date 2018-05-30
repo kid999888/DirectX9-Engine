@@ -9,9 +9,6 @@
 //　　　ヘッダファイル           
 //=================================================================================================
 #include"Player.h"
-#include"main.h"
-#include<d3d9.h>
-#include<d3dx9.h>
 #include"Renderer.h"
 #include"input.h"
 

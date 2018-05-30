@@ -9,7 +9,6 @@
 //　　　ヘッダファイル           
 //=================================================================================================
 #include"Material.h"
-#include"main.h"
 #include"Renderer.h"
 
 //=================================================================================================
@@ -17,6 +16,16 @@
 //=================================================================================================
 CMaterial::CMaterial()
 {
+	ZeroMemory(&m_Mat, sizeof(m_Mat));
+	m_Mat.Diffuse.r = 1.0f;
+	m_Mat.Diffuse.g = 1.0f;
+	m_Mat.Diffuse.b = 1.0f;
+	m_Mat.Diffuse.a = 1.0f;
+	//マテリアルに追加
+	m_Mat.Ambient.r = 0.9f;
+	m_Mat.Ambient.g = 0.1f;
+	m_Mat.Ambient.b = 0.1f;
+	m_Mat.Ambient.a = 1.0f;
 }
 
 //=================================================================================================
@@ -32,18 +41,6 @@ CMaterial::~CMaterial()
 void CMaterial::Update(void)
 {
 	LPDIRECT3DDEVICE9 pDevice = CRenderer::GetD3DDevice();
-
-	//マテリアル設定
-	D3DMATERIAL9 mat;
-	ZeroMemory(&mat, sizeof(mat));
-	mat.Diffuse.r = 1.0f;
-	mat.Diffuse.g = 1.0f;
-	mat.Diffuse.b = 1.0f;
-	mat.Diffuse.a = 1.0f;
-	//マテリアルに追加
-	mat.Ambient.r = 0.9f;
-	mat.Ambient.g = 0.0f;
-	mat.Ambient.b = 0.0f;
-	mat.Ambient.a = 1.0f;
-	pDevice->SetMaterial(&mat);
+	
+	pDevice->SetMaterial(&m_Mat);
 }

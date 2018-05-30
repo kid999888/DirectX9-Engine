@@ -19,5 +19,6 @@ public:
 	void Update(void);									//カメラクラス更新処理
 
 private:
+	D3DMATERIAL9 m_Mat;
 };
 #endif

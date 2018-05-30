@@ -9,7 +9,6 @@
 //　　　ヘッダファイル           
 //=================================================================================================
 #include"Field.h"
-#include"main.h"
 #include<d3d9.h>
 #include<d3dx9.h>
 #include<vector>
@@ -60,7 +59,6 @@ bool CField::Init(void)
 
 	HRESULT hr[2];
 
-
 	hr[0] = D3DXCreateTextureFromFile(
 		pDevice,
 		TEXTUREFILENAME000,
@@ -71,9 +69,7 @@ bool CField::Init(void)
 		MessageBox(NULL, "フィールドのテクスチャが読み込めない。", "エラー", MB_OK);					//テクスチャが読み込めエラーメッセージ
 		return false;
 	}
-
-
-
+	
 	float fSizeX = 1.0f, fSizeZ = 1.0f;
 	float fStartX = -fSizeX * (m_nNumX / 2), fStartY = 0.0f, fStartZ = fSizeZ * (m_nNumZ / 2);
 
@@ -81,8 +77,8 @@ bool CField::Init(void)
 	int nX, nZ;
 	int nCount = 0;
 
-	m_nFiledPosNumber = nCx * nCy;														//頂点数
-	m_nFiledIndexNumber = (nCx * 2 + 1) * (nCy - 1) + ((nCy - 2) * 1);										//インデックス数
+	m_nFiledPosNumber = nCx * nCy;													//頂点数
+	m_nFiledIndexNumber = (nCx * 2 + 1) * (nCy - 1) + ((nCy - 2) * 1);				//インデックス数
 	m_nFiledPrimitiveNumber = m_nFiledIndexNumber - 2;								//Primitive数
 
 	//頂点情報管理メモ帳（仮）
@@ -98,13 +94,13 @@ bool CField::Init(void)
 
 	//高度図を読み方む
 	ifstream InFile;
-	InFile.open(NOISEFILENAME000, ios::binary);		//二進の方式にデータを読み込む
+	InFile.open(NOISEFILENAME000, ios::binary);				//二進の方式にデータを読み込む
 
-	InFile.seekg(0, ios::end);							//ポインタにファイル末端を移動
-	vector<BYTE>vaInData(InFile.tellg());				//<BYTE>型のVector配列inDataを宣言
+	InFile.seekg(0, ios::end);								//ポインタにファイル末端を移動
+	vector<BYTE>vaInData(InFile.tellg());					//<BYTE>型のVector配列inDataを宣言
 
-	InFile.seekg(ios::beg);							//ポインタにファイル先端を移動
-	InFile.read((char*)&vaInData[0], vaInData.size());			//ファイルを読み込む
+	InFile.seekg(ios::beg);									//ポインタにファイル先端を移動
+	InFile.read((char*)&vaInData[0], vaInData.size());		//ファイルを読み込む
 	InFile.close();											//ファイルを閉じる		
 	
 	//ファイルの高度情報に高度のメモ帳に入れる
@@ -113,7 +109,7 @@ bool CField::Init(void)
 	{
 		for (nX = 0;nX < nCx;nX++)
 		{
-			vaFieldHeight[nZ][nX] = (vaInData[nCount] * 0.005f);
+			vaFieldHeight[nX][nZ] = (vaInData[nCount] * 0.005f);
 			nCount++;
 		}
 	}
@@ -128,7 +124,7 @@ bool CField::Init(void)
 			pvMeshFiledPos[nCount] = {
 				D3DXVECTOR3(fStartX + (fSizeX * nX), fStartY, fStartZ - (fSizeZ * nZ)), D3DXVECTOR3(0.0f, 1.0f, 0.0f), D3DCOLOR_RGBA(255, 255, 255, 255), D3DXVECTOR2((fSizeX * nX),(fSizeZ * nZ))
 			};
-			pvMeshFiledPos[nCount].pos.y = vaFieldHeight[nZ][nX];
+			pvMeshFiledPos[nCount].pos.y = vaFieldHeight[nX][nZ];
 			
 			nCount++;
 		}
@@ -272,8 +268,6 @@ bool CField::Init(void)
 
 	m_pIndexBuffer->Unlock();
 	
-	
-
 	return true;
 }
 
