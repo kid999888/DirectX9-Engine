@@ -17,10 +17,15 @@
 class CLight
 {
 public:
-	CLight();											//カメラクラスコンストラクタ
-	~CLight();											//カメラクラスデストラクタ
-	void Update(void);									//カメラクラス更新処理
+	CLight();													//ライトクラスコンストラクタ
+	~CLight();													//ライトクラスデストラクタ
+	void Update(void);											//ライトクラス更新処理
+	void SetDir(D3DXVECTOR3 vecDir);							//ライト方向設定
+	void SetAmbient(float r, float g, float b, float a);		//環境光（影に現れる色）色の設定
+	void SetDiffuse(float r, float g, float b, float a);		//拡散光（光のメイン色）色の設定
+	void SetSpecular(float r, float g, float b, float a);		//反射光の設定
 
 private:
+	D3DLIGHT9 m_Light;									//DirectXのライト情報
 };
 #endif

@@ -63,11 +63,15 @@ bool CSceneModel::Init(void)
 	{
 		return false;
 	}
-
-
+	
 	//Xモデルのマテリアル情報を読み込む
 	LPD3DXMATERIAL pMaterial = (LPD3DXMATERIAL)m_pMaterial->GetBufferPointer();
 	m_pTexture = new LPDIRECT3DTEXTURE9[m_nMaterialNum];
+
+	//マテリアルインスタンス生成
+	m_Material = new CMaterial();
+	m_Material->Init();
+	//m_Material->MatCopy(pMaterial->MatD3D);
 
 	int nCount = 0;
 	for (nCount = 0; nCount < m_nMaterialNum;nCount++)
@@ -112,8 +116,7 @@ bool CSceneModel::Init(void)
 		return false;
 	}
 	
-	//インスタンス生成
-	m_Material = new CMaterial();
+	
 
 	return true;
 }

@@ -14,11 +14,16 @@
 class CMaterial
 {
 public:
-	CMaterial();											//カメラクラスコンストラクタ
-	~CMaterial();											//カメラクラスデストラクタ
-	void Update(void);									//カメラクラス更新処理
+	CMaterial();												//マテリアルクラスコンストラクタ
+	~CMaterial();												//マテリアルクラスデストラクタ
+	void Init(void);											//マテリアルクラス初期処理
+	void Update(void);											//マテリアルクラス更新処理
+	void SetAmbient(float r, float g, float b, float a);		//マテリアル環境光（影に現れる色）色の設定
+	void SetDiffuse(float r, float g, float b, float a);		//マテリアル拡散光（光のメイン色）色の設定
+	void SetSpecular(float r, float g, float b, float a);		//マテリアル反射光の設定
+	void MatCopy(D3DMATERIAL9 MatCpy);							//マテリアル反射光の設定
 
 private:
-	D3DMATERIAL9 m_Mat;
+	D3DMATERIAL9 m_Mat;											//DirectXのマテリアル情報
 };
 #endif

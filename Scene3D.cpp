@@ -192,6 +192,7 @@ bool CScene3D::Init(void)
 
 	//インスタンス生成
 	m_Material = new CMaterial();
+	m_Material->Init();
 
 	
 	

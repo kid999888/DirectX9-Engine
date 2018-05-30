@@ -16,16 +16,7 @@
 //=================================================================================================
 CMaterial::CMaterial()
 {
-	ZeroMemory(&m_Mat, sizeof(m_Mat));
-	m_Mat.Diffuse.r = 1.0f;
-	m_Mat.Diffuse.g = 1.0f;
-	m_Mat.Diffuse.b = 1.0f;
-	m_Mat.Diffuse.a = 1.0f;
-	//マテリアルに追加
-	m_Mat.Ambient.r = 0.9f;
-	m_Mat.Ambient.g = 0.1f;
-	m_Mat.Ambient.b = 0.1f;
-	m_Mat.Ambient.a = 1.0f;
+	
 }
 
 //=================================================================================================
@@ -33,6 +24,27 @@ CMaterial::CMaterial()
 //=================================================================================================
 CMaterial::~CMaterial()
 {
+}
+
+void CMaterial::Init(void)
+{
+	ZeroMemory(&m_Mat, sizeof(m_Mat));
+	//拡散光（光のメイン色）色の設定
+	m_Mat.Diffuse.r = 1.0f;
+	m_Mat.Diffuse.g = 1.0f;
+	m_Mat.Diffuse.b = 1.0f;
+	m_Mat.Diffuse.a = 1.0f;
+	//環境光（影に現れる色）色の設定
+	m_Mat.Ambient.r = 0.9f;
+	m_Mat.Ambient.g = 0.1f;
+	m_Mat.Ambient.b = 0.1f;
+	m_Mat.Ambient.a = 1.0f;
+	//鏡面光（マテリアルが設定されていたら、テカリ部分）
+	//マテリアルが設定されていないと効果は表れない
+	m_Mat.Specular.r = 1.0f;
+	m_Mat.Specular.g = 1.0f;
+	m_Mat.Specular.b = 1.0f;
+	m_Mat.Specular.a = 1.0f;
 }
 
 //=================================================================================================
@@ -43,4 +55,42 @@ void CMaterial::Update(void)
 	LPDIRECT3DDEVICE9 pDevice = CRenderer::GetD3DDevice();
 	
 	pDevice->SetMaterial(&m_Mat);
+}
+
+//=================================================================================================
+//　　　環境光（影に現れる色）色の設定                               
+//=================================================================================================
+void CMaterial::SetAmbient(float r, float g, float b, float a)
+{
+	m_Mat.Ambient.r = r;
+	m_Mat.Ambient.g = g;
+	m_Mat.Ambient.b = b;
+	m_Mat.Ambient.a = a;
+}
+
+//=================================================================================================
+//　　　拡散光（光のメイン色）色の設定                                 
+//=================================================================================================
+void CMaterial::SetDiffuse(float r, float g, float b, float a)
+{
+	m_Mat.Diffuse.r = r;
+	m_Mat.Diffuse.g = g;
+	m_Mat.Diffuse.b = b;
+	m_Mat.Diffuse.a = a;
+}
+
+//=================================================================================================
+//　　　反射光の設定                                    
+//=================================================================================================
+void CMaterial::SetSpecular(float r, float g, float b, float a)
+{
+	m_Mat.Specular.r = r;
+	m_Mat.Specular.g = g;
+	m_Mat.Specular.b = b;
+	m_Mat.Specular.a = a;
+}
+
+void CMaterial::MatCopy(D3DMATERIAL9 MatCpy)
+{
+	memcpy(&this->m_Mat, &MatCpy, sizeof(m_Mat));
 }
