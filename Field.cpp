@@ -12,7 +12,12 @@
 #include"main.h"
 #include<d3d9.h>
 #include<d3dx9.h>
+#include<vector>
+#include<fstream>
+#include<tchar.h>
 #include"Renderer.h"
+
+using namespace std;
 
 //=================================================================================================
 //		マクロ定義                                        
@@ -21,20 +26,13 @@
 #define FVF_VERTEX_3D ( D3DFVF_XYZ | D3DFVF_NORMAL | D3DFVF_DIFFUSE | D3DFVF_TEX1)    //3Dポリゴンの頂点情報
 //テクスチャファイルパス
 #define TEXTUREFILENAME000	        "Data\\Texture\\Ground.png"	
+#define NOISEFILENAME000	        "Data\\Texture\\noise.png"	
 
-#define MESH_FILEDX (4)
-#define MESH_FILEDY (4)
+#define MESH_FILEDX (20)
+#define MESH_FILEDY (20)
 //=================================================================================================
 //　　　グローバル変数                                    
 //=================================================================================================
-float g_FieldHeight[5][5] = 
-{
-	{ 0.2f,-0.2f,0.4f,-0.1f,0.5f },
-	{ 0.2f,-0.2f,0.4f,-0.1f,0.5f },
-	{ 0.2f,-0.2f,0.4f,-0.1f,0.5f },
-	{ 0.2f,-0.2f,0.4f,-0.1f,0.5f },
-	{ 0.2f,-0.2f,0.4f,-0.1f,0.5f },
-};
 
 //=================================================================================================
 //　　　構造体定義                                         
@@ -93,6 +91,38 @@ bool CField::Init(void)
 	VERTEX_3D *pvMeshFiledPos;
 	pvMeshFiledPos = new VERTEX_3D[m_FiledPosNumber];
 
+	//高度の情報管理メモ帳（仮）
+	vector<vector<float>> vaFieldHeight(nCx);
+	for (nCount = 0; nCount < nCx; nCount++)
+	{
+		vaFieldHeight[nCount].resize(nCy);
+	}
+
+	//高度図を読み方む
+	std::ifstream inFile;
+	inFile.open(NOISEFILENAME000, std::ios::binary);		//二進の方式にデータを読み込む
+
+	inFile.seekg(0, std::ios::end);							//ポインタにファイル末端を移動
+	std::vector<BYTE>inData(inFile.tellg());				//<BYTE>型のVector配列inDataを宣言
+
+	inFile.seekg(std::ios::beg);							//ポインタにファイル先端を移動
+	inFile.read((char*)&inData[0], inData.size());			//ファイルを読み込む
+	inFile.close();											//ファイルを閉じる		
+	
+	//ファイルの高度情報に高度のメモ帳に入れる
+	nCount = 0;
+	for (nZ = 0;nZ < nCy;nZ++)
+	{
+		for (nX = 0;nX < nCx;nX++)
+		{
+			vaFieldHeight[nZ][nX] = (inData[nCount] * 0.01f);
+			nCount++;
+		}
+	}
+	//Vector配列inDataの消す
+	inData.clear();
+	
+	nCount = 0;
 	for (nZ = 0;nZ < nCy;nZ++)
 	{
 		for (nX = 0;nX < nCx;nX++)
@@ -100,11 +130,15 @@ bool CField::Init(void)
 			pvMeshFiledPos[nCount] = {
 				D3DXVECTOR3(fStartX + (fSizeX * nX), fStartY, fStartZ - (fSizeZ * nZ)), D3DXVECTOR3(0.0f, 1.0f, 0.0f), D3DCOLOR_RGBA(255, 255, 255, 255), D3DXVECTOR2((fSizeX * nX),(fSizeZ * nZ))
 			};
-			pvMeshFiledPos[nCount].pos.y = g_FieldHeight[nZ][nX];
+			pvMeshFiledPos[nCount].pos.y = vaFieldHeight[nZ][nX];
 			
 			nCount++;
 		}
 	}
+
+	//Vector配列vaFieldHeightの消す
+	vaFieldHeight.clear();
+	
 
 	//法線の凹凸として自動計算
 	for (nZ = 1;nZ < (nCy - 1);nZ++)
@@ -121,7 +155,9 @@ bool CField::Init(void)
 			nz.x = -vz.y;
 			nz.y = vz.x;
 			nz.z = 0.0f;
+
 			n = nx + nz;
+
 			D3DXVec3Normalize(&n,&n);
 			pvMeshFiledPos[nZ * nCx + (nX + 1)].fs = n;
 		}
