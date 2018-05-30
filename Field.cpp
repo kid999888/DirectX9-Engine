@@ -28,8 +28,6 @@ using namespace std;
 #define TEXTUREFILENAME000	        "Data\\Texture\\Ground.png"	
 #define NOISEFILENAME000	        "Data\\Texture\\noise.png"	
 
-#define MESH_FILEDX (20)
-#define MESH_FILEDY (20)
 //=================================================================================================
 //　　　グローバル変数                                    
 //=================================================================================================
@@ -77,19 +75,19 @@ bool CField::Init(void)
 
 
 	float fSizeX = 1.0f, fSizeZ = 1.0f;
-	float fStartX = -fSizeX * (MESH_FILEDX / 2), fStartY = 0.0f, fStartZ = fSizeZ * (MESH_FILEDY / 2);
+	float fStartX = -fSizeX * (m_nNumX / 2), fStartY = 0.0f, fStartZ = fSizeZ * (m_nNumZ / 2);
 
-	int nCx = MESH_FILEDX + 1, nCy = MESH_FILEDY + 1;
+	int nCx = m_nNumX + 1, nCy = m_nNumZ + 1;
 	int nX, nZ;
 	int nCount = 0;
 
-	m_FiledPosNumber = nCx * nCy;														//頂点数
-	m_FiledIndexNumber = (nCx * 2 + 1) * (nCy - 1) + ((nCy - 2) * 1);										//インデックス数
-	m_FiledPrimitiveNumber = m_FiledIndexNumber - 2;								//Primitive数
+	m_nFiledPosNumber = nCx * nCy;														//頂点数
+	m_nFiledIndexNumber = (nCx * 2 + 1) * (nCy - 1) + ((nCy - 2) * 1);										//インデックス数
+	m_nFiledPrimitiveNumber = m_nFiledIndexNumber - 2;								//Primitive数
 
 	//頂点情報管理メモ帳（仮）
 	VERTEX_3D *pvMeshFiledPos;
-	pvMeshFiledPos = new VERTEX_3D[m_FiledPosNumber];
+	pvMeshFiledPos = new VERTEX_3D[m_nFiledPosNumber];
 
 	//高度の情報管理メモ帳（仮）
 	vector<vector<float>> vaFieldHeight(nCx);
@@ -99,15 +97,15 @@ bool CField::Init(void)
 	}
 
 	//高度図を読み方む
-	std::ifstream inFile;
-	inFile.open(NOISEFILENAME000, std::ios::binary);		//二進の方式にデータを読み込む
+	ifstream InFile;
+	InFile.open(NOISEFILENAME000, ios::binary);		//二進の方式にデータを読み込む
 
-	inFile.seekg(0, std::ios::end);							//ポインタにファイル末端を移動
-	std::vector<BYTE>inData(inFile.tellg());				//<BYTE>型のVector配列inDataを宣言
+	InFile.seekg(0, ios::end);							//ポインタにファイル末端を移動
+	vector<BYTE>vaInData(InFile.tellg());				//<BYTE>型のVector配列inDataを宣言
 
-	inFile.seekg(std::ios::beg);							//ポインタにファイル先端を移動
-	inFile.read((char*)&inData[0], inData.size());			//ファイルを読み込む
-	inFile.close();											//ファイルを閉じる		
+	InFile.seekg(ios::beg);							//ポインタにファイル先端を移動
+	InFile.read((char*)&vaInData[0], vaInData.size());			//ファイルを読み込む
+	InFile.close();											//ファイルを閉じる		
 	
 	//ファイルの高度情報に高度のメモ帳に入れる
 	nCount = 0;
@@ -115,12 +113,12 @@ bool CField::Init(void)
 	{
 		for (nX = 0;nX < nCx;nX++)
 		{
-			vaFieldHeight[nZ][nX] = (inData[nCount] * 0.01f);
+			vaFieldHeight[nZ][nX] = (vaInData[nCount] * 0.005f);
 			nCount++;
 		}
 	}
 	//Vector配列inDataの消す
-	inData.clear();
+	vaInData.clear();
 	
 	nCount = 0;
 	for (nZ = 0;nZ < nCy;nZ++)
@@ -169,8 +167,9 @@ bool CField::Init(void)
 	};*/
 
 	int nS = 0, nF = 0, nC = 2 * nCx, nD = 2 * nCx + 1;
-	static WORD index[1024];
-	for (nCount = 0;nCount < m_FiledIndexNumber;nCount++)
+	static WORD *index;
+	index = new WORD[m_nFiledIndexNumber];
+	for (nCount = 0;nCount < m_nFiledIndexNumber;nCount++)
 	{
 		//インデックス偶数番の縮退
 		if (nCount == nC)
@@ -210,7 +209,7 @@ bool CField::Init(void)
 
 	//頂点Vertexバッファを作る
 	hr[0] = pDevice->CreateVertexBuffer(
-		sizeof(VERTEX_3D) * m_FiledPosNumber,						//頂点情報領域確保
+		sizeof(VERTEX_3D) * m_nFiledPosNumber,						//頂点情報領域確保
 		D3DUSAGE_WRITEONLY,							//使用用途(書き込んでだけ)
 		FVF_VERTEX_3D,								//FVF、０でも大丈夫
 		D3DPOOL_MANAGED,							//頂点バッファの管理方法(Deviceに管理する)
@@ -219,7 +218,7 @@ bool CField::Init(void)
 
 	//インデックスバッファを作る
 	hr[1] = pDevice->CreateIndexBuffer(
-		sizeof(WORD) * m_FiledIndexNumber,							//ワールド行列情報領域確保
+		sizeof(WORD) * m_nFiledIndexNumber,							//ワールド行列情報領域確保
 		D3DUSAGE_WRITEONLY,							//使用用途(書き込んでだけ)
 		D3DFMT_INDEX16,								//FMT,DWORDの場合はD3DFMT_INDEX32
 		D3DPOOL_MANAGED,							//頂点バッファの管理方法(Deviceに管理する)
@@ -247,7 +246,7 @@ bool CField::Init(void)
 
 	//頂点情報をpVに書き入れる
 	//①今までの配列を使用…PVにVの内容コピーする。（memcpy使用して）
-	memcpy(&pV[0], &pvMeshFiledPos[0], sizeof(VERTEX_3D) * m_FiledPosNumber);
+	memcpy(&pV[0], &pvMeshFiledPos[0], sizeof(VERTEX_3D) * m_nFiledPosNumber);
 
 	//頂点情報管理メモ帳（仮）の消す
 	SAFE_DELETE_ARRAY(pvMeshFiledPos);
@@ -264,7 +263,11 @@ bool CField::Init(void)
 
 	//インデックスをpIndexに書き入れる
 	//①今までの配列を使用…PVにVの内容コピーする。（memcpy使用して）
-	memcpy(&pIndex[0], &index[0], sizeof(WORD) * m_FiledIndexNumber);
+	memcpy(&pIndex[0], &index[0], sizeof(WORD) * m_nFiledIndexNumber);
+
+	//頂点情報管理メモ帳（仮）の消す
+	SAFE_DELETE_ARRAY(index);
+
 	//②直接書く^
 
 	m_pIndexBuffer->Unlock();
@@ -350,17 +353,17 @@ void CField::Draw(void)
 		D3DPT_TRIANGLESTRIP,			//Primitive描画タイプ
 		0,
 		0,								//インデックスの最小値	
-		m_FiledPosNumber,				//頂点の数
+		m_nFiledPosNumber,				//頂点の数
 		0,
-		m_FiledPrimitiveNumber);		//描画するのポリゴン（三角形）の数
+		m_nFiledPrimitiveNumber);		//描画するのポリゴン（三角形）の数
 }
 
 //=================================================================================================
 //　　　3Dキューブクラスのインスタンス生成                                   
 //=================================================================================================
-CField * CField::Create(void)
+CField * CField::Create(int nNumX, int nNumZ)
 {
-	CField *Field = new CField(2);
+	CField *Field = new CField(2, nNumX, nNumZ);
 	Field->Init();
 	return Field;
 }
