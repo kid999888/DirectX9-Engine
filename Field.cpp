@@ -269,9 +269,11 @@ void CField::Uninit(void)
 {
 	SAFE_RELEASE(m_pVertexBuffer);
 	SAFE_RELEASE(m_pIndexBuffer);
+	SAFE_DELETE(m_Material);
 	SAFE_DELETE_ARRAY(m_pTexture);
 	//’¸“_î•ñŠÇ—ƒƒ‚’ ‚ÌÁ‚·
 	SAFE_DELETE_ARRAY(m_pvMeshFiledPos);
+	
 
 }
 

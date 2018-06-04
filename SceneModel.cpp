@@ -128,8 +128,9 @@ void CSceneModel::Uninit(void)
 {
 	SAFE_RELEASE(m_pMesh);
 	SAFE_RELEASE(m_pMaterial);
-	SAFE_DELETE_ARRAY(m_pTexture);
 	SAFE_DELETE(m_Material);
+	SAFE_DELETE_ARRAY(m_pTexture);
+	
 }
 
 //=================================================================================================
