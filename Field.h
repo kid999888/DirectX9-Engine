@@ -10,6 +10,17 @@
 #include"Scene.h"
 
 //=================================================================================================
+//　　　構造体定義                                         
+//=================================================================================================
+typedef struct
+{
+	D3DXVECTOR3 pos;            //XYZW座標
+	D3DXVECTOR3 fs;				//法線
+	D3DCOLOR color;             //色情報
+	D3DXVECTOR2 texcoord;       //テクスチャ座標
+}VERTEX_3D;
+
+//=================================================================================================
 //　　　フィールドクラス                                       
 //=================================================================================================
 class CField: public CScene
@@ -38,6 +49,7 @@ public:
 private:
 	LPDIRECT3DVERTEXBUFFER9 m_pVertexBuffer;				//頂点バッファ管理するメモ帳
 	LPDIRECT3DINDEXBUFFER9 m_pIndexBuffer;					//インデックスバッファ管理するメモ
+	VERTEX_3D *m_pvMeshFiledPos;							//頂点情報管理メモ帳
 	int m_nFiledPosNumber;									//頂点数
 	int m_nFiledIndexNumber;								//インデックス数
 	int m_nFiledPrimitiveNumber;							//Primitive数

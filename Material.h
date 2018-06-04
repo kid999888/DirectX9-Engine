@@ -16,7 +16,6 @@ class CMaterial
 public:
 	CMaterial();												//マテリアルクラスコンストラクタ
 	~CMaterial();												//マテリアルクラスデストラクタ
-	void Init(void);											//マテリアルクラス初期処理
 	void Update(void);											//マテリアルクラス更新処理
 	void SetAmbient(float r, float g, float b, float a);		//マテリアル環境光（影に現れる色）色の設定
 	void SetDiffuse(float r, float g, float b, float a);		//マテリアル拡散光（光のメイン色）色の設定

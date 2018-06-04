@@ -70,8 +70,8 @@ bool CSceneModel::Init(void)
 
 	//マテリアルインスタンス生成
 	m_Material = new CMaterial();
-	m_Material->Init();
-	//m_Material->MatCopy(pMaterial->MatD3D);
+	//Xモデルにマテリアル複製
+	m_Material->MatCopy(pMaterial->MatD3D);
 
 	int nCount = 0;
 	for (nCount = 0; nCount < m_nMaterialNum;nCount++)
@@ -137,8 +137,6 @@ void CSceneModel::Uninit(void)
 //=================================================================================================
 void CSceneModel::Update(void)
 {
-
-	m_Material->Update();
 	//m_fRotX += 0.0f;
 	//m_fRotY -= 0.01f;
 	//m_fRotZ += 0.0f;
@@ -183,6 +181,9 @@ void CSceneModel::Draw(void)
 	//マテリアルと光の設定
 	//MaterialSet(FCOLOR{ 0.8f,0.8f,0.8f,1.0f }, FCOLOR{ 0.8f,0.8f,0.8f,1.0f });
 	//LightSet(D3DXVECTOR3(1.0f, -1.0f, 0.0f), FCOLOR{ 0.8f,0.8f,0.8f,1.0f }, FCOLOR{ 0.8f,0.8f,0.8f,1.0f }, FCOLOR{ 0.3f,0.3f,0.3f,1.0f });
+	
+	//マテリアルの更新
+	m_Material->Update();
 
 	//描画
 	int nCount = 0;

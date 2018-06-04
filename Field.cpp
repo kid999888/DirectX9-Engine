@@ -32,17 +32,6 @@ using namespace std;
 //=================================================================================================
 
 //=================================================================================================
-//　　　構造体定義                                         
-//=================================================================================================
-typedef struct
-{
-	D3DXVECTOR3 pos;            //XYZW座標
-	D3DXVECTOR3 fs;				//法線
-	D3DCOLOR color;             //色情報
-	D3DXVECTOR2 texcoord;       //テクスチャ座標
-}VERTEX_3D;
-
-//=================================================================================================
 //　　　3Dキューブクラスデストラクタ                                     
 //=================================================================================================
 CField::~CField()
@@ -81,9 +70,8 @@ bool CField::Init(void)
 	m_nFiledIndexNumber = (nCx * 2 + 1) * (nCy - 1) + ((nCy - 2) * 1);				//インデックス数
 	m_nFiledPrimitiveNumber = m_nFiledIndexNumber - 2;								//Primitive数
 
-	//頂点情報管理メモ帳（仮）
-	VERTEX_3D *pvMeshFiledPos;
-	pvMeshFiledPos = new VERTEX_3D[m_nFiledPosNumber];
+	//頂点情報管理メモ帳のインスタンス生成
+	m_pvMeshFiledPos = new VERTEX_3D[m_nFiledPosNumber];
 
 	//高度の情報管理メモ帳（仮）
 	vector<vector<float>> vaFieldHeight(nCx);
@@ -121,10 +109,10 @@ bool CField::Init(void)
 	{
 		for (nX = 0;nX < nCx;nX++)
 		{
-			pvMeshFiledPos[nCount] = {
+			m_pvMeshFiledPos[nCount] = {
 				D3DXVECTOR3(fStartX + (fSizeX * nX), fStartY, fStartZ - (fSizeZ * nZ)), D3DXVECTOR3(0.0f, 1.0f, 0.0f), D3DCOLOR_RGBA(255, 255, 255, 255), D3DXVECTOR2((fSizeX * nX),(fSizeZ * nZ))
 			};
-			pvMeshFiledPos[nCount].pos.y = vaFieldHeight[nX][nZ];
+			m_pvMeshFiledPos[nCount].pos.y = vaFieldHeight[nX][nZ];
 			
 			nCount++;
 		}
@@ -140,20 +128,20 @@ bool CField::Init(void)
 		for (nX = 1;nX < (nCx - 1);nX++)
 		{
 			D3DXVECTOR3 vx, nx, vz, nz, n;
-			vx = pvMeshFiledPos[nZ * nCx + (nX + 1)].pos - pvMeshFiledPos[nZ * nCx + (nX - 1)].pos;
+			vx = m_pvMeshFiledPos[nZ * nCx + (nX + 1)].pos - m_pvMeshFiledPos[nZ * nCx + (nX - 1)].pos;
 			nx.x = -vx.y;
 			nx.y = vx.x;
 			nx.z = 0.0f;
 
-			vz = pvMeshFiledPos[nX * nCy + (nZ + 1)].pos - pvMeshFiledPos[nX * nCy + (nZ - 1)].pos;
-			nz.x = -vz.y;
-			nz.y = vz.x;
-			nz.z = 0.0f;
+			vz = m_pvMeshFiledPos[nX * nCy + (nZ + 1)].pos - m_pvMeshFiledPos[nX * nCy + (nZ - 1)].pos;
+			nz.x = 0.0f;
+			nz.y = vz.z;
+			nz.z =-vz.y;
 
 			n = nx + nz;
 
 			D3DXVec3Normalize(&n,&n);
-			pvMeshFiledPos[nZ * nCx + (nX + 1)].fs = n;
+			m_pvMeshFiledPos[nZ * nCx + (nX + 1)].fs = n;
 		}
 	}
 
@@ -242,10 +230,9 @@ bool CField::Init(void)
 
 	//頂点情報をpVに書き入れる
 	//①今までの配列を使用…PVにVの内容コピーする。（memcpy使用して）
-	memcpy(&pV[0], &pvMeshFiledPos[0], sizeof(VERTEX_3D) * m_nFiledPosNumber);
+	memcpy(&pV[0], &m_pvMeshFiledPos[0], sizeof(VERTEX_3D) * m_nFiledPosNumber);
 
-	//頂点情報管理メモ帳（仮）の消す
-	SAFE_DELETE_ARRAY(pvMeshFiledPos);
+	
 
 	//②直接書く
 
@@ -267,6 +254,10 @@ bool CField::Init(void)
 	//②直接書く^
 
 	m_pIndexBuffer->Unlock();
+
+	//マテリアルのインスタンス生成&設定
+	m_Material = new CMaterial();
+	m_Material->SetAmbient(0.9f, 0.1f, 0.1f, 1.0f);
 	
 	return true;
 }
@@ -279,6 +270,8 @@ void CField::Uninit(void)
 	SAFE_RELEASE(m_pVertexBuffer);
 	SAFE_RELEASE(m_pIndexBuffer);
 	SAFE_DELETE_ARRAY(m_pTexture);
+	//頂点情報管理メモ帳の消す
+	SAFE_DELETE_ARRAY(m_pvMeshFiledPos);
 
 }
 
@@ -287,9 +280,9 @@ void CField::Uninit(void)
 //=================================================================================================
 void CField::Update(void)
 {
-	/*g_fRotX[nCount] += rx;
-	g_fRotY[nCount] += ry;
-	g_fRotZ[nCount] += rz;*/
+	/*g_fRotX[nCount] += rx;*/
+	m_fRotY += 0.01f;
+	/*g_fRotZ[nCount] += rz;*/
 }
 
 //=================================================================================================
@@ -337,6 +330,9 @@ void CField::Draw(void)
 	pDevice->SetSamplerState(0, D3DSAMP_ADDRESSU, D3DTADDRESS_WRAP);			//テクスチャU座標大きな場合は,WRAPは画像を増える。
 
 	pDevice->SetSamplerState(0, D3DSAMP_ADDRESSV, D3DTADDRESS_WRAP);			//テクスチャV座標大きな場合は,WRAPは画像を増える。
+
+	//マテリアルの更新
+	m_Material->Update();
 
 	//テクスチャ貼り付ける
 	pDevice->SetTexture(0, *m_pTexture);

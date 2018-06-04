@@ -190,12 +190,9 @@ bool CScene3D::Init(void)
 
 	m_pIndexBuffer->Unlock();
 
-	//インスタンス生成
+	//マテリアルのインスタンス生成&設定
 	m_Material = new CMaterial();
-	m_Material->Init();
-
-	
-	
+	m_Material->SetAmbient(0.9f, 0.1f, 0.1f, 1.0f);
 
 	return true;
 }
@@ -216,7 +213,7 @@ void CScene3D::Uninit(void)
 //=================================================================================================
 void CScene3D::Update(void)
 {
-	m_Material->Update();
+	
 	//m_fRotX += 0.0f;
 	m_fRotY += 0.05f;
 	//m_fRotZ += 0.0f;
@@ -264,6 +261,8 @@ void CScene3D::Draw(void)
 	//ワールド行列の設定
 	pDevice->SetTransform(D3DTS_WORLD, &m_mtxWorld);
 
+	//マテリアルの更新
+	m_Material->Update();
 
 	//テクスチャ貼り付ける
 	pDevice->SetTexture(0, *m_pTexture);
