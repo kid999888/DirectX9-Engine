@@ -28,8 +28,7 @@ bool CManager::Init( HWND hWnd, BOOL bWindow)
 	CScene2D::Create();
 	CScene3D::Create();
 	CField::Create(20,20);
-	CPlayer::Create(D3DXVECTOR3(0.0f,0.0f,0.0f));
-	CPlayer::Create(D3DXVECTOR3(0.0f, 1.0f, 0.0f));
+	CPlayer::Create(D3DXVECTOR3(0.0f, 2.0f, 0.0f));
 
 	return true;
 }
