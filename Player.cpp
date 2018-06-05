@@ -11,6 +11,8 @@
 #include"Player.h"
 #include"Renderer.h"
 #include"input.h"
+#include"Field.h"
+#include"Manager.h"
 
 //=================================================================================================
 //		マクロ定義                                        
@@ -53,6 +55,8 @@ void CPlayer::Uninit(void)
 //=================================================================================================
 void CPlayer::Update(void)
 {
+	CField *field = CManager::GetField();
+	//移動処理
 	if (GetKeyboardPress(DIK_LEFT))
 	{
 		m_vePosition += v3Left * m_fMoveSpeed;
@@ -61,8 +65,20 @@ void CPlayer::Update(void)
 	{
 		m_vePosition += v3Right * m_fMoveSpeed;
 	}
-	m_pPlayer->SetPosition(m_vePosition);
+	if (GetKeyboardPress(DIK_UP))
+	{
+		m_vePosition += v3In * m_fMoveSpeed;
+	}
+	if (GetKeyboardPress(DIK_DOWN))
+	{
+		m_vePosition += v3Out * m_fMoveSpeed;
+	}
 
+	//フィール衝突判定
+	m_vePosition.y = (field->GetHeight(m_vePosition) + 0.5f);
+
+	//プレーヤーの座標をモデリングに転送
+	m_pPlayer->SetPosition(m_vePosition);
 }
 
 //=================================================================================================

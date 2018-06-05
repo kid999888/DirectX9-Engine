@@ -29,9 +29,11 @@ public:
 	static void Uninit(void);							//マネージャークラス終了処理
 	static void Update(void);							//マネージャークラス更新処理
 	static void Draw(void);								//マネージャークラス描画処理
+	static CField* GetField(void);
 private:
 	static CCamera *m_Camera;
 	static CLight *m_Light;
+	static CField * m_Field;
 	
 };
 

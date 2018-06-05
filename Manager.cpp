@@ -15,6 +15,7 @@
 //=================================================================================================
 CCamera *CManager::m_Camera = NULL;
 CLight *CManager::m_Light = NULL;
+CField *CManager::m_Field = NULL;
 
 //=================================================================================================
 //　　　マネージャークラス初期処理         
@@ -27,8 +28,8 @@ bool CManager::Init( HWND hWnd, BOOL bWindow)
 	m_Light = new CLight();
 	CScene2D::Create();
 	CScene3D::Create();
-	CField::Create(20,20);
-	CPlayer::Create(D3DXVECTOR3(0.0f, 2.0f, 0.0f));
+	m_Field = CField::Create(20,20);
+	CPlayer::Create(D3DXVECTOR3(-0.5f, 1.0f, -0.4f));
 
 	return true;
 }
@@ -75,4 +76,9 @@ void CManager::Draw(void)
 	}
 	//DirectX初期化クラス描画終了処理 
 	CRenderer::DrawEnd();
+}
+
+CField * CManager::GetField(void)
+{
+	return CManager::m_Field;
 }

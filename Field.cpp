@@ -136,7 +136,7 @@ bool CField::Init(void)
 			vz = m_pvMeshFiledPos[nX * nCy + (nZ + 1)].pos - m_pvMeshFiledPos[nX * nCy + (nZ - 1)].pos;
 			nz.x = 0.0f;
 			nz.y = vz.z;
-			nz.z =-vz.y;
+			nz.z = -vz.y;
 
 			n = nx + nz;
 
@@ -269,7 +269,8 @@ void CField::Uninit(void)
 {
 	SAFE_RELEASE(m_pVertexBuffer);
 	SAFE_RELEASE(m_pIndexBuffer);
-	SAFE_DELETE(m_Material);
+	SAFE_DELETE(m_Material)
+		;
 	SAFE_DELETE_ARRAY(m_pTexture);
 	//頂点情報管理メモ帳の消す
 	SAFE_DELETE_ARRAY(m_pvMeshFiledPos);
@@ -337,6 +338,8 @@ void CField::Draw(void)
 	//テクスチャ貼り付ける
 	pDevice->SetTexture(0, *m_pTexture);
 
+	//線分描画ON
+	//pDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 
 	//バッファ使い方
 	pDevice->DrawIndexedPrimitive(
@@ -346,6 +349,9 @@ void CField::Draw(void)
 		m_nFiledPosNumber,				//頂点の数
 		0,
 		m_nFiledPrimitiveNumber);		//描画するのポリゴン（三角形）の数
+
+	//線分描画OFF
+	//pDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 }
 
 //=================================================================================================
@@ -356,4 +362,82 @@ CField * CField::Create(int nNumX, int nNumZ)
 	CField *Field = new CField(2, nNumX, nNumZ);
 	Field->Init();
 	return Field;
+}
+
+float CField::GetHeight(D3DXVECTOR3 Position)
+{
+	int nCx = m_nNumX, nCz = m_nNumZ;
+	int nX, nZ;
+	int nCount = 0;
+	D3DXVECTOR3 V01, V12, V20, V0P, V1P, V2P,n;
+	float C0, C1, C2;
+	int P0, P1, P2;
+	D3DXVECTOR3 T0, T1, T2;
+
+
+	for (nZ = 0;nZ < nCz;nZ++)
+	{
+		for (nX = 0;nX < nCx;nX++)
+		{
+			//左側ポリゴン衝突判定
+			P0 = (nZ + 1) * nCx + (1 * nZ) + 1 + nX;
+			P1 = nZ * nCx + (1 * nZ) + nX;
+			P2 = nZ * nCx + (1 * nZ) + (nX + 1);
+			T0 = m_pvMeshFiledPos[P0].pos;
+			T1 = m_pvMeshFiledPos[P1].pos;
+			T2 = m_pvMeshFiledPos[P2].pos;
+
+			V01 = m_pvMeshFiledPos[P1].pos - m_pvMeshFiledPos[P0].pos;
+			V12 = m_pvMeshFiledPos[P2].pos - m_pvMeshFiledPos[P1].pos;
+			V20 = m_pvMeshFiledPos[P0].pos - m_pvMeshFiledPos[P2].pos;
+
+			V0P = Position - m_pvMeshFiledPos[P0].pos;
+			V1P = Position - m_pvMeshFiledPos[P1].pos;
+			V2P = Position - m_pvMeshFiledPos[P2].pos;
+
+
+
+			C0 = V01.x * V0P.z - V01.z * V0P.x;
+			C1 = V12.x * V1P.z - V12.z * V1P.x;
+			C2 = V20.x * V2P.z - V20.z * V2P.x;
+
+			if (C0 <= 0.0f && C1 <= 0.0f && C2 <= 0.0f)
+			{
+				//高さを求める
+				D3DXVec3Cross(&n, &V01, &V12);
+				Position.y = m_pvMeshFiledPos[P0].pos.y - (n.x * (Position.x - m_pvMeshFiledPos[P0].pos.x) + n.z * (Position.z - m_pvMeshFiledPos[P0].pos.z)) / n.y;
+			}
+
+
+
+			//右側ポリゴン衝突判定
+			P0 = (nZ + 1) * nCx + (1 * nZ) + 1 + nX;
+			P1 = nZ * nCx + (1 * nZ) + (nX + 1);
+			P2 = (nZ + 1) * nCx + (1 * nZ) + 1 + (nX + 1);
+			T0 = m_pvMeshFiledPos[P0].pos;
+			T1 = m_pvMeshFiledPos[P1].pos;
+			T2 = m_pvMeshFiledPos[P2].pos;
+
+			V01 = m_pvMeshFiledPos[P1].pos - m_pvMeshFiledPos[P0].pos;
+			V12 = m_pvMeshFiledPos[P2].pos - m_pvMeshFiledPos[P1].pos;
+			V20 = m_pvMeshFiledPos[P0].pos - m_pvMeshFiledPos[P2].pos;
+
+			V0P = Position - m_pvMeshFiledPos[P0].pos;
+			V1P = Position - m_pvMeshFiledPos[P1].pos;
+			V2P = Position - m_pvMeshFiledPos[P2].pos;
+
+			C0 = V01.x * V0P.z - V01.z * V0P.x;
+			C1 = V12.x * V1P.z - V12.z * V1P.x;
+			C2 = V20.x * V2P.z - V20.z * V2P.x;
+
+			if (C0 <= 0.0f && C1<= 0.0f && C2 <= 0.0f)
+			{
+				//高さを求める
+				D3DXVec3Cross(&n, &V01, &V12);
+				Position.y = m_pvMeshFiledPos[P0].pos.y - (n.x * (Position.x - m_pvMeshFiledPos[P0].pos.x) + n.z * (Position.z - m_pvMeshFiledPos[P0].pos.z))/n.y;
+			}
+		}
+	}
+
+	return Position.y;
 }

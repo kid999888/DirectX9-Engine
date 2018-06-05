@@ -179,10 +179,6 @@ void CSceneModel::Draw(void)
 	//ワールド行列の設定
 	pDevice->SetTransform(D3DTS_WORLD, &m_mtxWorld);
 
-	//マテリアルと光の設定
-	//MaterialSet(FCOLOR{ 0.8f,0.8f,0.8f,1.0f }, FCOLOR{ 0.8f,0.8f,0.8f,1.0f });
-	//LightSet(D3DXVECTOR3(1.0f, -1.0f, 0.0f), FCOLOR{ 0.8f,0.8f,0.8f,1.0f }, FCOLOR{ 0.8f,0.8f,0.8f,1.0f }, FCOLOR{ 0.3f,0.3f,0.3f,1.0f });
-	
 	//マテリアルの更新
 	m_Material->Update();
 
