@@ -16,6 +16,7 @@
 #include"Scene2D.h"
 #include"Scene3D.h"
 #include"SceneModel.h"
+#include"ScenePolygon.h"
 #include"Field.h"
 #include"Player.h"
 

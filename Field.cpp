@@ -79,6 +79,22 @@ bool CField::Init(void)
 	{
 		vaFieldHeight[nCount].resize(nCy);
 	}
+	//頂点情報管理メモ帳初期化
+	nCount = 0;
+	for (nZ = 0;nZ < nCy;nZ++)
+	{
+		for (nX = 0;nX < nCx;nX++)
+		{
+			vaFieldHeight[nX][nZ] = 0.0f;
+		}
+	}
+
+	//高度ファイルを作る
+	ofstream OutFile;
+	OutFile.open("Data\\HeightMessage.txt", ios::out);
+	//OutFile.write("0.0",3);
+	
+	OutFile.close();
 
 	//高度図を読み方む
 	ifstream InFile;
@@ -89,7 +105,8 @@ bool CField::Init(void)
 
 	InFile.seekg(ios::beg);									//ポインタにファイル先端を移動
 	InFile.read((char*)&vaInData[0], vaInData.size());		//ファイルを読み込む
-	InFile.close();											//ファイルを閉じる		
+	InFile.close();											//ファイルを閉じる	
+	
 	
 	//ファイルの高度情報に高度のメモ帳に入れる
 	nCount = 0;
@@ -136,7 +153,7 @@ bool CField::Init(void)
 			vz = m_pvMeshFiledPos[nX * nCy + (nZ + 1)].pos - m_pvMeshFiledPos[nX * nCy + (nZ - 1)].pos;
 			nz.x = 0.0f;
 			nz.y = vz.z;
-			nz.z = -vz.y;
+			nz.z = vz.y;
 
 			n = nx + nz;
 

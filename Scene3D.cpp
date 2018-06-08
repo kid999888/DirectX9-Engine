@@ -98,37 +98,37 @@ bool CScene3D::Init(void)
 	// 前の面（黄色）
 	{ D3DXVECTOR3(-0.5f, 0.5f, -0.5f),D3DXVECTOR3(0.0f, 0.0f, -1.0f), D3DCOLOR_RGBA(255, 255, 255, 255), D3DXVECTOR2(fu0[0],fv0[0]) },	//0
 	{ D3DXVECTOR3(0.5f,0.5f,-0.5f),D3DXVECTOR3(0.0f, 0.0f, -1.0f), D3DCOLOR_RGBA(255, 255, 255, 255), D3DXVECTOR2(fu1[0],fv0[0]) },		//1
-	{ D3DXVECTOR3(0.5f,-0.5f,-0.5f),D3DXVECTOR3(0.0f, 0.0f, -1.0f), D3DCOLOR_RGBA(255, 255, 255, 255), D3DXVECTOR2(fu1[0],fv1[0]) },		//2
-	{ D3DXVECTOR3(-0.5f,-0.5f,-0.5f),D3DXVECTOR3(0.0f, 0.0f, -1.0f), D3DCOLOR_RGBA(255, 255, 255, 255), D3DXVECTOR2(fu0[0],fv1[0]) },		//3
+	{ D3DXVECTOR3(0.5f,-0.5f,-0.5f),D3DXVECTOR3(0.0f, 0.0f, -1.0f), D3DCOLOR_RGBA(255, 255, 255, 255), D3DXVECTOR2(fu1[0],fv1[0]) },	//2
+	{ D3DXVECTOR3(-0.5f,-0.5f,-0.5f),D3DXVECTOR3(0.0f, 0.0f, -1.0f), D3DCOLOR_RGBA(255, 255, 255, 255), D3DXVECTOR2(fu0[0],fv1[0]) },	//3
 
-																																			// 左の面（緑色）
+	// 左の面（緑色）
 	{ D3DXVECTOR3(-0.5f,0.5f,0.5f),D3DXVECTOR3(-1.0f, 0.0f, 0.0f),D3DCOLOR_RGBA(255, 255, 255, 255),D3DXVECTOR2(fu0[1],fv0[1]) },		//4
 	{ D3DXVECTOR3(-0.5f,0.5f,-0.5f),D3DXVECTOR3(-1.0f, 0.0f, 0.0f),D3DCOLOR_RGBA(255, 255, 255, 255),D3DXVECTOR2(fu1[1],fv0[1]) },		//5
 	{ D3DXVECTOR3(-0.5f,-0.5f,-0.5f),D3DXVECTOR3(-1.0f, 0.0f, 0.0f),D3DCOLOR_RGBA(255, 255, 255, 255),D3DXVECTOR2(fu1[1],fv1[1]) },		//6
 	{ D3DXVECTOR3(-0.5f,-0.5f,0.5f),D3DXVECTOR3(-1.0f, 0.0f, 0.0f),D3DCOLOR_RGBA(255, 255, 255, 255),D3DXVECTOR2(fu0[1],fv1[1]) },		//7
 
-																																			// 後ろの面（青色）
+	// 後ろの面（青色）
 	{ D3DXVECTOR3(0.5f,0.5f,0.5f),D3DXVECTOR3(0.0f, 0.0f, 1.0f),D3DCOLOR_RGBA(255, 255, 255, 255),D3DXVECTOR2(fu0[2],fv0[2]) },			//8
 	{ D3DXVECTOR3(-0.5f,0.5f,0.5f),D3DXVECTOR3(0.0f, 0.0f, 1.0f),D3DCOLOR_RGBA(255, 255, 255, 255),D3DXVECTOR2(fu1[2],fv0[2]) },		//9
 	{ D3DXVECTOR3(-0.5f,-0.5f,0.5f),D3DXVECTOR3(0.0f, 0.0f, 1.0f),D3DCOLOR_RGBA(255, 255, 255, 255),D3DXVECTOR2(fu1[2],fv1[2]) },		//10
 	{ D3DXVECTOR3(0.5f,-0.5f,0.5f),D3DXVECTOR3(0.0f, 0.0f, 1.0f),D3DCOLOR_RGBA(255, 255, 255, 255) ,D3DXVECTOR2(fu0[2],fv1[2]) },		//11
 
-																																		// 右の面（赤色）
+	// 右の面（赤色）
 	{ D3DXVECTOR3(0.5f,0.5f,-0.5f),D3DXVECTOR3(1.0f, 0.0f, 0.0f),D3DCOLOR_RGBA(255, 255, 255, 255) ,D3DXVECTOR2(fu0[3],fv0[3]) },		//12
 	{ D3DXVECTOR3(0.5f,0.5f,0.5f),D3DXVECTOR3(1.0f, 0.0f, 0.0f),D3DCOLOR_RGBA(255, 255, 255, 255),D3DXVECTOR2(fu1[3],fv0[3]) },			//13
 	{ D3DXVECTOR3(0.5f,-0.5f,0.5f),D3DXVECTOR3(1.0f, 0.0f, 0.0f),D3DCOLOR_RGBA(255, 255, 255, 255),D3DXVECTOR2(fu1[3],fv1[3]) },		//14
 	{ D3DXVECTOR3(0.5f,-0.5f,-0.5f),D3DXVECTOR3(1.0f, 0.0f, 0.0f),D3DCOLOR_RGBA(255, 255, 255, 255) ,D3DXVECTOR2(fu0[3],fv1[3]) },		//15
 
-																																			// 上の面（紫色）
+	// 上の面（紫色）
 	{ D3DXVECTOR3(-0.5f,0.5f,0.5f),D3DXVECTOR3(0.0f, 1.0f, 0.0f),D3DCOLOR_RGBA(255, 255, 255, 255),D3DXVECTOR2(fu0[4],fv0[4]) },		//16
 	{ D3DXVECTOR3(0.5f,0.5f,0.5f),D3DXVECTOR3(0.0f, 1.0f, 0.0f),D3DCOLOR_RGBA(255, 255, 255, 255) ,D3DXVECTOR2(fu1[4],fv0[4]) },		//17
 	{ D3DXVECTOR3(0.5f,0.5f,-0.5f),D3DXVECTOR3(0.0f, 1.0f, 0.0f),D3DCOLOR_RGBA(255, 255, 255, 255),D3DXVECTOR2(fu1[4],fv1[4]) },		//18
 	{ D3DXVECTOR3(-0.5f,0.5f,-0.5f),D3DXVECTOR3(0.0f, 1.0f, 0.0f),D3DCOLOR_RGBA(255, 255, 255, 255) ,D3DXVECTOR2(fu0[4],fv1[4]) },		//19
 
-																																			// 下の面（青緑色）
+	// 下の面（青緑色）
 	{ D3DXVECTOR3(0.5f,-0.5f,0.5f),D3DXVECTOR3(0.0f, -1.0f, 0.0f),D3DCOLOR_RGBA(255, 255, 255, 255) ,D3DXVECTOR2(fu0[5],fv0[5]) },		//20
 	{ D3DXVECTOR3(-0.5f,-0.5f,0.5f),D3DXVECTOR3(0.0f, -1.0f, 0.0f),D3DCOLOR_RGBA(255, 255, 255, 255) ,D3DXVECTOR2(fu1[5],fv0[5]) },		//21
-	{ D3DXVECTOR3(-0.5f,-0.5f,-0.5f),D3DXVECTOR3(0.0f, -1.0f, 0.0f),D3DCOLOR_RGBA(255, 255, 255, 255) ,D3DXVECTOR2(fu1[5],fv1[5]) },		//22
+	{ D3DXVECTOR3(-0.5f,-0.5f,-0.5f),D3DXVECTOR3(0.0f, -1.0f, 0.0f),D3DCOLOR_RGBA(255, 255, 255, 255) ,D3DXVECTOR2(fu1[5],fv1[5]) },	//22
 	{ D3DXVECTOR3(0.5f,-0.5f,-0.5f),D3DXVECTOR3(0.0f, -1.0f, 0.0f),D3DCOLOR_RGBA(255, 255, 255, 255) ,D3DXVECTOR2(fu0[5],fv1[5]) },		//23
 	};
 
@@ -206,7 +206,6 @@ void CScene3D::Uninit(void)
 	SAFE_RELEASE(m_pIndexBuffer);
 	SAFE_DELETE(m_Material);
 	SAFE_DELETE_ARRAY(m_pTexture);
-	
 }
 
 //=================================================================================================

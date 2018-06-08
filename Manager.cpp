@@ -30,6 +30,7 @@ bool CManager::Init( HWND hWnd, BOOL bWindow)
 	CScene3D::Create();
 	m_Field = CField::Create(20,20);
 	CPlayer::Create(D3DXVECTOR3(-0.5f, 1.0f, -0.4f));
+	CScenePolygon::Create();
 
 	return true;
 }

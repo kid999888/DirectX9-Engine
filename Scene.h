@@ -35,6 +35,9 @@ public:
 	virtual void Update(void) = 0;						//オブジェクト更新処理
 	virtual void Draw(void) = 0;						//オブジェクト描画処理
 	void SetPosition(D3DXVECTOR3 vePosition);			//オブジェクトの位置設定
+	void SetPositionX(float fX);						//オブジェクトの位置X設定
+	void SetPositionY(float fY);						//オブジェクトの位置Y設定
+	void SetPositionZ(float fZ);						//オブジェクトの位置Z設定
 	void Release(void);									//オブジェクトのリリース
 	static void UpdateAll(void);						//オブジェクト全体更新処理
 	static void DrawAll(void);							//オブジェクト全体描画処理	
