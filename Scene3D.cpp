@@ -213,10 +213,10 @@ void CScene3D::Uninit(void)
 //=================================================================================================
 void CScene3D::Update(void)
 {
-	
-	//m_fRotX += 0.0f;
-	m_fRotY += 0.05f;
-	//m_fRotZ += 0.0f;
+	//m_veRotation.x += 0.0f;
+	//m_veRotation.y += 0.05f;
+	//m_veRotation.z += 0.0f;
+	SetRotationY(GetRotationY() + 0.05f);
 }
 
 //=================================================================================================
@@ -227,12 +227,12 @@ void CScene3D::Draw(void)
 	LPDIRECT3DDEVICE9 pDevice = CRenderer::GetD3DDevice();
 
 	//ägëÂèkè¨çsóÒÇçÏÇÈ
-	D3DXMatrixScaling(&m_mtxWorldS, 1.0f, 1.0f, 1.0f);
+	D3DXMatrixScaling(&m_mtxWorldS, m_veScale.x, m_veScale.y, m_veScale.z);
 
 	//âÒì]çsóÒÇçÏÇÈ
-	D3DXMatrixRotationX(&m_mtxWorldRX, m_fRotX);
-	D3DXMatrixRotationY(&m_mtxWorldRY, m_fRotY);
-	D3DXMatrixRotationZ(&m_mtxWorldRZ, m_fRotZ);
+	D3DXMatrixRotationX(&m_mtxWorldRX, m_veRotation.x);
+	D3DXMatrixRotationY(&m_mtxWorldRY, m_veRotation.y);
+	D3DXMatrixRotationZ(&m_mtxWorldRZ, m_veRotation.z);
 
 	//âÒì]çsóÒÇçáê¨	
 	D3DXMatrixMultiply(&m_mtxWorldR, &m_mtxWorldRX, &m_mtxWorldRY);

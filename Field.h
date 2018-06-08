@@ -28,10 +28,9 @@ class CField: public CScene
 public:
 	CField(int nPriority,int nNumX, int nNumZ) : CScene(nPriority)
 	{
+		m_veScale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
+		m_veRotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		m_vePosition = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-		m_fRotX = 0.0f;
-		m_fRotY = 0.0f;
-		m_fRotZ = 0.0f;
 		m_pTexture = nullptr;
 		m_pVertexBuffer = NULL;
 		m_pIndexBuffer = NULL;
