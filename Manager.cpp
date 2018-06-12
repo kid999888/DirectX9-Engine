@@ -28,7 +28,7 @@ bool CManager::Init( HWND hWnd, BOOL bWindow)
 	m_Light = new CLight();
 	CScene2D::Create();
 	CScene3D::Create();
-	m_Field = CField::Create(20,20);
+	m_Field = CField::Create(4,4);
 	CPlayer::Create(D3DXVECTOR3(-0.5f, 1.0f, -0.4f));
 	CScenePolygon::Create();
 

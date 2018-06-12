@@ -34,6 +34,7 @@ public:
 	virtual void Uninit(void) = 0;						//オブジェクト終了処理
 	virtual void Update(void) = 0;						//オブジェクト更新処理
 	virtual void Draw(void) = 0;						//オブジェクト描画処理
+
 	void SetScale(D3DXVECTOR3 veScale);					//オブジェクトの拡縮倍率設定
 	void SetScaleX(float fX);							//オブジェクトの拡縮倍率X設定
 	void SetScaleY(float fY);							//オブジェクトの拡縮倍率Y設定
