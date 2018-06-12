@@ -41,4 +41,38 @@ static const D3DXVECTOR4 v4Zero(0, 0, 0, 0);
 static const D3DXVECTOR3 v3Zero(0, 0, 0);
 static const D3DXVECTOR2 v2Zero(0, 0);
 
+//----------------------------------------------------------------------------------
+//
+//
+//
+//----------------------------------------------------------------------------------
+struct Point2DI
+{
+	int x, y;
+};
+struct Point3DI
+{
+	int x, y, z;
+};
+struct Point4DI
+{
+	int x, y, z, w;
+};
+
+//----------------------------------------------------------------------------------
+//
+//----------------------------------------------------------------------------------
+struct Point2DF
+{
+	float x, y;
+};
+struct Point3DF
+{
+	float x, y, z;
+};
+struct Point4DF
+{
+	float x, y, z, w;
+};
+
 #endif		//_MAIN_H_

@@ -26,9 +26,9 @@ bool CManager::Init( HWND hWnd, BOOL bWindow)
 	CRenderer::Init(hWnd, bWindow);
 	m_Camera = new CCamera();
 	m_Light = new CLight();
-	CScene2D::Create();
+	CScene2D::Create(8,8);
 	CScene3D::Create();
-	m_Field = CField::Create(4,4);
+	m_Field = CField::Create(20,20);
 	CPlayer::Create(D3DXVECTOR3(-0.5f, 1.0f, -0.4f));
 	CScenePolygon::Create();
 
