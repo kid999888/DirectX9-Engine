@@ -13,8 +13,11 @@
 #include<d3d9.h>
 #include<d3dx9.h>
 #include<windows.h>
+#if defined(DEBUG)
+#include"Renderer.h"
 #include "./GUI/imgui.h"
 #include "./GUI/imgui_impl_dx9.h"
+#endif//defined(DEBUG)
 
 //=================================================================================================
 //　　　マクロ定義                                        

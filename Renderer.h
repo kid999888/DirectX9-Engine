@@ -19,10 +19,16 @@ public:
 	static void DrawBegin(void);							//DirectX初期化クラス描画開始処理
 	static void DrawEnd(void);								//DirectX初期化クラス描画終了処理
 	static LPDIRECT3DDEVICE9  GetD3DDevice(void);			//D3DDeviceの伝達
+#if defined(DEBUG)
+	static D3DPRESENT_PARAMETERS  GetD3DPARAMETERS(void);	//D3DPARAMETERSの伝達
+	static void SetBackBuffer(LPARAM lParam);				//D3DPARAMETERSのBackBufferの設定
+#endif//defined(DEBUG)
 	
 private:
 	static LPDIRECT3D9        m_pD3D;						//DirectXインターフェース
 	static LPDIRECT3DDEVICE9  m_pD3DDevice;					//デバイスのIDirect3Device9インタフェース
+#if defined(DEBUG)
 	static D3DPRESENT_PARAMETERS m_d3dpp;					//DirectXプレゼンテーションパラメータ
+#endif//defined(DEBUG)
 };
 #endif

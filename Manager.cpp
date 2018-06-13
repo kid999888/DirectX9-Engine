@@ -10,6 +10,10 @@
 //=================================================================================================
 #include"Manager.h"
 
+#if defined(DEBUG)
+#include"DebugGUI.h"
+#endif//defined(DEBUG)
+
 //=================================================================================================
 //　　　インスタンス実体化          
 //=================================================================================================
@@ -29,7 +33,11 @@ bool CManager::Init( HWND hWnd, BOOL bWindow)
 	CScene2D::Create(10,2);
 	CScene3D::Create();
 	m_Field = CField::Create(100,100);
+#if defined(DEBUG)
+	CDebugGUI::SetPlayerPoint(CPlayer::Create(D3DXVECTOR3(-0.5f, 1.0f, -0.4f)));
+#else//defined(DEBUG)
 	CPlayer::Create(D3DXVECTOR3(-0.5f, 1.0f, -0.4f));
+#endif//defined(DEBUG)
 	CScenePolygon::Create();
 	return true;
 }
@@ -61,8 +69,11 @@ void CManager::Update(void)
 //=================================================================================================
 void CManager::Draw(void)
 {
+#if defined(DEBUG)
 	//ImGuiDirectX描画前の処理
 	ImGui::EndFrame();
+#endif//defined(DEBUG)
+
 	//DirectX初期化クラス描画開始処理 
 	CRenderer::DrawBegin();
 
@@ -75,9 +86,13 @@ void CManager::Draw(void)
 		CScene::DrawAll();
 		//Presentの終了処理
 		CRenderer::GetD3DDevice()->EndScene();
+
+#if defined(DEBUG)
 		//ImGui処理
 		ImGui::Render();
 		ImGui_ImplDX9_RenderDrawData(ImGui::GetDrawData());
+#endif//defined(DEBUG)
+
 	}
 	//DirectX初期化クラス描画終了処理 
 	CRenderer::DrawEnd();

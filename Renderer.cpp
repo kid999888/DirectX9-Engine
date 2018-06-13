@@ -15,7 +15,9 @@
 //=================================================================================================
 LPDIRECT3D9 CRenderer::m_pD3D = NULL;
 LPDIRECT3DDEVICE9 CRenderer::m_pD3DDevice = NULL;
+#if defined(DEBUG)
 D3DPRESENT_PARAMETERS CRenderer::m_d3dpp;
+#endif//defined(DEBUG)
 
 //=================================================================================================
 //　　　DirectX初期化クラス初期処理                                     
@@ -35,22 +37,21 @@ bool CRenderer::Init(HWND hWnd, BOOL bWindow)
 	if (FAILED(m_pD3D->GetAdapterDisplayMode(D3DADAPTER_DEFAULT, &d3ddm)))
 	{
 		return E_FAIL;
-
 	}
 
 	//デバイスのプレゼンテーション
-	D3DPRESENT_PARAMETERS d3dpp;                                  //デバイスをつくっみ
-	ZeroMemory(&d3dpp, sizeof(d3dpp));                                //d3dppのメモリに初期化
-	d3dpp.BackBufferWidth = SCREEN_WIDTH;                             //スクリーンの幅
-	d3dpp.BackBufferHeight = SCREEN_HEIGHT;                           //スクリーンの高さ
-	d3dpp.BackBufferFormat = d3ddm.Format;                            //バック・バッファのフォーマット(ディスプレイ・フォーマットの指定ｖ)
-	d3dpp.BackBufferCount = 1;                                        //前のものと後ろのもの交換する
-	d3dpp.SwapEffect = D3DSWAPEFFECT_DISCARD;                         //スワップ・エフェクト
-	d3dpp.EnableAutoDepthStencil = TRUE;                              //3D描画モード
-	d3dpp.AutoDepthStencilFormat = D3DFMT_D16;                        //
-	d3dpp.Windowed = bWindow;                                         //ウインドウモードを指定
-	d3dpp.FullScreen_RefreshRateInHz = D3DPRESENT_RATE_DEFAULT;       //Full screen のFPSコントロール
-	d3dpp.PresentationInterval = D3DPRESENT_INTERVAL_DEFAULT;         //描画FPS固定
+	D3DPRESENT_PARAMETERS d3dpp;										//デバイスをつくっみ
+	ZeroMemory(&d3dpp, sizeof(d3dpp));									//d3dppのメモリに初期化
+	d3dpp.BackBufferWidth = SCREEN_WIDTH;								//スクリーンの幅
+	d3dpp.BackBufferHeight = SCREEN_HEIGHT;								//スクリーンの高さ
+	d3dpp.BackBufferFormat = d3ddm.Format;								//バック・バッファのフォーマット(ディスプレイ・フォーマットの指定ｖ)
+	d3dpp.BackBufferCount = 1;											//前のものと後ろのもの交換する
+	d3dpp.SwapEffect = D3DSWAPEFFECT_DISCARD;							//スワップ・エフェクト
+	d3dpp.EnableAutoDepthStencil = TRUE;								//3D描画モード
+	d3dpp.AutoDepthStencilFormat = D3DFMT_D16;							//
+	d3dpp.Windowed = bWindow;											//ウインドウモードを指定
+	d3dpp.FullScreen_RefreshRateInHz = D3DPRESENT_RATE_DEFAULT;			//Full screen のFPSコントロール
+	d3dpp.PresentationInterval = D3DPRESENT_INTERVAL_DEFAULT;			//描画FPS固定
 
 	//デバイスオブジェクトの生成
 	//[デバイス作成制御]<描画>と<頂点処理>を
@@ -75,6 +76,7 @@ bool CRenderer::Init(HWND hWnd, BOOL bWindow)
 			}
 		}
 	}
+#if defined(DEBUG)
 	//DirectXプレゼンテーションパラメータのcopy
 	memcpy(&m_d3dpp, &d3dpp, sizeof(d3dpp));
 
@@ -98,12 +100,14 @@ bool CRenderer::Init(HWND hWnd, BOOL bWindow)
 	// - Read 'misc/fonts/README.txt' for more instructions and details.
 	// - Remember that in C/C++ if you want to include a backslash \ in a string literal you need to write a double backslash \\ !
 	//io.Fonts->AddFontDefault();
-	//io.Fonts->AddFontFromFileTTF("../../misc/fonts/Roboto-Medium.ttf", 16.0f);
+	//io.Fonts->AddFontFromFileTTF("Data\\Fonts\\msmincho.ttc", 12.0f, nullptr, io.Fonts->GetGlyphRangesJapanese());
+	//io.Fonts->AddFontFromFileTTF("Data\\Fonts\\msmincho.ttc", 16.0f);
 	//io.Fonts->AddFontFromFileTTF("../../misc/fonts/Cousine-Regular.ttf", 15.0f);
 	//io.Fonts->AddFontFromFileTTF("../../misc/fonts/DroidSans.ttf", 16.0f);
 	//io.Fonts->AddFontFromFileTTF("../../misc/fonts/ProggyTiny.ttf", 10.0f);
-	//ImFont* font = io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\ArialUni.ttf", 18.0f, NULL, io.Fonts->GetGlyphRangesJapanese());
+	//ImFont* font = io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\msmincho.ttf", 18.0f, NULL, io.Fonts->GetGlyphRangesJapanese());
 	//IM_ASSERT(font != NULL);
+#endif//defined(DEBUG)
 
 	return true;
 }
@@ -113,9 +117,12 @@ bool CRenderer::Init(HWND hWnd, BOOL bWindow)
 //=================================================================================================
 void CRenderer::Uninit(void)
 {
+#if defined(DEBUG)
 	//ImGui終了処理
 	ImGui_ImplDX9_Shutdown();
 	ImGui::DestroyContext();
+#endif//defined(DEBUG)
+
 	//DirectXデバイス終了処理
 	SAFE_RELEASE(m_pD3DDevice);
 	SAFE_RELEASE(m_pD3D);
@@ -137,6 +144,7 @@ void CRenderer::DrawBegin(void)
 //=================================================================================================
 void CRenderer::DrawEnd(void)
 {
+#if defined(DEBUG)
 	HRESULT hr;
 	//Presentの終了処理
 	hr = m_pD3DDevice->Present(NULL, NULL, NULL, NULL);
@@ -147,6 +155,9 @@ void CRenderer::DrawEnd(void)
 		m_pD3DDevice->Reset(&m_d3dpp);
 		ImGui_ImplDX9_CreateDeviceObjects();
 	}
+#else//defined(DEBUG)
+	m_pD3DDevice->Present(NULL, NULL, NULL, NULL);
+#endif//defined(DEBUG)
 }
 
 //=================================================================================================
@@ -156,3 +167,22 @@ LPDIRECT3DDEVICE9 CRenderer::GetD3DDevice(void)
 {
 	return m_pD3DDevice;
 }
+
+#if defined(DEBUG)
+//=================================================================================================
+//　　　D3DPARAMETERSの伝達                                   
+//=================================================================================================
+D3DPRESENT_PARAMETERS CRenderer::GetD3DPARAMETERS(void)
+{
+	return m_d3dpp;
+}
+
+//=================================================================================================
+//　　　D3DPARAMETERSのBackBufferの設定                                  
+//=================================================================================================
+void CRenderer::SetBackBuffer(LPARAM lParam)
+{
+	m_d3dpp.BackBufferWidth = LOWORD(lParam);
+	m_d3dpp.BackBufferHeight = HIWORD(lParam);
+}
+#endif//defined(DEBUG)

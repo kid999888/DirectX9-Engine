@@ -28,9 +28,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 //=================================================================================================
 //　　　グローバル変数                                    
 //=================================================================================================
+float g_fStartWidth = 0.0f;
+float g_fStartHeight = 0.0f;
 static HWND g_hWnd;
+#if defined(DEBUG)
 //ImGUI実体コントローラー
 extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+#endif//defined(DEBUG)
 
 //=================================================================================================
 //　　　構造体定義                                         
@@ -66,6 +70,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	AdjustWindowRect(&wr, WS_OVERLAPPEDWINDOW, false);
 
 	GetWindowRect(GetDesktopWindow(), &dr);
+	g_fStartWidth = (dr.right - wr.right) / 2;
+	g_fStartHeight = (dr.bottom - wr.bottom) / 2;
 
 	//ウィンドハンドル型
 	g_hWnd = CreateWindowEx(
@@ -73,8 +79,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 		CLASS_NAME, 									//クラス名
 		WINDOW_NAME,									//ウインドウのタイトル名
 		(WS_OVERLAPPEDWINDOW ^ WS_MAXIMIZEBOX) ^ WS_THICKFRAME,							//ウィンドスタイル    // WS_POPUP //fullscreen
-		CW_USEDEFAULT,									//ウィンドの左上座標
-		CW_USEDEFAULT,                                  //ウィンドの右下座標
+		g_fStartWidth,									//ウィンドの左上座標X
+		g_fStartHeight,                                  //ウィンドの左上座標Y
 		SCREEN_WIDTH,									//フレイムを含めたウィンドの幅
 		SCREEN_HEIGHT,                                   //フレイムを含めたウィンドの高さ
 		NULL,											//親がない
@@ -95,9 +101,9 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	DWORD dwCurrentTime = timeGetTime();                       //今の時間
 	DWORD dwFPSLastTime = 0;                                   //前のフレームの時間
 
-	
 
-	
+
+
 	//初期処理
 	if (!CManager::Init(g_hWnd, TRUE))
 	{
@@ -106,8 +112,10 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	}
 	InitKeyboard(hInstance, g_hWnd);							//入力処理の初期化
 
+#if defined(DEBUG)
 	//DebugGUI初期処理
 	CDebugGUI::Init();
+#endif//defined(DEBUG)
 
 	timeBeginPeriod(1);											//分解能を設定
 
@@ -134,15 +142,19 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 			if ((dwCurrentTime - dwFPSLastTime) >= (1000 / 60))
 			{
 				dwFPSLastTime = dwCurrentTime;
+
+#if defined(DEBUG)
 				//ImGUI処理
 				CDebugGUI::UpdateWindow();
+#endif//defined(DEBUG)
+
 				//更新処理
 				CManager::Update();
 				UpdateKeyboard();						//入力処理の更新処理(無くてもいい)
 				//描画処理
 				CManager::Draw();
-				
-				
+
+
 			}
 		}
 	}
@@ -158,12 +170,27 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
+#if defined(DEBUG)
 	//ImGuiのWindowsandler生成
-	if(ImGui_ImplWin32_WndProcHandler(hWnd, uMsg, wParam, lParam))
+	if (ImGui_ImplWin32_WndProcHandler(hWnd, uMsg, wParam, lParam))
 		return true;
+#endif//defined(DEBUG)
 
 	switch (uMsg)
 	{
+#if defined(DEBUG)
+	case WM_SIZE:
+		if (CRenderer::GetD3DDevice() != NULL && wParam != SIZE_MINIMIZED)
+		{
+			ImGui_ImplDX9_InvalidateDeviceObjects();
+			CRenderer::SetBackBuffer(lParam);
+			HRESULT hr = CRenderer::GetD3DDevice()->Reset(&CRenderer::GetD3DPARAMETERS());
+			if (hr == D3DERR_INVALIDCALL)
+				IM_ASSERT(0);
+			ImGui_ImplDX9_CreateDeviceObjects();
+		}
+		return 0;
+#endif//defined(DEBUG)
 	case WM_DESTROY: PostQuitMessage(0);										//ウインドウを閉じてのメッセージ
 		break;
 	case WM_KEYDOWN:
