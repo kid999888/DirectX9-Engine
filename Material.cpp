@@ -23,9 +23,9 @@ CMaterial::CMaterial()
 	m_Mat.Diffuse.b = 1.0f;
 	m_Mat.Diffuse.a = 1.0f;
 	//環境光（影に現れる色）色の設定
-	m_Mat.Ambient.r = 1.0f;
-	m_Mat.Ambient.g = 1.0f;
-	m_Mat.Ambient.b = 1.0f;
+	m_Mat.Ambient.r = 0.1f;
+	m_Mat.Ambient.g = 0.0f;
+	m_Mat.Ambient.b = 0.0f;
 	m_Mat.Ambient.a = 1.0f;
 	//鏡面光（マテリアルが設定されていたら、テカリ部分）
 	//マテリアルが設定されていないと効果は表れない

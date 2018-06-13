@@ -17,7 +17,7 @@
 CCamera::CCamera()
 {
 	//カメラ位置の初期化
-	m_eye = D3DXVECTOR3(0.0f, 6.0f, -10.0f);
+	m_eye = D3DXVECTOR3(7.0f, 14.0f, -10.0f);
 	m_at = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	m_up = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
 }
@@ -41,7 +41,7 @@ void CCamera::Update(void)
 
 	//プロジェクション行列作成
 	D3DXMatrixPerspectiveFovLH(&m_mtxProjection,
-		D3DX_PI / 3,								//or D3DXToRadian(60)
+		D3DXToRadian(45),								//or D3DXToRadian(60) D3DX_PI / 3
 		(float)SCREEN_WIDTH / SCREEN_HEIGHT,		//
 		0.1f,										//
 		1000.0f);									//

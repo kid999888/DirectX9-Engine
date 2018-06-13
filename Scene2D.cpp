@@ -17,7 +17,7 @@
 //FVF定義
 #define FVF_VERTEX_2D (D3DFVF_XYZRHW | D3DFVF_DIFFUSE | D3DFVF_TEX1 )			//2Dポリゴンの頂点情報
 //テクスチャファイルパス
-#define TEXTUREFILENAME000	        "Data\\Texture\\kobeni.png"	
+#define TEXTUREFILENAME000	        "Data\\Texture\\Number.png"	
 
 //=================================================================================================
 //　　　構造体定義                                         
@@ -86,7 +86,6 @@ bool CScene2D::Init(void)
 		return false;
 	}
 
-
 	return true;
 }
 
@@ -113,7 +112,7 @@ void CScene2D::Draw(void)
 {
 	LPDIRECT3DDEVICE9 pDevice = CRenderer::GetD3DDevice();
 
-	CreateVertexAffine(D3DCOLOR_RGBA(255, 255, 255, 255), 5, 5);
+	CreateVertexAffine(D3DCOLOR_RGBA(255, 255, 255, 255), m_nTextureNumber.x, m_nTextureNumber.y);
 
 
 	pDevice->SetStreamSource(0, m_pVertexBuffer, 0, sizeof(VERTEX_2D));
@@ -130,12 +129,6 @@ void CScene2D::Draw(void)
 
 	pDevice->SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_LINEAR);
 
-	//pDevice->DrawPrimitiveUP(			//重要
-	//	D3DPT_TRIANGLEFAN,				//描画のモード
-	//	2,								//ポリゴン数
-	//	&vtx[0],						//座標情報
-	//	sizeof(VERTEX_2D));				//座標情報のメモリ長さ
-
 	pDevice->DrawPrimitive(                 //重要
 		D3DPT_TRIANGLEFAN, 0,			    //描画のモード
 		2);                                  //ポリゴン数
@@ -151,26 +144,41 @@ CScene2D * CScene2D::Create(int nNx, int nNy)
 	return Scene2D;
 }
 
+//=================================================================================================
+//　　　2Dポリゴンのテクスチャナンバーの設定                                
+//=================================================================================================
+void CScene2D::SetTextureNum(int nX, int nY)
+{
+	m_nTextureNumber.x = nX;
+	m_nTextureNumber.y = nY;
+}
+
+//=================================================================================================
+//　　　頂点バッファ処理                                   
+//=================================================================================================
 void CScene2D::CreateVertexAffine(D3DCOLOR color, int tCx, int tCy)
 {
 	float dx = m_vePosition.x;
 	float dy = m_vePosition.y;
 
-	int dw = m_D3DTextureInfo.Width;
-	int dh = m_D3DTextureInfo.Height;
+	int tw = m_D3DTextureInfo.Width;
+	int th = m_D3DTextureInfo.Height;
+
+	int dw = m_D3DTextureInfo.Width / m_npTLimitNum.x;
+	int dh = m_D3DTextureInfo.Height / m_npTLimitNum.y;
 
 	dw *= m_veScale.x;
 	dh *= m_veScale.y;
 
-	int tcx = m_veScale.x * tCx * (m_D3DTextureInfo.Width / m_npTLimitNum.x);
-	int tcy = m_veScale.y * tCy * (m_D3DTextureInfo.Height / m_npTLimitNum.y);
-	int tcw = m_veScale.x * (m_D3DTextureInfo.Width / m_npTLimitNum.x);
-	int tch = m_veScale.y * (m_D3DTextureInfo.Height / m_npTLimitNum.y);
+	int tcx = tCx * (m_D3DTextureInfo.Width / m_npTLimitNum.x);
+	int tcy = tCy * (m_D3DTextureInfo.Height / m_npTLimitNum.y);
+	int tcw = (m_D3DTextureInfo.Width / m_npTLimitNum.x);
+	int tch = (m_D3DTextureInfo.Height / m_npTLimitNum.y);
 
-	float u0 = (float)tcx / dw;
-	float v0 = (float)tcy / dh;
-	float u1 = (float)(tcx + tcw) / dw;
-	float v1 = (float)(tcy + tch) / dh;
+	float u0 = (float)tcx / tw;
+	float v0 = (float)tcy / th;
+	float u1 = (float)(tcx + tcw) / tw;
+	float v1 = (float)(tcy + tch) / th;
 
 	VERTEX_2D* pV;
 	m_pVertexBuffer->Lock(0, 0,			//頂点バッファロック(始まる、領域、voidのポイントポイント（つまり擬似アドレス）) 

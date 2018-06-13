@@ -274,7 +274,7 @@ bool CField::Init(void)
 
 	//マテリアルのインスタンス生成&設定
 	m_Material = new CMaterial();
-	m_Material->SetAmbient(0.9f, 0.1f, 0.1f, 1.0f);
+	/*m_Material->SetAmbient(0.9f, 0.1f, 0.1f, 1.0f);*/
 	
 	return true;
 }

@@ -38,6 +38,8 @@ bool CSceneModel::Init(void)
 	m_nMaterialNum = 0;
 	m_pMaterial = NULL;
 	m_nMaterialPointNum = 0;
+	D3DXQuaternionIdentity(&m_Quaternion);
+	
 
 	LPD3DXBUFFER pAdjacencyBuffer;
 	HRESULT hr;

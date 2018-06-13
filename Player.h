@@ -6,7 +6,6 @@
 //=================================================================================================
 #ifndef _CPLAYER_H_                                                 //2重インクルード防止のマクロ定義
 #define _CPLAYER_H_
-#include"main.h"
 #include"Scene.h"
 #include"SceneModel.h"
 

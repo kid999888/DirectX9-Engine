@@ -30,7 +30,7 @@ public:
 	static CSceneModel * Create(void);						//3Dモデルクラスのインスタンス生成
 
 private:
-	
+	D3DXQUATERNION m_Quaternion;							//コォータニオン回転ベクトル
 	LPD3DXMESH m_pMesh;										//メッシュを受け取る変数
 	DWORD  m_nMaterialNum;									//Xモデルのマテリアル数
 	LPD3DXBUFFER m_pMaterial;								//Xモデルのマテリアル情報
