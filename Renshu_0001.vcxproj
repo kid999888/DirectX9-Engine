@@ -153,7 +153,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="DebugGUI.cpp" />
     <ClCompile Include="Field.cpp" />
+    <ClCompile Include="GUI\imgui.cpp" />
+    <ClCompile Include="GUI\imgui_demo.cpp" />
+    <ClCompile Include="GUI\imgui_draw.cpp" />
+    <ClCompile Include="GUI\imgui_impl_dx9.cpp" />
     <ClCompile Include="input.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="main.cpp" />
@@ -169,7 +174,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="DebugGUI.h" />
     <ClInclude Include="Field.h" />
+    <ClInclude Include="GUI\imconfig.h" />
+    <ClInclude Include="GUI\imgui.h" />
+    <ClInclude Include="GUI\imgui_impl_dx9.h" />
+    <ClInclude Include="GUI\imgui_internal.h" />
+    <ClInclude Include="GUI\stb_rect_pack.h" />
+    <ClInclude Include="GUI\stb_textedit.h" />
+    <ClInclude Include="GUI\stb_truetype.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="main.h" />

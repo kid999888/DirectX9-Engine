@@ -11,6 +11,7 @@
 #include"main.h"
 #include"Manager.h"
 #include"input.h"
+#include"DebugGUI.h"
 #include <crtdbg.h>
 
 //=================================================================================================
@@ -28,6 +29,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 //　　　グローバル変数                                    
 //=================================================================================================
 static HWND g_hWnd;
+//ImGUI実体コントローラー
+extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 //=================================================================================================
 //　　　構造体定義                                         
@@ -93,14 +96,18 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	DWORD dwFPSLastTime = 0;                                   //前のフレームの時間
 
 	
+
+	
 	//初期処理
 	if (!CManager::Init(g_hWnd, TRUE))
 	{
-		MessageBox(g_hWnd, "エラー", "初期が", MB_OK);
+		MessageBox(g_hWnd, "エラー", "初期化エラー", MB_OK);
 		return -1;
 	}
 	InitKeyboard(hInstance, g_hWnd);							//入力処理の初期化
 
+	//DebugGUI初期処理
+	CDebugGUI::Init();
 
 	timeBeginPeriod(1);											//分解能を設定
 
@@ -127,11 +134,15 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 			if ((dwCurrentTime - dwFPSLastTime) >= (1000 / 60))
 			{
 				dwFPSLastTime = dwCurrentTime;
+				//ImGUI処理
+				CDebugGUI::UpdateWindow();
 				//更新処理
 				CManager::Update();
 				UpdateKeyboard();						//入力処理の更新処理(無くてもいい)
 				//描画処理
 				CManager::Draw();
+				
+				
 			}
 		}
 	}
@@ -147,6 +158,10 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
+	//ImGuiのWindowsandler生成
+	if(ImGui_ImplWin32_WndProcHandler(hWnd, uMsg, wParam, lParam))
+		return true;
+
 	switch (uMsg)
 	{
 	case WM_DESTROY: PostQuitMessage(0);										//ウインドウを閉じてのメッセージ

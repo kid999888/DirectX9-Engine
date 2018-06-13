@@ -61,6 +61,8 @@ void CManager::Update(void)
 //=================================================================================================
 void CManager::Draw(void)
 {
+	//ImGuiDirectX描画前の処理
+	ImGui::EndFrame();
 	//DirectX初期化クラス描画開始処理 
 	CRenderer::DrawBegin();
 
@@ -73,6 +75,9 @@ void CManager::Draw(void)
 		CScene::DrawAll();
 		//Presentの終了処理
 		CRenderer::GetD3DDevice()->EndScene();
+		//ImGui処理
+		ImGui::Render();
+		ImGui_ImplDX9_RenderDrawData(ImGui::GetDrawData());
 	}
 	//DirectX初期化クラス描画終了処理 
 	CRenderer::DrawEnd();

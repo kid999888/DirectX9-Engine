@@ -18,11 +18,11 @@ public:
 	static void Uninit(void);								//DirectX初期化クラス終了処理
 	static void DrawBegin(void);							//DirectX初期化クラス描画開始処理
 	static void DrawEnd(void);								//DirectX初期化クラス描画終了処理
-	static LPDIRECT3DDEVICE9  GetD3DDevice(void);				//D3DDeviceの伝達
+	static LPDIRECT3DDEVICE9  GetD3DDevice(void);			//D3DDeviceの伝達
 	
 private:
 	static LPDIRECT3D9        m_pD3D;						//DirectXインターフェース
 	static LPDIRECT3DDEVICE9  m_pD3DDevice;					//デバイスのIDirect3Device9インタフェース
-	
+	static D3DPRESENT_PARAMETERS m_d3dpp;					//DirectXプレゼンテーションパラメータ
 };
 #endif

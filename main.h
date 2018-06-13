@@ -13,6 +13,8 @@
 #include<d3d9.h>
 #include<d3dx9.h>
 #include<windows.h>
+#include "./GUI/imgui.h"
+#include "./GUI/imgui_impl_dx9.h"
 
 //=================================================================================================
 //　　　マクロ定義                                        
@@ -20,8 +22,8 @@
 #define SAFE_RELEASE(p)			if(p){ p->Release(); p=NULL; }					//安全リリースマクロ
 #define SAFE_DELETE(p)			if(p){ delete      (p); (p) = nullptr; }		//安全消しマクロ
 #define SAFE_DELETE_ARRAY(p)	if(p){ delete[]    (p); (p) = nullptr; }		//安全配列消しマクロ
-#define SCREEN_WIDTH		(800)							//スクリーンの幅
-#define SCREEN_HEIGHT		(600)							//スクリーンの高さ
+#define SCREEN_WIDTH		(1280)							//スクリーンの幅
+#define SCREEN_HEIGHT		(720)							//スクリーンの高さ
 
 //デフォルトベクトル
 static const D3DXVECTOR4 v4One(1, 1, 1, 1);
