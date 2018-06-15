@@ -20,11 +20,17 @@ public:
 	CCamera();											//カメラクラスコンストラクタ
 	~CCamera();											//カメラクラスデストラクタ
 	void Update(void);									//カメラクラス更新処理
+	static void SetCameraPos(D3DXVECTOR3 veEyePos);		//
+	static void SetCameraAtPos(D3DXVECTOR3 veAtPos);	//
+	static D3DXVECTOR3 GetCameraPos(void) 
+	{ return m_eye; };									//
+	static D3DXVECTOR3 GetCameraAtPos(void) 
+	{ return m_at; };									//
 
 private:
-	D3DXVECTOR3 m_eye;									//カメラの場所
-	D3DXVECTOR3 m_at;									//注視点
-	D3DXVECTOR3 m_up;									//上の場所
+	static D3DXVECTOR3 m_eye;									//カメラの場所
+	static D3DXVECTOR3 m_at;									//注視点
+	static D3DXVECTOR3 m_up;									//上の場所
 	D3DXMATRIX m_mtxView;								//ビュー行列
 	D3DXMATRIX m_mtxProjection;							//プロジェクション行列
 };

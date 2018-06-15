@@ -31,6 +31,7 @@ public:
 	static void Update(void);							//マネージャークラス更新処理
 	static void Draw(void);								//マネージャークラス描画処理
 	static CField* GetField(void);
+	static CCamera* GetMainCamera(void) { return m_Camera; };				//
 private:
 	static CCamera *m_Camera;
 	static CLight *m_Light;

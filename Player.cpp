@@ -40,6 +40,7 @@ bool CPlayer::Init(void)
 {
 	m_pPlayer = CSceneModel::Create();
 	m_pPlayer->SetPosition(m_vePosition);
+	m_Camera = CManager::GetMainCamera();
 	return true;
 }
 
@@ -60,18 +61,26 @@ void CPlayer::Update(void)
 	if (GetKeyboardPress(DIK_LEFT))
 	{
 		m_vePosition += v3Left * m_fMoveSpeed;
+		m_Camera->SetCameraPos(m_Camera->GetCameraPos() + (v3Left * m_fMoveSpeed));
+		m_Camera->SetCameraAtPos(m_Camera->GetCameraAtPos() + (v3Left * m_fMoveSpeed));
 	}
 	if (GetKeyboardPress(DIK_RIGHT))
 	{
 		m_vePosition += v3Right * m_fMoveSpeed;
+		m_Camera->SetCameraPos(m_Camera->GetCameraPos() + (v3Right  * m_fMoveSpeed));
+		m_Camera->SetCameraAtPos(m_Camera->GetCameraAtPos() + (v3Right  * m_fMoveSpeed));
 	}
 	if (GetKeyboardPress(DIK_UP))
 	{
 		m_vePosition += v3In * m_fMoveSpeed;
+		m_Camera->SetCameraPos(m_Camera->GetCameraPos() + (v3In * m_fMoveSpeed));
+		m_Camera->SetCameraAtPos(m_Camera->GetCameraAtPos() + (v3In  * m_fMoveSpeed));
 	}
 	if (GetKeyboardPress(DIK_DOWN))
 	{
 		m_vePosition += v3Out * m_fMoveSpeed;
+		m_Camera->SetCameraPos(m_Camera->GetCameraPos() + (v3Out * m_fMoveSpeed));
+		m_Camera->SetCameraAtPos(m_Camera->GetCameraAtPos() + (v3Out  * m_fMoveSpeed));
 	}
 
 	//ƒtƒB[ƒ‹Õ“Ë”»’è

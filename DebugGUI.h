@@ -9,6 +9,8 @@
 #define _DEBUGGUI_H_
 #include"main.h"
 #include"Player.h"
+#include"Camera.h"
+#include"Manager.h"
 
 //=================================================================================================
 //　　　DirectX初期化クラス                                      
@@ -19,12 +21,14 @@ public:
 	static bool Init(void);				//DebugGUI初期処理
 	static void UpdateWindow(void);		//DebugGUIウィンドウズ更新処理
 	static void SetPlayerPoint(CPlayer* pPlayer) { m_pPlayer = pPlayer; };
+	static void SetMainCameraPoint(CCamera* pCamera) { m_Camera = pCamera; };
 
 private:
 
 	static bool m_bshow_demo_window;
 	static ImVec4 m_v4clear_color;
 	static CPlayer* m_pPlayer;
+	static CCamera* m_Camera;
 
 };
 #endif

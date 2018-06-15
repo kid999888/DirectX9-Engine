@@ -29,6 +29,9 @@ bool CManager::Init( HWND hWnd, BOOL bWindow)
 	//DirectX‰Šú‰»ƒNƒ‰ƒX‰Šúˆ—
 	CRenderer::Init(hWnd, bWindow);
 	m_Camera = new CCamera();
+#if defined(DEBUG)
+	CDebugGUI::SetMainCameraPoint(m_Camera);
+#endif//defined(DEBUG)
 	m_Light = new CLight();
 	CScene2D::Create(10,2);
 	CScene3D::Create();
