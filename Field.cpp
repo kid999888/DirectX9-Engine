@@ -16,6 +16,8 @@
 #include<tchar.h>
 #include"Renderer.h"
 
+#include "input.h"
+
 using namespace std;
 
 //=================================================================================================
@@ -292,7 +294,6 @@ void CField::Uninit(void)
 	//’¸“_î•ñŠÇ—ƒƒ‚’ ‚ÌÁ‚·
 	SAFE_DELETE_ARRAY(m_pvMeshFiledPos);
 	
-
 }
 
 //=================================================================================================
@@ -303,6 +304,22 @@ void CField::Update(void)
 	//m_veRotation.x += 0.0f;
 	//m_veRotation.y += 0.01f;
 	//m_veRotation.z += 0.0f;
+	if (GetKeyboardPress(DIK_LEFT))
+	{
+
+	}
+	if (GetKeyboardPress(DIK_RIGHT))
+	{
+		
+	}
+	if (GetKeyboardPress(DIK_UP))
+	{
+		
+	}
+	if (GetKeyboardPress(DIK_DOWN))
+	{
+		
+	}
 }
 
 //=================================================================================================
@@ -316,9 +333,9 @@ void CField::Draw(void)
 	D3DXMatrixScaling(&m_mtxWorldS, m_veScale.x, m_veScale.y, m_veScale.z);
 
 	//‰ñ“]s—ñ‚ðì‚é
-	D3DXMatrixRotationX(&m_mtxWorldRX, m_veRotation.x);
-	D3DXMatrixRotationY(&m_mtxWorldRY, m_veRotation.y);
-	D3DXMatrixRotationZ(&m_mtxWorldRZ, m_veRotation.z);
+	D3DXMatrixRotationX(&m_mtxWorldRX, D3DXToRadian(m_veRotation.x));
+	D3DXMatrixRotationY(&m_mtxWorldRY, D3DXToRadian(m_veRotation.y));
+	D3DXMatrixRotationZ(&m_mtxWorldRZ, D3DXToRadian(m_veRotation.z));
 
 	//‰ñ“]s—ñ‚ð‡¬	
 	D3DXMatrixMultiply(&m_mtxWorldR, &m_mtxWorldRX, &m_mtxWorldRY);
@@ -382,6 +399,7 @@ CField * CField::Create(int nNumX, int nNumZ)
 	Field->Init();
 	return Field;
 }
+
 
 float CField::GetHeight(D3DXVECTOR3 Position)
 {

@@ -29,19 +29,18 @@ bool CManager::Init( HWND hWnd, BOOL bWindow)
 	//DirectX‰Šú‰»ƒNƒ‰ƒX‰Šúˆ—
 	CRenderer::Init(hWnd, bWindow);
 	m_Camera = new CCamera();
-#if defined(DEBUG)
-	CDebugGUI::SetMainCameraPoint(m_Camera);
-#endif//defined(DEBUG)
 	m_Light = new CLight();
+	m_Field = CField::Create(10, 10);
 	CScene2D::Create(10,2);
 	CScene3D::Create();
-	m_Field = CField::Create(100,100);
+	CScenePolygon::Create();
 #if defined(DEBUG)
-	CDebugGUI::SetPlayerPoint(CPlayer::Create(D3DXVECTOR3(-0.5f, 1.0f, -0.4f)));
+	CDebugGUI::SetMainCamera(m_Camera);
+	CDebugGUI::SetField(m_Field);
+	CDebugGUI::SetPlayer(CPlayer::Create(D3DXVECTOR3(-0.5f, 1.0f, -0.4f)));
 #else//defined(DEBUG)
 	CPlayer::Create(D3DXVECTOR3(-0.5f, 1.0f, -0.4f));
 #endif//defined(DEBUG)
-	CScenePolygon::Create();
 	return true;
 }
 

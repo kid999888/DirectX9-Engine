@@ -16,7 +16,9 @@
 bool CDebugGUI::m_bshow_demo_window = false;
 ImVec4 CDebugGUI::m_v4clear_color = ImVec4(0.0f, 0.0f, 0.0f, 0.0f);
 CPlayer* CDebugGUI::m_pPlayer = nullptr;
-CCamera* CDebugGUI::m_Camera = nullptr;
+CCamera* CDebugGUI::m_pCamera = nullptr;
+CField* CDebugGUI::m_pField = nullptr;
+
 //=================================================================================================
 //　　　DebugGUIクラス初期処理         
 //=================================================================================================
@@ -46,11 +48,11 @@ void CDebugGUI::UpdateWindow(void)
 
 		ImGui::Text("Camera Position:");
 		ImGui::SameLine();
-		ImGui::Text("(%f,%f,%f)", m_Camera->GetCameraPos().x, m_Camera->GetCameraPos().y, m_Camera->GetCameraPos().z);
+		ImGui::Text("(%f,%f,%f)", m_pCamera->GetCameraPos().x, m_pCamera->GetCameraPos().y, m_pCamera->GetCameraPos().z);
 
 		ImGui::Text("Camera At Position:");
 		ImGui::SameLine();
-		ImGui::Text("(%f,%f,%f)", m_Camera->GetCameraAtPos().x, m_Camera->GetCameraAtPos().y, m_Camera->GetCameraAtPos().z);
+		ImGui::Text("(%f,%f,%f)", m_pCamera->GetCameraAtPos().x, m_pCamera->GetCameraAtPos().y, m_pCamera->GetCameraAtPos().z);
 
 		ImGui::Checkbox("Demo Window", &m_bshow_demo_window);      // Edit bools storing our windows open/close state
 		/*ImGui::Checkbox("Another Window", &show_another_window);*/

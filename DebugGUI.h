@@ -20,15 +20,17 @@ class CDebugGUI
 public:
 	static bool Init(void);				//DebugGUI初期処理
 	static void UpdateWindow(void);		//DebugGUIウィンドウズ更新処理
-	static void SetPlayerPoint(CPlayer* pPlayer) { m_pPlayer = pPlayer; };
-	static void SetMainCameraPoint(CCamera* pCamera) { m_Camera = pCamera; };
+	static void SetPlayer(CPlayer* pPlayer) { m_pPlayer = pPlayer; };
+	static void SetMainCamera(CCamera* pCamera) { m_pCamera = pCamera; };
+	static void SetField(CField* pField) { m_pField = pField; };
 
 private:
 
 	static bool m_bshow_demo_window;
 	static ImVec4 m_v4clear_color;
 	static CPlayer* m_pPlayer;
-	static CCamera* m_Camera;
+	static CCamera* m_pCamera;
+	static CField * m_pField;
 
 };
 #endif

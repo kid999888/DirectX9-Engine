@@ -41,6 +41,10 @@ bool CPlayer::Init(void)
 	m_pPlayer = CSceneModel::Create();
 	m_pPlayer->SetPosition(m_vePosition);
 	m_Camera = CManager::GetMainCamera();
+	//プレーヤーの座標をモデリングに転送
+	m_pPlayer->SetPosition(m_vePosition);
+	//プレーヤーの軸回転値をモデリングに転送
+	m_pPlayer->SetRotation(m_veRotation);
 	return true;
 }
 
@@ -82,12 +86,22 @@ void CPlayer::Update(void)
 		m_Camera->SetCameraPos(m_Camera->GetCameraPos() + (v3Out * m_fMoveSpeed));
 		m_Camera->SetCameraAtPos(m_Camera->GetCameraAtPos() + (v3Out  * m_fMoveSpeed));
 	}
+	if (GetKeyboardPress(DIK_A))
+	{
+		
+	}
+	if (GetKeyboardPress(DIK_D))
+	{
+		
+	}
 
 	//フィール衝突判定
 	m_vePosition.y = (field->GetHeight(m_vePosition) + 0.5f);
 
 	//プレーヤーの座標をモデリングに転送
 	m_pPlayer->SetPosition(m_vePosition);
+	//プレーヤーの軸回転値をモデリングに転送
+	m_pPlayer->SetRotation(m_veRotation);
 }
 
 //=================================================================================================

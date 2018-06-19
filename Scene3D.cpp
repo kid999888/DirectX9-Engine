@@ -230,9 +230,9 @@ void CScene3D::Draw(void)
 	D3DXMatrixScaling(&m_mtxWorldS, m_veScale.x, m_veScale.y, m_veScale.z);
 
 	//âÒì]çsóÒÇçÏÇÈ
-	D3DXMatrixRotationX(&m_mtxWorldRX, m_veRotation.x);
-	D3DXMatrixRotationY(&m_mtxWorldRY, m_veRotation.y);
-	D3DXMatrixRotationZ(&m_mtxWorldRZ, m_veRotation.z);
+	D3DXMatrixRotationX(&m_mtxWorldRX, D3DXToRadian(m_veRotation.x));
+	D3DXMatrixRotationY(&m_mtxWorldRY, D3DXToRadian(m_veRotation.y));
+	D3DXMatrixRotationZ(&m_mtxWorldRZ, D3DXToRadian(m_veRotation.z));
 
 	//âÒì]çsóÒÇçáê¨	
 	D3DXMatrixMultiply(&m_mtxWorldR, &m_mtxWorldRX, &m_mtxWorldRY);
