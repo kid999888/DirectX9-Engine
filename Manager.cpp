@@ -24,6 +24,7 @@ CField *CManager::m_Field = NULL;
 CPlayer *CManager:: m_Player = NULL;
 CScene3D *CManager::m_Scene3D = NULL;
 CScene2D *CManager::m_Scene2D = NULL;
+CNumber *CManager::m_Number = NULL;
 bool CManager::m_bDisable = false;
 
 //=================================================================================================
@@ -38,7 +39,8 @@ bool CManager::Init( HWND hWnd, BOOL bWindow)
 	m_Light = new CLight();
 	m_Field = CField::Create(100, 100);
 	m_Player = CPlayer::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
-	m_Scene2D = CScene2D::Create(10,2);
+	/*m_Scene2D = CScene2D::Create(10,2);*/
+	m_Number = CNumber::Create(0);
 	m_Scene3D = CScene3D::Create();
 	CScenePolygon::Create();
 #if defined(DEBUG)
@@ -74,7 +76,7 @@ void CManager::Update(void)
 
 	if (m_Player->BallJudgement(m_Scene3D->GetPosition(), m_Player->GetPosition(), 1.0f, 1.0f))
 	{
-		m_Scene3D->SetPositionY(m_Scene3D->GetPositionY() + 0.01f);
+		m_Scene3D->SetPositionY(m_Scene3D->GetPositionY() + 0.06f);
 	}
 	else
 	{
@@ -83,7 +85,7 @@ void CManager::Update(void)
 
 	if (GetKeyboardTrigger(DIK_Z))//Î‚ß‚Éi‚Ş
 	{
-		m_Scene2D->SetTextureNum(m_Scene2D->GetTextureNumX()+ 1,0);
+		m_Number->SetNumber(m_Number->GetNumber() + 1);
 	}
 }
 
