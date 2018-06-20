@@ -18,7 +18,7 @@
 #define FVF_VERTEX_2D (D3DFVF_XYZRHW | D3DFVF_DIFFUSE | D3DFVF_TEX1 )			//2Dポリゴンの頂点情報
 
 //=================================================================================================
-//　　　構造体定義                                         
+//　　　実体定義                                       
 //=================================================================================================
 typedef struct
 {
@@ -46,7 +46,7 @@ bool CScene2D::Init(void)
 
 	hr = D3DXCreateTextureFromFile(
 		pDevice,
-		TEXTUREFILENAME000,
+		stFileNameModel.c_str(),
 		m_pTexture);
 
 	if (FAILED(hr))
@@ -56,7 +56,7 @@ bool CScene2D::Init(void)
 	}
 
 	//テクスチャの情報を読み込む
-	hr = D3DXGetImageInfoFromFile(TEXTUREFILENAME000, &m_D3DTextureInfo);
+	hr = D3DXGetImageInfoFromFile(stFileNameModel.c_str(), &m_D3DTextureInfo);
 
 	if (FAILED(hr))
 	{

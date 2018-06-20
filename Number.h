@@ -27,11 +27,11 @@ public:
 	void Update(void);								//数字表示更新処理
 	void Draw(void);								//数字表示描画処理
 	static CNumber * Create(int nNum);				//数字表示のインスタンス生成
-	void SetNumber(int nNum)
+	void SetNumber(int nNum)						//数字の設定
 	{
 		m_nNumber = nNum;
 	};
-	int GetNumber(void)
+	int GetNumber(void)								//数字の取得
 	{
 		return m_nNumber;
 	};

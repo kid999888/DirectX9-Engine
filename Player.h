@@ -31,29 +31,25 @@ public:
 		m_fRotOnce = 0.0f;
 		m_fRotYExactly = 0;
 		m_pTexture = nullptr;
-	};												//プレーヤーコンストラクタ
-	~CPlayer();										//プレーヤーデストラクタ
-	bool Init(void);								//プレーヤー初期処理
-	void Uninit(void);								//プレーヤー終了処理
-	void Update(void);								//プレーヤー更新処理
-	void Draw(void);								//プレーヤー描画処理
-	static CPlayer * Create(D3DXVECTOR3 vePosition);//プレーヤーのインスタンス生成
+	};													//プレーヤーコンストラクタ
+	~CPlayer();											//プレーヤーデストラクタ
+	bool Init(void);									//プレーヤー初期処理
+	void Uninit(void);									//プレーヤー終了処理
+	void Update(void);									//プレーヤー更新処理
+	void Draw(void);									//プレーヤー描画処理
+	static CPlayer * Create(D3DXVECTOR3 vePosition);	//プレーヤーのインスタンス生成
 	bool BallJudgement(D3DXVECTOR3 vBall1, D3DXVECTOR3 vBall2, float r1, float r2);
-	D3DXVECTOR3 GetPlayerFront(void)				//プレーヤーの向きベクトルを取得
+	D3DXVECTOR3 GetPlayerFront(void)					//プレーヤーの向きベクトルを取得
 	{
 		return m_veFrontTemporary;
 	};
-	float GetPlayerRotY(void)
-	{
-		return m_veRotation.y;
-	}
 
 private:
-	CSceneModel * m_pPlayer;							//プレーヤーのモデリング管理するアドレス
-	CBullet * m_pBullet;								//管理するアドレス
-	CCamera *m_Camera;									//カメラ管理するメンバーアドレス
+	CSceneModel * m_pPlayer;							//プレーヤーのモデリング管理するアドレスを声明
+	CBullet * m_pBullet;								//管理するアドレスを声明
+	CCamera *m_Camera;									//カメラ管理するメンバーアドレスを声明
 	D3DXVECTOR3 m_vePlayerFront;						//プレーヤーの向きベクトル
-	D3DXVECTOR3 m_veFrontTemporary;
+	D3DXVECTOR3 m_veFrontTemporary;						//プレーヤーの向きベクトル(仮)
 	float m_fMoveSpeed;									//移動スビート
 	float m_fRotYSpeed;									//回転スビート
 	float m_fRotOnce;									//プレーヤー一回回転角度

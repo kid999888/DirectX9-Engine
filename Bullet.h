@@ -15,27 +15,26 @@
 class CBullet : public CScene
 {
 public:
-	CBullet(int nPriority) : CScene(nPriority)
+	CBullet(int nPriority) : CScene(nPriority)						//バレットコンストラクタ
 	{
 		m_veScale = D3DXVECTOR3(0.5f, 0.5f, 0.5f);
 		m_veRotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		m_vePosition = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		m_veMove = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		m_nLife = 0;
-	};												//プレーヤーコンストラクタ
-	~CBullet();										//プレーヤーデストラクタ
-	bool Init(void);								//プレーヤー初期処理
-	void Uninit(void);								//プレーヤー終了処理
-	void Update(void);								//プレーヤー更新処理
-	void Draw(void);								//プレーヤー描画処理
-	static CBullet * Create(D3DXVECTOR3 Pos, D3DXVECTOR3 At);					//プレーヤーのインスタンス生成
-	/*static bool BallJudgement(D3DXVECTOR3 vBall1, D3DXVECTOR3 vBall2, float r1, float r2);*/
+	};												
+	~CBullet();														//バレットデストラクタ
+	bool Init(void);												//バレット初期処理
+	void Uninit(void);												//バレット終了処理
+	void Update(void);												//バレット更新処理
+	void Draw(void);												//バレット描画処理
+	static CBullet * Create(D3DXVECTOR3 Pos, D3DXVECTOR3 At);		//バレットのインスタンス生成
 
 private:
-	CSceneModel * m_pBullet;							//プレーヤーのモデリング管理するアドレス
-	static D3DXVECTOR3 m_vePosition;
-	static D3DXVECTOR3 m_veMove;								//
-	int m_nLife;
+	CSceneModel * m_pBullet;										//バレットモデリング管理するアドレス
+	static D3DXVECTOR3 m_vePosition;								//バレットの位置を声明する
+	static D3DXVECTOR3 m_veMove;									//バレットの加速度を声明する
+	int m_nLife;													//バレットの寿命
 
 };
 

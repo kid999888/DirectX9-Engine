@@ -11,10 +11,9 @@
 #include"DebugGUI.h"
 
 //=================================================================================================
-//　　　インスタンス実体化          
+//　　　実体定義
 //=================================================================================================
 bool CDebugGUI::m_bshow_demo_window = false;
-ImVec4 CDebugGUI::m_v4clear_color = ImVec4(0.0f, 0.0f, 0.0f, 0.0f);
 CPlayer* CDebugGUI::m_pPlayer = nullptr;
 CCamera* CDebugGUI::m_pCamera = nullptr;
 CField* CDebugGUI::m_pField = nullptr;
@@ -22,16 +21,17 @@ CField* CDebugGUI::m_pField = nullptr;
 //=================================================================================================
 //　　　DebugGUIクラス初期処理         
 //=================================================================================================
-
 bool CDebugGUI::Init(void)
 {
 	//ImGUI処理
 	m_bshow_demo_window = false;
-	m_v4clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
 	return true;
 }
 
+//=================================================================================================
+//　　　DebugGUIウィンドウズ更新処理
+//=================================================================================================
 void CDebugGUI::UpdateWindow(void)
 {
 	ImGui_ImplDX9_NewFrame();
@@ -50,10 +50,6 @@ void CDebugGUI::UpdateWindow(void)
 		ImGui::SameLine();
 		ImGui::Text("(%f,%f,%f)", m_pPlayer->GetRotationX(), m_pPlayer->GetRotationY(), m_pPlayer->GetRotationZ());
 
-		ImGui::Text("Player RotationY:");
-		ImGui::SameLine();
-		ImGui::Text("(%f)", m_pPlayer->GetPlayerRotY());
-
 		ImGui::Text("Player At Position:");
 		ImGui::SameLine();
 		ImGui::Text("(%f,%f,%f)", m_pPlayer->GetPlayerFront().x, m_pPlayer->GetPlayerFront().y, m_pPlayer->GetPlayerFront().z);
@@ -67,8 +63,6 @@ void CDebugGUI::UpdateWindow(void)
 		ImGui::Text("(%f,%f,%f)", m_pCamera->GetCameraAtPos().x, m_pCamera->GetCameraAtPos().y, m_pCamera->GetCameraAtPos().z);
 
 		ImGui::Checkbox("Demo Window", &m_bshow_demo_window);      // Edit bools storing our windows open/close state
-		/*ImGui::Checkbox("Another Window", &show_another_window);*/
-
 		
 	}
 

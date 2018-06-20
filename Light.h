@@ -26,6 +26,6 @@ public:
 	void SetSpecular(float r, float g, float b, float a);		//反射光の設定
 
 private:
-	D3DLIGHT9 m_Light;									//DirectXのライト情報
+	D3DLIGHT9 m_Light;											//DirectXのライト情報
 };
 #endif

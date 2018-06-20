@@ -28,16 +28,16 @@ public:
 	void Uninit(void);											//3Dモデルクラス終了処理
 	void Update(void);											//3Dモデルクラス更新処理
 	void Draw(void);											//3Dモデルクラス描画処理
-	static CSceneModel * Create(std::string stFileName);	//3Dモデルクラスのインスタンス生成
+	static CSceneModel * Create(std::string stFileName);		//3Dモデルクラスのインスタンス生成
 
 private:
-	D3DXQUATERNION m_Quaternion;							//コォータニオン回転ベクトル
-	LPD3DXMESH m_pMesh;										//メッシュを受け取る変数
-	DWORD  m_nMaterialNum;									//Xモデルのマテリアル数
-	LPD3DXBUFFER m_pMaterial;								//Xモデルのマテリアル情報
-	int m_nMaterialPointNum;								//マテリアルポインタの番号
-	D3DXVECTOR3 m_XmodelAt;									//Xモデルの注視点
-	std::string stFileNameModel;							//ファイルパスの管理メモ帳
+	D3DXQUATERNION m_Quaternion;								//コォータニオン回転ベクトル
+	LPD3DXMESH m_pMesh;											//メッシュを受け取る変数
+	DWORD  m_nMaterialNum;										//Xモデルのマテリアル数
+	LPD3DXBUFFER m_pMaterial;									//Xモデルのマテリアル情報
+	int m_nMaterialPointNum;									//マテリアルポインタの番号
+	D3DXVECTOR3 m_XmodelAt;										//Xモデルの注視点
+	std::string stFileNameModel;								//ファイルパスの管理メモ帳
 };
 
 #endif

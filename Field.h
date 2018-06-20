@@ -37,14 +37,14 @@ public:
 		m_fheightScale = 0.005f;
 		m_nNumX = nNumX;
 		m_nNumZ = nNumZ;
-	};												//フィールドコンストラクタ
-	~CField();										//フィールドデストラクタ
-	bool Init(void);								//フィールド初期処理
-	void Uninit(void);								//フィールド終了処理
-	void Update(void);								//フィールド更新処理
-	void Draw(void);								//フィールド描画処理
-	static CField * Create(int nNumX, int nNumZ);	//フィールドのインスタンス生成
-	float GetHeight(D3DXVECTOR3 Position);
+	};														//フィールドコンストラクタ
+	~CField();												//フィールドデストラクタ
+	bool Init(void);										//フィールド初期処理
+	void Uninit(void);										//フィールド終了処理
+	void Update(void);										//フィールド更新処理
+	void Draw(void);										//フィールド描画処理
+	static CField * Create(int nNumX, int nNumZ);			//フィールドのインスタンス生成
+	float GetHeight(D3DXVECTOR3 Position);					//フィールド高度判定
 
 private:
 	LPDIRECT3DVERTEXBUFFER9 m_pVertexBuffer;				//頂点バッファ管理するメモ帳

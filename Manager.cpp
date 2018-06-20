@@ -16,7 +16,7 @@
 #endif//defined(DEBUG)
 
 //=================================================================================================
-//　　　インスタンス実体化          
+//　　　実体定義       
 //=================================================================================================
 CCamera *CManager::m_Camera = NULL;
 CLight *CManager::m_Light = NULL;
@@ -117,9 +117,4 @@ void CManager::Draw(void)
 	}
 	//DirectX初期化クラス描画終了処理 
 	CRenderer::DrawEnd();
-}
-
-CField * CManager::GetField(void)
-{
-	return CManager::m_Field;
 }

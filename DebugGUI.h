@@ -18,19 +18,26 @@
 class CDebugGUI
 {
 public:
-	static bool Init(void);				//DebugGUI初期処理
-	static void UpdateWindow(void);		//DebugGUIウィンドウズ更新処理
-	static void SetPlayer(CPlayer* pPlayer) { m_pPlayer = pPlayer; };
-	static void SetMainCamera(CCamera* pCamera) { m_pCamera = pCamera; };
-	static void SetField(CField* pField) { m_pField = pField; };
+	static bool Init(void);						//DebugGUI初期処理
+	static void UpdateWindow(void);				//DebugGUIウィンドウズ更新処理
+	static void SetPlayer(CPlayer* pPlayer)		//プレーヤーのアドレスの設定
+	{ 
+		m_pPlayer = pPlayer; 
+	};
+	static void SetMainCamera(CCamera* pCamera) //カメラのアドレスの設定
+	{
+		m_pCamera = pCamera; 
+	};
+	static void SetField(CField* pField)		//フィールドのアドレスの設定
+	{
+		m_pField = pField; 
+	};
 
 private:
-
-	static bool m_bshow_demo_window;
-	static ImVec4 m_v4clear_color;
-	static CPlayer* m_pPlayer;
-	static CCamera* m_pCamera;
-	static CField * m_pField;
+	static bool m_bshow_demo_window;			//Demoウィンドウのフラッグを声明する
+	static CPlayer* m_pPlayer;					//プレーヤーのアドレスを声明する
+	static CCamera* m_pCamera;					//カメラのアドレスを声明する
+	static CField * m_pField;					//フィールドのアドレスを声明する
 
 };
 #endif
