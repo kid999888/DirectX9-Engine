@@ -9,6 +9,7 @@
 //　　　ヘッダファイル           
 //=================================================================================================
 #include"Manager.h"
+#include"input.h"
 
 #if defined(DEBUG)
 #include"DebugGUI.h"
@@ -20,24 +21,30 @@
 CCamera *CManager::m_Camera = NULL;
 CLight *CManager::m_Light = NULL;
 CField *CManager::m_Field = NULL;
+CPlayer *CManager:: m_Player = NULL;
+CScene3D *CManager::m_Scene3D = NULL;
+CScene2D *CManager::m_Scene2D = NULL;
+bool CManager::m_bDisable = false;
 
 //=================================================================================================
 //　　　マネージャークラス初期処理         
 //=================================================================================================
 bool CManager::Init( HWND hWnd, BOOL bWindow)
 {
+	m_bDisable = false;
 	//DirectX初期化クラス初期処理
 	CRenderer::Init(hWnd, bWindow);
 	m_Camera = new CCamera();
 	m_Light = new CLight();
-	m_Field = CField::Create(10, 10);
-	CScene2D::Create(10,2);
-	CScene3D::Create();
+	m_Field = CField::Create(100, 100);
+	m_Player = CPlayer::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+	m_Scene2D = CScene2D::Create(10,2);
+	m_Scene3D = CScene3D::Create();
 	CScenePolygon::Create();
 #if defined(DEBUG)
 	CDebugGUI::SetMainCamera(m_Camera);
 	CDebugGUI::SetField(m_Field);
-	CDebugGUI::SetPlayer(CPlayer::Create(D3DXVECTOR3(-0.5f, 1.0f, -0.4f)));
+	CDebugGUI::SetPlayer(m_Player);
 #else//defined(DEBUG)
 	CPlayer::Create(D3DXVECTOR3(-0.5f, 1.0f, -0.4f));
 #endif//defined(DEBUG)
@@ -64,6 +71,20 @@ void CManager::Update(void)
 {
 	//シーンオブジェクトの更新
 	CScene::UpdateAll();
+
+	if (m_Player->BallJudgement(m_Scene3D->GetPosition(), m_Player->GetPosition(), 1.0f, 1.0f))
+	{
+		m_Scene3D->SetPositionY(m_Scene3D->GetPositionY() + 0.01f);
+	}
+	else
+	{
+		m_Scene3D->SetPositionY(1.0f);
+	}
+
+	if (GetKeyboardTrigger(DIK_Z))//斜めに進む
+	{
+		m_Scene2D->SetTextureNum(m_Scene2D->GetTextureNumX()+ 1,0);
+	}
 }
 
 //=================================================================================================

@@ -7,7 +7,7 @@
 #ifndef _SCENEMODEL_H_                                                 //2重インクルード防止のマクロ定義
 #define _SCENEMODEL_H_
 #include"Scene.h"
-
+#include<string>
 
 //=================================================================================================
 //　　　3Dポリゴンクラス                                       
@@ -15,19 +15,20 @@
 class CSceneModel : public CScene
 {
 public:
-	CSceneModel(int nPriority) : CScene(nPriority) 
+	CSceneModel(int nPriority, std::string stFileName) : CScene(nPriority)
 	{
 		m_veScale = D3DXVECTOR3(0.3f, 0.3f, 0.3f);
 		m_veRotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-		m_vePosition = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
+		m_vePosition = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		m_pTexture = nullptr;
-	};														//3Dモデルクラスコンストラクタ
-	~CSceneModel();											//3Dモデルクラスデストラクタ
-	bool Init(void);										//3Dモデルクラス初期処理
-	void Uninit(void);										//3Dモデルクラス終了処理
-	void Update(void);										//3Dモデルクラス更新処理
-	void Draw(void);										//3Dモデルクラス描画処理
-	static CSceneModel * Create(void);						//3Dモデルクラスのインスタンス生成
+		stFileNameModel = stFileName;
+	};															//3Dモデルクラスコンストラクタ
+	~CSceneModel();												//3Dモデルクラスデストラクタ
+	bool Init(void);											//3Dモデルクラス初期処理
+	void Uninit(void);											//3Dモデルクラス終了処理
+	void Update(void);											//3Dモデルクラス更新処理
+	void Draw(void);											//3Dモデルクラス描画処理
+	static CSceneModel * Create(std::string stFileName);	//3Dモデルクラスのインスタンス生成
 
 private:
 	D3DXQUATERNION m_Quaternion;							//コォータニオン回転ベクトル
@@ -36,6 +37,7 @@ private:
 	LPD3DXBUFFER m_pMaterial;								//Xモデルのマテリアル情報
 	int m_nMaterialPointNum;								//マテリアルポインタの番号
 	D3DXVECTOR3 m_XmodelAt;									//Xモデルの注視点
+	std::string stFileNameModel;
 };
 
 #endif

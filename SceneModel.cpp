@@ -32,8 +32,11 @@ bool CSceneModel::Init(void)
 {
 
 	LPDIRECT3DDEVICE9 pDevice = CRenderer::GetD3DDevice();
+	/*if (stFileNameModel.length == 0)
+	{
+		stFileNameModel = MODELFILENAME000;
+	}*/
 	//メンバー変数初期化 
-	
 	m_pMesh = NULL;
 	m_nMaterialNum = 0;
 	m_pMaterial = NULL;
@@ -44,7 +47,7 @@ bool CSceneModel::Init(void)
 	LPD3DXBUFFER pAdjacencyBuffer;
 	HRESULT hr;
 
-	hr = D3DXLoadMeshFromX(MODELFILENAME000,
+	hr = D3DXLoadMeshFromX(stFileNameModel.c_str(),
 		D3DXMESH_SYSTEMMEM,
 		pDevice,
 		&pAdjacencyBuffer,
@@ -199,9 +202,9 @@ void CSceneModel::Draw(void)
 //=================================================================================================
 //　　　3Dモデルクラスのインスタンス生成                                    
 //=================================================================================================
-CSceneModel * CSceneModel::Create(void)
+CSceneModel * CSceneModel::Create(std::string stFileName)
 {
-	CSceneModel *SceneModel = new CSceneModel(1);
+	CSceneModel *SceneModel = new CSceneModel(1, stFileName);
 	SceneModel->Init();
 	return SceneModel;
 }

@@ -13,6 +13,7 @@
 #include"input.h"
 #include"Field.h"
 #include"Manager.h"
+#include"Bullet.h"
 
 //=================================================================================================
 //		マクロ定義                                        
@@ -38,7 +39,7 @@ CPlayer::~CPlayer()
 //=================================================================================================
 bool CPlayer::Init(void)
 {
-	m_pPlayer = CSceneModel::Create();
+	m_pPlayer = CSceneModel::Create("Data\\Model\\roboModel.x");
 	m_pPlayer->SetPosition(m_vePosition);
 	m_Camera = CManager::GetMainCamera();
 	//プレーヤーの座標をモデリングに転送
@@ -61,39 +62,126 @@ void CPlayer::Uninit(void)
 void CPlayer::Update(void)
 {
 	CField *field = CManager::GetField();
+	
+
+	if (m_veRotation.y > m_fRotYExactly)
+	{
+		if (m_veRotation.y - m_fRotYExactly < 180.f)
+		{
+			m_veRotation.y -= m_fRotYSpeed;
+			m_fRotOnce = -m_fRotYSpeed;
+		}
+		else
+		{
+			m_veRotation.y += m_fRotYSpeed;
+			m_fRotOnce = m_fRotYSpeed;
+		}
+	}
+	else if (m_veRotation.y < m_fRotYExactly)
+	{
+		if (m_fRotYExactly - m_veRotation.y < 180.f)
+		{
+			m_veRotation.y += m_fRotYSpeed;
+			m_fRotOnce = m_fRotYSpeed;
+		}
+		else
+		{
+			m_veRotation.y -= m_fRotYSpeed;
+			m_fRotOnce = -m_fRotYSpeed;
+		}
+	}
+
+	if (m_veRotation.y > 360.f)
+	{
+		m_veRotation.y -= 360.f;
+	}
+	if (m_veRotation.y < 0.0f)
+	{
+		m_veRotation.y += 360.f;
+	}
+
 	//移動処理
 	if (GetKeyboardPress(DIK_LEFT))
 	{
+		m_fRotYExactly = 90.0f;
 		m_vePosition += v3Left * m_fMoveSpeed;
+		m_vePlayerFront += v3Left * m_fMoveSpeed;
 		m_Camera->SetCameraPos(m_Camera->GetCameraPos() + (v3Left * m_fMoveSpeed));
 		m_Camera->SetCameraAtPos(m_Camera->GetCameraAtPos() + (v3Left * m_fMoveSpeed));
 	}
 	if (GetKeyboardPress(DIK_RIGHT))
 	{
+		m_fRotYExactly = 270.0f;
 		m_vePosition += v3Right * m_fMoveSpeed;
+		m_vePlayerFront += v3Right * m_fMoveSpeed;
 		m_Camera->SetCameraPos(m_Camera->GetCameraPos() + (v3Right  * m_fMoveSpeed));
 		m_Camera->SetCameraAtPos(m_Camera->GetCameraAtPos() + (v3Right  * m_fMoveSpeed));
 	}
 	if (GetKeyboardPress(DIK_UP))
 	{
+		m_fRotYExactly = 180.0f;
 		m_vePosition += v3In * m_fMoveSpeed;
+		m_vePlayerFront += v3In * m_fMoveSpeed;
 		m_Camera->SetCameraPos(m_Camera->GetCameraPos() + (v3In * m_fMoveSpeed));
 		m_Camera->SetCameraAtPos(m_Camera->GetCameraAtPos() + (v3In  * m_fMoveSpeed));
 	}
 	if (GetKeyboardPress(DIK_DOWN))
 	{
+		m_fRotYExactly = 0.0f;
 		m_vePosition += v3Out * m_fMoveSpeed;
+		m_vePlayerFront += v3Out * m_fMoveSpeed;
 		m_Camera->SetCameraPos(m_Camera->GetCameraPos() + (v3Out * m_fMoveSpeed));
 		m_Camera->SetCameraAtPos(m_Camera->GetCameraAtPos() + (v3Out  * m_fMoveSpeed));
 	}
-	if (GetKeyboardPress(DIK_A))
+
+	if (GetKeyboardPress(DIK_SPACE))
 	{
-		
+		CBullet::Create(m_vePosition,m_vePlayerFront);
 	}
-	if (GetKeyboardPress(DIK_D))
+
+	if (m_veRotation.y > 360.0f)
 	{
-		
+		m_veRotation.y -= 360.f;
 	}
+	if (m_veRotation.y < 0.0f)
+	{
+		m_veRotation.y = 360.0f;
+	}
+	if (m_fRotYExactly > 360.0f)
+	{
+		m_fRotYExactly -= 360.f;
+	}
+	if (m_fRotYExactly < 0.0f)
+	{
+		m_fRotYExactly = 360.0f;
+	}
+
+	if (GetKeyboardPress(DIK_UP) && GetKeyboardPress(DIK_LEFT))//斜めに進む
+	{
+		m_fRotYExactly = 135.0f;
+	}
+	if (GetKeyboardPress(DIK_UP) && GetKeyboardPress(DIK_RIGHT))//斜めに進む
+	{
+		m_fRotYExactly = 225.0f;
+	}
+	if (GetKeyboardPress(DIK_DOWN) && GetKeyboardPress(DIK_RIGHT))//斜めに進む
+	{
+		m_fRotYExactly = 315.0f;
+	}
+	if (GetKeyboardPress(DIK_DOWN) && GetKeyboardPress(DIK_LEFT))//斜めに進む
+	{
+		m_fRotYExactly = 45.0f;
+	}
+
+	D3DXMATRIX m_mtxRoation;
+	m_veFrontTemporary = m_vePlayerFront;
+	D3DXMatrixRotationY(&m_mtxRoation, D3DXToRadian(m_veRotation.y));
+	D3DXVec3TransformNormal(&m_veFrontTemporary, &m_veFrontTemporary, &m_mtxRoation);
+	/*D3DXVec3Normalize(&m_veFrontTemporary, &m_veFrontTemporary);
+	m_veFrontTemporary *= 1.0f;*/
+
+	
+	
 
 	//フィール衝突判定
 	m_vePosition.y = (field->GetHeight(m_vePosition) + 0.5f);
@@ -120,4 +208,13 @@ CPlayer * CPlayer::Create(D3DXVECTOR3 vePosition)
 	Player->m_vePosition = vePosition;
 	Player->Init();
 	return Player;
+}
+
+bool CPlayer::BallJudgement(D3DXVECTOR3 vBall1, D3DXVECTOR3 vBall2, float r1, float r2)
+{
+	float x = vBall1.x - vBall2.x;
+	float y = vBall1.y - vBall2.y;
+	float z = vBall1.z - vBall2.z;
+	float l = x * x + y * y + z * z;
+	return l < (r1 + r2) * (r1 + r2);
 }

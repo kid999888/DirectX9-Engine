@@ -32,6 +32,9 @@ public:
 	void Draw(void);								//2Dポリゴン描画処理
 	static CScene2D * Create(int nNx, int nNy);		//2Dポリゴンのインスタンス生成
 	void SetTextureNum(int nX,int nY);				//2Dポリゴンのテクスチャナンバーの設定
+	int GetTextureNumX(void) {
+		return m_nTextureNumber.x;
+	};;						//
 	int Get2DObjectHeight(void) 
 	{ 
 		return m_D3DTextureInfo.Height; 

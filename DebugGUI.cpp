@@ -46,6 +46,18 @@ void CDebugGUI::UpdateWindow(void)
 		ImGui::SameLine();
 		ImGui::Text("(%f,%f,%f)", m_pPlayer->GetPositionX(), m_pPlayer->GetPositionY(), m_pPlayer->GetPositionZ());
 
+		ImGui::Text("Player Rotation:");
+		ImGui::SameLine();
+		ImGui::Text("(%f,%f,%f)", m_pPlayer->GetRotationX(), m_pPlayer->GetRotationY(), m_pPlayer->GetRotationZ());
+
+		ImGui::Text("Player RotationY:");
+		ImGui::SameLine();
+		ImGui::Text("(%f)", m_pPlayer->GetPlayerRotY());
+
+		ImGui::Text("Player At Position:");
+		ImGui::SameLine();
+		ImGui::Text("(%f,%f,%f)", m_pPlayer->GetPlayerFront().x, m_pPlayer->GetPlayerFront().y, m_pPlayer->GetPlayerFront().z);
+
 		ImGui::Text("Camera Position:");
 		ImGui::SameLine();
 		ImGui::Text("(%f,%f,%f)", m_pCamera->GetCameraPos().x, m_pCamera->GetCameraPos().y, m_pCamera->GetCameraPos().z);
