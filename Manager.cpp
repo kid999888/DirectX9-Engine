@@ -23,23 +23,19 @@ CLight *CManager::m_Light = NULL;
 CField *CManager::m_Field = NULL;
 CPlayer *CManager:: m_Player = NULL;
 CScene3D *CManager::m_Scene3D = NULL;
-CScene2D *CManager::m_Scene2D = NULL;
 CNumber *CManager::m_Number = NULL;
-bool CManager::m_bDisable = false;
 
 //=================================================================================================
 //　　　マネージャークラス初期処理         
 //=================================================================================================
 bool CManager::Init( HWND hWnd, BOOL bWindow)
 {
-	m_bDisable = false;
 	//DirectX初期化クラス初期処理
 	CRenderer::Init(hWnd, bWindow);
 	m_Camera = new CCamera();
 	m_Light = new CLight();
 	m_Field = CField::Create(100, 100);
 	m_Player = CPlayer::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
-	/*m_Scene2D = CScene2D::Create(10,2);*/
 	m_Number = CNumber::Create(0);
 	m_Scene3D = CScene3D::Create();
 	CScenePolygon::Create();

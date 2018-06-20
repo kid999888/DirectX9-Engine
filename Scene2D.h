@@ -7,6 +7,7 @@
 #ifndef _SCENE2D_H_                                                 //2重インクルード防止のマクロ定義
 #define _SCENE2D_H_
 #include"Scene.h"
+#include<string>
 
 //=================================================================================================
 //　　　2Dポリゴンクラス                                       
@@ -14,7 +15,7 @@
 class CScene2D : public CScene
 {
 public:
-	CScene2D(int nPriority, int nNx, int nNy) : CScene(nPriority)
+	CScene2D(int nPriority, std::string stFileName, int nNx, int nNy) : CScene(nPriority)
 	{
 		m_veScale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
 		m_vePosition = D3DXVECTOR3(0.0f, 0.0f, -1.0f);
@@ -24,17 +25,18 @@ public:
 		m_npTLimitNum.y = nNy;
 		m_pTexture = nullptr;
 		m_pVertexBuffer = NULL;
-	};												//2Dポリゴンコンストラクタ
-	~CScene2D();									//2Dポリゴンデストラクタ
-	bool Init(void);								//2Dポリゴン初期処理
-	void Uninit(void);								//2Dポリゴン終了処理
-	void Update(void);								//2Dポリゴン更新処理
-	void Draw(void);								//2Dポリゴン描画処理
-	static CScene2D * Create(int nNx, int nNy);		//2Dポリゴンのインスタンス生成
-	void SetTextureNum(int nX,int nY);				//2Dポリゴンのテクスチャナンバーの設定
-	int Get2DObjectHeight(void) 
-	{ 
-		return m_D3DTextureInfo.Height; 
+		stFileNameModel = stFileName;
+	};																		//2Dポリゴンコンストラクタ
+	~CScene2D();															//2Dポリゴンデストラクタ
+	bool Init(void);														//2Dポリゴン初期処理
+	void Uninit(void);														//2Dポリゴン終了処理
+	void Update(void);														//2Dポリゴン更新処理
+	void Draw(void);														//2Dポリゴン描画処理
+	static CScene2D * Create(std::string stFileName, int nNx, int nNy);		//2Dポリゴンのインスタンス生成
+	void SetTextureNum(int nX, int nY);										//2Dポリゴンのテクスチャナンバーの設定
+	int Get2DObjectHeight(void)
+	{
+		return m_D3DTextureInfo.Height;
 	};
 	int Get2DObjectWidth(void)
 	{
@@ -47,6 +49,7 @@ private:
 	D3DXIMAGE_INFO m_D3DTextureInfo;
 	LPDIRECT3DVERTEXBUFFER9 m_pVertexBuffer;						//頂点バッファ管理するメモ帳
 	void CreateVertexAffine(D3DCOLOR color, int tCx, int tCy);		//頂点バッファ処理
+	std::string stFileNameModel;									//ファイルパスの管理メモ帳
 };
 
 #endif

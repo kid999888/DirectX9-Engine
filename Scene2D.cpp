@@ -16,8 +16,6 @@
 //=================================================================================================
 //FVF定義
 #define FVF_VERTEX_2D (D3DFVF_XYZRHW | D3DFVF_DIFFUSE | D3DFVF_TEX1 )			//2Dポリゴンの頂点情報
-//テクスチャファイルパス
-#define TEXTUREFILENAME000	        "Data\\Texture\\Number.png"	
 
 //=================================================================================================
 //　　　構造体定義                                         
@@ -137,9 +135,9 @@ void CScene2D::Draw(void)
 //=================================================================================================
 //　　　2Dポリゴンクラスのインスタンス生成                                    
 //=================================================================================================
-CScene2D * CScene2D::Create(int nNx, int nNy)
+CScene2D * CScene2D::Create(std::string stFileName, int nNx, int nNy)
 {
-	CScene2D *Scene2D = new CScene2D(2, nNx, nNy);
+	CScene2D *Scene2D = new CScene2D(2, stFileName, nNx, nNy);
 	Scene2D->Init();
 	return Scene2D;
 }

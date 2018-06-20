@@ -41,10 +41,7 @@ private:
 	static CField * m_Field;
 	static CPlayer * m_Player;
 	static CScene3D * m_Scene3D;
-	static CScene2D * m_Scene2D;
 	static CNumber * m_Number;
-	static bool m_bDisable;
-	
 };
 
 #endif

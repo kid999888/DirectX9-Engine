@@ -37,7 +37,7 @@ private:
 	LPD3DXBUFFER m_pMaterial;								//Xモデルのマテリアル情報
 	int m_nMaterialPointNum;								//マテリアルポインタの番号
 	D3DXVECTOR3 m_XmodelAt;									//Xモデルの注視点
-	std::string stFileNameModel;
+	std::string stFileNameModel;							//ファイルパスの管理メモ帳
 };
 
 #endif

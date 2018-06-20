@@ -55,7 +55,7 @@ bool CNumber::Init(void)
 
 	for (nCount = 0;nCount < m_nDig; nCount++)
 	{
-		Scene2DNumber[nCount] = CScene2D::Create(10, 2);
+		Scene2DNumber[nCount] = CScene2D::Create("Data\\Texture\\Number.png",10, 2);
 		Scene2DNumber[nCount]->SetPosition(D3DXVECTOR3(m_vePosition.x + ((float)nCount * 60.0f),
 														m_vePosition.y,
 														-1.0f));
