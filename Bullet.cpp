@@ -82,7 +82,7 @@ CBullet * CBullet::Create(D3DXVECTOR3 Pos, D3DXVECTOR3 At)
 	CBullet *Bullet = new CBullet(1);
 	Bullet->Init();
 	m_vePosition = Pos;
-	m_veMove = (Pos - At) * 0.5f;
+	m_veMove = (At - Pos) * 0.1f;
 	
 	return Bullet;
 }

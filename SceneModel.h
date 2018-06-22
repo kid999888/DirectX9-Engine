@@ -29,6 +29,10 @@ public:
 	void Update(void);											//3Dモデルクラス更新処理
 	void Draw(void);											//3Dモデルクラス描画処理
 	static CSceneModel * Create(std::string stFileName);		//3Dモデルクラスのインスタンス生成
+	D3DXVECTOR3 GetModelAt(void) 
+	{
+		return m_XmodelAt;
+	};								//
 
 private:
 	D3DXQUATERNION m_Quaternion;								//コォータニオン回転ベクトル

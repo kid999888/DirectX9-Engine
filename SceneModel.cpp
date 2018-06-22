@@ -170,7 +170,7 @@ void CSceneModel::Draw(void)
 
 	//ÉèÅ[ÉãÉhçsóÒ
 	D3DXMATRIX Vec;
-	D3DXMatrixTranslation(&Vec, v3In.x, v3In.y, v3In.z);
+	D3DXMatrixTranslation(&Vec, v3Out.x, v3Out.y, v3Out.z);
 	D3DXMatrixMultiply(&Vec, &Vec, &m_mtxWorld);
 
 	m_XmodelAt = D3DXVECTOR3(Vec._41, Vec._42, Vec._43);

@@ -136,7 +136,7 @@ void CPlayer::Update(void)
 
 	if (GetKeyboardPress(DIK_SPACE))
 	{
-		CBullet::Create(m_vePosition,m_vePlayerFront);
+		CBullet::Create(m_vePosition, m_veFrontTemporary);
 	}
 
 	if (m_veRotation.y > 360.0f)
@@ -173,12 +173,14 @@ void CPlayer::Update(void)
 		m_fRotYExactly = 45.0f;
 	}
 
-	D3DXMATRIX m_mtxRoation;
+	/*D3DXMATRIX m_mtxRoation;
 	m_veFrontTemporary = m_vePlayerFront;
 	D3DXMatrixRotationY(&m_mtxRoation, D3DXToRadian(m_veRotation.y));
-	D3DXVec3TransformNormal(&m_veFrontTemporary, &m_veFrontTemporary, &m_mtxRoation);
+	D3DXVec3TransformNormal(&m_veFrontTemporary, &m_veFrontTemporary, &m_mtxRoation);*/
 	/*D3DXVec3Normalize(&m_veFrontTemporary, &m_veFrontTemporary);
 	m_veFrontTemporary *= 1.0f;*/
+
+	m_veFrontTemporary = m_pPlayer->GetModelAt();
 
 	
 	
@@ -210,6 +212,9 @@ CPlayer * CPlayer::Create(D3DXVECTOR3 vePosition)
 	return Player;
 }
 
+//=================================================================================================
+//Å@Å@Å@BallîªíË                                        
+//=================================================================================================
 bool CPlayer::BallJudgement(D3DXVECTOR3 vBall1, D3DXVECTOR3 vBall2, float r1, float r2)
 {
 	float x = vBall1.x - vBall2.x;
