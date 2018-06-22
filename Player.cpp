@@ -14,6 +14,7 @@
 #include"Field.h"
 #include"Manager.h"
 #include"Bullet.h"
+#include"Collision.h"
 
 //=================================================================================================
 //		マクロ定義                                        
@@ -186,7 +187,7 @@ void CPlayer::Update(void)
 	
 
 	//フィール衝突判定
-	m_vePosition.y = (field->GetHeight(m_vePosition) + 0.5f);
+	m_vePosition.y = (CCollision::GetFieldHeight(field->GetFiledPos(), m_vePosition, field->GetBlockNumX(), field->GetBlockNumZ()) + 0.5f);
 
 	//プレーヤーの座標をモデリングに転送
 	m_pPlayer->SetPosition(m_vePosition);
@@ -210,16 +211,4 @@ CPlayer * CPlayer::Create(D3DXVECTOR3 vePosition)
 	Player->m_vePosition = vePosition;
 	Player->Init();
 	return Player;
-}
-
-//=================================================================================================
-//　　　Ball判定                                        
-//=================================================================================================
-bool CPlayer::BallJudgement(D3DXVECTOR3 vBall1, D3DXVECTOR3 vBall2, float r1, float r2)
-{
-	float x = vBall1.x - vBall2.x;
-	float y = vBall1.y - vBall2.y;
-	float z = vBall1.z - vBall2.z;
-	float l = x * x + y * y + z * z;
-	return l < (r1 + r2) * (r1 + r2);
 }

@@ -44,7 +44,18 @@ public:
 	void Update(void);										//フィールド更新処理
 	void Draw(void);										//フィールド描画処理
 	static CField * Create(int nNumX, int nNumZ);			//フィールドのインスタンス生成
-	float GetHeight(D3DXVECTOR3 Position);					//フィールド高度判定
+	int GetBlockNumX(void)									//フィールドX方向ブロック数を取得
+	{
+		return m_nNumX;
+	};
+	int GetBlockNumZ(void)									//フィールドZ方向ブロック数を取得
+	{
+		return m_nNumZ;
+	};
+	VERTEX_3D* GetFiledPos(void)							//頂点情報管理メモ帳を取得
+	{
+		return m_pvMeshFiledPos;
+	};							
 
 private:
 	LPDIRECT3DVERTEXBUFFER9 m_pVertexBuffer;				//頂点バッファ管理するメモ帳

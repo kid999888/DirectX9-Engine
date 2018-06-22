@@ -19,7 +19,6 @@
 #include"ScenePolygon.h"
 #include"Field.h"
 #include"Player.h"
-
 #include"Number.h"
 
 //=================================================================================================

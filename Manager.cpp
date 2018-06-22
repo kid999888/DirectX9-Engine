@@ -10,6 +10,7 @@
 //=================================================================================================
 #include"Manager.h"
 #include"input.h"
+#include"Collision.h"
 
 #if defined(DEBUG)
 #include"DebugGUI.h"
@@ -69,8 +70,8 @@ void CManager::Update(void)
 {
 	//シーンオブジェクトの更新
 	CScene::UpdateAll();
-
-	if (m_Player->BallJudgement(m_Scene3D->GetPosition(), m_Player->GetPosition(), 1.0f, 1.0f))
+	
+	if (CCollision::BallJudgement(m_Scene3D->GetPosition(), m_Player->GetPosition(), 1.0f, 1.0f))
 	{
 		m_Scene3D->SetPositionY(m_Scene3D->GetPositionY() + 0.06f);
 	}

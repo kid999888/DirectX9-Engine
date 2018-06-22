@@ -38,7 +38,6 @@ public:
 	void Update(void);									//プレーヤー更新処理
 	void Draw(void);									//プレーヤー描画処理
 	static CPlayer * Create(D3DXVECTOR3 vePosition);	//プレーヤーのインスタンス生成
-	bool BallJudgement(D3DXVECTOR3 vBall1, D3DXVECTOR3 vBall2, float r1, float r2);
 	D3DXVECTOR3 GetPlayerFront(void)					//プレーヤーの向きベクトルを取得
 	{
 		return m_veFrontTemporary;
