@@ -21,6 +21,10 @@ public:
 								D3DXVECTOR3 Capsulecenter, float lenght, float r2);
 	static float GetSqDistancePoint2Segment(const D3DXVECTOR3& point,										//“_‚Æü•ª‚Ì‹——£‚Ì“ñæ‚ğæ“¾
 								const D3DXVECTOR3& start, const D3DXVECTOR3& end);
+	D3DXVECTOR3* CalcScreenToXZ(D3DXVECTOR3* pout,int Sx,int Sy,
+	int Screen_w,int Screen_h,D3DXMATRIX* View,D3DXMATRIX* Prj);
+	D3DXVECTOR3* CalcScreenToWorld(D3DXVECTOR3* pout, int Sx, int Sy, float fZ,
+	int Screen_w, int Screen_h, D3DXMATRIX* View, D3DXMATRIX* Prj);
 	
 
 private:
