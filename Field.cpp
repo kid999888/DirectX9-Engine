@@ -303,22 +303,6 @@ void CField::Update(void)
 	//m_veRotation.x += 0.0f;
 	//m_veRotation.y += 0.01f;
 	//m_veRotation.z += 0.0f;
-	if (GetKeyboardPress(DIK_LEFT))
-	{
-
-	}
-	if (GetKeyboardPress(DIK_RIGHT))
-	{
-		
-	}
-	if (GetKeyboardPress(DIK_UP))
-	{
-		
-	}
-	if (GetKeyboardPress(DIK_DOWN))
-	{
-		
-	}
 }
 
 //=================================================================================================

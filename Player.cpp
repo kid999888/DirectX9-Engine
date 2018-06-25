@@ -102,7 +102,7 @@ void CPlayer::Update(void)
 	}
 
 	//移動処理
-	if (GetKeyboardPress(DIK_LEFT))
+	if (CInputKeyboard::GetKeyPress(DIK_LEFT))
 	{
 		m_fRotYExactly = 90.0f;
 		m_vePosition += v3Left * m_fMoveSpeed;
@@ -110,7 +110,7 @@ void CPlayer::Update(void)
 		m_Camera->SetCameraPos(m_Camera->GetCameraPos() + (v3Left * m_fMoveSpeed));
 		m_Camera->SetCameraAtPos(m_Camera->GetCameraAtPos() + (v3Left * m_fMoveSpeed));
 	}
-	if (GetKeyboardPress(DIK_RIGHT))
+	if (CInputKeyboard::GetKeyPress(DIK_RIGHT))
 	{
 		m_fRotYExactly = 270.0f;
 		m_vePosition += v3Right * m_fMoveSpeed;
@@ -118,7 +118,7 @@ void CPlayer::Update(void)
 		m_Camera->SetCameraPos(m_Camera->GetCameraPos() + (v3Right  * m_fMoveSpeed));
 		m_Camera->SetCameraAtPos(m_Camera->GetCameraAtPos() + (v3Right  * m_fMoveSpeed));
 	}
-	if (GetKeyboardPress(DIK_UP))
+	if (CInputKeyboard::GetKeyPress(DIK_UP))
 	{
 		m_fRotYExactly = 180.0f;
 		m_vePosition += v3In * m_fMoveSpeed;
@@ -126,7 +126,7 @@ void CPlayer::Update(void)
 		m_Camera->SetCameraPos(m_Camera->GetCameraPos() + (v3In * m_fMoveSpeed));
 		m_Camera->SetCameraAtPos(m_Camera->GetCameraAtPos() + (v3In  * m_fMoveSpeed));
 	}
-	if (GetKeyboardPress(DIK_DOWN))
+	if (CInputKeyboard::GetKeyPress(DIK_DOWN))
 	{
 		m_fRotYExactly = 0.0f;
 		m_vePosition += v3Out * m_fMoveSpeed;
@@ -135,7 +135,7 @@ void CPlayer::Update(void)
 		m_Camera->SetCameraAtPos(m_Camera->GetCameraAtPos() + (v3Out  * m_fMoveSpeed));
 	}
 
-	if (GetKeyboardPress(DIK_SPACE))
+	if (CInputKeyboard::GetKeyPress(DIK_SPACE))
 	{
 		CBullet::Create(m_vePosition, m_vePlayerFront);
 	}
@@ -157,19 +157,19 @@ void CPlayer::Update(void)
 		m_fRotYExactly = 360.0f;
 	}
 
-	if (GetKeyboardPress(DIK_UP) && GetKeyboardPress(DIK_LEFT))//斜めに進む
+	if (CInputKeyboard::GetKeyPress(DIK_UP) && CInputKeyboard::GetKeyPress(DIK_LEFT))//斜めに進む
 	{
 		m_fRotYExactly = 135.0f;
 	}
-	if (GetKeyboardPress(DIK_UP) && GetKeyboardPress(DIK_RIGHT))//斜めに進む
+	if (CInputKeyboard::GetKeyPress(DIK_UP) && CInputKeyboard::GetKeyPress(DIK_RIGHT))//斜めに進む
 	{
 		m_fRotYExactly = 225.0f;
 	}
-	if (GetKeyboardPress(DIK_DOWN) && GetKeyboardPress(DIK_RIGHT))//斜めに進む
+	if (CInputKeyboard::GetKeyPress(DIK_DOWN) && CInputKeyboard::GetKeyPress(DIK_RIGHT))//斜めに進む
 	{
 		m_fRotYExactly = 315.0f;
 	}
-	if (GetKeyboardPress(DIK_DOWN) && GetKeyboardPress(DIK_LEFT))//斜めに進む
+	if (CInputKeyboard::GetKeyPress(DIK_DOWN) && CInputKeyboard::GetKeyPress(DIK_LEFT))//斜めに進む
 	{
 		m_fRotYExactly = 45.0f;
 	}

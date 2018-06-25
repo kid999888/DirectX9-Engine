@@ -41,6 +41,13 @@ extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam
 //=================================================================================================
 
 //=================================================================================================
+//　　　静的インスタンス                           
+//=================================================================================================
+CInputKeyboard* g_pInputKeyboard;
+CInputMouse* g_pInputMouse;
+CInputJoypad* g_pInputJoypad;
+
+//=================================================================================================
 //　　　メイン関数                                        
 //=================================================================================================
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)					//int Main(void)と同じ
@@ -110,7 +117,14 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 		MessageBox(g_hWnd, "エラー", "初期化エラー", MB_OK);
 		return -1;
 	}
-	InitKeyboard(hInstance, g_hWnd);							//入力処理の初期化
+	//入力処理の初期化
+	/*InitKeyboard(hInstance, g_hWnd);*/
+	g_pInputKeyboard = new CInputKeyboard;
+	g_pInputKeyboard->Init(hInstance, g_hWnd);
+	g_pInputMouse = new CInputMouse;
+	g_pInputMouse->Init(hInstance, g_hWnd);
+	g_pInputJoypad = new CInputJoypad;
+	g_pInputJoypad->Init(hInstance, g_hWnd);
 
 #if defined(DEBUG)
 	//DebugGUI初期処理
@@ -150,7 +164,11 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 
 				//更新処理
 				CManager::Update();
-				UpdateKeyboard();						//入力処理の更新処理(無くてもいい)
+				//入力処理の更新処理
+				/*UpdateKeyboard();*/						
+				g_pInputKeyboard->Update();
+				g_pInputMouse->Update();
+				g_pInputJoypad->Update();
 				//描画処理
 				CManager::Draw();
 
@@ -162,7 +180,11 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	timeEndPeriod(1);									//分解能を戻す
 
 	CManager::Uninit();									//後処理
-	UninitKeyboard();									//入力処理の終了処理
+	//入力処理の終了処理
+	/*UninitKeyboard();*/									
+	g_pInputKeyboard->Uninit();
+	g_pInputMouse->Uninit();
+	g_pInputJoypad->Uninit();
 
 	//終了 戻り値設定
 	return (int)msg.wParam;

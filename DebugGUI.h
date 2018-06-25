@@ -11,6 +11,7 @@
 #include"Player.h"
 #include"Camera.h"
 #include"Manager.h"
+#include"input.h"
 
 //=================================================================================================
 //　　　DirectX初期化クラス                                      

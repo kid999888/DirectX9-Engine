@@ -1,206 +1,793 @@
-//=================================================================================================
-//                                                        
-//　　　入力処理[input.cpp]                   
-//      Author:王暁晨(AT-12B-242 04)　2017.06.05   
-//                                                        
-//=================================================================================================
-
-//=================================================================================================
-//　　　ヘッダファイル           
-//=================================================================================================
+//=============================================================================
+//
+//		入力処理 [input.cpp]
+//      Author:王暁晨(AT-13A-281 04)　2018.05.16
+//
+//=============================================================================
 #include "input.h"
 
-//=================================================================================================
-//		マクロ定義
-//=================================================================================================
+//*****************************************************************************
+// マクロ定義
+//*****************************************************************************
+#define		JOY_MIN_X		(-256)		// Ｘ軸最小値
+#define		JOY_MAX_X		(256)		// Ｘ軸最大値
+#define		JOY_MIN_Y		(-256)		// Ｙ軸最小値
+#define		JOY_MAX_Y		(256)		// Ｙ軸最大値
 
 //=================================================================================================
-//		グローバル変数
+//　　　実体定義
 //=================================================================================================
-LPDIRECTINPUT8			g_pInput = NULL;					// DirectInputオブジェクトへのポインタ
-LPDIRECTINPUTDEVICE8	g_pDevKeyboard = NULL;				// 入力デバイス(キーボード)へのポインタ
-BYTE					g_aKeyState[NUM_KEY_MAX];			// キーボードの入力情報ワーク
-BYTE					g_aKeyStateTrigger[NUM_KEY_MAX];	// キーボードのトリガー情報ワーク
-BYTE					g_aKeyStateRelease[NUM_KEY_MAX];	// キーボードのリリース情報ワーク
-BYTE					g_aKeyStateRepeat[NUM_KEY_MAX];		// キーボードのリピート情報ワーク
-int						g_aKeyStateRepeatCnt[NUM_KEY_MAX];	// キーボードのリピートカウンタ
+LPDIRECTINPUT8		CInput::m_pDInput = NULL;			// IDirectInput8インターフェースへのポインタ
+BYTE CInputKeyboard::m_aKeyState[256];
+BYTE CInputKeyboard::m_aKeyStateTrigger[256];
+BYTE CInputKeyboard::m_aKeyStateRelease[256];
+BYTE CInputKeyboard::m_aKeyStateRepeat[256];
+int CInputKeyboard::m_aKeyStateRepeatCnt[256];
+DIMOUSESTATE2 CInputMouse::m_mouseState;
+DIMOUSESTATE2 CInputMouse::m_mouseStateTrigger;
+POINT CInputMouse::m_posMouseWorld;
+DIJOYSTATE2 CInputJoypad::m_joypadState;
+bool CInputJoypad::m_aKeyState[KEY_MAX];
+bool CInputJoypad::m_aKeyStateTrigger[KEY_MAX];
+bool CInputJoypad::m_aKeyStateRelease[KEY_MAX];
+bool CInputJoypad::m_aKeyStateRepeat[KEY_MAX];
+int CInputJoypad::m_aKeyStateRepeatCnt[KEY_MAX];
 
-//=================================================================================================
-//		入力処理の初期化
-//=================================================================================================
-HRESULT InitInput(HINSTANCE hInstance, HWND hWnd)
+//=============================================================================
+// CInputコンストラスタ
+//=============================================================================
+CInput::CInput()
 {
-	hWnd = hWnd;
-	//UNREFERENCED_PARAMETER(hWnd);
-	if(g_pInput == NULL)
+	m_pDIDevice = NULL;
+}
+
+//=============================================================================
+// CInputデストラスタ
+//=============================================================================
+CInput::~CInput()
+{
+}
+
+//=============================================================================
+// 入力処理の初期化処理
+//=============================================================================
+HRESULT CInput::Init(HINSTANCE hInst, HWND hWnd)
+{
+	HRESULT hr = S_FALSE;
+
+	// DirectInputオブジェクトの作成
+	if(!m_pDInput)
 	{
-		// DirectInputオブジェクトの作成
-		if(FAILED(DirectInput8Create(hInstance, DIRECTINPUT_VERSION,
-										IID_IDirectInput8, (void**)&g_pInput, NULL)))
-		{
-			return E_FAIL;
-		}
+		hr = DirectInput8Create(hInst, DIRECTINPUT_VERSION,
+									IID_IDirectInput8, (void**)&m_pDInput, NULL);
 	}
 
+	return hr;
+}
+
+//=============================================================================
+// 入力処理の終了処理
+//=============================================================================
+void CInput::Uninit(void)
+{
+	if(m_pDIDevice)
+	{// デバイスオブジェクトの開放
+		m_pDIDevice->Unacquire();
+
+		m_pDIDevice->Release();
+		m_pDIDevice = NULL;
+	}
+
+	if(m_pDInput)
+	{// DirectInputオブジェクトの開放
+		m_pDInput->Release();
+		m_pDInput = NULL;
+	}
+}
+
+//=============================================================================
+// 入力処理の更新処理
+//=============================================================================
+#if 0	// ---> 純粋仮想関数化
+HRESULT CInput::Update(void)
+{
 	return S_OK;
 }
+#endif
 
-//=================================================================================================
-//		入力処理の終了処理
-//=================================================================================================
-void UninitInput(void)
+//=============================================================================
+// CInputKeyboardコンストラスタ
+//=============================================================================
+CInputKeyboard::CInputKeyboard()
 {
-	if(g_pInput != NULL)
-	{// DirectInputオブジェクトの開放
-		g_pInput->Release();
-		g_pInput = NULL;
-	}
+	// 各ワークのクリア
+	ZeroMemory(m_aKeyState, sizeof m_aKeyState);
+	ZeroMemory(m_aKeyStateTrigger, sizeof m_aKeyStateTrigger);
+	ZeroMemory(m_aKeyStateRelease, sizeof m_aKeyStateRelease);
+	ZeroMemory(m_aKeyStateRepeat, sizeof m_aKeyStateRepeat);
+	ZeroMemory(m_aKeyStateRepeatCnt, sizeof m_aKeyStateRepeatCnt);
 }
 
-//=================================================================================================
-//		入力処理の更新処理
-//=================================================================================================
-void UpdateInput(void)
+//=============================================================================
+// CInputKeyboardデストラスタ
+//=============================================================================
+CInputKeyboard::~CInputKeyboard()
 {
-
 }
 
-//=================================================================================================
-//		キーボードの初期化
-//=================================================================================================
-HRESULT InitKeyboard(HINSTANCE hInstance, HWND hWnd)
+//=============================================================================
+// キーボードの初期化処理
+//=============================================================================
+HRESULT CInputKeyboard::Init(HINSTANCE hInst, HWND hWnd)
 {
+	HRESULT hr;
+
 	// 入力処理の初期化
-	if(FAILED(InitInput(hInstance, hWnd)))
-	{
-		MessageBox(hWnd, "DirectInputオブジェクトが作れねぇ！", "警告！", MB_ICONWARNING);
-		return E_FAIL;
-	}
+	CInput::Init(hInst, hWnd);
 
-	// デバイスの作成
-	if(FAILED(g_pInput->CreateDevice(GUID_SysKeyboard, &g_pDevKeyboard, NULL)))
+	// デバイスオブジェクトを作成
+	hr = m_pDInput->CreateDevice(GUID_SysKeyboard, &m_pDIDevice, NULL);
+	if(FAILED(hr) || m_pDIDevice == NULL)
 	{
 		MessageBox(hWnd, "キーボードがねぇ！", "警告！", MB_ICONWARNING);
-		return E_FAIL;
+		return hr;
 	}
 
 	// データフォーマットを設定
-	if(FAILED(g_pDevKeyboard->SetDataFormat(&c_dfDIKeyboard)))
+	hr = m_pDIDevice->SetDataFormat(&c_dfDIKeyboard);
+	if(FAILED(hr))
 	{
 		MessageBox(hWnd, "キーボードのデータフォーマットを設定できませんでした。", "警告！", MB_ICONWARNING);
-		return E_FAIL;
+		return hr;
 	}
 
 	// 協調モードを設定（フォアグラウンド＆非排他モード）
-	if(FAILED(g_pDevKeyboard->SetCooperativeLevel(hWnd, (DISCL_FOREGROUND | DISCL_NONEXCLUSIVE))))    //FOREGROUNDこのプログラムだけ、BACKGROUND全部のプログラムキーを入力できる
+	hr = m_pDIDevice->SetCooperativeLevel(hWnd, (DISCL_FOREGROUND | DISCL_NONEXCLUSIVE));
+	if(FAILED(hr))
 	{
 		MessageBox(hWnd, "キーボードの協調モードを設定できませんでした。", "警告！", MB_ICONWARNING);
-		return E_FAIL;
+		return hr;
 	}
 
-	// キーボードへのアクセス権を獲得(入力制御開始)
-	g_pDevKeyboard->Acquire();
+	// m_pDIDeviceアクセス権を獲得(入力制御開始)
+	m_pDIDevice->Acquire();
 
-	return S_OK;
+	return hr;
 }
 
-//=================================================================================================
-//		キーボードの終了処理
-//=================================================================================================
-void UninitKeyboard(void)
+//=============================================================================
+// キーボード入力処理の開放
+//=============================================================================
+void CInputKeyboard::Uninit(void)
 {
-	if(g_pDevKeyboard != NULL)
-	{// 入力デバイス(キーボード)の開放
-		// キーボードへのアクセス権を開放(入力制御終了)
-		g_pDevKeyboard->Unacquire();
+	// 入力処理の開放
+	CInput::Uninit();
+}
 
-		g_pDevKeyboard->Release();
-		g_pDevKeyboard = NULL;
+//=============================================================================
+// キーボードの更新処理
+//=============================================================================
+HRESULT CInputKeyboard::Update(void)
+{
+	HRESULT hr;
+	BYTE aKeyState[256];
+
+	if(!m_pDIDevice)
+	{
+		return S_FALSE;
 	}
-
-	// 入力処理の終了処理
-	UninitInput();
-}
-
-//=================================================================================================
-//		キーボードの更新処理
-//=================================================================================================
-void UpdateKeyboard(void)
-{
-	//一フレム内
-	BYTE aKeyState[NUM_KEY_MAX];
 
 	// デバイスからデータを取得
-	if(SUCCEEDED(g_pDevKeyboard->GetDeviceState(sizeof(aKeyState), aKeyState)))
+	hr = m_pDIDevice->GetDeviceState(sizeof(aKeyState), aKeyState);
+	if(SUCCEEDED(hr))
 	{
-		for(int nCnKey = 0; nCnKey < NUM_KEY_MAX; nCnKey++)
+		for(int nCntKey = 0; nCntKey < 256; nCntKey++)
 		{
-			// キートリガー・リリース情報を生成
-			g_aKeyStateTrigger[nCnKey] = (g_aKeyState[nCnKey] ^ aKeyState[nCnKey]) & aKeyState[nCnKey];             //押した瞬間
-			g_aKeyStateRelease[nCnKey] = (g_aKeyState[nCnKey] ^ aKeyState[nCnKey]) & g_aKeyState[nCnKey];            //離す瞬間
+			m_aKeyStateTrigger[nCntKey] = (m_aKeyState[nCntKey] ^ aKeyState[nCntKey]) & aKeyState[nCntKey];
+			m_aKeyStateRelease[nCntKey] = (m_aKeyState[nCntKey] ^ aKeyState[nCntKey]) & ~aKeyState[nCntKey];
+			m_aKeyStateRepeat[nCntKey] = m_aKeyStateTrigger[nCntKey];
 
-			// キーリピート情報を生成
-			if(aKeyState[nCnKey])
+			if(aKeyState[nCntKey])
 			{
-				if(g_aKeyStateRepeatCnt[nCnKey] < LIMIT_COUNT_REPEAT)
+				m_aKeyStateRepeatCnt[nCntKey]++;
+				if(m_aKeyStateRepeatCnt[nCntKey] >= 20)
 				{
-					g_aKeyStateRepeatCnt[nCnKey]++;
-					if(g_aKeyStateRepeatCnt[nCnKey] == 1
-					|| g_aKeyStateRepeatCnt[nCnKey] >= LIMIT_COUNT_REPEAT)
-					{// キーを押し始めた最初のフレーム、または一定時間経過したらキーリピート情報ON
-						g_aKeyStateRepeat[nCnKey] = aKeyState[nCnKey];
-					}
-					else
-					{
-						g_aKeyStateRepeat[nCnKey] = 0;
-					}
+					m_aKeyStateRepeat[nCntKey] = aKeyState[nCntKey];
 				}
 			}
 			else
 			{
-				g_aKeyStateRepeatCnt[nCnKey] = 0;
-				g_aKeyStateRepeat[nCnKey] = 0;
+				m_aKeyStateRepeatCnt[nCntKey] = 0;
+				m_aKeyStateRepeat[nCntKey] = 0;
 			}
 
-			// キープレス情報を保存
-			g_aKeyState[nCnKey] = aKeyState[nCnKey];
+			m_aKeyState[nCntKey] = aKeyState[nCntKey];
 		}
 	}
 	else
 	{
-		// キーボードへのアクセス権を取得
-		g_pDevKeyboard->Acquire();
+		m_pDIDevice->Acquire();
+	}
+
+	return hr;
+}
+
+//=============================================================================
+// キーボードデータ取得(プレス)
+//=============================================================================
+BOOL CInputKeyboard::GetKeyPress(int nKey)
+{
+	return (m_aKeyState[nKey] & 0x80) ? TRUE: FALSE;
+}
+
+//=============================================================================
+// キーボードデータ取得(トリガー)
+//=============================================================================
+BOOL CInputKeyboard::GetKeyTrigger(int nKey)
+{
+	return (m_aKeyStateTrigger[nKey] & 0x80) ? TRUE: FALSE;
+}
+
+//=============================================================================
+// キーボードデータ取得(リリース)
+//=============================================================================
+BOOL CInputKeyboard::GetKeyRelease(int nKey)
+{
+	return (m_aKeyStateRelease[nKey] & 0x80) ? TRUE: FALSE;
+}
+
+//=============================================================================
+// キーボードデータ取得(リピート)
+//=============================================================================
+BOOL CInputKeyboard::GetKeyRepeat(int nKey)
+{
+	return (m_aKeyStateRepeat[nKey] & 0x80) ? TRUE: FALSE;
+}
+
+//=============================================================================
+// キーボードデータ削除(トリガー)
+//=============================================================================
+void CInputKeyboard::FlushKeyTrigger(int nKey)
+{
+	m_aKeyStateTrigger[nKey] = 0;
+}
+
+//=============================================================================
+// CInputMouseコンストラスタ
+//=============================================================================
+CInputMouse::CInputMouse()
+{
+	ZeroMemory(&m_mouseState, sizeof(m_mouseState));
+	ZeroMemory(&m_mouseStateTrigger, sizeof(m_mouseStateTrigger));
+}
+
+//=============================================================================
+// CInputMouseデストラスタ
+//=============================================================================
+CInputMouse::~CInputMouse()
+{
+}
+
+//=============================================================================
+// マウスの初期化
+//=============================================================================
+HRESULT CInputMouse::Init(HINSTANCE hInst, HWND hWnd)
+{
+	HRESULT hr;
+
+	// 入力処理の初期化
+	CInput::Init(hInst, hWnd);
+
+	// デバイスオブジェクトを作成
+	hr = m_pDInput->CreateDevice(GUID_SysMouse, &m_pDIDevice, NULL);
+	if(FAILED(hr) || m_pDIDevice == NULL)
+	{
+		MessageBox(hWnd, "マウスがねぇ！", "警告！", MB_ICONWARNING);
+		return hr;
+	}
+
+	// データフォーマットを設定
+	hr = m_pDIDevice->SetDataFormat(&c_dfDIMouse2);
+	if(FAILED(hr))
+	{
+		MessageBox(hWnd, "マウスのデータフォーマットを設定できませんでした。", "警告！", MB_ICONWARNING);
+		return hr;
+	}
+
+	// 協調モードを設定（フォアグラウンド＆非排他モード）
+	hr = m_pDIDevice->SetCooperativeLevel(hWnd, (DISCL_FOREGROUND | DISCL_NONEXCLUSIVE));
+	if(FAILED(hr))
+	{
+		MessageBox(hWnd, "マウスの協調モードを設定できませんでした。", "警告！", MB_ICONWARNING);
+		return hr;
+	}
+
+	// デバイスの設定
+	{
+		DIPROPDWORD dipdw;
+
+		dipdw.diph.dwSize = sizeof(dipdw);
+		dipdw.diph.dwHeaderSize = sizeof(dipdw.diph);
+		dipdw.diph.dwObj = 0;
+		dipdw.diph.dwHow = DIPH_DEVICE;
+		dipdw.dwData = DIPROPAXISMODE_REL;
+
+		hr = m_pDIDevice->SetProperty(DIPROP_AXISMODE, &dipdw.diph);
+	}
+
+	// キーボードへのアクセス権を獲得(入力制御開始)
+	m_pDIDevice->Acquire();
+
+	return hr;
+}
+
+//=============================================================================
+// マウス入力処理の開放
+//=============================================================================
+void CInputMouse::Uninit(void)
+{
+	// 入力処理の開放
+	CInput::Uninit();
+}
+
+//=============================================================================
+// マウス入力処理更新
+//=============================================================================
+HRESULT CInputMouse::Update(void)
+{
+	HRESULT hr;
+	DIMOUSESTATE2 mouseState;
+
+	if(!m_pDIDevice)
+	{
+		return S_FALSE;
+	}
+
+	// デバイスからデータを取得
+	hr = m_pDIDevice->GetDeviceState(sizeof(mouseState), &mouseState);
+	if(SUCCEEDED(hr))
+	{
+		m_mouseStateTrigger.lX = ((m_mouseState.lX ^ mouseState.lX) & mouseState.lX);
+		m_mouseStateTrigger.lY = ((m_mouseState.lY ^ mouseState.lY) & mouseState.lY);
+		m_mouseStateTrigger.lZ = ((m_mouseState.lZ ^ mouseState.lZ) & mouseState.lZ);
+		for(int nCntKey = 0; nCntKey < 8; nCntKey++)
+		{
+			m_mouseStateTrigger.rgbButtons[nCntKey]
+				= ((m_mouseState.rgbButtons[nCntKey] ^ mouseState.rgbButtons[nCntKey]) & mouseState.rgbButtons[nCntKey]);
+		}
+
+		m_mouseState = mouseState;
+
+		// スクリーン座標を取得
+		GetCursorPos(&m_posMouseWorld);
+	}
+	else
+	{
+		m_pDIDevice->Acquire();
+	}
+
+	return hr;
+}
+
+//=============================================================================
+// マウスデータ取得(左プレス)
+//=============================================================================
+BOOL CInputMouse::GetLeftPress(void)
+{
+	return (m_mouseState.rgbButtons[0] & 0x80) ? TRUE: FALSE;
+}
+
+//=============================================================================
+// マウスデータ取得(左トリガー)
+//=============================================================================
+BOOL CInputMouse::GetLeftTrigger(void)
+{
+	return (m_mouseStateTrigger.rgbButtons[0] & 0x80) ? TRUE: FALSE;
+}
+
+//=============================================================================
+// マウスデータ取得(右プレス)
+//=============================================================================
+BOOL CInputMouse::GetRightPress(void)
+{
+	return (m_mouseState.rgbButtons[1] & 0x80) ? TRUE: FALSE;
+}
+
+//=============================================================================
+// マウスデータ取得(右トリガー)
+//=============================================================================
+BOOL CInputMouse::GetRightTrigger(void)
+{
+	return (m_mouseStateTrigger.rgbButtons[1] & 0x80) ? TRUE: FALSE;
+}
+
+//=============================================================================
+// マウスデータ取得(中央プレス)
+//=============================================================================
+BOOL CInputMouse::GetCenterPress(void)
+{
+	return (m_mouseState.rgbButtons[2] & 0x80) ? TRUE: FALSE;
+}
+
+//=============================================================================
+// マウスデータ取得(中央トリガー)
+//=============================================================================
+BOOL CInputMouse::GetCenterTrigger(void)
+{
+	return (m_mouseStateTrigger.rgbButtons[2] & 0x80) ? TRUE: FALSE;
+}
+
+//=============================================================================
+// マウスデータ取得(Ｘ軸移動)
+//=============================================================================
+LONG CInputMouse::GetAxisX(void)
+{
+	return m_mouseState.lX;
+}
+
+//=============================================================================
+// マウスデータ取得(Ｙ軸移動)
+//=============================================================================
+LONG CInputMouse::GetAxisY(void)
+{
+	return m_mouseState.lY;
+}
+
+//=============================================================================
+// マウスデータ取得(Ｚ軸移動)
+//=============================================================================
+LONG CInputMouse::GetAxisZ(void)
+{
+	return m_mouseState.lZ;
+}
+
+//=============================================================================
+// CInputJoypadコンストラスタ
+//=============================================================================
+CInputJoypad::CInputJoypad()
+{
+}
+
+//=============================================================================
+// CInputJoypadデストラスタ
+//=============================================================================
+CInputJoypad::~CInputJoypad()
+{
+}
+
+//=============================================================================
+// ジョイパッドの初期化
+//=============================================================================
+HRESULT CInputJoypad::Init(HINSTANCE hInst, HWND hWnd)
+{
+	HRESULT hr;
+
+	// 入力処理の初期化
+	CInput::Init(hInst, hWnd);
+
+	hr = m_pDInput->EnumDevices(DI8DEVCLASS_GAMECTRL, CInputJoypad::EnumJoyCallback, this, DIEDFL_ATTACHEDONLY);
+	if(FAILED(hr) || m_pDIDevice == NULL)
+	{
+//		MessageBox(hWnd, "ジョイパッドがねぇ！", "警告！", MB_ICONWARNING);
+		return hr;
+	}
+
+	// データフォーマットを設定
+	hr = m_pDIDevice->SetDataFormat(&c_dfDIJoystick2);
+	if(FAILED(hr))
+	{
+		MessageBox(hWnd, "ジョイパッドのデータフォーマットを設定できませんでした。", "警告！", MB_ICONWARNING);
+		return hr;
+	}
+
+	// 協調モードを設定（フォアグラウンド＆非排他モード）
+	hr = m_pDIDevice->SetCooperativeLevel(hWnd, (DISCL_FOREGROUND | DISCL_NONEXCLUSIVE));
+	if(FAILED(hr))
+	{
+		MessageBox(hWnd, "ジョイパッドの協調モードを設定できませんでした。", "警告！", MB_ICONWARNING);
+		return hr;
+	}
+
+	hr = m_pDIDevice->EnumObjects(CInputJoypad::EnumAxesCallback, this, DIDFT_AXIS);
+	if(FAILED(hr))
+	{
+		MessageBox(hWnd, "ジョイパッドの・・・", "警告！", MB_ICONWARNING);
+		return hr;
+	}
+
+	// デバイスの設定
+#if 0
+	{
+		DIPROPRANGE diprg;
+
+		ZeroMemory(&diprg, sizeof(diprg));
+		diprg.diph.dwSize = sizeof(diprg);
+		diprg.diph.dwHeaderSize = sizeof(diprg.diph);
+
+		diprg.diph.dwObj = DIJOFS_X;
+		diprg.diph.dwHow = DIPH_BYOFFSET;
+		diprg.lMin       = JOY_MIN_X;
+		diprg.lMax       = JOY_MAX_X;
+		m_pDIDevice->SetProperty(DIPROP_RANGE, &diprg.diph);	// Ｘ方向の範囲を指定
+
+		diprg.diph.dwObj = DIJOFS_Y;
+		diprg.diph.dwHow = DIPH_BYOFFSET;
+		diprg.lMin       = JOY_MIN_Y;
+		diprg.lMax       = JOY_MAX_Y;
+		m_pDIDevice->SetProperty(DIPROP_RANGE, &diprg.diph);	// Ｙ方向の範囲を指定
+
+		diprg.diph.dwObj = DIJOFS_RY;
+		diprg.diph.dwHow = DIPH_BYOFFSET;
+		diprg.lMin       = JOY_MIN_Y;
+		diprg.lMax       = JOY_MAX_Y;
+		m_pDIDevice->SetProperty(DIPROP_RANGE, &diprg.diph);	// Ｙ方向の範囲を指定
+	}
+#endif
+
+	// キーボードへのアクセス権を獲得(入力制御開始)
+	m_pDIDevice->Acquire();
+
+	return hr;
+}
+
+//=============================================================================
+// ジョイスティック問い合わせ用コールバック関数
+//=============================================================================
+BOOL CALLBACK CInputJoypad::EnumJoyCallback(const DIDEVICEINSTANCE* lpddi, VOID* pvRef)
+{
+	DIDEVCAPS	diDevCaps;			// デバイス情報
+	HRESULT		hRes;
+	CInputJoypad *pThis = reinterpret_cast<CInputJoypad*>(pvRef);
+
+	// ジョイスティック用デバイスオブジェクトを作成
+	hRes = pThis->m_pDInput->CreateDevice(lpddi->guidInstance, &pThis->m_pDIDevice, NULL);
+	if(FAILED(hRes))
+	{
+		return DIENUM_CONTINUE;		// 列挙を続ける
+	}
+
+	// ジョイスティックの能力を調べる
+	diDevCaps.dwSize = sizeof(DIDEVCAPS);
+	hRes = pThis->m_pDIDevice->GetCapabilities(&diDevCaps);
+	if(FAILED(hRes))
+	{
+		SAFE_RELEASE(pThis->m_pDIDevice);
+		return DIENUM_CONTINUE;		// 列挙を続ける
+	}
+
+	return DIENUM_STOP;		// このデバイスを使うので列挙を終了する
+}
+
+BOOL CALLBACK CInputJoypad::EnumAxesCallback(const LPCDIDEVICEOBJECTINSTANCE lpddoi, LPVOID pvRef)
+{
+	HRESULT hr;
+	CInputJoypad *pThis = reinterpret_cast<CInputJoypad*>(pvRef);
+
+	// 軸の値の範囲を設定（-1000～1000）
+	DIPROPRANGE diprg;
+	ZeroMemory(&diprg, sizeof(diprg));
+	diprg.diph.dwSize	= sizeof(diprg); 
+	diprg.diph.dwHeaderSize	= sizeof(diprg.diph); 
+	diprg.diph.dwObj	= lpddoi->dwType;
+	diprg.diph.dwHow	= DIPH_BYID;
+	diprg.lMin	= -1000;
+	diprg.lMax	= +1000;
+	hr = pThis->m_pDIDevice->SetProperty(DIPROP_RANGE, &diprg.diph);
+	if (FAILED(hr))
+	{
+		return DIENUM_STOP;
+	}
+
+	return DIENUM_CONTINUE;
+}
+
+//=============================================================================
+// ジョイパッド入力処理の開放
+//=============================================================================
+void CInputJoypad::Uninit(void)
+{
+	// 入力処理の開放
+	CInput::Uninit();
+}
+
+//=============================================================================
+// ジョイパッド入力処理更新
+//=============================================================================
+HRESULT CInputJoypad::Update(void)
+{
+	HRESULT hr;
+	bool aKeyStateOld[KEY_MAX];
+
+	if(!m_pDIDevice)
+	{
+		return S_FALSE;
+	}
+
+	// 前回のデータを保存
+	for(int nCntKey = 0; nCntKey < KEY_MAX; nCntKey++)
+	{
+		aKeyStateOld[nCntKey] = m_aKeyState[nCntKey];
+	}
+
+	// デバイスからデータを取得
+	hr = m_pDIDevice->GetDeviceState(sizeof(m_joypadState), &m_joypadState);
+	if(SUCCEEDED(hr))
+	{
+		// キー情報設定
+		SetKeyState();
+
+		for(int nCntKey = 0; nCntKey < KEY_MAX; nCntKey++)
+		{
+			m_aKeyStateTrigger[nCntKey] = (aKeyStateOld[nCntKey] ^ m_aKeyState[nCntKey]) & m_aKeyState[nCntKey];
+			m_aKeyStateRelease[nCntKey] = (aKeyStateOld[nCntKey] ^ m_aKeyState[nCntKey]) & !m_aKeyState[nCntKey];
+			m_aKeyStateRepeat[nCntKey] = m_aKeyStateTrigger[nCntKey];
+
+			if(m_aKeyState[nCntKey])
+			{
+				m_aKeyStateRepeatCnt[nCntKey]++;
+				if(m_aKeyStateRepeatCnt[nCntKey] >= 20)
+				{
+					m_aKeyStateRepeat[nCntKey] = m_aKeyState[nCntKey];
+				}
+			}
+			else
+			{
+				m_aKeyStateRepeatCnt[nCntKey] = 0;
+				m_aKeyStateRepeat[nCntKey] = 0;
+			}
+		}
+	}
+	else
+	{
+		m_pDIDevice->Acquire();
+	}
+
+	return hr;
+}
+
+//=============================================================================
+// ジョイパッドのキー情報設定
+//=============================================================================
+void CInputJoypad::SetKeyState(void)
+{
+	if(m_joypadState.lX <= -8)
+	{
+		m_aKeyState[KEY_LEFT] = true;
+	}
+	else
+	{
+		m_aKeyState[KEY_LEFT] = false;
+	}
+
+	if(m_joypadState.lX >= 8)
+	{
+		m_aKeyState[KEY_RIGHT] = true;
+	}
+	else
+	{
+		m_aKeyState[KEY_RIGHT] = false;
+	}
+
+	if(m_joypadState.lY <= -8)
+	{
+		m_aKeyState[KEY_UP] = true;
+	}
+	else
+	{
+		m_aKeyState[KEY_UP] = false;
+	}
+
+	if(m_joypadState.lY >= 8)
+	{
+		m_aKeyState[KEY_DOWN] = true;
+	}
+	else
+	{
+		m_aKeyState[KEY_DOWN] = false;
+	}
+
+	if(m_joypadState.rgbButtons[0])
+	{
+		m_aKeyState[KEY_JUMP] = true;
+	}
+	else
+	{
+		m_aKeyState[KEY_JUMP] = false;
+	}
+
+	if(m_joypadState.rgbButtons[1])
+	{
+		m_aKeyState[KEY_SHOT] = true;
+	}
+	else
+	{
+		m_aKeyState[KEY_SHOT] = false;
+	}
+
+	if(m_joypadState.rgbButtons[6])
+	{
+		m_aKeyState[KEY_TURN_LEFT] = true;
+	}
+	else
+	{
+		m_aKeyState[KEY_TURN_LEFT] = false;
+	}
+
+	if(m_joypadState.rgbButtons[8])
+	{
+		m_aKeyState[KEY_TURN_RIGHT] = true;
+	}
+	else
+	{
+		m_aKeyState[KEY_TURN_RIGHT] = false;
+	}
+
+	if(m_joypadState.rgbButtons[7])
+	{
+		m_aKeyState[KEY_TURN_UP] = true;
+	}
+	else
+	{
+		m_aKeyState[KEY_TURN_UP] = false;
+	}
+
+	if(m_joypadState.rgbButtons[9])
+	{
+		m_aKeyState[KEY_TURN_DOWN] = true;
+	}
+	else
+	{
+		m_aKeyState[KEY_TURN_DOWN] = false;
+	}
+
+	if(m_joypadState.rgbButtons[11])
+	{
+		m_aKeyState[KEY_START] = true;
+	}
+	else
+	{
+		m_aKeyState[KEY_START] = false;
+	}
+
+	if(m_joypadState.rgbButtons[10])
+	{
+		m_aKeyState[KEY_SELECT] = true;
+	}
+	else
+	{
+		m_aKeyState[KEY_SELECT] = false;
 	}
 }
 
-//=================================================================================================
-//		キーボードのプレス状態を取得
-//=================================================================================================
-bool GetKeyboardPress(int nKey)
+//=============================================================================
+// ジョイパッド情報取得
+//=============================================================================
+bool CInputJoypad::GetKeyPress(KEY key)
 {
-	return (g_aKeyState[nKey] & 0x80) ? true: false;
+	return m_aKeyState[key];
 }
 
-//=================================================================================================
-//		キーボードのトリガー状態を取得
-//=================================================================================================
-bool GetKeyboardTrigger(int nKey)
+//=============================================================================
+// ジョイパッド情報取得
+//=============================================================================
+bool CInputJoypad::GetKeyTrigger(KEY key)
 {
-	return (g_aKeyStateTrigger[nKey] & 0x80) ? true: false;
+	return m_aKeyStateTrigger[key];
 }
 
-//=================================================================================================
-//		キーボードのリピート状態を取得
-//=================================================================================================
-bool GetKeyboardRepeat(int nKey)
+//=============================================================================
+// ジョイパッド情報取得
+//=============================================================================
+bool CInputJoypad::GetKeyRelease(KEY key)
 {
-	return (g_aKeyStateRepeat[nKey] & 0x80) ? true: false;
+	return m_aKeyStateRelease[key];
 }
 
-//=================================================================================================
-//		キーボードのリリ－ス状態を取得
-//=================================================================================================
-bool GetKeyboardRelease(int nKey)
+//=============================================================================
+// ジョイパッド情報取得
+//=============================================================================
+bool CInputJoypad::GetKeyRepeat(KEY key)
 {
-	return (g_aKeyStateRelease[nKey] & 0x80) ? true: false;
+	return m_aKeyStateRepeat[key];
 }
+

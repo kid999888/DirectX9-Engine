@@ -62,6 +62,10 @@ void CDebugGUI::UpdateWindow(void)
 		ImGui::SameLine();
 		ImGui::Text("(%f,%f,%f)", m_pCamera->GetCameraAtPos().x, m_pCamera->GetCameraAtPos().y, m_pCamera->GetCameraAtPos().z);
 
+		ImGui::Text("Screen Mouse Position:");
+		ImGui::SameLine();
+		ImGui::Text("(%f,%f)", (float)CInputMouse::GetPosWorld()->x, (float)CInputMouse::GetPosWorld()->y);
+
 		ImGui::Checkbox("Demo Window", &m_bshow_demo_window);      // Edit bools storing our windows open/close state
 		
 	}

@@ -80,7 +80,7 @@ void CManager::Update(void)
 		m_Scene3D->SetPositionY(1.0f);
 	}
 
-	if (GetKeyboardTrigger(DIK_Z))//Î‚ß‚Éi‚Ş
+	if (CInputKeyboard::GetKeyTrigger(DIK_Z))//Î‚ß‚Éi‚Ş
 	{
 		m_Number->SetNumber(m_Number->GetNumber() + 1);
 	}
