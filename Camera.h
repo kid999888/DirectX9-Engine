@@ -25,13 +25,20 @@ public:
 	static D3DXVECTOR3 GetCameraPos(void)				//カメラ位置の取得
 	{ return m_eye; };									
 	static D3DXVECTOR3 GetCameraAtPos(void)				//カメラ注視点の取得
-	{ return m_at; };									
-
+	{ return m_at; };
+	static D3DXMATRIX GetCameraProjection(void)			//カメラプロジェクション行列の取得
+	{
+		return m_mtxProjection;
+	};
+	static D3DXMATRIX GetCameraView(void)			//カメラビュー行列の取得
+	{
+		return m_mtxView;
+	};
 private:
 	static D3DXVECTOR3 m_eye;							//カメラ場所を声明
 	static D3DXVECTOR3 m_at;							//カメラ注視点を声明
 	static D3DXVECTOR3 m_up;							//上の場所を声明
-	D3DXMATRIX m_mtxView;								//ビュー行列
-	D3DXMATRIX m_mtxProjection;							//プロジェクション行列
+	static D3DXMATRIX m_mtxView;						//ビュー行列
+	static D3DXMATRIX m_mtxProjection;					//プロジェクション行列
 };
 #endif

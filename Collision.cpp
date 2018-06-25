@@ -9,6 +9,7 @@
 //　　　ヘッダファイル           
 //=================================================================================================
 #include"Collision.h"
+#include"Camera.h"
 
 //=============================================================================================
 //		関数名：	BallJudgement
@@ -109,4 +110,61 @@ float CCollision::GetFieldHeight(VERTEX_3D * m_pvMeshFiledPos, D3DXVECTOR3 Posit
 	}
 
 	return Position.y;
+}
+
+//=================================================================================================
+//　　　球とカプセル判定                                    
+//=================================================================================================
+bool CCollision::CheckSphereAndCapsule(D3DXVECTOR3 Spherecenter, float r1, D3DXVECTOR3 Capsulecenter, float lenght, float r2)
+{
+	D3DXVECTOR3 start = Capsulecenter - v3Up * (lenght + r2);
+	D3DXVECTOR3 end = Capsulecenter + v3Up * (lenght + r2);
+	float distance = GetSqDistancePoint2Segment(Spherecenter, start, end);
+	float R = r1 + r2;
+	if (distance > R*R)
+	{
+		return false;
+	}
+	return true;
+}
+
+//=================================================================================================
+//		関数名：	GetSqDistancePoint2Segment
+//		引数　：	点(point)、線分始点(start)、線分終点(end)
+//		戻り値：	点と線分の距離の二乗(float)
+//		説明　：	平方根を算出しない版
+//		線分の端点をA,B	点をCとして、
+//		①ABベクトルとACベクトルの内積が負の時、点Aが点Cの最近傍である
+//		②BAベクトルとBCベクトルの内積が負の時、点Bが点Cの最近傍である
+//		③　①、②に該当しない場合、点Cの射影がACの内側に存在するため、その点が最近傍である
+//=================================================================================================
+float CCollision::GetSqDistancePoint2Segment(const D3DXVECTOR3 & point, const D3DXVECTOR3 & start, const D3DXVECTOR3 & end)
+{
+	const float epsilon = 1.0e-5f;	// 誤差吸収用の微小な値
+	D3DXVECTOR3 SegmentSub;
+	D3DXVECTOR3 SegmentPoint;
+	D3DXVECTOR3 CP;
+
+	// 線分の始点から終点へのベクトル
+	SegmentSub = end - start;
+
+	// 線分の始点から点へのベクトル
+	SegmentPoint = point - start;
+	if (D3DXVec3Dot(&SegmentSub, &SegmentPoint) < epsilon)
+	{// ２ベクトルの内積が負なら、線分の始点が最近傍
+		return 	D3DXVec3Dot(&SegmentPoint, &SegmentPoint);
+	}
+
+	// 点から線分の終点へのベクトル
+	SegmentPoint = end - point;
+	if (D3DXVec3Dot(&SegmentSub, &SegmentPoint) < epsilon)
+	{// ２ベクトルの内積が負なら、線分の終点が最近傍
+		return 	D3DXVec3Dot(&SegmentPoint, &SegmentPoint);
+	}
+
+	// 上記のどちらにも該当しない場合、線分上に落とした射影が最近傍
+	// (本来ならサインで求めるが、外積の大きさ/線分のベクトルの大きさで求まる)
+	D3DXVec3Cross(&CP, &SegmentSub, &SegmentPoint);
+
+	return D3DXVec3Dot(&CP, &CP) / D3DXVec3Dot(&SegmentSub, &SegmentSub);
 }
