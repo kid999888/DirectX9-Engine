@@ -26,6 +26,7 @@ int CInputKeyboard::m_aKeyStateRepeatCnt[256];
 DIMOUSESTATE2 CInputMouse::m_mouseState;
 DIMOUSESTATE2 CInputMouse::m_mouseStateTrigger;
 POINT CInputMouse::m_posMouseWorld;
+POINT CInputMouse::m_posMouseUserScreen;
 DIJOYSTATE2 CInputJoypad::m_joypadState;
 bool CInputJoypad::m_aKeyState[KEY_MAX];
 bool CInputJoypad::m_aKeyStateTrigger[KEY_MAX];
@@ -360,6 +361,34 @@ HRESULT CInputMouse::Update(void)
 
 		// スクリーン座標を取得
 		GetCursorPos(&m_posMouseWorld);
+
+		if (m_posMouseWorld.x > GetUserWindowsSize().left && m_posMouseWorld.x < (GetUserWindowsSize().left + GetUserWindowsSize().right))
+		{
+			m_posMouseUserScreen.x = m_posMouseWorld.x - GetUserWindowsSize().left;
+		}
+
+		if (m_posMouseWorld.y > GetUserWindowsSize().top && m_posMouseWorld.y < (GetUserWindowsSize().top + GetUserWindowsSize().bottom))
+		{
+			m_posMouseUserScreen.y = m_posMouseWorld.y - GetUserWindowsSize().top;
+		}
+
+		if (m_posMouseWorld.x < GetUserWindowsSize().left)
+		{
+			m_posMouseUserScreen.x = 0.0f;
+		}
+		if (m_posMouseWorld.y < GetUserWindowsSize().top)
+		{
+			m_posMouseUserScreen.y = 0.0f;
+		}
+		if (m_posMouseWorld.x > (GetUserWindowsSize().left + GetUserWindowsSize().right))
+		{
+			m_posMouseUserScreen.x = GetUserWindowsSize().right;
+		}
+		if (m_posMouseWorld.y > (GetUserWindowsSize().top + GetUserWindowsSize().bottom))
+		{
+			m_posMouseUserScreen.y = GetUserWindowsSize().bottom;
+		}
+		
 	}
 	else
 	{

@@ -78,11 +78,13 @@ public:
 	static LONG GetAxisY(void);
 	static LONG GetAxisZ(void);
 	static POINT *GetPosWorld(void){ return &m_posMouseWorld; }
+	static POINT *GetPosUserScreen(void) { return &m_posMouseUserScreen; }
 
 private:
 	static DIMOUSESTATE2	m_mouseState;				// マウスの状態を受け取るワーク
 	static DIMOUSESTATE2	m_mouseStateTrigger;		// トリガーワーク
-	static POINT	m_posMouseWorld;			// マウスのスクリーン座標
+	static POINT	m_posMouseWorld;					// マウスのスクリーン座標
+	static POINT	m_posMouseUserScreen;				// マウスのユーザースクリーン座標
 };
 
 //*********************************************************

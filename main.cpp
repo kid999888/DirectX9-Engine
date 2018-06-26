@@ -30,6 +30,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 //=================================================================================================
 float g_fStartWidth = 0.0f;
 float g_fStartHeight = 0.0f;
+RECT g_UserRectSize;
 static HWND g_hWnd;
 #if defined(DEBUG)
 //ImGUI実体コントローラー
@@ -73,19 +74,21 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 
 	RegisterClassEx(&wcex);
 	RECT wr = { 0,0,SCREEN_WIDTH,SCREEN_HEIGHT };
-	RECT dr;                                            //デスクトップサイズ<ウインドウサイズ　？　0:ウインドウ
+	RECT dr;                                          //デスクトップサイズ<ウインドウサイズ　？　0:ウインドウ
 	AdjustWindowRect(&wr, WS_OVERLAPPEDWINDOW, false);
 
 	GetWindowRect(GetDesktopWindow(), &dr);
 	g_fStartWidth = (dr.right - wr.right) / 2;
 	g_fStartHeight = (dr.bottom - wr.bottom) / 2;
 
+	
+
 	//ウィンドハンドル型
 	g_hWnd = CreateWindowEx(
 		0,
 		CLASS_NAME, 									//クラス名
 		WINDOW_NAME,									//ウインドウのタイトル名
-		(WS_OVERLAPPEDWINDOW ^ WS_MAXIMIZEBOX) ^ WS_THICKFRAME,							//ウィンドスタイル    // WS_POPUP //fullscreen
+		(WS_OVERLAPPEDWINDOW ^ WS_MAXIMIZEBOX) ^ WS_THICKFRAME,							//ウィンドスタイル    // WS_POPUP //fullscreen //(WS_OVERLAPPEDWINDOW ^ WS_MAXIMIZEBOX) ^ WS_THICKFRAME
 		g_fStartWidth,									//ウィンドの左上座標X
 		g_fStartHeight,                                  //ウィンドの左上座標Y
 		SCREEN_WIDTH,									//フレイムを含めたウィンドの幅
@@ -96,9 +99,18 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 		NULL
 	);
 
+	//ユーザー区域取得、leftユーザー区域開始Y座標、topユーザー区域開始X座標、rightユーザー区域幅、bottomユーザー区域高さ
+	GetClientRect(g_hWnd, &g_UserRectSize);
+	g_UserRectSize.left = g_fStartWidth - wr.left;
+	g_UserRectSize.top = g_fStartHeight - wr.top;
+	
+	
+
 	//ウィンド表示
 	ShowWindow(g_hWnd, nCmdShow);
 	UpdateWindow(g_hWnd);
+
+	
 
 	//メッセージループ
 	MSG msg;											//メッセージを受け取る変数
@@ -287,4 +299,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	default: break;                                     //他の場合はswitchに出し
 	}
 	return DefWindowProc(hWnd, uMsg, wParam, lParam);
+}
+
+RECT GetUserWindowsSize(void)
+{
+	return g_UserRectSize;
 }

@@ -176,6 +176,7 @@ void CPlayer::Update(void)
 
 	m_vePlayerFront = m_pPlayer->GetModelAt();
 	
+
 	//ƒtƒB[ƒ‹Õ“Ë”»’è
 	m_vePosition.y = (CCollision::GetFieldHeight(field->GetFiledPos(), m_vePosition, field->GetBlockNumX(), field->GetBlockNumZ()) + 0.5f);
 
