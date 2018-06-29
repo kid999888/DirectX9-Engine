@@ -169,6 +169,15 @@ float CCollision::GetSqDistancePoint2Segment(const D3DXVECTOR3 & point, const D3
 	return D3DXVec3Dot(&CP, &CP) / D3DXVec3Dot(&SegmentSub, &SegmentSub);
 }
 
+//=============================================================================================
+//		関数名：	CalcScreenToXZ
+//		引数　：	出力のオブジェクト3次座標（pout）、
+//					ユーザースクリーンのX座標（Sx）、ユーザースクリーンのY座標(Sy）、
+//					スクリーンの幅（Screen_w）、スクリーンの高さ(Screen_h）、
+//					カメラのビュー行列（View）、カメラのプロジェクション行列（Prj）
+//		戻り値：	出力のオブジェクト3次座標（float）
+//		説明　：	XZ平面とスクリーン座標の交点算出関数
+//=============================================================================================
 D3DXVECTOR3 * CCollision::CalcScreenToXZ(D3DXVECTOR3 * pout, int Sx, int Sy, int Screen_w, int Screen_h, D3DXMATRIX * View, D3DXMATRIX * Prj)
 {
 	D3DXVECTOR3 nearpos;
@@ -194,6 +203,9 @@ D3DXVECTOR3 * CCollision::CalcScreenToXZ(D3DXVECTOR3 * pout, int Sx, int Sy, int
 	return pout;
 }
 
+//=================================================================================================
+//　　　スクリーン座標をワールド座標に変換                                    
+//=================================================================================================
 D3DXVECTOR3 * CCollision::CalcScreenToWorld(D3DXVECTOR3 * pout, int Sx, int Sy, float fZ, int Screen_w, int Screen_h, D3DXMATRIX * View, D3DXMATRIX * Prj)
 {
 	// 各行列の逆行列を算出

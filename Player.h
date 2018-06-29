@@ -12,6 +12,8 @@
 
 #include"Camera.h"
 #include"Bullet.h"
+#include<vector>
+using namespace std;
 
 //=================================================================================================
 //　　　フィールドクラス                                       
@@ -44,7 +46,8 @@ public:
 
 private:
 	CSceneModel * m_pPlayer;							//プレーヤーのモデリング管理するアドレスを声明
-	CBullet * m_pBullet;								//管理するアドレスを声明
+	//CBullet m_pBullet;								//管理するアドレスを声明
+	//vector<CBullet*> m_vBullet;						//管理するアドレスを声明
 	CCamera *m_Camera;									//カメラ管理するメンバーアドレスを声明
 	D3DXVECTOR3 m_vePlayerFront;						//プレーヤーの向きベクトル
 	float m_fMoveSpeed;									//移動スビート

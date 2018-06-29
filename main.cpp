@@ -195,8 +195,11 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	//“ü—Íˆ—‚ÌI—¹ˆ—
 	/*UninitKeyboard();*/									
 	g_pInputKeyboard->Uninit();
+	delete g_pInputKeyboard;
 	g_pInputMouse->Uninit();
+	delete g_pInputMouse;
 	g_pInputJoypad->Uninit();
+	delete g_pInputJoypad;
 
 	//I—¹ –ß‚è’lİ’è
 	return (int)msg.wParam;
