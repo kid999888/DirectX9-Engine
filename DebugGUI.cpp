@@ -9,6 +9,7 @@
 //　　　ヘッダファイル           
 //=================================================================================================
 #include"DebugGUI.h"
+#include "Mode.h"
 
 //=================================================================================================
 //　　　実体定義
@@ -42,26 +43,6 @@ void CDebugGUI::UpdateWindow(void)
 		ImGui::Text("Average and FPS:");
 		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate); 
 
-		ImGui::Text("Player Position:");
-		ImGui::SameLine();
-		ImGui::Text("(%f,%f,%f)", m_pPlayer->GetPositionX(), m_pPlayer->GetPositionY(), m_pPlayer->GetPositionZ());
-
-		ImGui::Text("Player Rotation:");
-		ImGui::SameLine();
-		ImGui::Text("(%f,%f,%f)", m_pPlayer->GetRotationX(), m_pPlayer->GetRotationY(), m_pPlayer->GetRotationZ());
-
-		ImGui::Text("Player At Position:");
-		ImGui::SameLine();
-		ImGui::Text("(%f,%f,%f)", m_pPlayer->GetPlayerFront().x, m_pPlayer->GetPlayerFront().y, m_pPlayer->GetPlayerFront().z);
-
-		ImGui::Text("Camera Position:");
-		ImGui::SameLine();
-		ImGui::Text("(%f,%f,%f)", m_pCamera->GetCameraPos().x, m_pCamera->GetCameraPos().y, m_pCamera->GetCameraPos().z);
-
-		ImGui::Text("Camera At Position:");
-		ImGui::SameLine();
-		ImGui::Text("(%f,%f,%f)", m_pCamera->GetCameraAtPos().x, m_pCamera->GetCameraAtPos().y, m_pCamera->GetCameraAtPos().z);
-
 		ImGui::Text("Mouse Position:");
 		ImGui::SameLine();
 		ImGui::Text("(%f,%f)", (float)CInputMouse::GetPosWorld()->x, (float)CInputMouse::GetPosWorld()->y);
@@ -70,6 +51,51 @@ void CDebugGUI::UpdateWindow(void)
 		ImGui::SameLine();
 		ImGui::Text("(%f,%f)", (float)CInputMouse::GetPosUserScreen()->x, (float)CInputMouse::GetPosUserScreen()->y);
 
+		switch (CManager::GetMode()->GetModeId())
+		{
+		case MODE_TITLE:
+			ImGui::Text("Camera Position:");
+			ImGui::SameLine();
+			ImGui::Text("(%f,%f,%f)", m_pCamera->GetCameraPos().x, m_pCamera->GetCameraPos().y, m_pCamera->GetCameraPos().z);
+
+			ImGui::Text("Camera At Position:");
+			ImGui::SameLine();
+			ImGui::Text("(%f,%f,%f)", m_pCamera->GetCameraAtPos().x, m_pCamera->GetCameraAtPos().y, m_pCamera->GetCameraAtPos().z);
+			break;
+		case MODE_GAME:
+			ImGui::Text("Camera Position:");
+			ImGui::SameLine();
+			ImGui::Text("(%f,%f,%f)", m_pCamera->GetCameraPos().x, m_pCamera->GetCameraPos().y, m_pCamera->GetCameraPos().z);
+
+			ImGui::Text("Camera At Position:");
+			ImGui::SameLine();
+			ImGui::Text("(%f,%f,%f)", m_pCamera->GetCameraAtPos().x, m_pCamera->GetCameraAtPos().y, m_pCamera->GetCameraAtPos().z);
+
+			ImGui::Text("Player Position:");
+			ImGui::SameLine();
+			ImGui::Text("(%f,%f,%f)", m_pPlayer->GetPositionX(), m_pPlayer->GetPositionY(), m_pPlayer->GetPositionZ());
+
+			ImGui::Text("Player Rotation:");
+			ImGui::SameLine();
+			ImGui::Text("(%f,%f,%f)", m_pPlayer->GetRotationX(), m_pPlayer->GetRotationY(), m_pPlayer->GetRotationZ());
+
+			ImGui::Text("Player At Position:");
+			ImGui::SameLine();
+			ImGui::Text("(%f,%f,%f)", m_pPlayer->GetPlayerFront().x, m_pPlayer->GetPlayerFront().y, m_pPlayer->GetPlayerFront().z);
+			break;
+		case MODE_RESULT:
+			ImGui::Text("Camera Position:");
+			ImGui::SameLine();
+			ImGui::Text("(%f,%f,%f)", m_pCamera->GetCameraPos().x, m_pCamera->GetCameraPos().y, m_pCamera->GetCameraPos().z);
+
+			ImGui::Text("Camera At Position:");
+			ImGui::SameLine();
+			ImGui::Text("(%f,%f,%f)", m_pCamera->GetCameraAtPos().x, m_pCamera->GetCameraAtPos().y, m_pCamera->GetCameraAtPos().z);
+			break;
+		default:
+			break;
+		}
+		
 		ImGui::Checkbox("Demo Window", &m_bshow_demo_window);      // Edit bools storing our windows open/close state
 		
 	}

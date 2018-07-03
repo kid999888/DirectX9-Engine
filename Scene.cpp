@@ -94,6 +94,31 @@ void CScene::ReleaseAll(void)
 }
 
 //=================================================================================================
+//　　　オブジェクトのリリース                                     
+//=================================================================================================
+void CScene::Release(void)
+{
+	int nCount = 0;
+	int nCountPriority = 0;
+	for (nCountPriority = 0;nCountPriority < 3;nCountPriority++)
+	{
+		for (nCount = 0;nCount < 30;nCount++)
+		{
+			if (m_Scene[nCountPriority][nCount] == this)
+			{
+				Uninit();
+				delete this;
+				m_Scene[nCountPriority][nCount] = NULL;
+				
+				
+				break;
+			}
+		}
+	}
+
+}
+
+//=================================================================================================
 //　　　オブジェクトの拡縮倍率設定                                      
 //=================================================================================================
 void CScene::SetScale(D3DXVECTOR3 veScale)
@@ -285,25 +310,4 @@ float CScene::GetPositionZ(void)
 	return m_vePosition.z;
 }
 
-//=================================================================================================
-//　　　オブジェクトのリリース                                     
-//=================================================================================================
-void CScene::Release(void)
-{
-	int nCount = 0;
-	int nCountPriority = 0;
-	for (nCountPriority = 0;nCountPriority < 3;nCountPriority++)
-	{
-		for (nCount = 0;nCount < 30;nCount++)
-		{
-			if (m_Scene[nCountPriority][nCount] == this)
-			{
-				m_Scene[nCountPriority][nCount] == NULL;
-				Uninit();
-				delete this;
-				break;
-			}
-		}
-	}
-	
-}
+

@@ -45,7 +45,7 @@ bool CPlayer::Init(void)
 {
 	m_pPlayer = CSceneModel::Create("Data\\Model\\roboModel.x");
 	m_pPlayer->SetPosition(m_vePosition);
-	m_Camera = CManager::GetMainCamera();
+	m_Camera = CModeGame::GetMainCamera();
 	//プレーヤーの座標をモデリングに転送
 	m_pPlayer->SetPosition(m_vePosition);
 	//プレーヤーの軸回転値をモデリングに転送
@@ -66,7 +66,7 @@ void CPlayer::Uninit(void)
 //=================================================================================================
 void CPlayer::Update(void)
 {
-	CField *field = CManager::GetField();
+	CField *field = CModeGame::GetField();
 	
 
 	/*if (m_veRotation.y > m_fRotYExactly)

@@ -166,6 +166,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Manager.cpp" />
     <ClCompile Include="Material.cpp" />
+    <ClCompile Include="Mode.cpp" />
     <ClCompile Include="Number.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Renderer.cpp" />
@@ -193,6 +194,7 @@
     <ClInclude Include="main.h" />
     <ClInclude Include="Manager.h" />
     <ClInclude Include="Material.h" />
+    <ClInclude Include="Mode.h" />
     <ClInclude Include="Number.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Renderer.h" />

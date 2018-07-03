@@ -9,17 +9,18 @@
 
 #include"main.h"
 #include"Renderer.h"
-#include"Camera.h"
-#include"Light.h"
-#include"Material.h"
-#include"Scene.h"
-#include"Scene2D.h"
-#include"Scene3D.h"
-#include"SceneModel.h"
-#include"ScenePolygon.h"
-#include"Field.h"
-#include"Player.h"
-#include"Number.h"
+//#include"Camera.h"
+//#include"Light.h"
+//#include"Material.h"
+//#include"Scene.h"
+//#include"Scene2D.h"
+//#include"Scene3D.h"
+//#include"SceneModel.h"
+//#include"ScenePolygon.h"
+//#include"Field.h"
+//#include"Player.h"
+//#include"Number.h"
+#include "Mode.h"
 
 //=================================================================================================
 //　　　マネージャークラス                                       
@@ -31,16 +32,10 @@ public:
 	static void Uninit(void);										//マネージャークラス終了処理
 	static void Update(void);										//マネージャークラス更新処理
 	static void Draw(void);											//マネージャークラス描画処理
-	static CField* GetField(void) { return m_Field; };				//フィールドのアドレスを取得
-	static CCamera* GetMainCamera(void) { return m_Camera; };		//カメラのアドレスを取得
-	static CPlayer* GetMainPlayer(void) { return m_Player; };		//プレーヤーのアドレスを取得
+	static void SetMode(CMode* Mode);								//ゲームモードの設定
+	static CMode* GetMode(void) {return m_Mode;};					//
 private:
-	static CCamera *m_Camera;										//カメラのアドレスポインタを声明
-	static CLight *m_Light;											//ライトのアドレスポインタを声明
-	static CField * m_Field;										//フィールドのアドレスポインタを声明
-	static CPlayer * m_Player;										//プレーヤーのアドレスポインタを声明
-	static CScene3D * m_Scene3D;									//3Dキューブのアドレスポインタを声明
-	static CNumber * m_Number;										//スコア数字のアドレスポインタを声明
+	static CMode* m_Mode;											//ゲームモード
 };
 
 #endif
