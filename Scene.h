@@ -29,6 +29,7 @@ class CScene
 {
 public:
 	CScene(int nPriorty);
+	CScene(void);
 	virtual ~CScene() {};
 	virtual bool Init(void) { return true; };			//オブジェクト初期処理
 	virtual void Uninit(void) = 0;						//オブジェクト終了処理

@@ -21,7 +21,7 @@ CScene *CScene::m_Scene[3][30] = { NULL };
 CScene::CScene(int nPriorty)
 {
 	int nCount = 0;
-	for (nCount = 0;nCount < 10;nCount++)
+	for (nCount = 0;nCount < 30;nCount++)
 	{
 		if (m_Scene[nPriorty][nCount] == NULL)
 		{
@@ -29,6 +29,11 @@ CScene::CScene(int nPriorty)
 			break;
 		}
 	}
+}
+
+CScene::CScene(void)
+{
+
 }
 
 //=================================================================================================
@@ -40,7 +45,7 @@ void CScene::UpdateAll(void)
 	int nCountPriority = 0;
 	for (nCountPriority = 0;nCountPriority < 3;nCountPriority++)
 	{
-		for (nCount = 0;nCount < 10;nCount++)
+		for (nCount = 0;nCount < 30;nCount++)
 		{
 			if (m_Scene[nCountPriority][nCount] != NULL)
 			{
@@ -59,7 +64,7 @@ void CScene::DrawAll(void)
 	int nCountPriority = 0;
 	for (nCountPriority = 0;nCountPriority < 3;nCountPriority++)
 	{
-		for (nCount = 0;nCount < 10;nCount++)
+		for (nCount = 0;nCount < 30;nCount++)
 		{
 			if (m_Scene[nCountPriority][nCount] != NULL)
 			{
@@ -78,7 +83,7 @@ void CScene::ReleaseAll(void)
 	int nCountPriority = 0;
 	for (nCountPriority = 0;nCountPriority < 3;nCountPriority++)
 	{
-		for (nCount = 0;nCount < 10;nCount++)
+		for (nCount = 0;nCount < 30;nCount++)
 		{
 			if (m_Scene[nCountPriority][nCount] != NULL)
 			{
@@ -289,7 +294,7 @@ void CScene::Release(void)
 	int nCountPriority = 0;
 	for (nCountPriority = 0;nCountPriority < 3;nCountPriority++)
 	{
-		for (nCount = 0;nCount < 10;nCount++)
+		for (nCount = 0;nCount < 30;nCount++)
 		{
 			if (m_Scene[nCountPriority][nCount] == this)
 			{
