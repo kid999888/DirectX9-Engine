@@ -21,7 +21,7 @@ public:
 		m_veRotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		m_vePosition = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		m_veMove = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-		m_nLife = 0;
+		m_nLife = 100;
 	};												
 	~CBullet();														//バレットデストラクタ
 	bool Init(void);												//バレット初期処理
@@ -32,7 +32,7 @@ public:
 	static int GeTBullerLife(void) { return m_nLife; };				//バレットの寿命をもらう
 
 private:
-	CSceneModel * m_pBullet;										//バレットモデリング管理するアドレス
+	CSceneModel* m_pBullet;											//バレットモデリング管理するアドレス
 	static D3DXVECTOR3 m_vePosition;								//バレットの位置を声明する
 	static D3DXVECTOR3 m_veMove;									//バレットの加速度を声明する
 	static int m_nLife;												//バレットの寿命

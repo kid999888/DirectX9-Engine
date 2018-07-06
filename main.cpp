@@ -75,7 +75,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	RegisterClassEx(&wcex);
 	RECT wr = { 0,0,SCREEN_WIDTH,SCREEN_HEIGHT };
 	RECT dr;                                          //デスクトップサイズ<ウインドウサイズ　？　0:ウインドウ
-	AdjustWindowRect(&wr, WS_OVERLAPPEDWINDOW, false);
+	AdjustWindowRect(&wr, (WS_OVERLAPPEDWINDOW ^ WS_MAXIMIZEBOX) ^ WS_THICKFRAME, false);
 
 	GetWindowRect(GetDesktopWindow(), &dr);
 	g_fStartWidth = (dr.right - wr.right) / 2;

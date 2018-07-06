@@ -41,9 +41,7 @@ CBullet::~CBullet()
 bool CBullet::Init(void)
 {
 	m_pBullet = CSceneModel::Create("Data\\Model\\Ball.x");
-	
 
-	
 	m_nLife = 100;
 
 	return false;
