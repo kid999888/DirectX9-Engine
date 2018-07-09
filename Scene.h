@@ -67,6 +67,7 @@ public:
 	static void DrawAll(void);							//オブジェクト全体描画処理	
 	static void ReleaseAll(void);						//オブジェクトの全体リリース処理
 	static CScene *m_Scene[3][30];						//シーンの管理メンバー関数
+	bool m_bDraw = true;								//オブジェクト描画判断変数
 	SCENE_TYPE m_Type;
 	SCENE_TYPE GetType(void)
 	{
@@ -86,7 +87,7 @@ protected:
 	D3DXMATRIX m_mtxWorldRZ;							//オブジェクトワールド キューブのZ方向回転行列
 	D3DXMATRIX m_mtxWorldT;								//オブジェクトワールド キューブの平行移動行列
 	D3DXMATRIX m_mtxWorldS;								//オブジェクトワールド キューブの平行移動行列
-	bool m_bDraw;										//オブジェクト描画判断変数
+	
 };
 
 #endif

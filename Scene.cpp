@@ -66,7 +66,7 @@ void CScene::DrawAll(void)
 	{
 		for (nCount = 0;nCount < 30;nCount++)
 		{
-			if (m_Scene[nCountPriority][nCount] != NULL)
+			if (m_Scene[nCountPriority][nCount] != NULL && m_Scene[nCountPriority][nCount]->m_bDraw == true)
 			{
 				m_Scene[nCountPriority][nCount]->Draw();
 			}
