@@ -359,7 +359,7 @@ void CField::Draw(void)
 	//平行移動行列の作り方
 	D3DXMatrixTranslation(&m_mtxWorldT, m_vePosition.x, m_vePosition.y, m_vePosition.z);
 
-	//行列成	
+	//行列合成 	
 	D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorldS, &m_mtxWorldR);
 	D3DXMatrixMultiply(&m_mtxWorld, &m_mtxWorld, &m_mtxWorldT);
 

@@ -16,6 +16,7 @@
 #include"Scene3D.h"
 #include"SceneModel.h"
 #include"ScenePolygon.h"
+#include"SceneBillBoard.h"
 #include"Field.h"
 #include"Player.h"
 #include"Number.h"
@@ -66,7 +67,8 @@ private:
 	static CPlayer * m_Player;										//プレーヤーのアドレスポインタを声明
 	static CScene3D * m_Scene3D;									//3Dキューブのアドレスポインタを声明
 	static CNumber * m_Number;										//スコア数字のアドレスポインタを声明
-	static CScenePolygon  * m_ScenePolygon;
+	static CScenePolygon  * m_ScenePolygon;							//3Dポリゴンのアドレスポインタを声明
+	static CSceneBillBoard  * m_SceneBillBoard;						//ビルボードのアドレスポインタを声明
 };
 
 //=================================================================================================

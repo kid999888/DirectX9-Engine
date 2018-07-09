@@ -173,6 +173,7 @@
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Scene2D.cpp" />
     <ClCompile Include="Scene3D.cpp" />
+    <ClCompile Include="SceneBillBoard.cpp" />
     <ClCompile Include="SceneModel.cpp" />
     <ClCompile Include="ScenePolygon.cpp" />
   </ItemGroup>
@@ -201,6 +202,7 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Scene2D.h" />
     <ClInclude Include="Scene3D.h" />
+    <ClInclude Include="SceneBillBoard.h" />
     <ClInclude Include="SceneModel.h" />
     <ClInclude Include="ScenePolygon.h" />
   </ItemGroup>

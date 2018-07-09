@@ -22,6 +22,7 @@ CPlayer *CModeGame::m_Player = NULL;
 CScene3D *CModeGame::m_Scene3D = NULL;
 CNumber *CModeGame::m_Number = NULL;
 CScenePolygon* CModeGame::m_ScenePolygon = NULL;
+CSceneBillBoard* CModeGame::m_SceneBillBoard = NULL;
 CCamera *CModeTitle::m_Camera = NULL;
 CLight *CModeTitle::m_Light = NULL;
 CScene2D *CModeTitle::m_Scene2D = NULL;
@@ -47,6 +48,7 @@ bool CModeGame::Init(void)
 	m_Scene3D = CScene3D::Create();
 	m_ScenePolygon = CScenePolygon::Create();
 	/*m_ScenePolygon->m_bDraw = false;*/
+	m_SceneBillBoard = CSceneBillBoard::Create();
 #if defined(DEBUG)
 	CDebugGUI::SetMainCamera(m_Camera);
 	CDebugGUI::SetField(m_Field);
