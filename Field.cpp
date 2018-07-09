@@ -163,6 +163,38 @@ bool CField::Init(void)
 		}
 	}
 
+	/*for (nZ = 1;nZ < (nCy - 1);nZ++)
+	{
+		for (nX = 1;nX < (nCx - 1);nX++)
+		{
+			D3DXVECTOR3 vx, vx0, nx, nx0, vz, vz0, nz, nz0, n;
+			vx = m_pvMeshFiledPos[nZ * nCx + (nX + 1)].pos - m_pvMeshFiledPos[nZ * nCx + (nX - 1)].pos;
+			nx.x = -vx.y;
+			nx.y = vx.x;
+			nx.z = 0.0f;
+
+			vx0 = m_pvMeshFiledPos[nZ * nCx + (nX - 1)].pos - m_pvMeshFiledPos[nZ * nCx + (nX + 1)].pos;
+			nx0.x = -vx.y;
+			nx0.y = -vx.x;
+			nx0.z = 0.0f;
+
+			vz = m_pvMeshFiledPos[nX * nCy + (nZ + 1)].pos - m_pvMeshFiledPos[nX * nCy + (nZ - 1)].pos;
+			nz.x = 0.0f;
+			nz.y = vz.z;
+			nz.z = vz.y;
+
+			vz0 = m_pvMeshFiledPos[nX * nCy + (nZ - 1)].pos - m_pvMeshFiledPos[nX * nCy + (nZ + 1)].pos;
+			nz0.x = 0.0f;
+			nz0.y = -vz.z;
+			nz0.z = vz.y;
+
+			n = nx + nz + nx0 + nz0;
+
+			D3DXVec3Normalize(&n, &n);
+			m_pvMeshFiledPos[nZ * nCx + (nX + 1)].fs = n;
+		}
+	}*/
+
 	//2X2のインデックス
 	/*static WORD index[] = {
 	3,0,4,1,5,2,2,6,6,3,7,4,8,5

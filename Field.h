@@ -37,6 +37,7 @@ public:
 		m_fheightScale = 0.005f;
 		m_nNumX = nNumX;
 		m_nNumZ = nNumZ;
+		m_bDraw = true;
 	};														//フィールドコンストラクタ
 	~CField();												//フィールドデストラクタ
 	bool Init(void);										//フィールド初期処理

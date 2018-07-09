@@ -86,7 +86,7 @@ protected:
 	D3DXMATRIX m_mtxWorldRZ;							//オブジェクトワールド キューブのZ方向回転行列
 	D3DXMATRIX m_mtxWorldT;								//オブジェクトワールド キューブの平行移動行列
 	D3DXMATRIX m_mtxWorldS;								//オブジェクトワールド キューブの平行移動行列
+	bool m_bDraw;										//オブジェクト描画判断変数
 };
-
 
 #endif

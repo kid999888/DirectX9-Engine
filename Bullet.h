@@ -22,6 +22,7 @@ public:
 		m_vePosition = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		m_veMove = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		m_nLife = 100;
+		m_bDraw = true;
 	};												
 	~CBullet();														//バレットデストラクタ
 	bool Init(void);												//バレット初期処理
