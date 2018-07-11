@@ -36,7 +36,7 @@ private:
 	CSceneModel* m_pBullet;											//バレットモデリング管理するアドレス
 	static D3DXVECTOR3 m_vePosition;								//バレットの位置を声明する
 	static D3DXVECTOR3 m_veMove;									//バレットの加速度を声明する
-	static int m_nLife;												//バレットの寿命
+	static int m_nLife;												//バレットの寿命を声明する
 
 };
 

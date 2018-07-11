@@ -47,8 +47,9 @@ bool CModeGame::Init(void)
 	m_Number = CNumber::Create(0);
 	m_Scene3D = CScene3D::Create();
 	m_ScenePolygon = CScenePolygon::Create();
-	/*m_ScenePolygon->m_bDraw = false;*/
 	m_SceneBillBoard = CSceneBillBoard::Create();
+	m_SceneBillBoard->m_bDraw = false;
+	CParticle::Create(m_SceneBillBoard, D3DXVECTOR3(0.0f, 3.0f, 0.0f),1.0f,100);
 #if defined(DEBUG)
 	CDebugGUI::SetMainCamera(m_Camera);
 	CDebugGUI::SetField(m_Field);
