@@ -36,6 +36,8 @@ void CManager::Uninit(void)
 	//モード管理ポインタの解放
 	m_Mode->Uninit();
 	delete m_Mode;
+	//シーンオブジェクトのリリース
+	CScene::ReleaseAll();
 	//DirectX初期化クラス終了処理
 	CRenderer::Uninit();
 }

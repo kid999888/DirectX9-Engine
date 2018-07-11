@@ -9,18 +9,7 @@
 
 #include"main.h"
 #include"Renderer.h"
-//#include"Camera.h"
-//#include"Light.h"
-//#include"Material.h"
-//#include"Scene.h"
-//#include"Scene2D.h"
-//#include"Scene3D.h"
-//#include"SceneModel.h"
-//#include"ScenePolygon.h"
-//#include"Field.h"
-//#include"Player.h"
-//#include"Number.h"
-#include "Mode.h"
+#include"Mode.h"
 
 //=================================================================================================
 //　　　マネージャークラス                                       

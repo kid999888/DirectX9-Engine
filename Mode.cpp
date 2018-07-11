@@ -1,10 +1,11 @@
 //=================================================================================================
 //                                                        
-//　　　モード処理クラス プログラム[Mode.h]
+//　　　モード処理クラス プログラム[Mode.cpp]
 //      Author:王暁晨(AT-13A-281 04)　2018.07.03      
 //                                                        
 //=================================================================================================
-
+#include"Mode.h"
+#include"Manager.h"
 #include"input.h"
 #include"Collision.h"
 
@@ -47,15 +48,13 @@ bool CModeGame::Init(void)
 	m_Number = CNumber::Create(0);
 	m_Scene3D = CScene3D::Create();
 	m_ScenePolygon = CScenePolygon::Create();
-	m_SceneBillBoard = CSceneBillBoard::Create();
+	/*m_SceneBillBoard = CSceneBillBoard::Create();
 	m_SceneBillBoard->m_bDraw = false;
-	CParticle::Create(m_SceneBillBoard, D3DXVECTOR3(0.0f, 3.0f, 0.0f),1.0f,100);
+	CParticle::Create(m_SceneBillBoard, D3DXVECTOR3(0.0f, 3.0f, 0.0f),1.0f,100);*/
 #if defined(DEBUG)
 	CDebugGUI::SetMainCamera(m_Camera);
 	CDebugGUI::SetField(m_Field);
 	CDebugGUI::SetPlayer(m_Player);
-#else//defined(DEBUG)
-	CPlayer::Create(D3DXVECTOR3(-0.5f, 1.0f, -0.4f));
 #endif//defined(DEBUG)
 	return true;
 }
