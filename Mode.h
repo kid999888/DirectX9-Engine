@@ -22,6 +22,7 @@
 #include"Player.h"
 #include"Number.h"
 #include"Particle.h"
+#include"Bullet.h"
 
 //=================================================================================================
 //　　　構造体定義                                         
@@ -32,6 +33,7 @@ typedef enum
 	MODE_TITLE,				//タイトルモード
 	MODE_GAME,				//ゲームモード
 	MODE_RESULT,			//リザルトモード
+	MODE_GAMEOVER,			//ゲームオーバーモード
 	MODE_MAX				//使えないモード
 }MODE_ID;
 
@@ -71,6 +73,9 @@ private:
 	static CNumber * m_Number;										//スコア数字のアドレスポインタを声明
 	static CScenePolygon  * m_ScenePolygon;							//3Dポリゴンのアドレスポインタを声明
 	static CSceneBillBoard  * m_SceneBillBoard;						//ビルボードのアドレスポインタを声明
+	static CSceneModel* m_SceneModel;								//
+	static CBullet* m_Bullet;										//
+
 };
 
 //=================================================================================================
@@ -93,6 +98,22 @@ private:
 //　　　リザルトモードクラス                                       
 //=================================================================================================
 class CModeResult : public CMode
+{
+public:
+	bool Init(void);												//リザルトモードクラス初期処理
+	void Uninit(void);												//リザルトモードクラス終了処理
+	void Update(void);												//リザルトモードクラス更新処理
+	void Draw(void);												//リザルトモードクラス描画処理
+private:
+	static CCamera* m_Camera;										//カメラのアドレスポインタを声明
+	static CLight* m_Light;											//ライトのアドレスポインタを声明
+	static CScene2D* m_Scene2D;										//2D画像のアドレスポインタを声明
+};
+
+//=================================================================================================
+//　　　リザルトモードクラス                                       
+//=================================================================================================
+class CModeGameOver : public CMode
 {
 public:
 	bool Init(void);												//リザルトモードクラス初期処理

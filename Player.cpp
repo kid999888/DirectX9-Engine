@@ -117,85 +117,35 @@ void CPlayer::Update(void)
 	//移動処理
 	if (CInputKeyboard::GetKeyPress(DIK_A))
 	{
-		/*m_fRotYExactly = 90.0f;*/
 		m_vePosition += v3Left * m_fMoveSpeed;
-		//m_vePlayerFront += v3Left * m_fMoveSpeed;
 		m_Camera->SetCameraPos(m_Camera->GetCameraPos() + (v3Left * m_fMoveSpeed));
 		m_Camera->SetCameraAtPos(m_Camera->GetCameraAtPos() + (v3Left * m_fMoveSpeed));
 	}
 	if (CInputKeyboard::GetKeyPress(DIK_D))
 	{
-		/*m_fRotYExactly = 270.0f;*/
 		m_vePosition += v3Right * m_fMoveSpeed;
-		//m_vePlayerFront += v3Right * m_fMoveSpeed;
 		m_Camera->SetCameraPos(m_Camera->GetCameraPos() + (v3Right  * m_fMoveSpeed));
 		m_Camera->SetCameraAtPos(m_Camera->GetCameraAtPos() + (v3Right  * m_fMoveSpeed));
 	}
 	if (CInputKeyboard::GetKeyPress(DIK_W))
 	{
-		/*m_fRotYExactly = 180.0f;*/
 		m_vePosition += v3In * m_fMoveSpeed;
-		/*m_vePlayerFront += v3In * m_fMoveSpeed;*/
 		m_Camera->SetCameraPos(m_Camera->GetCameraPos() + (v3In * m_fMoveSpeed));
 		m_Camera->SetCameraAtPos(m_Camera->GetCameraAtPos() + (v3In  * m_fMoveSpeed));
 	}
 	if (CInputKeyboard::GetKeyPress(DIK_S))
 	{
-		/*m_fRotYExactly = 0.0f;*/
 		m_vePosition += v3Out * m_fMoveSpeed;
-		/*m_vePlayerFront += v3Out * m_fMoveSpeed;*/
 		m_Camera->SetCameraPos(m_Camera->GetCameraPos() + (v3Out * m_fMoveSpeed));
 		m_Camera->SetCameraAtPos(m_Camera->GetCameraAtPos() + (v3Out  * m_fMoveSpeed));
 	}
 
-	if (CInputKeyboard::GetKeyPress(DIK_SPACE))
-	{
-		/*m_vBullet.push_back(CBullet::Create(m_vePosition, m_vePlayerFront));*/
-		
-		CBullet::Create(m_vePosition, m_vePlayerFront);
-	}
-
-	//キーボードを八方向をコントロールの限界
-	/*if (m_veRotation.y > 360.0f)
-	{
-		m_veRotation.y -= 360.f;
-	}
-	if (m_veRotation.y < 0.0f)
-	{
-		m_veRotation.y = 360.0f;
-	}
-	if (m_fRotYExactly > 360.0f)
-	{
-		m_fRotYExactly -= 360.f;
-	}
-	if (m_fRotYExactly < 0.0f)
-	{
-		m_fRotYExactly = 360.0f;
-	}*/
-
-	//キーボードを四つ方向をコントロール
-	//if (CInputKeyboard::GetKeyPress(DIK_UP) && CInputKeyboard::GetKeyPress(DIK_LEFT))//斜めに進む
-	//{
-	//	m_fRotYExactly = 135.0f;
-	//}
-	//if (CInputKeyboard::GetKeyPress(DIK_UP) && CInputKeyboard::GetKeyPress(DIK_RIGHT))//斜めに進む
-	//{
-	//	m_fRotYExactly = 225.0f;
-	//}
-	//if (CInputKeyboard::GetKeyPress(DIK_DOWN) && CInputKeyboard::GetKeyPress(DIK_RIGHT))//斜めに進む
-	//{
-	//	m_fRotYExactly = 315.0f;
-	//}
-	//if (CInputKeyboard::GetKeyPress(DIK_DOWN) && CInputKeyboard::GetKeyPress(DIK_LEFT))//斜めに進む
-	//{
-	//	m_fRotYExactly = 45.0f;
-	//}
-
 	D3DXVECTOR3 veMousePosToXZ(0.0f,0.0f,0.0f);
 	
-	/*m_vePlayerFront = m_pPlayer->GetModelAt();*/
 	CCollision::CalcScreenToXZ(&veMousePosToXZ, CInputMouse::GetPosUserScreen()->x, CInputMouse::GetPosUserScreen()->y,
 	GetUserWindowsSize().right, GetUserWindowsSize().bottom, &CCamera::GetCameraView(), &CCamera::GetCameraProjection());
+	m_vePlayerMousePoint = veMousePosToXZ;
+	m_vePlayerMousePoint.y = 0.0f;
 	veMousePosToXZ = veMousePosToXZ - m_vePosition;
 	D3DXVec3Normalize(&veMousePosToXZ, &veMousePosToXZ);
 	veMousePosToXZ.y = 0.0f;

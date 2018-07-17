@@ -27,6 +27,7 @@ public:
 		m_veRotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		m_vePosition = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		m_vePlayerFront = D3DXVECTOR3(m_vePosition.x, m_vePosition.y, (m_vePosition.z - 1.0f));
+		m_vePlayerMousePoint = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		m_fMoveSpeed = 0.2f;
 		m_fRotYSpeed = 5.0f;
 		m_fRotOnce = 0.0f;
@@ -43,6 +44,10 @@ public:
 	{
 		return m_vePlayerFront;
 	};
+	D3DXVECTOR3 GetPlayerMouse(void)
+	{
+		return m_vePlayerMousePoint;
+	}
 
 private:
 	CSceneModel * m_pPlayer;							//プレーヤーのモデリング管理するアドレスを声明
@@ -50,6 +55,7 @@ private:
 	//vector<CBullet*> m_vBullet;						//管理するアドレスを声明
 	CCamera *m_Camera;									//カメラ管理するメンバーアドレスを声明
 	D3DXVECTOR3 m_vePlayerFront;						//プレーヤーの向きベクトル
+	D3DXVECTOR3 m_vePlayerMousePoint;						//プレーヤーの向きベクトル
 	float m_fMoveSpeed;									//移動スビート
 	float m_fRotYSpeed;									//回転スビート
 	float m_fRotOnce;									//プレーヤー一回回転角度

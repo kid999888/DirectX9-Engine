@@ -20,9 +20,8 @@
 //=================================================================================================
 //　　　実体定義
 //=================================================================================================
-D3DXVECTOR3 CBullet::m_vePosition = D3DXVECTOR3(0.0f,0.0f,0.0f);
-D3DXVECTOR3 CBullet::m_veMove = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-int CBullet::m_nLife = 0;
+CSceneModel* CBullet::m_pBullet = NULL;
+BULLET CBullet::m_Bullet[BULLET_NUM];
 
 //=================================================================================================
 //　　　構造体定義                                         
@@ -40,9 +39,16 @@ CBullet::~CBullet()
 //=================================================================================================
 bool CBullet::Init(void)
 {
-	m_pBullet = CSceneModel::Create("Data\\Model\\Ball.x");
+	//バレット情報初期化
+	for (int nCount = 0;nCount < BULLET_NUM;nCount++)
+	{
+		m_Bullet[nCount].status = 0;
+		m_Bullet[nCount].vePos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+		m_Bullet[nCount].veMov = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+		m_Bullet[nCount].nLife = 200;
+	}
 
-	m_nLife = 100;
+	
 
 	return false;
 }
@@ -52,7 +58,6 @@ bool CBullet::Init(void)
 //=================================================================================================
 void CBullet::Uninit(void)
 {
-	m_pBullet->Release();
 }
 
 //=================================================================================================
@@ -60,9 +65,27 @@ void CBullet::Uninit(void)
 //=================================================================================================
 void CBullet::Update(void)
 {
-	m_nLife -= 1;
-	m_vePosition += m_veMove;
-
+	for (int nCount = 0;nCount < BULLET_NUM;nCount++)
+	{
+		switch (m_Bullet[nCount].status)
+		{
+		case 0:					// 待機状態
+			break;
+		case 1:
+			if (m_Bullet[nCount].nLife <= 0)
+			{
+				m_Bullet[nCount].status = 0;
+				m_Bullet[nCount].vePos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+				m_Bullet[nCount].veMov = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+				m_Bullet[nCount].nLife = 200;
+				break;
+			}
+			m_Bullet[nCount].vePos += m_Bullet[nCount].veMov;
+			m_Bullet[nCount].nLife -= 2;
+			break;
+		default:break;
+		}
+	}
 	//バレットの座標をモデリングに転送
 	m_pBullet->SetPosition(m_vePosition);
 }
@@ -72,17 +95,50 @@ void CBullet::Update(void)
 //=================================================================================================
 void CBullet::Draw(void)
 {
+	for (int nCount = 0;nCount < BULLET_NUM;nCount++)
+	{
+		if (m_Bullet[nCount].status != 0)
+		{
+			m_pBullet->SetPosition(m_Bullet[nCount].vePos);
+			m_pBullet->Draw();
+		}
+	}
 }
 
 //=================================================================================================
 //　　　バレットのインスタンス生成
 //=================================================================================================
-CBullet * CBullet::Create(D3DXVECTOR3 Pos, D3DXVECTOR3 At)
+CBullet * CBullet::Create(CSceneModel* pBullet)
 {
 	CBullet *Bullet = new CBullet(1);
 	Bullet->Init();
-	m_vePosition = Pos;
-	m_veMove = (At - Pos) * 0.1f;
-	
+	Load(pBullet);
+	m_pBullet->SetScale(D3DXVECTOR3(0.3f, 0.3f, 0.3f));
+	m_pBullet->SetPosition(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 	return Bullet;
+}
+
+void CBullet::Load(CSceneModel* pBullet)
+{
+	m_pBullet = pBullet;
+	
+}
+
+void CBullet::Shoot(D3DXVECTOR3 vePosition, D3DXVECTOR3 veVec)
+{
+	for (int nCount = 0;nCount < BULLET_NUM;nCount++)
+	{
+		if (m_Bullet[nCount].status != 1)
+		{
+			m_Bullet[nCount].vePos = vePosition;
+			m_Bullet[nCount].vePos.y = 2.0f;
+			m_Bullet[nCount].veMov = (veVec - vePosition);
+			D3DXVec3Normalize(&m_Bullet[nCount].veMov, &m_Bullet[nCount].veMov);
+			m_Bullet[nCount].veMov = m_Bullet[nCount].veMov * 0.12;
+			m_Bullet[nCount].veMov.y = 0.0f;
+			m_Bullet[nCount].status = 1;
+			m_Bullet[nCount].nLife = 200;
+			break;
+		}
+	}
 }
