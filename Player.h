@@ -40,6 +40,10 @@ public:
 	void Update(void);									//プレーヤー更新処理
 	void Draw(void);									//プレーヤー描画処理
 	static CPlayer * Create(D3DXVECTOR3 vePosition);	//プレーヤーのインスタンス生成
+	static D3DXVECTOR3 GetPlayerPos(void)				
+	{
+		return m_vePosition;
+	}
 	D3DXVECTOR3 GetPlayerFront(void)					//プレーヤーの向きベクトルを取得
 	{
 		return m_vePlayerFront;
@@ -53,6 +57,7 @@ private:
 	CSceneModel * m_pPlayer;							//プレーヤーのモデリング管理するアドレスを声明
 	//CBullet m_pBullet;								//管理するアドレスを声明
 	//vector<CBullet*> m_vBullet;						//管理するアドレスを声明
+	static D3DXVECTOR3 m_vePosition;
 	CCamera *m_Camera;									//カメラ管理するメンバーアドレスを声明
 	D3DXVECTOR3 m_vePlayerFront;						//プレーヤーの向きベクトル
 	D3DXVECTOR3 m_vePlayerMousePoint;						//プレーヤーの向きベクトル

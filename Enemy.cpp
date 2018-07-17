@@ -1,74 +1,71 @@
 //=================================================================================================
 //                                                        
-//　　　バレットクラスプログラム[Bullet.h]                   
-//      Author:王暁晨(AT-13A-281 04)　2018.05.23      
+//　　　敵クラスプログラム[Enemy.cpp]                   
+//      Author:王暁晨(AT-13A-281 04)　2018.07.16      
 //                                                        
 //=================================================================================================
 
 //=================================================================================================
 //　　　ヘッダファイル           
 //=================================================================================================
-#include"Bullet.h"
-#include"Player.h"
-#include"Renderer.h"
-#include"Manager.h"
+#include"Enemy.h"
+#include"Collision.h"
 
 //=================================================================================================
 //　　　実体定義
 //=================================================================================================
-CSceneModel* CBullet::m_pBullet = NULL;
-BULLET CBullet::m_Bullet[BULLET_NUM];
+ENEMY CEnemy::m_Enemy[ENEMY_NUM];
+CScene3D* CEnemy::m_pScene3D = NULL;
 
 //=================================================================================================
-//　　　バレットデストラクタ                                        
+//　　　敵デストラクタ                                         
 //=================================================================================================
-CBullet::~CBullet()
+CEnemy::~CEnemy()
 {
 }
 
 //=================================================================================================
-//　　　バレット初期処理                                       
+//　　　敵初期処理                                      
 //=================================================================================================
-bool CBullet::Init(void)
+bool CEnemy::Init(void)
 {
 	//バレット情報初期化
-	for (int nCount = 0;nCount < BULLET_NUM;nCount++)
+	for (int nCount = 0;nCount < ENEMY_NUM;nCount++)
 	{
-		m_Bullet[nCount].status = 0;
-		m_Bullet[nCount].vePos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-		m_Bullet[nCount].veMov = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-		m_Bullet[nCount].nLife = 400;
+		m_Enemy[nCount].status = 0;
+		m_Enemy[nCount].vePos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+		m_Enemy[nCount].veMov = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+		m_Enemy[nCount].nLife = 10;
 	}
-	
-	return false;
+	return true;
 }
 
 //=================================================================================================
-//　　　バレット終了処理                                    
+//　　　敵終了処理
 //=================================================================================================
-void CBullet::Uninit(void)
+void CEnemy::Uninit(void)
 {
 }
 
 //=================================================================================================
-//　　　バレット更新処理                                      
+//　　　敵更新処理
 //=================================================================================================
-void CBullet::Update(void)
+void CEnemy::Update(void)
 {
-	for (int nCount = 0;nCount < BULLET_NUM;nCount++)
+	for (int nCount = 0;nCount < ENEMY_NUM;nCount++)
 	{
-		switch (m_Bullet[nCount].status)
+		switch (m_Enemy[nCount].status)
 		{
 		case 0:					// 待機状態
 			break;
 		case 1:
-			if (m_Bullet[nCount].nLife <= 0)
+			if (m_Enemy[nCount].nLife <= 0)
 			{
 				Destory(nCount);
 				break;
 			}
-			m_Bullet[nCount].vePos += m_Bullet[nCount].veMov;
-			m_Bullet[nCount].nLife -= 2;
+			m_Enemy[nCount].veMov = GetMovePattern(nCount);
+			m_Enemy[nCount].vePos += m_Enemy[nCount].veMov;
 			break;
 		default:break;
 		}
@@ -76,70 +73,91 @@ void CBullet::Update(void)
 }
 
 //=================================================================================================
-//　　　バレット描画処理                                     
+//　　　敵描画処理
 //=================================================================================================
-void CBullet::Draw(void)
+void CEnemy::Draw(void)
 {
-	for (int nCount = 0;nCount < BULLET_NUM;nCount++)
+	for (int nCount = 0;nCount < ENEMY_NUM;nCount++)
 	{
-		if (m_Bullet[nCount].status != 0)
+		if (m_Enemy[nCount].status != 0)
 		{
-			m_pBullet->SetPosition(m_Bullet[nCount].vePos);
-			m_pBullet->Draw();
+			m_pScene3D->SetPosition(m_Enemy[nCount].vePos);
+			m_pScene3D->Draw();
 		}
 	}
 }
 
 //=================================================================================================
-//　　　バレットのインスタンス生成
+//　　　敵のインスタンス生成
 //=================================================================================================
-CBullet * CBullet::Create(CSceneModel* pBullet)
+CEnemy * CEnemy::Create(CScene3D * pScene3D)
 {
-	CBullet *Bullet = new CBullet(1);
-	Bullet->Init();
-	Load(pBullet);
-	m_pBullet->SetScale(D3DXVECTOR3(0.3f, 0.3f, 0.3f));
-	m_pBullet->SetPosition(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
-	return Bullet;
+	CEnemy *Enemy = new CEnemy(1);
+	Enemy->Init();
+	Load(pScene3D);
+	m_pScene3D->SetScale(D3DXVECTOR3(1.0f, 1.0f, 01.0f));
+	m_pScene3D->SetPosition(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+	return Enemy;
 }
 
 //=================================================================================================
-//　　　バレットのモデリングを読み込む                                  
+//　　　敵の実体を読み込む
 //=================================================================================================
-void CBullet::Load(CSceneModel* pBullet)
+void CEnemy::Load(CScene3D * pScene3D)
 {
-	m_pBullet = pBullet;
+	m_pScene3D = pScene3D;
 }
 
 //=================================================================================================
-//　　　新しいバレットを出る
+//　　　新しい敵を生成
 //=================================================================================================
-void CBullet::Shoot(D3DXVECTOR3 vePosition, D3DXVECTOR3 veVec)
+void CEnemy::Generate(D3DXVECTOR3 vePosition)
 {
-	for (int nCount = 0;nCount < BULLET_NUM;nCount++)
+	for (int nCount = 0;nCount < ENEMY_NUM;nCount++)
 	{
-		if (m_Bullet[nCount].status != 1)
+		if (m_Enemy[nCount].status != 1)
 		{
-			m_Bullet[nCount].vePos = vePosition;
-			m_Bullet[nCount].vePos.y = 2.0f;
-			m_Bullet[nCount].veMov = (veVec - vePosition);
-			D3DXVec3Normalize(&m_Bullet[nCount].veMov, &m_Bullet[nCount].veMov);
-			m_Bullet[nCount].veMov = m_Bullet[nCount].veMov * 0.12;
-			m_Bullet[nCount].veMov.y = 0.0f;
-			m_Bullet[nCount].status = 1;
-			m_Bullet[nCount].nLife = 400;
+			m_Enemy[nCount].vePos = vePosition;
+			m_Enemy[nCount].veMov = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+			m_Enemy[nCount].status = 1;
+			m_Enemy[nCount].nLife = 10;
 			break;
 		}
 	}
 }
 
 //=================================================================================================
-//　　　バレットを廃棄
+//　　　敵を廃棄する
 //=================================================================================================
-void CBullet::Destory(int nNum)
+void CEnemy::Destory(int nNum)
 {
-	m_Bullet[nNum].status = 0;
-	m_Bullet[nNum].vePos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	m_Bullet[nNum].veMov = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	m_Bullet[nNum].nLife = 400;
+	m_Enemy[nNum].status = 0;
+	m_Enemy[nNum].vePos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	m_Enemy[nNum].veMov = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	m_Enemy[nNum].nLife = 10;
+}
+
+//=================================================================================================
+//　　　敵移動パターン
+//=================================================================================================
+D3DXVECTOR3 CEnemy::GetMovePattern(int nNum)
+{
+	D3DXVECTOR3 Vec = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	D3DXVECTOR3 Vec0 = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	D3DXVECTOR3 Vec1 = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	if (m_Enemy[nNum].status != 0)
+	{
+		if (CCollision::BallJudgement(m_Enemy[nNum].vePos, CPlayer::GetPlayerPos(), 10.0f, 1.0f))
+		{
+			Vec0 = m_Enemy[nNum].vePos;
+			Vec0.y = 0.0f;
+			Vec1 = CPlayer::GetPlayerPos();
+			Vec1.y = 0.0f;
+			Vec = Vec1 - Vec0;
+			D3DXVec3Normalize(&Vec, &Vec);
+			Vec.y = 0.0f;
+			Vec *= 0.2f;
+		}
+	}
+	return Vec;
 }

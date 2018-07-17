@@ -55,7 +55,18 @@ bool CModeGame::Init(void)
 	m_Player = CPlayer::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 	m_Number = CNumber::Create(0);
 	m_Scene3D = CScene3D::Create();
-	/*m_Scene3D->m_bDraw = false;*/
+	m_Scene3D->m_bDraw = false;
+	CEnemy::Create(m_Scene3D);
+	CEnemy::Generate(D3DXVECTOR3(0.0f, 2.0f, 20.0f));
+	CEnemy::Generate(D3DXVECTOR3(-16.0f, 2.0f, 20.0f));
+	CEnemy::Generate(D3DXVECTOR3(2.0f, 2.0f, 20.0f));
+	CEnemy::Generate(D3DXVECTOR3(-12.0f, 2.0f, 20.0f));
+	CEnemy::Generate(D3DXVECTOR3(0.0f, 2.0f, -20.0f));
+	CEnemy::Generate(D3DXVECTOR3(16.0f, 2.0f, -20.0f));
+	CEnemy::Generate(D3DXVECTOR3(2.f, 2.0f, -20.0f));
+	CEnemy::Generate(D3DXVECTOR3(-12.0f, 2.0f, -20.0f));
+	m_nEnemyCount = 8;
+	
 	m_ScenePolygon = CScenePolygon::Create();
 	/*m_SceneBillBoard = CSceneBillBoard::Create();
 	m_SceneBillBoard->m_bDraw = false;
@@ -90,27 +101,43 @@ void CModeGame::Uninit(void)
 void CModeGame::Update(void)
 {
 	//
-	if (CCollision::BallJudgement(m_Scene3D->GetPosition(), m_Player->GetPosition(), 1.0f, 1.0f))
-	{
-		CManager::SetMode(new CModeGameOver());
-	}
+	
 
 	//
-	for (int nCount = 0;nCount < BULLET_NUM;nCount++)
+	for (int nCountX = 0;nCountX < ENEMY_NUM;nCountX++)
 	{
-		if (CBullet::GetBulletManager(nCount).status != 0)
+		if (CEnemy::GetEnemyManager(nCountX).status != 0)
 		{
-			if (CCollision::BallJudgement(m_Scene3D->GetPosition(), CBullet::GetBulletManager(nCount).vePos, 0.8f, 0.3f))
+			//敵とプレーヤーの当たり
+			if (CCollision::BallJudgement(CEnemy::GetEnemyManager(nCountX).vePos, CPlayer::GetPlayerPos(), 1.0f, 1.0f))
 			{
-				CManager::SetMode(new CModeResult());
+				CManager::SetMode(new CModeGameOver());
+			}
+			for (int nCount = 0;nCount < BULLET_NUM;nCount++)
+			{
+				//敵とプレーヤーバレットの当たり
+				if (CBullet::GetBulletManager(nCount).status != 0)
+				{
+					if (CCollision::BallJudgement(CEnemy::GetEnemyManager(nCountX).vePos, CBullet::GetBulletManager(nCount).vePos, 0.8f, 0.3f))
+					{
+						CEnemy::Destory(nCountX);
+						CBullet::Destory(nCount);
+						m_nEnemyCount -= 1;
+					}
+				}
 			}
 		}
+	}
+
+	if (m_nEnemyCount <= 0)
+	{
+		CManager::SetMode(new CModeResult());
 	}
 	
 
 	if (CInputMouse::GetLeftTrigger())
 	{
-		CBullet::Shoot(m_Player->GetPosition(), m_Player->GetPlayerMouse());
+		CBullet::Shoot(CPlayer::GetPlayerPos(), m_Player->GetPlayerMouse());
 	}
 
 	if (CInputKeyboard::GetKeyTrigger(DIK_Z))

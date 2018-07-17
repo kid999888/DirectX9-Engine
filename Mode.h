@@ -23,6 +23,7 @@
 #include"Number.h"
 #include"Particle.h"
 #include"Bullet.h"
+#include"Enemy.h"
 
 //=================================================================================================
 //　　　構造体定義                                         
@@ -75,6 +76,7 @@ private:
 	static CSceneBillBoard  * m_SceneBillBoard;						//ビルボードのアドレスポインタを声明
 	static CSceneModel* m_SceneModel;								//
 	static CBullet* m_Bullet;										//
+	int m_nEnemyCount;												//敵記数
 
 };
 
