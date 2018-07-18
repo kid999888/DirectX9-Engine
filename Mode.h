@@ -11,6 +11,7 @@
 #include"Renderer.h"
 #include"Camera.h"
 #include"Light.h"
+#include"Xorshift.h"
 #include"Material.h"
 #include"Scene.h"
 #include"Scene2D.h"
@@ -68,6 +69,7 @@ public:
 private:
 	static CCamera *m_Camera;										//カメラのアドレスポインタを声明
 	static CLight *m_Light;											//ライトのアドレスポインタを声明
+	static CXorshift* m_Xorshift;									//
 	static CField * m_Field;										//フィールドのアドレスポインタを声明
 	static CPlayer * m_Player;										//プレーヤーのアドレスポインタを声明
 	static CScene3D * m_Scene3D;									//3Dキューブのアドレスポインタを声明

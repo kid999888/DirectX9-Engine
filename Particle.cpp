@@ -72,9 +72,9 @@ void CParticle::Update(void)
 		case 1:
 			m_Particle[nCount].vePos = m_vePosition;
 			m_Particle[nCount].veMov = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-			m_Particle[nCount].veAcc.x = (float)(xor64() * 0.0000000000005f * m_fSpeed) - ((xor64() * 0.0000000000005f * m_fSpeed) * 0.5f);
-			m_Particle[nCount].veAcc.y = (float)(xor64() * 0.0000000000005f * m_fSpeed) - ((xor64() * 0.0000000000005f * m_fSpeed) * 0.5f);
-			m_Particle[nCount].veAcc.z = (float)(xor64() * 0.0000000000005f * m_fSpeed) - ((xor64() * 0.0000000000005f * m_fSpeed) * 0.5f);
+			m_Particle[nCount].veAcc.x = (float)(CXorshift::xor64() * 0.0000000000005f * m_fSpeed) - ((CXorshift::xor64() * 0.0000000000005f * m_fSpeed) * 0.5f);
+			m_Particle[nCount].veAcc.y = (float)(CXorshift::xor64() * 0.0000000000005f * m_fSpeed) - ((CXorshift::xor64() * 0.0000000000005f * m_fSpeed) * 0.5f);
+			m_Particle[nCount].veAcc.z = (float)(CXorshift::xor64() * 0.0000000000005f * m_fSpeed) - ((CXorshift::xor64() * 0.0000000000005f * m_fSpeed) * 0.5f);
 			m_Particle[nCount].nLife = m_nLifeLimit;
 			m_Particle[nCount].status = 2;
 		case 2:

@@ -18,6 +18,7 @@
 //=================================================================================================
 CCamera *CModeGame::m_Camera = NULL;
 CLight *CModeGame::m_Light = NULL;
+CXorshift* CModeGame::m_Xorshift = NULL;
 CField *CModeGame::m_Field = NULL;
 CPlayer *CModeGame::m_Player = NULL;
 CScene3D *CModeGame::m_Scene3D = NULL;
@@ -51,6 +52,7 @@ bool CModeGame::Init(void)
 	m_ModeId = MODE_GAME;
 	this->m_Camera = new CCamera();
 	this->m_Light = new CLight();
+	this->m_Xorshift = new CXorshift();
 	m_Field = CField::Create(100, 100);
 	m_Player = CPlayer::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 	m_Number = CNumber::Create(0);
@@ -68,9 +70,9 @@ bool CModeGame::Init(void)
 	m_nEnemyCount = 8;
 	
 	m_ScenePolygon = CScenePolygon::Create();
-	/*m_SceneBillBoard = CSceneBillBoard::Create();
+	m_SceneBillBoard = CSceneBillBoard::Create();
 	m_SceneBillBoard->m_bDraw = false;
-	CParticle::Create(m_SceneBillBoard, D3DXVECTOR3(0.0f, 3.0f, 0.0f),1.0f,100);*/
+	CParticle::Create(m_SceneBillBoard, D3DXVECTOR3(0.0f, 3.0f, 0.0f),1.0f,100);
 	m_SceneModel = CSceneModel::Create("Data\\Model\\Ball.x");
 	m_SceneModel->m_bDraw = false;
 	m_Bullet = CBullet::Create(m_SceneModel);
@@ -91,6 +93,8 @@ void CModeGame::Uninit(void)
 	this->m_Camera = nullptr;
 	delete this->m_Light;
 	this->m_Light = nullptr;
+	delete this->m_Xorshift;
+	this->m_Xorshift = nullptr;
 	//シーンオブジェクトの解放
 	CScene::ReleaseAll();
 }
