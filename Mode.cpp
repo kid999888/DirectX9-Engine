@@ -53,7 +53,7 @@ bool CModeGame::Init(void)
 	this->m_Camera = new CCamera();
 	this->m_Light = new CLight();
 	this->m_Xorshift = new CXorshift();
-	m_Field = CField::Create(100, 100);
+	m_Field = CField::Create(150, 150);
 	m_Player = CPlayer::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 	m_Number = CNumber::Create(0);
 	m_Scene3D = CScene3D::Create();
@@ -72,7 +72,7 @@ bool CModeGame::Init(void)
 	m_ScenePolygon = CScenePolygon::Create();
 	m_SceneBillBoard = CSceneBillBoard::Create();
 	m_SceneBillBoard->m_bDraw = false;
-	CParticle::Create(m_SceneBillBoard, D3DXVECTOR3(0.0f, 3.0f, 0.0f),1.0f,100);
+	CParticle::Create(m_SceneBillBoard, D3DXVECTOR3(0.0f, 5.0f, 0.0f),1.0f,100,6000);
 	m_SceneModel = CSceneModel::Create("Data\\Model\\Ball.x");
 	m_SceneModel->m_bDraw = false;
 	m_Bullet = CBullet::Create(m_SceneModel);
@@ -104,8 +104,10 @@ void CModeGame::Uninit(void)
 //=================================================================================================
 void CModeGame::Update(void)
 {
-	//
-	
+	//ƒŒ[ƒU[•”•ª
+	m_ScenePolygon->SetPosition(CPlayer::GetPlayerPos());
+	m_ScenePolygon->SetPositionY(2.0f);
+	m_ScenePolygon->SetRotationY(m_Player->GetRotationY() + 90.0f);
 
 	//
 	for (int nCountX = 0;nCountX < ENEMY_NUM;nCountX++)

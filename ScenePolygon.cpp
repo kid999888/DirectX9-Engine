@@ -18,7 +18,7 @@
 //FVFの宣言
 #define FVF_VERTEX_POLYGON ( D3DFVF_XYZ | D3DFVF_NORMAL | D3DFVF_DIFFUSE | D3DFVF_TEX1)    //3Dポリゴンの頂点情報
 //テクスチャファイルパス
-#define TEXTUREFILENAME000	        "Data\\Texture\\Circle.png"	
+#define TEXTUREFILENAME000	        "Data\\Texture\\Laser.png"	
 
 //=================================================================================================
 //　　　構造体定義                                         
@@ -181,8 +181,8 @@ void CScenePolygon::Draw(void)
 	//FVFの設定
 	pDevice->SetFVF(FVF_VERTEX_POLYGON);
 
-	//ライトON
-	pDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
+	//ライトOFF
+	pDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
 
 	//αテスト
 	pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
@@ -212,6 +212,9 @@ void CScenePolygon::Draw(void)
 		4,							//頂点の数
 		0,
 		2);							//ヴァーテックスデータのサイズ
+
+	//ライトON
+	pDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
 }
 
 CScenePolygon * CScenePolygon::Create(void)

@@ -10,6 +10,7 @@
 //=================================================================================================
 #include"Enemy.h"
 #include"Collision.h"
+#include"Xorshift.h"
 
 //=================================================================================================
 //　　　実体定義
@@ -156,8 +157,14 @@ D3DXVECTOR3 CEnemy::GetMovePattern(int nNum)
 			Vec = Vec1 - Vec0;
 			D3DXVec3Normalize(&Vec, &Vec);
 			Vec.y = 0.0f;
-			Vec *= 0.2f;
+			Vec *= 0.1f;
+		}
+		else
+		{
+			Vec.x = (float)(CXorshift::xor64() * 0.000000000005f * 1.0f) - ((CXorshift::xor64() * 0.000000000005f * 1.0f) * 0.5f);
+			Vec.z = (float)(CXorshift::xor64() * 0.000000000005f * 1.0f) - ((CXorshift::xor64() * 0.000000000005f * 1.0f) * 0.5f);
 		}
 	}
+	
 	return Vec;
 }

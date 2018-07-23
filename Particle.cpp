@@ -18,6 +18,7 @@ CSceneBillBoard* CParticle::m_pBillBoard = NULL;
 D3DXVECTOR3 CParticle::m_vePosition = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 float CParticle::m_fSpeed = 0.0f;
 int CParticle::m_nLifeLimit = 0;
+int CParticle::m_nGenerateTimeLimit = 0;
 
 //=================================================================================================
 //　　　パーティクルデストラクタ
@@ -41,6 +42,8 @@ bool CParticle::Init(void)
 		m_Particle[nCount].nLife = 0;
 	}
 
+	m_nGenerateTime = 0;
+
 	m_pBillBoard->SetScale(m_veScale);
 	m_pBillBoard->SetPosition(m_vePosition);
 	return true;
@@ -59,29 +62,49 @@ void CParticle::Uninit(void)
 void CParticle::Update(void)
 {
 	bool bBorn = false;
-	for (int nCount = 0;nCount < PARTICLE_NUM;nCount++)
+	if (this->m_bDraw)
 	{
-		switch (m_Particle[nCount].status)
+		for (int nCount = 0;nCount < PARTICLE_NUM;nCount++)
 		{
-		case 0:					// 待機状態
-			if (!bBorn) {
-				bBorn = true;
-				m_Particle[nCount].status = 1;
+			switch (m_Particle[nCount].status)
+			{
+			case 0:					// 待機状態
+				if (!bBorn) {
+					bBorn = true;
+					m_Particle[nCount].status = 1;
+				}
+				break;
+			case 1:
+				m_Particle[nCount].vePos = m_vePosition;
+				m_Particle[nCount].veMov = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+				m_Particle[nCount].veAcc.x = (float)(CXorshift::xor64() * 0.0000000000005f * m_fSpeed) - ((CXorshift::xor64() * 0.0000000000005f * m_fSpeed) * 0.5f);
+				m_Particle[nCount].veAcc.y = (float)(CXorshift::xor64() * 0.0000000000005f * m_fSpeed) - ((CXorshift::xor64() * 0.0000000000005f * m_fSpeed) * 0.5f);
+				m_Particle[nCount].veAcc.z = (float)(CXorshift::xor64() * 0.0000000000005f * m_fSpeed) - ((CXorshift::xor64() * 0.0000000000005f * m_fSpeed) * 0.5f);
+				m_Particle[nCount].nLife = m_nLifeLimit;
+				m_Particle[nCount].status = 2;
+			case 2:
+				m_Particle[nCount].veMov += m_Particle[nCount].veAcc;
+				m_Particle[nCount].vePos += m_Particle[nCount].veMov;
+				m_Particle[nCount].nLife -= 1;
+				if (m_Particle[nCount].nLife <= 0)
+				{
+					m_Particle[nCount].status = 0;
+					m_Particle[nCount].vePos = m_vePosition;
+					m_Particle[nCount].veMov = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+					m_Particle[nCount].veAcc = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+					m_Particle[nCount].nLife = 0;
+				}
 			}
-			break;
-		case 1:
-			m_Particle[nCount].vePos = m_vePosition;
-			m_Particle[nCount].veMov = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-			m_Particle[nCount].veAcc.x = (float)(CXorshift::xor64() * 0.0000000000005f * m_fSpeed) - ((CXorshift::xor64() * 0.0000000000005f * m_fSpeed) * 0.5f);
-			m_Particle[nCount].veAcc.y = (float)(CXorshift::xor64() * 0.0000000000005f * m_fSpeed) - ((CXorshift::xor64() * 0.0000000000005f * m_fSpeed) * 0.5f);
-			m_Particle[nCount].veAcc.z = (float)(CXorshift::xor64() * 0.0000000000005f * m_fSpeed) - ((CXorshift::xor64() * 0.0000000000005f * m_fSpeed) * 0.5f);
-			m_Particle[nCount].nLife = m_nLifeLimit;
-			m_Particle[nCount].status = 2;
-		case 2:
-			m_Particle[nCount].veMov += m_Particle[nCount].veAcc;
-			m_Particle[nCount].vePos += m_Particle[nCount].veMov;
-			m_Particle[nCount].nLife -= 1;
-			if (m_Particle[nCount].nLife <= 0)
+		}
+		m_nGenerateTime++;
+	}
+
+	if (m_nGenerateTime >= m_nGenerateTimeLimit)
+	{
+		for (int nCount = 0;nCount < PARTICLE_NUM;nCount++)
+		{
+			//パーティクル情報初期化
+			if (m_Particle[nCount].status != 0)
 			{
 				m_Particle[nCount].status = 0;
 				m_Particle[nCount].vePos = m_vePosition;
@@ -90,7 +113,10 @@ void CParticle::Update(void)
 				m_Particle[nCount].nLife = 0;
 			}
 		}
+		m_nGenerateTime = 0;
+		this->m_bDraw = false;
 	}
+	
 }
 
 //=================================================================================================
@@ -111,13 +137,14 @@ void CParticle::Draw(void)
 //=================================================================================================
 //　　　パーティクルのインスタンス生成
 //=================================================================================================
-CParticle * CParticle::Create(CSceneBillBoard* pBillBoard, D3DXVECTOR3 vePosition, float fSpeed, int nLife)
+CParticle * CParticle::Create(CSceneBillBoard* pBillBoard, D3DXVECTOR3 vePosition, float fSpeed, int nLife, int GenerateTime)
 {
 	CParticle *Particle = new CParticle(1);
 	LoadBillBoard(pBillBoard);
 	m_vePosition = vePosition;
 	m_fSpeed = fSpeed;
 	m_nLifeLimit = nLife;
+	m_nGenerateTimeLimit = GenerateTime;
 	Particle->Init();
 	return Particle;
 }

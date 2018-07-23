@@ -43,8 +43,9 @@ public:
 	void Update(void);												//パーティクル更新処理
 	void Draw(void);												//パーティクル描画処理
 	static CParticle * Create(CSceneBillBoard* pBillBoard,
-		D3DXVECTOR3 vePosition, float fSpeed, int nLife);			//パーティクルのインスタンス生成
+		D3DXVECTOR3 vePosition, float fSpeed, int nLife,int GenerateTime);			//パーティクルのインスタンス生成
 	static void LoadBillBoard(CSceneBillBoard* pBillBoard);			//パーティクルのビルボードを読み込む
+
 
 private:
 	PARTICLE m_Particle[PARTICLE_NUM];								//パーティクル情報の管理
@@ -52,6 +53,8 @@ private:
 	static D3DXVECTOR3 m_vePosition;								//パーティクル発生の位置を声明する
 	static float m_fSpeed;											//パーティクルの移動スビートを声明する
 	static int m_nLifeLimit;										//パーティクルの寿命限界を声明する
+	int m_nGenerateTime;											//パーティクルの生成時間
+	static int m_nGenerateTimeLimit;								//パーティクルの寿命限界を声明する
 };
 
 #endif

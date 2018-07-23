@@ -124,7 +124,7 @@ void CBullet::Shoot(D3DXVECTOR3 vePosition, D3DXVECTOR3 veVec)
 			m_Bullet[nCount].vePos.y = 2.0f;
 			m_Bullet[nCount].veMov = (veVec - vePosition);
 			D3DXVec3Normalize(&m_Bullet[nCount].veMov, &m_Bullet[nCount].veMov);
-			m_Bullet[nCount].veMov = m_Bullet[nCount].veMov * 0.12;
+			m_Bullet[nCount].veMov = m_Bullet[nCount].veMov * 0.24;
 			m_Bullet[nCount].veMov.y = 0.0f;
 			m_Bullet[nCount].status = 1;
 			m_Bullet[nCount].nLife = 400;
