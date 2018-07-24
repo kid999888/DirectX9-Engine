@@ -27,6 +27,7 @@ CScenePolygon* CModeGame::m_ScenePolygon = NULL;
 CSceneBillBoard* CModeGame::m_SceneBillBoard = NULL;
 CSceneModel* CModeGame::m_SceneModel = NULL;
 CBullet* CModeGame::m_Bullet = NULL;
+CEnemy* CModeGame::m_Enemy = NULL;
 
 CCamera *CModeTitle::m_Camera = NULL;
 CLight *CModeTitle::m_Light = NULL;
@@ -58,7 +59,7 @@ bool CModeGame::Init(void)
 	m_Number = CNumber::Create(0);
 	m_Scene3D = CScene3D::Create();
 	m_Scene3D->m_bDraw = false;
-	CEnemy::Create(m_Scene3D);
+	m_Enemy = CEnemy::Create(m_Scene3D);
 	CEnemy::Generate(D3DXVECTOR3(0.0f, 2.0f, 20.0f));
 	CEnemy::Generate(D3DXVECTOR3(-16.0f, 2.0f, 20.0f));
 	CEnemy::Generate(D3DXVECTOR3(2.0f, 2.0f, 20.0f));
@@ -76,6 +77,7 @@ bool CModeGame::Init(void)
 	m_SceneModel = CSceneModel::Create("Data\\Model\\Ball.x");
 	m_SceneModel->m_bDraw = false;
 	m_Bullet = CBullet::Create(m_SceneModel);
+	CMap::Create();
 #if defined(DEBUG)
 	CDebugGUI::SetMainCamera(m_Camera);
 	CDebugGUI::SetField(m_Field);
@@ -173,7 +175,7 @@ bool CModeTitle::Init(void)
 	m_ModeId = MODE_TITLE;
 	this->m_Camera = new CCamera();
 	this->m_Light = new CLight();
-	m_Scene2D = CScene2D::Create("Data\\Texture\\Title.png", 1, 1);
+	m_Scene2D = CScene2D::Create(2,"Data\\Texture\\Title.png", 1, 1,255);
 	return true;
 }
 
@@ -222,7 +224,7 @@ bool CModeResult::Init(void)
 	m_ModeId = MODE_RESULT;
 	this->m_Camera = new CCamera();
 	this->m_Light = new CLight();
-	m_Scene2D = CScene2D::Create("Data\\Texture\\Result.png", 1, 1);
+	m_Scene2D = CScene2D::Create(2,"Data\\Texture\\Result.png", 1, 1,255);
 	return true;
 }
 
@@ -264,7 +266,7 @@ bool CModeGameOver::Init(void)
 	m_ModeId = MODE_GAMEOVER;
 	this->m_Camera = new CCamera();
 	this->m_Light = new CLight();
-	m_Scene2D = CScene2D::Create("Data\\Texture\\GameOver.png", 1, 1);
+	m_Scene2D = CScene2D::Create(2,"Data\\Texture\\GameOver.png", 1, 1,255);
 	return true;
 }
 

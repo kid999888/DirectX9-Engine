@@ -25,6 +25,7 @@
 #include"Particle.h"
 #include"Bullet.h"
 #include"Enemy.h"
+#include"Map.h"
 
 //=================================================================================================
 //　　　構造体定義                                         
@@ -59,13 +60,21 @@ public:
 class CModeGame : public CMode
 {
 public:
+	CModeGame()
+	{
+		m_nClipNum = 0;
+		m_nClipNumLimit = 10;
+	};
+	~CModeGame(void) {};
 	bool Init(void);												//ゲームモードクラス初期処理
 	void Uninit(void);												//ゲームモードクラス終了処理
 	void Update(void);												//ゲームモードクラス更新処理
 	void Draw(void);												//ゲームモードクラス描画処理
+	void ReLoad(void);
 	static CCamera* GetMainCamera(void) { return m_Camera; };		//カメラのアドレスを取得
 	static CField* GetField(void) { return m_Field; };				//フィールドのアドレスを取得
 	static CPlayer* GetMainPlayer(void) { return m_Player; };		//プレーヤーのアドレスを取得
+	static CEnemy* GetMainEnemy(void) { return m_Enemy; };		//プレーヤーのアドレスを取得
 private:
 	static CCamera *m_Camera;										//カメラのアドレスポインタを声明
 	static CLight *m_Light;											//ライトのアドレスポインタを声明
@@ -78,7 +87,10 @@ private:
 	static CSceneBillBoard  * m_SceneBillBoard;						//ビルボードのアドレスポインタを声明
 	static CSceneModel* m_SceneModel;								//
 	static CBullet* m_Bullet;										//
+	static CEnemy* m_Enemy;										//
 	int m_nEnemyCount;												//敵記数
+	int m_nClipNum;													//
+	int m_nClipNumLimit;											//
 
 };
 

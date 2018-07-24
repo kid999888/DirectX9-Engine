@@ -20,6 +20,10 @@
 //=================================================================================================
 //　　　実体定義                                       
 //=================================================================================================
+int CScene2D::m_nAlpha = 255;
+
+
+
 typedef struct
 {
 	D3DXVECTOR4 pos;            //XYZW座標
@@ -110,10 +114,21 @@ void CScene2D::Draw(void)
 {
 	LPDIRECT3DDEVICE9 pDevice = CRenderer::GetD3DDevice();
 
-	CreateVertexAffine(D3DCOLOR_RGBA(255, 255, 255, 255), m_nTextureNumber.x, m_nTextureNumber.y);
+	CreateVertexAffine(D3DCOLOR_RGBA(255, 255, 255, m_nAlpha), m_nTextureNumber.x, m_nTextureNumber.y);
 
 
 	pDevice->SetStreamSource(0, m_pVertexBuffer, 0, sizeof(VERTEX_2D));
+
+	//レンダーステートの設定
+	//αブレンドを行う
+	//SRC...今から描くもの、つまりポリゴンに描画されている部分
+	//DEST...すでに描画されている画面の部分
+	//SRC_RGB * SRC_α +DEST_RGB * ( 1 - SRC_α )
+	pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+
+	pDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);                   //
+
+	pDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
 
 	//FVF(今から使用する頂点情報)の設定
 	pDevice->SetFVF(FVF_VERTEX_2D);
@@ -130,14 +145,18 @@ void CScene2D::Draw(void)
 	pDevice->DrawPrimitive(                 //重要
 		D3DPT_TRIANGLEFAN, 0,			    //描画のモード
 		2);                                  //ポリゴン数
+	
+	//アルファブレンドOFF
+	pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 }
 
 //=================================================================================================
 //　　　2Dポリゴンクラスのインスタンス生成                                    
 //=================================================================================================
-CScene2D * CScene2D::Create(std::string stFileName, int nNx, int nNy)
+CScene2D * CScene2D::Create(int nPriority, std::string stFileName, int nNx, int nNy, int nAlpha)
 {
-	CScene2D *Scene2D = new CScene2D(2, stFileName, nNx, nNy);
+	CScene2D *Scene2D = new CScene2D(nPriority, stFileName, nNx, nNy);
+	m_nAlpha = nAlpha;
 	Scene2D->Init();
 	return Scene2D;
 }
