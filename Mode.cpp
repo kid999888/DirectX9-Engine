@@ -131,16 +131,18 @@ void CModeGame::Update(void)
 						CEnemy::Destory(nCountX);
 						CBullet::Destory(nCount);
 						m_nEnemyCount -= 1;
+						//リザルトシーン判定
+						if (m_nEnemyCount <= 0)
+						{
+							CManager::SetMode(new CModeResult());
+						}
 					}
 				}
 			}
 		}
 	}
 
-	if (m_nEnemyCount <= 0)
-	{
-		CManager::SetMode(new CModeResult());
-	}
+	
 	
 
 	if (CInputMouse::GetLeftTrigger())
