@@ -175,7 +175,7 @@ bool CModeTitle::Init(void)
 	m_ModeId = MODE_TITLE;
 	this->m_Camera = new CCamera();
 	this->m_Light = new CLight();
-	m_Scene2D = CScene2D::Create(2,"Data\\Texture\\Title.png", 1, 1,255);
+	m_Scene2D = CScene2D::Create(2,"Data\\Texture\\Title.png", 1, 1);
 	return true;
 }
 
@@ -224,7 +224,7 @@ bool CModeResult::Init(void)
 	m_ModeId = MODE_RESULT;
 	this->m_Camera = new CCamera();
 	this->m_Light = new CLight();
-	m_Scene2D = CScene2D::Create(2,"Data\\Texture\\Result.png", 1, 1,255);
+	m_Scene2D = CScene2D::Create(2,"Data\\Texture\\Result.png", 1, 1);
 	return true;
 }
 
@@ -266,7 +266,7 @@ bool CModeGameOver::Init(void)
 	m_ModeId = MODE_GAMEOVER;
 	this->m_Camera = new CCamera();
 	this->m_Light = new CLight();
-	m_Scene2D = CScene2D::Create(2,"Data\\Texture\\GameOver.png", 1, 1,255);
+	m_Scene2D = CScene2D::Create(2,"Data\\Texture\\GameOver.png", 1, 1);
 	return true;
 }
 

@@ -21,7 +21,7 @@
 #define TEXTUREFILENAME000	        "Data\\Texture\\horoCube.png"	
 
 //=================================================================================================
-//　　　構造体定義                                         
+//　　　構造体定義
 //=================================================================================================
 typedef struct
 {
@@ -45,7 +45,6 @@ bool CScene3D::Init(void)
 {
 	HRESULT hr[2];
 	LPDIRECT3DDEVICE9 pDevice = CRenderer::GetD3DDevice();
-	/*m_pTexture = new LPDIRECT3DTEXTURE9[1];*/
 
 	hr[0] = D3DXCreateTextureFromFile(
 		pDevice,

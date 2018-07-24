@@ -26,14 +26,13 @@ public:
 		m_pTexture = nullptr;
 		m_pVertexBuffer = NULL;
 		stFileNameModel = stFileName;
-		m_nAlpha = 255;
 	};																		//2Dポリゴンコンストラクタ
 	~CScene2D();															//2Dポリゴンデストラクタ
 	bool Init(void);														//2Dポリゴン初期処理
 	void Uninit(void);														//2Dポリゴン終了処理
 	void Update(void);														//2Dポリゴン更新処理
 	void Draw(void);														//2Dポリゴン描画処理
-	static CScene2D * Create(int nPriority, std::string stFileName, int nNx, int nNy,int nAlpha);		//2Dポリゴンのインスタンス生成
+	static CScene2D * Create(int nPriority, std::string stFileName, int nNx, int nNy);		//2Dポリゴンのインスタンス生成
 	void SetTextureNum(int nX, int nY);										//2Dポリゴンのテクスチャナンバーの設定
 	int Get2DObjectHeight(void)												//テクスチャの高度を取得
 	{
@@ -51,7 +50,6 @@ private:
 	LPDIRECT3DVERTEXBUFFER9 m_pVertexBuffer;								//頂点バッファ管理するメモ帳
 	void CreateVertexAffine(D3DCOLOR color, int tCx, int tCy);				//頂点バッファ処理
 	std::string stFileNameModel;											//ファイルパスの管理メモ帳
-	static int m_nAlpha;															//
 };
 
 #endif

@@ -20,10 +20,10 @@
 //=================================================================================================
 //　　　実体定義                                       
 //=================================================================================================
-int CScene2D::m_nAlpha = 255;
 
-
-
+//=================================================================================================
+//　　　構造体定義                                         
+//=================================================================================================
 typedef struct
 {
 	D3DXVECTOR4 pos;            //XYZW座標
@@ -46,7 +46,6 @@ bool CScene2D::Init(void)
 {
 	HRESULT hr;
 	LPDIRECT3DDEVICE9 pDevice = CRenderer::GetD3DDevice();
-	/*m_pTexture = new LPDIRECT3DTEXTURE9[1];*/
 
 	hr = D3DXCreateTextureFromFile(
 		pDevice,
@@ -114,7 +113,7 @@ void CScene2D::Draw(void)
 {
 	LPDIRECT3DDEVICE9 pDevice = CRenderer::GetD3DDevice();
 
-	CreateVertexAffine(D3DCOLOR_RGBA(255, 255, 255, m_nAlpha), m_nTextureNumber.x, m_nTextureNumber.y);
+	CreateVertexAffine(D3DCOLOR_RGBA(255, 255, 255, 255), m_nTextureNumber.x, m_nTextureNumber.y);
 
 
 	pDevice->SetStreamSource(0, m_pVertexBuffer, 0, sizeof(VERTEX_2D));
@@ -153,10 +152,9 @@ void CScene2D::Draw(void)
 //=================================================================================================
 //　　　2Dポリゴンクラスのインスタンス生成                                    
 //=================================================================================================
-CScene2D * CScene2D::Create(int nPriority, std::string stFileName, int nNx, int nNy, int nAlpha)
+CScene2D * CScene2D::Create(int nPriority, std::string stFileName, int nNx, int nNy)
 {
 	CScene2D *Scene2D = new CScene2D(nPriority, stFileName, nNx, nNy);
-	m_nAlpha = nAlpha;
 	Scene2D->Init();
 	return Scene2D;
 }

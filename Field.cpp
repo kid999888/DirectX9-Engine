@@ -45,7 +45,6 @@ CField::~CField()
 bool CField::Init(void)
 {
 	LPDIRECT3DDEVICE9 pDevice = CRenderer::GetD3DDevice();
-	/*m_pTexture = new LPDIRECT3DTEXTURE9[1];*/
 
 	HRESULT hr[2];
 
