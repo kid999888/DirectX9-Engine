@@ -46,12 +46,12 @@ bool CScene2D::Init(void)
 {
 	HRESULT hr;
 	LPDIRECT3DDEVICE9 pDevice = CRenderer::GetD3DDevice();
-	m_pTexture = new LPDIRECT3DTEXTURE9[1];
+	/*m_pTexture = new LPDIRECT3DTEXTURE9[1];*/
 
 	hr = D3DXCreateTextureFromFile(
 		pDevice,
 		stFileNameModel.c_str(),
-		m_pTexture);
+		&m_pTexture);
 
 	if (FAILED(hr))
 	{
@@ -96,7 +96,7 @@ bool CScene2D::Init(void)
 //=================================================================================================
 void CScene2D::Uninit(void)
 {
-	SAFE_DELETE_ARRAY(m_pTexture);
+	SAFE_RELEASE(m_pTexture);
 	SAFE_RELEASE(m_pVertexBuffer);
 }
 
@@ -134,7 +134,7 @@ void CScene2D::Draw(void)
 	pDevice->SetFVF(FVF_VERTEX_2D);
 
 	//テクスチャ貼り付ける
-	pDevice->SetTexture(0, *m_pTexture);
+	pDevice->SetTexture(0, m_pTexture);
 
 	pDevice->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
 

@@ -128,6 +128,11 @@ void CSceneModel::Uninit(void)
 	SAFE_RELEASE(m_pMesh);
 	SAFE_RELEASE(m_pMaterial);
 	SAFE_DELETE(m_Material);
+	//モデリングのリリース
+	for (int nCount = 0;nCount < m_nMaterialNum;nCount++)
+	{
+		SAFE_RELEASE(m_pTexture[nCount]);
+	}
 	SAFE_DELETE_ARRAY(m_pTexture);
 	
 }

@@ -45,14 +45,14 @@ CField::~CField()
 bool CField::Init(void)
 {
 	LPDIRECT3DDEVICE9 pDevice = CRenderer::GetD3DDevice();
-	m_pTexture = new LPDIRECT3DTEXTURE9[1];
+	/*m_pTexture = new LPDIRECT3DTEXTURE9[1];*/
 
 	HRESULT hr[2];
 
 	hr[0] = D3DXCreateTextureFromFile(
 		pDevice,
 		TEXTUREFILENAME000,
-		m_pTexture);
+		&m_pTexture);
 
 	if (FAILED(hr[0]))
 	{
@@ -319,9 +319,8 @@ void CField::Uninit(void)
 {
 	SAFE_RELEASE(m_pVertexBuffer);
 	SAFE_RELEASE(m_pIndexBuffer);
-	SAFE_DELETE(m_Material)
-		;
-	SAFE_DELETE_ARRAY(m_pTexture);
+	SAFE_RELEASE(m_pTexture);
+	SAFE_DELETE(m_Material);
 	//頂点情報管理メモ帳の消す
 	SAFE_DELETE_ARRAY(m_pvMeshFiledPos);
 	
@@ -387,7 +386,7 @@ void CField::Draw(void)
 	m_Material->Update();
 
 	//テクスチャ貼り付ける
-	pDevice->SetTexture(0, *m_pTexture);
+	pDevice->SetTexture(0, m_pTexture);
 
 	//線分描画ON
 	//pDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);

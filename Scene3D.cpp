@@ -45,12 +45,12 @@ bool CScene3D::Init(void)
 {
 	HRESULT hr[2];
 	LPDIRECT3DDEVICE9 pDevice = CRenderer::GetD3DDevice();
-	m_pTexture = new LPDIRECT3DTEXTURE9[1];
+	/*m_pTexture = new LPDIRECT3DTEXTURE9[1];*/
 
 	hr[0] = D3DXCreateTextureFromFile(
 		pDevice,
 		TEXTUREFILENAME000,
-		m_pTexture);
+		&m_pTexture);
 
 	if (FAILED(hr[0]))
 	{
@@ -204,8 +204,8 @@ void CScene3D::Uninit(void)
 {
 	SAFE_RELEASE(m_pVertexBuffer);
 	SAFE_RELEASE(m_pIndexBuffer);
+	SAFE_RELEASE(m_pTexture);
 	SAFE_DELETE(m_Material);
-	SAFE_DELETE_ARRAY(m_pTexture);
 }
 
 //=================================================================================================
@@ -265,7 +265,7 @@ void CScene3D::Draw(void)
 	m_Material->Update();
 
 	//テクスチャ貼り付ける
-	pDevice->SetTexture(0, *m_pTexture);
+	pDevice->SetTexture(0, m_pTexture);
 
 	pDevice->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
 

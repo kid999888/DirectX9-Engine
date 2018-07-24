@@ -78,7 +78,7 @@ protected:
 	D3DXVECTOR3 m_veScale;								//オブジェクトの拡縮倍率
 	D3DXVECTOR3 m_veRotation;							//オブジェクトの軸回転
 	D3DXVECTOR3 m_vePosition;							//オブジェクトの位置
-	LPDIRECT3DTEXTURE9* m_pTexture;						//テクスチャ管理するメモ帳
+	LPDIRECT3DTEXTURE9 m_pTexture;						//テクスチャ管理するメモ帳
 	CMaterial *m_Material;								//マテリアルの管理するメモ帳
 	D3DXMATRIX m_mtxWorld;								//オブジェクトワールド行列変数
 	D3DXMATRIX m_mtxWorldR;								//オブジェクトワールド キューブの回転行列
