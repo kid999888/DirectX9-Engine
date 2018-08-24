@@ -73,7 +73,7 @@ void CDebugGUI::UpdateWindow(void)
 
 			ImGui::Text("Player Position:");
 			ImGui::SameLine();
-			ImGui::Text("(%f,%f,%f)", m_pPlayer->GetPositionX(), m_pPlayer->GetPositionY(), m_pPlayer->GetPositionZ());
+			ImGui::Text("(%f,%f,%f)", CPlayer::GetPlayerPos().x, CPlayer::GetPlayerPos().y, CPlayer::GetPlayerPos().z);
 
 			ImGui::Text("Player Rotation:");
 			ImGui::SameLine();

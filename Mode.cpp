@@ -61,14 +61,7 @@ bool CModeGame::Init(void)
 	m_Scene3D->m_bDraw = false;
 	m_Enemy = CEnemy::Create(m_Scene3D);
 	CEnemy::Generate(D3DXVECTOR3(0.0f, 2.0f, 20.0f));
-	CEnemy::Generate(D3DXVECTOR3(-16.0f, 2.0f, 20.0f));
-	CEnemy::Generate(D3DXVECTOR3(2.0f, 2.0f, 20.0f));
-	CEnemy::Generate(D3DXVECTOR3(-12.0f, 2.0f, 20.0f));
-	CEnemy::Generate(D3DXVECTOR3(0.0f, 2.0f, -20.0f));
-	CEnemy::Generate(D3DXVECTOR3(16.0f, 2.0f, -20.0f));
-	CEnemy::Generate(D3DXVECTOR3(2.f, 2.0f, -20.0f));
-	CEnemy::Generate(D3DXVECTOR3(-12.0f, 2.0f, -20.0f));
-	m_nEnemyCount = 8;
+	m_nEnemyCount = 1;
 
 	m_ScenePolygon = CScenePolygon::Create();
 	m_SceneBillBoard = CSceneBillBoard::Create();
@@ -128,16 +121,24 @@ void CModeGame::Update(void)
 				{
 					if (CCollision::BallJudgement(CEnemy::GetEnemyManager(nCountX).vePos, CBullet::GetBulletManager(nCount).vePos, 0.8f, 0.3f))
 					{
-						vePos = CEnemy::GetEnemyManager(nCountX).vePos;
-						CEnemy::Destory(nCountX);
+						CEnemy::SetEnemyLife(nCountX, CEnemy::GetEnemyManager(nCountX).nLife - 1);
 						CBullet::Destory(nCount);
-						m_nEnemyCount -= 1;
-
-						CParticle::Create(m_SceneBillBoard, vePos, 5.0f, 100, 90);
-						//リザルトシーン判定
-						if (m_nEnemyCount <= 0)
+						m_SceneBillBoard->SetScale(D3DXVECTOR3(0.2f, 0.2f, 0.2f));
+						CParticle::Create(m_SceneBillBoard, CEnemy::GetEnemyManager(nCountX).vePos, 1.0f, 100, 90);
+						/*m_SceneBillBoard->SetScale(D3DXVECTOR3(1.0f, 1.0f, 1.0f));*/
+						if (CEnemy::GetEnemyManager(nCountX).nLife <= 0)
 						{
-							CManager::SetMode(new CModeResult());
+							vePos = CEnemy::GetEnemyManager(nCountX).vePos;
+							CEnemy::Destory(nCountX);
+							CBullet::Destory(nCount);
+							m_nEnemyCount -= 1;
+
+							CParticle::Create(m_SceneBillBoard, vePos, 5.0f, 100, 90);
+							//リザルトシーン判定
+							if (m_nEnemyCount <= 0)
+							{
+								CManager::SetMode(new CModeResult());
+							}
 						}
 					}
 				}

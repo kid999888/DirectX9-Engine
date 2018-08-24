@@ -26,7 +26,7 @@ using namespace std;
 #define FVF_VERTEX_3D ( D3DFVF_XYZ | D3DFVF_NORMAL | D3DFVF_DIFFUSE | D3DFVF_TEX1)    //3Dポリゴンの頂点情報
 //テクスチャファイルパス
 #define TEXTUREFILENAME000	        "Data\\Texture\\Ground.png"	
-#define NOISEFILENAME000	        "Data\\Texture\\noise.png"	
+#define NOISEFILENAME000	        "Data\\Texture\\Field.png"	
 
 //=================================================================================================
 //　　　グローバル変数                                    

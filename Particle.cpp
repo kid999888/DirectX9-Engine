@@ -19,6 +19,7 @@ D3DXVECTOR3 CParticle::m_vePosition = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 float CParticle::m_fSpeed = 0.0f;
 int CParticle::m_nLifeLimit = 0;
 int CParticle::m_nGenerateTimeLimit = 0;
+bool CParticle::m_bGravityType = false;
 
 //=================================================================================================
 //　　　パーティクルデストラクタ
@@ -85,6 +86,11 @@ void CParticle::Update(void)
 			case 2:
 				m_Particle[nCount].veMov += m_Particle[nCount].veAcc;
 				m_Particle[nCount].vePos += m_Particle[nCount].veMov;
+				//バッグがある
+				if (m_bGravityType)
+				{
+					m_Particle[nCount].vePos += (v3Down * 0.0130f);
+				}
 				m_Particle[nCount].nLife -= 1;
 				if (m_Particle[nCount].nLife <= 0)
 				{
@@ -137,13 +143,14 @@ void CParticle::Draw(void)
 //=================================================================================================
 //　　　パーティクルのインスタンス生成
 //=================================================================================================
-CParticle * CParticle::Create(CSceneBillBoard* pBillBoard, D3DXVECTOR3 vePosition, float fSpeed, int nLife, int GenerateTime)
+CParticle * CParticle::Create(CSceneBillBoard* pBillBoard, D3DXVECTOR3 vePosition, float fSpeed, int nLife, int GenerateTime, bool bGravity)
 {
 	CParticle *Particle = new CParticle(1);
 	LoadBillBoard(pBillBoard);
 	m_vePosition = vePosition;
 	m_fSpeed = fSpeed;
 	m_nLifeLimit = nLife;
+	m_bGravityType = bGravity;
 	m_nGenerateTimeLimit = GenerateTime;
 	Particle->Init();
 	return Particle;

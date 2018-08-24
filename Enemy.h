@@ -43,6 +43,7 @@ public:
 	static void Load(CScene3D* pScene3D);							//“G‚ÌÀ‘Ì‚ğ“Ç‚İ‚Ş
 	static void Generate(D3DXVECTOR3 vePosition);					//V‚µ‚¢“G‚ğ¶¬
 	static void Destory(int nNum);									//“G‚ğ”pŠü‚·‚é
+	static void SetEnemyLife(int nNum, int nLife);					//“GHP‚ğİ’è
 	static ENEMY GetEnemyManager(int nNum)							//ƒiƒ“ƒo[‚Ì“G‚Ìî•ñ‚ğ‚­‚ê
 	{
 		return m_Enemy[nNum];

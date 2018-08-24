@@ -43,7 +43,7 @@ public:
 	void Update(void);												//パーティクル更新処理
 	void Draw(void);												//パーティクル描画処理
 	static CParticle * Create(CSceneBillBoard* pBillBoard,
-		D3DXVECTOR3 vePosition, float fSpeed, int nLife,int GenerateTime);			//パーティクルのインスタンス生成
+		D3DXVECTOR3 vePosition, float fSpeed, int nLife,int GenerateTime,bool bGravity = false);			//パーティクルのインスタンス生成
 	static void LoadBillBoard(CSceneBillBoard* pBillBoard);			//パーティクルのビルボードを読み込む
 
 
@@ -55,6 +55,7 @@ private:
 	static int m_nLifeLimit;										//パーティクルの寿命限界を声明する
 	int m_nGenerateTime;											//パーティクルの生成時間
 	static int m_nGenerateTimeLimit;								//パーティクルの寿命限界を声明する
+	static bool m_bGravityType;										//パーティクルが重力の影響を受けるか
 };
 
 #endif
