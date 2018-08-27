@@ -60,6 +60,8 @@ bool CField::Init(void)
 	}
 
 	float fSizeX = 1.0f, fSizeZ = 1.0f;
+	fSizeX *= m_veScale.x;
+	fSizeZ *= m_veScale.z;
 	float fStartX = -fSizeX * (m_nNumX / 2), fStartY = 0.0f, fStartZ = fSizeZ * (m_nNumZ / 2);
 
 	int nCx = m_nNumX + 1, nCy = m_nNumZ + 1;
@@ -353,7 +355,7 @@ void CField::Draw(void)
 	LPDIRECT3DDEVICE9 pDevice = CRenderer::GetD3DDevice();
 
 	//ägëÂèkè¨çsóÒÇçÏÇÈ
-	D3DXMatrixScaling(&m_mtxWorldS, m_veScale.x, m_veScale.y, m_veScale.z);
+	D3DXMatrixScaling(&m_mtxWorldS, 1.0f, 1.0f, 1.0f);
 
 	//âÒì]çsóÒÇçÏÇÈ
 	D3DXMatrixRotationX(&m_mtxWorldRX, D3DXToRadian(m_veRotation.x));

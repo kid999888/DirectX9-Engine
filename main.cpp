@@ -251,10 +251,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		}
 		break;
 
-	case WM_RBUTTONDOWN:
-		//マウスの右キーが押された
-		MessageBox(g_hWnd, "マウスの右キー", "ボーダーメッセージタイトル", MB_OK);							//メッセージ
-		break;
+	//case WM_RBUTTONDOWN:
+	//	//マウスの右キーが押された
+	//	MessageBox(g_hWnd, "マウスの右キー", "ボーダーメッセージタイトル", MB_OK);							//メッセージ
+	//	break;
 
 	case WM_CLOSE:
 	{

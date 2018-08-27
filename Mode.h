@@ -87,7 +87,8 @@ private:
 	static CSceneBillBoard  * m_SceneBillBoard;						//ビルボードのアドレスポインタを声明
 	static CSceneModel* m_SceneModel;								//
 	static CBullet* m_Bullet;										//
-	static CEnemy* m_Enemy;										//
+	static CEnemy* m_Enemy;											//
+	static CEnemy* m_Bulid;											//
 	int m_nEnemyCount;												//敵記数
 	int m_nClipNum;													//
 	int m_nClipNumLimit;											//

@@ -28,6 +28,7 @@ CSceneBillBoard* CModeGame::m_SceneBillBoard = NULL;
 CSceneModel* CModeGame::m_SceneModel = NULL;
 CBullet* CModeGame::m_Bullet = NULL;
 CEnemy* CModeGame::m_Enemy = NULL;
+CEnemy* CModeGame::m_Bulid = NULL;
 
 CCamera *CModeTitle::m_Camera = NULL;
 CLight *CModeTitle::m_Light = NULL;
@@ -60,12 +61,16 @@ bool CModeGame::Init(void)
 	m_Scene3D = CScene3D::Create();
 	m_Scene3D->m_bDraw = false;
 	m_Enemy = CEnemy::Create(m_Scene3D);
+	m_Bulid = CEnemy::Create(m_Scene3D);
+
 	//敵
-	CEnemy::Generate(ENEMY_TYPES_ZAKU,D3DXVECTOR3(0.0f, 2.0f, 20.0f));
+	m_Enemy->Generate(ENEMY_TYPES_ZAKU,D3DXVECTOR3(0.0f, 2.0f, 20.0f));
 	m_nEnemyCount = 1;
 	//建物
-	CEnemy::Generate(ENEMY_TYPES_BULIDING, D3DXVECTOR3(-10.0f, 2.0f, 20.0f));
+	m_Bulid->Generate(ENEMY_TYPES_BULIDING, D3DXVECTOR3(-10.0f, 2.0f, 20.0f));
+
 	m_ScenePolygon = CScenePolygon::Create();
+	m_ScenePolygon->SetScale(D3DXVECTOR3(40.0f, 1.0f, 0.125f));
 	m_SceneBillBoard = CSceneBillBoard::Create();
 	m_SceneBillBoard->m_bDraw = false;
 	m_SceneModel = CSceneModel::Create("Data\\Model\\Ball.x");
@@ -100,10 +105,19 @@ void CModeGame::Uninit(void)
 //=================================================================================================
 void CModeGame::Update(void)
 {
+	D3DXVECTOR3 veTempVector3(0.0f,0.0f,0.0f);
 	//レーザー部分
 	m_ScenePolygon->SetPosition(CPlayer::GetPlayerPos());
-	m_ScenePolygon->SetPositionY(2.0f);
+	m_ScenePolygon->SetPositionY(2.2f);
 	m_ScenePolygon->SetRotationY(m_Player->GetRotationY() + 90.0f);
+	if (CInputMouse::GetRightPress() == true)
+	{
+		m_ScenePolygon->m_bDraw = true;
+	}
+	else
+	{
+		m_ScenePolygon->m_bDraw = false;;
+	}
 
 	//
 	D3DXVECTOR3 vePos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
@@ -147,23 +161,45 @@ void CModeGame::Update(void)
 				{
 					if (CCollision::BallJudgement(CEnemy::GetEnemyManager(nCountX).vePos, CBullet::GetBulletManager(nCount).vePos, 0.8f, 0.3f))
 					{
-						CEnemy::SetEnemyLife(nCountX, CEnemy::GetEnemyManager(nCountX).nLife - 1);
-						CBullet::Destory(nCount);
-						m_SceneBillBoard->SetScale(D3DXVECTOR3(0.2f, 0.2f, 0.2f));
-						CParticle::Create(m_SceneBillBoard, CEnemy::GetEnemyManager(nCountX).vePos, 1.0f, 100, 90);
-						if (CEnemy::GetEnemyManager(nCountX).nLife <= 0)
+						switch (CEnemy::GetEnemyManager(nCountX).EnemyType)
 						{
-							vePos = CEnemy::GetEnemyManager(nCountX).vePos;
-							CEnemy::Destory(nCountX);
+							//ザグ
+						case ENEMY_TYPES_ZAKU:
+							CEnemy::SetEnemyLife(nCountX, CEnemy::GetEnemyManager(nCountX).nLife - 1);
 							CBullet::Destory(nCount);
-							m_nEnemyCount -= 1;
-							m_SceneBillBoard->SetScale(D3DXVECTOR3(0.5f, 0.5f, 0.5f));
-							CParticle::Create(m_SceneBillBoard, vePos, 5.0f, 100, 90);
-							//リザルトシーン判定
-							if (m_nEnemyCount <= 0)
+							m_SceneBillBoard->SetScale(D3DXVECTOR3(0.2f, 0.2f, 0.2f));
+							CParticle::Create(m_SceneBillBoard, CEnemy::GetEnemyManager(nCountX).vePos, 1.0f, 100, 90);
+							if (CEnemy::GetEnemyManager(nCountX).nLife <= 0)
 							{
-								CManager::SetMode(new CModeResult());
+								vePos = CEnemy::GetEnemyManager(nCountX).vePos;
+								CEnemy::Destory(nCountX);
+								CBullet::Destory(nCount);
+								m_nEnemyCount -= 1;
+								m_SceneBillBoard->SetScale(D3DXVECTOR3(0.5f, 0.5f, 0.5f));
+								CParticle::Create(m_SceneBillBoard, vePos, 5.0f, 100, 90);
+								//リザルトシーン判定
+								if (m_nEnemyCount <= 0)
+								{
+									CManager::SetMode(new CModeResult());
+								}
 							}
+							break;
+							//建物
+						case ENEMY_TYPES_BULIDING:
+							CEnemy::SetEnemyLife(nCountX, CEnemy::GetEnemyManager(nCountX).nLife - 1);
+							CBullet::Destory(nCount);
+							m_SceneBillBoard->SetScale(D3DXVECTOR3(0.2f, 0.2f, 0.2f));
+							CParticle::Create(m_SceneBillBoard, CEnemy::GetEnemyManager(nCountX).vePos, 1.0f, 100, 90);
+							if (CEnemy::GetEnemyManager(nCountX).nLife <= 0)
+							{
+								vePos = CEnemy::GetEnemyManager(nCountX).vePos;
+								CEnemy::Destory(nCountX);
+								CBullet::Destory(nCount);
+								m_SceneBillBoard->SetScale(D3DXVECTOR3(0.5f, 0.5f, 0.5f));
+								CParticle::Create(m_SceneBillBoard, vePos, 5.0f, 100, 90);
+							}
+							break;
+						default:break;
 						}
 					}
 				}
@@ -176,7 +212,9 @@ void CModeGame::Update(void)
 
 	if (CInputMouse::GetLeftTrigger())
 	{
-		CBullet::Shoot(CPlayer::GetPlayerPos(), m_Player->GetPlayerMouse());
+		veTempVector3 = CPlayer::GetPlayerPos();
+		veTempVector3.y += 1.5f;
+		CBullet::Shoot(veTempVector3, m_Player->GetPlayerMouse());
 	}
 
 	if (CInputKeyboard::GetKeyTrigger(DIK_Z))
