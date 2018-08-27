@@ -54,15 +54,17 @@ bool CModeGame::Init(void)
 	this->m_Camera = new CCamera();
 	this->m_Light = new CLight();
 	this->m_Xorshift = new CXorshift();
-	m_Field = CField::Create(150, 150);
+	m_Field = CField::Create(120, 120);
 	m_Player = CPlayer::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 	m_Number = CNumber::Create(0);
 	m_Scene3D = CScene3D::Create();
 	m_Scene3D->m_bDraw = false;
 	m_Enemy = CEnemy::Create(m_Scene3D);
-	CEnemy::Generate(D3DXVECTOR3(0.0f, 2.0f, 20.0f));
+	//敵
+	CEnemy::Generate(ENEMY_TYPES_ZAKU,D3DXVECTOR3(0.0f, 2.0f, 20.0f));
 	m_nEnemyCount = 1;
-
+	//建物
+	CEnemy::Generate(ENEMY_TYPES_BULIDING, D3DXVECTOR3(-10.0f, 2.0f, 20.0f));
 	m_ScenePolygon = CScenePolygon::Create();
 	m_SceneBillBoard = CSceneBillBoard::Create();
 	m_SceneBillBoard->m_bDraw = false;
@@ -112,7 +114,31 @@ void CModeGame::Update(void)
 			//敵とプレーヤーの当たり
 			if (CCollision::BallJudgement(CEnemy::GetEnemyManager(nCountX).vePos, CPlayer::GetPlayerPos(), 1.0f, 1.0f))
 			{
-				CManager::SetMode(new CModeGameOver());
+				switch (CEnemy::GetEnemyManager(nCountX).EnemyType)
+				{
+					//ザグ
+				case ENEMY_TYPES_ZAKU:
+					CManager::SetMode(new CModeGameOver());
+					break;
+					//建物
+				case ENEMY_TYPES_BULIDING:
+					vePos = CEnemy::GetEnemyManager(nCountX).vePos;
+					CEnemy::Destory(nCountX);
+					m_SceneBillBoard->SetScale(D3DXVECTOR3(0.5f, 0.5f, 0.5f));
+					CParticle::Create(m_SceneBillBoard, vePos, 5.0f, 100, 90);
+					break;
+				default:break;
+				}
+
+				/*if (CEnemy::GetEnemyManager(nCountX).EnemyType != ENEMY_TYPES_BULIDING)
+				{
+					CManager::SetMode(new CModeGameOver());
+				}
+				else
+				{
+
+				}*/
+				
 			}
 			for (int nCount = 0;nCount < BULLET_NUM;nCount++)
 			{
@@ -125,14 +151,13 @@ void CModeGame::Update(void)
 						CBullet::Destory(nCount);
 						m_SceneBillBoard->SetScale(D3DXVECTOR3(0.2f, 0.2f, 0.2f));
 						CParticle::Create(m_SceneBillBoard, CEnemy::GetEnemyManager(nCountX).vePos, 1.0f, 100, 90);
-						/*m_SceneBillBoard->SetScale(D3DXVECTOR3(1.0f, 1.0f, 1.0f));*/
 						if (CEnemy::GetEnemyManager(nCountX).nLife <= 0)
 						{
 							vePos = CEnemy::GetEnemyManager(nCountX).vePos;
 							CEnemy::Destory(nCountX);
 							CBullet::Destory(nCount);
 							m_nEnemyCount -= 1;
-
+							m_SceneBillBoard->SetScale(D3DXVECTOR3(0.5f, 0.5f, 0.5f));
 							CParticle::Create(m_SceneBillBoard, vePos, 5.0f, 100, 90);
 							//リザルトシーン判定
 							if (m_nEnemyCount <= 0)

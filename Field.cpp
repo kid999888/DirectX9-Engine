@@ -26,7 +26,7 @@ using namespace std;
 #define FVF_VERTEX_3D ( D3DFVF_XYZ | D3DFVF_NORMAL | D3DFVF_DIFFUSE | D3DFVF_TEX1)    //3Dポリゴンの頂点情報
 //テクスチャファイルパス
 #define TEXTUREFILENAME000	        "Data\\Texture\\Ground.png"	
-#define NOISEFILENAME000	        "Data\\Texture\\Field.png"	
+#define NOISEFILENAME000	        "Data\\Texture\\noise.png"	
 
 //=================================================================================================
 //　　　グローバル変数                                    
@@ -58,7 +58,7 @@ bool CField::Init(void)
 		MessageBox(NULL, "フィールドのテクスチャが読み込めない。", "エラー", MB_OK);					//テクスチャが読み込めエラーメッセージ
 		return false;
 	}
-	
+
 	float fSizeX = 1.0f, fSizeZ = 1.0f;
 	float fStartX = -fSizeX * (m_nNumX / 2), fStartY = 0.0f, fStartZ = fSizeZ * (m_nNumZ / 2);
 
@@ -89,12 +89,9 @@ bool CField::Init(void)
 		}
 	}
 
-	//高度ファイルを作る
-	ofstream OutFile;
-	OutFile.open("Data\\HeightMessage.txt", ios::out);
-	//OutFile.write("0.0",3);
 	
-	OutFile.close();
+
+	
 
 	//高度図を読み方む
 	ifstream InFile;
@@ -102,12 +99,25 @@ bool CField::Init(void)
 
 	InFile.seekg(0, ios::end);								//ポインタにファイル末端を移動
 	vector<BYTE>vaInData(InFile.tellg());					//<BYTE>型のVector配列inDataを宣言
-
+	int nSize = vaInData.size();
 	InFile.seekg(ios::beg);									//ポインタにファイル先端を移動
 	InFile.read((char*)&vaInData[0], vaInData.size());		//ファイルを読み込む
-	InFile.close();											//ファイルを閉じる	
-	
-	
+	InFile.close();											//ファイルを閉じる
+
+	//高度ファイルを作る
+	//ofstream OutFile;
+	//OutFile.open("Data\\HeightMessage.txt", ios::out);
+	///*OutFile.write("0.0", 3);*/
+
+	//for (int i = 0;i < (int)vaInData.size(); i++)
+	//{
+	//	OutFile << (vaInData[i] * 0.005f);
+	//	OutFile.write("\n", 2);
+	//}
+
+	//OutFile.close();
+
+
 	//ファイルの高度情報に高度のメモ帳に入れる
 	nCount = 0;
 	for (nZ = 0;nZ < nCy;nZ++)
@@ -120,7 +130,7 @@ bool CField::Init(void)
 	}
 	//Vector配列inDataの消す
 	vaInData.clear();
-	
+
 	nCount = 0;
 	for (nZ = 0;nZ < nCy;nZ++)
 	{
@@ -130,14 +140,14 @@ bool CField::Init(void)
 				D3DXVECTOR3(fStartX + (fSizeX * nX), fStartY, fStartZ - (fSizeZ * nZ)), D3DXVECTOR3(0.0f, 1.0f, 0.0f), D3DCOLOR_RGBA(255, 255, 255, 255), D3DXVECTOR2((fSizeX * nX),(fSizeZ * nZ))
 			};
 			m_pvMeshFiledPos[nCount].pos.y = vaFieldHeight[nX][nZ];
-			
+
 			nCount++;
 		}
 	}
 
 	//Vector配列vaFieldHeightの消す
 	vaFieldHeight.clear();
-	
+
 
 	//法線の凹凸として自動計算
 	for (nZ = 1;nZ < (nCy - 1);nZ++)
@@ -157,7 +167,7 @@ bool CField::Init(void)
 
 			n = nx + nz;
 
-			D3DXVec3Normalize(&n,&n);
+			D3DXVec3Normalize(&n, &n);
 			m_pvMeshFiledPos[nZ * nCx + (nX + 1)].fs = n;
 		}
 	}
@@ -281,7 +291,7 @@ bool CField::Init(void)
 	//①今までの配列を使用…PVにVの内容コピーする。（memcpy使用して）
 	memcpy(&pV[0], &m_pvMeshFiledPos[0], sizeof(VERTEX_3D) * m_nFiledPosNumber);
 
-	
+
 
 	//②直接書く
 
@@ -307,7 +317,7 @@ bool CField::Init(void)
 	//マテリアルのインスタンス生成&設定
 	m_Material = new CMaterial();
 	/*m_Material->SetAmbient(0.9f, 0.1f, 0.1f, 1.0f);*/
-	
+
 	return true;
 }
 
@@ -322,7 +332,7 @@ void CField::Uninit(void)
 	SAFE_DELETE(m_Material);
 	//頂点情報管理メモ帳の消す
 	SAFE_DELETE_ARRAY(m_pvMeshFiledPos);
-	
+
 }
 
 //=================================================================================================

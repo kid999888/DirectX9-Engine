@@ -112,7 +112,7 @@ void CEnemy::Load(CScene3D * pScene3D)
 //=================================================================================================
 //　　　新しい敵を生成
 //=================================================================================================
-void CEnemy::Generate(D3DXVECTOR3 vePosition)
+void CEnemy::Generate(ENEMY_TYPES_ID EnemyType, D3DXVECTOR3 vePosition)
 {
 	for (int nCount = 0;nCount < ENEMY_NUM;nCount++)
 	{
@@ -121,7 +121,19 @@ void CEnemy::Generate(D3DXVECTOR3 vePosition)
 			m_Enemy[nCount].vePos = vePosition;
 			m_Enemy[nCount].veMov = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 			m_Enemy[nCount].status = 1;
-			m_Enemy[nCount].nLife = 10;
+			m_Enemy[nCount].EnemyType = EnemyType;
+			switch (EnemyType)
+			{
+			//ザグの生成
+			case ENEMY_TYPES_ZAKU:
+				m_Enemy[nCount].nLife = 5;
+				break;
+			//建物の生成
+			case ENEMY_TYPES_BULIDING:
+				m_Enemy[nCount].nLife = 2;
+				break;
+			default:break;
+			}
 			break;
 		}
 	}
@@ -154,24 +166,34 @@ D3DXVECTOR3 CEnemy::GetMovePattern(int nNum)
 	D3DXVECTOR3 Vec = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	D3DXVECTOR3 Vec0 = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	D3DXVECTOR3 Vec1 = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	if (m_Enemy[nNum].status != 0)
+	switch (m_Enemy[nNum].EnemyType)
 	{
-		if (CCollision::BallJudgement(m_Enemy[nNum].vePos, CPlayer::GetPlayerPos(), 10.0f, 1.0f))
+	//ザグの移動パターン
+	case ENEMY_TYPES_ZAKU:
+		if (m_Enemy[nNum].status != 0)
 		{
-			Vec0 = m_Enemy[nNum].vePos;
-			Vec0.y = 0.0f;
-			Vec1 = CPlayer::GetPlayerPos();
-			Vec1.y = 0.0f;
-			Vec = Vec1 - Vec0;
-			D3DXVec3Normalize(&Vec, &Vec);
-			Vec.y = 0.0f;
-			Vec *= 0.1f;
+			if (CCollision::BallJudgement(m_Enemy[nNum].vePos, CPlayer::GetPlayerPos(), 10.0f, 1.0f))
+			{
+				Vec0 = m_Enemy[nNum].vePos;
+				Vec0.y = 0.0f;
+				Vec1 = CPlayer::GetPlayerPos();
+				Vec1.y = 0.0f;
+				Vec = Vec1 - Vec0;
+				D3DXVec3Normalize(&Vec, &Vec);
+				Vec.y = 0.0f;
+				Vec *= 0.1f;
+			}
+			else
+			{
+				Vec.x = (float)(CXorshift::xor64() * 0.000000000005f * 1.0f) - ((CXorshift::xor64() * 0.000000000005f * 1.0f) * 0.5f);
+				Vec.z = (float)(CXorshift::xor64() * 0.000000000005f * 1.0f) - ((CXorshift::xor64() * 0.000000000005f * 1.0f) * 0.5f);
+			}
 		}
-		else
-		{
-			Vec.x = (float)(CXorshift::xor64() * 0.000000000005f * 1.0f) - ((CXorshift::xor64() * 0.000000000005f * 1.0f) * 0.5f);
-			Vec.z = (float)(CXorshift::xor64() * 0.000000000005f * 1.0f) - ((CXorshift::xor64() * 0.000000000005f * 1.0f) * 0.5f);
-		}
+		break;
+	//建物の移動パターン
+	case ENEMY_TYPES_BULIDING:
+		break;
+	default:break;
 	}
 	
 	return Vec;

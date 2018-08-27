@@ -10,6 +10,15 @@
 #include"Scene3D.h"
 #include"Player.h"
 
+//=================================================================================================
+//　　　構造体定義                                         
+//=================================================================================================
+typedef enum
+{
+	ENEMY_TYPES_ZAKU,				//ザグ敵型
+	ENEMY_TYPES_BULIDING,			//建物敵型
+}ENEMY_TYPES_ID;
+
 
 typedef struct
 {
@@ -17,9 +26,12 @@ typedef struct
 	D3DXVECTOR3 vePos;			//現在の座標
 	D3DXVECTOR3 veMov;			//速度ベクトル
 	int nLife;					//寿命
+	ENEMY_TYPES_ID EnemyType;	//敵型
 }ENEMY;
 
 #define ENEMY_NUM (100)
+
+
 
 //=================================================================================================
 //　　　フィールドクラス                                       
@@ -41,7 +53,7 @@ public:
 	void Draw(void);												//敵描画処理
 	static CEnemy * Create(CScene3D* pScene3D);						//敵のインスタンス生成
 	static void Load(CScene3D* pScene3D);							//敵の実体を読み込む
-	static void Generate(D3DXVECTOR3 vePosition);					//新しい敵を生成
+	static void Generate(ENEMY_TYPES_ID EnemyType, D3DXVECTOR3 vePosition);					//新しい敵を生成
 	static void Destory(int nNum);									//敵を廃棄する
 	static void SetEnemyLife(int nNum, int nLife);					//敵HPを設定
 	static ENEMY GetEnemyManager(int nNum)							//ナンバーの敵の情報をくれ
