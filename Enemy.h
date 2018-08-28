@@ -8,6 +8,7 @@
 #define _CENEMY_H_
 #include"Scene.h"
 #include"Scene3D.h"
+#include"SceneModel.h"
 #include"Player.h"
 
 //=================================================================================================
@@ -27,6 +28,8 @@ typedef struct
 	D3DXVECTOR3 veMov;			//速度ベクトル
 	int nLife;					//寿命
 	ENEMY_TYPES_ID EnemyType;	//敵型
+	CSceneModel* SceneModel;
+	D3DXVECTOR3 veScale;
 }ENEMY;
 
 #define ENEMY_NUM (100)
@@ -51,9 +54,8 @@ public:
 	void Uninit(void);												//敵終了処理
 	void Update(void);												//敵更新処理
 	void Draw(void);												//敵描画処理
-	static CEnemy * Create(CScene3D* pScene3D);						//敵のインスタンス生成
-	static void Load(CScene3D* pScene3D);							//敵の実体を読み込む
-	static void Generate(ENEMY_TYPES_ID EnemyType, D3DXVECTOR3 vePosition);					//新しい敵を生成
+	static CEnemy * Create(void);						//敵のインスタンス生成
+	static void Generate(ENEMY_TYPES_ID EnemyType, D3DXVECTOR3 vePosition, CSceneModel* pSceneModel, D3DXVECTOR3 veScale);					//新しい敵を生成
 	static void Destory(int nNum);									//敵を廃棄する
 	static void SetEnemyLife(int nNum, int nLife);					//敵HPを設定
 	static ENEMY GetEnemyManager(int nNum)							//ナンバーの敵の情報をくれ
@@ -62,7 +64,6 @@ public:
 	};
 private:
 	static ENEMY m_Enemy[ENEMY_NUM];								//敵情報の管理
-	static CScene3D* m_pScene3D;									//敵の実体管理するアドレス
 	static D3DXVECTOR3 GetMovePattern(int nNum);					//敵移動パターン
 };
 

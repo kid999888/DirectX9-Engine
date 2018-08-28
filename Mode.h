@@ -81,7 +81,8 @@ private:
 	static CXorshift* m_Xorshift;									//
 	static CField * m_Field;										//フィールドのアドレスポインタを声明
 	static CPlayer * m_Player;										//プレーヤーのアドレスポインタを声明
-	static CScene3D * m_Scene3D;									//3Dキューブのアドレスポインタを声明
+	static CSceneModel * m_SceneModelEnemy;							//敵モデリングのアドレスポインタを声明
+	static CSceneModel * m_SceneModelBuliding;						//モデリングのアドレスポインタを声明
 	static CNumber * m_Number;										//スコア数字のアドレスポインタを声明
 	static CScenePolygon  * m_ScenePolygon;							//3Dポリゴンのアドレスポインタを声明
 	static CSceneBillBoard  * m_SceneBillBoard;						//ビルボードのアドレスポインタを声明

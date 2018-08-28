@@ -22,7 +22,7 @@ CLight::CLight()
 	m_Light.Type = D3DLIGHT_DIRECTIONAL;
 
 	//ライトの方向
-	D3DXVECTOR3 vecDir(1.0f, -1.0f, 0.0f);							//ライトベクトル
+	D3DXVECTOR3 vecDir(-1.0f, -1.0f, 1.0f);							//ライトベクトル
 	D3DXVec3Normalize((D3DXVECTOR3*)&m_Light.Direction, &vecDir);
 
 	//拡散光（光のメイン色）色の設定

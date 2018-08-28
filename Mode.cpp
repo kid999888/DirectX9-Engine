@@ -21,7 +21,8 @@ CLight *CModeGame::m_Light = NULL;
 CXorshift* CModeGame::m_Xorshift = NULL;
 CField *CModeGame::m_Field = NULL;
 CPlayer *CModeGame::m_Player = NULL;
-CScene3D *CModeGame::m_Scene3D = NULL;
+CSceneModel *CModeGame::m_SceneModelEnemy = NULL;
+CSceneModel *CModeGame::m_SceneModelBuliding = NULL;
 CNumber *CModeGame::m_Number = NULL;
 CScenePolygon* CModeGame::m_ScenePolygon = NULL;
 CSceneBillBoard* CModeGame::m_SceneBillBoard = NULL;
@@ -58,22 +59,25 @@ bool CModeGame::Init(void)
 	m_Field = CField::Create(120, 120);
 	m_Player = CPlayer::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 	m_Number = CNumber::Create(0);
-	m_Scene3D = CScene3D::Create();
-	m_Scene3D->m_bDraw = false;
-	m_Enemy = CEnemy::Create(m_Scene3D);
-	m_Bulid = CEnemy::Create(m_Scene3D);
+	m_SceneModelEnemy = CSceneModel::Create("Data\\Model\\bones_allK.x");
+	m_SceneModelEnemy->m_bDraw = false;
+	m_SceneModelBuliding = CSceneModel::Create("Data\\Model\\building001.x");
+	m_SceneModelBuliding->m_bDraw = false;
+	m_Enemy = CEnemy::Create();
+	m_Bulid = CEnemy::Create();
 
 	//“G
-	m_Enemy->Generate(ENEMY_TYPES_ZAKU,D3DXVECTOR3(0.0f, 2.0f, 20.0f));
+	m_Enemy->Generate(ENEMY_TYPES_ZAKU,D3DXVECTOR3(0.0f, 2.0f, 20.0f), m_SceneModelEnemy, D3DXVECTOR3(1.0f, 1.0f, 1.0f));
 	m_nEnemyCount = 1;
 	//Œš•¨
-	m_Bulid->Generate(ENEMY_TYPES_BULIDING, D3DXVECTOR3(-10.0f, 2.0f, 20.0f));
+	m_Bulid->Generate(ENEMY_TYPES_BULIDING, D3DXVECTOR3(-10.0f, 2.0f, 20.0f), m_SceneModelBuliding, D3DXVECTOR3(0.025f, 0.025f, 0.025f));
 
 	m_ScenePolygon = CScenePolygon::Create();
 	m_ScenePolygon->SetScale(D3DXVECTOR3(40.0f, 1.0f, 0.125f));
 	m_SceneBillBoard = CSceneBillBoard::Create();
 	m_SceneBillBoard->m_bDraw = false;
 	m_SceneModel = CSceneModel::Create("Data\\Model\\Ball.x");
+	m_SceneModel->SetScale(D3DXVECTOR3(0.3f, 0.3f, 0.3f));
 	m_SceneModel->m_bDraw = false;
 	m_Bullet = CBullet::Create(m_SceneModel);
 	CMap::Create();

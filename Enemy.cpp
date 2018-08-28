@@ -16,7 +16,6 @@
 //　　　実体定義
 //=================================================================================================
 ENEMY CEnemy::m_Enemy[ENEMY_NUM];
-CScene3D* CEnemy::m_pScene3D = NULL;
 
 //=================================================================================================
 //　　　敵デストラクタ                                         
@@ -82,8 +81,9 @@ void CEnemy::Draw(void)
 	{
 		if (m_Enemy[nCount].status != 0)
 		{
-			m_pScene3D->SetPosition(m_Enemy[nCount].vePos);
-			m_pScene3D->Draw();
+			m_Enemy[nCount].SceneModel->SetPosition(m_Enemy[nCount].vePos);
+			m_Enemy[nCount].SceneModel->SetScale(m_Enemy[nCount].veScale);
+			m_Enemy[nCount].SceneModel->Draw();
 		}
 	}
 }
@@ -91,28 +91,17 @@ void CEnemy::Draw(void)
 //=================================================================================================
 //　　　敵のインスタンス生成
 //=================================================================================================
-CEnemy * CEnemy::Create(CScene3D * pScene3D)
+CEnemy * CEnemy::Create(void)
 {
 	CEnemy *Enemy = new CEnemy(1);
 	Enemy->Init();
-	Load(pScene3D);
-	m_pScene3D->SetScale(D3DXVECTOR3(1.0f, 1.0f, 01.0f));
-	m_pScene3D->SetPosition(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 	return Enemy;
-}
-
-//=================================================================================================
-//　　　敵の実体を読み込む
-//=================================================================================================
-void CEnemy::Load(CScene3D * pScene3D)
-{
-	m_pScene3D = pScene3D;
 }
 
 //=================================================================================================
 //　　　新しい敵を生成
 //=================================================================================================
-void CEnemy::Generate(ENEMY_TYPES_ID EnemyType, D3DXVECTOR3 vePosition)
+void CEnemy::Generate(ENEMY_TYPES_ID EnemyType, D3DXVECTOR3 vePosition, CSceneModel* pSceneModel, D3DXVECTOR3 veScale)
 {
 	for (int nCount = 0;nCount < ENEMY_NUM;nCount++)
 	{
@@ -122,6 +111,8 @@ void CEnemy::Generate(ENEMY_TYPES_ID EnemyType, D3DXVECTOR3 vePosition)
 			m_Enemy[nCount].veMov = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 			m_Enemy[nCount].status = 1;
 			m_Enemy[nCount].EnemyType = EnemyType;
+			m_Enemy[nCount].SceneModel = pSceneModel;
+			m_Enemy[nCount].veScale = veScale;
 			switch (EnemyType)
 			{
 			//ザグの生成
