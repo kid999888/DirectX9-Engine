@@ -8,6 +8,7 @@
 #include"Manager.h"
 #include"input.h"
 #include"Collision.h"
+#include<math.h>
 
 #if defined(DEBUG)
 #include"DebugGUI.h"
@@ -38,10 +39,12 @@ CScene2D *CModeTitle::m_Scene2D = NULL;
 CCamera *CModeResult::m_Camera = NULL;
 CLight *CModeResult::m_Light = NULL;
 CScene2D *CModeResult::m_Scene2D = NULL;
+CNumber *CModeResult::m_Money = NULL;
 
 CCamera* CModeGameOver::m_Camera = NULL;
 CLight* CModeGameOver::m_Light = NULL;
 CScene2D* CModeGameOver::m_Scene2D = NULL;
+CNumber *CModeGameOver::m_Money = NULL;
 
 //=================================================================================================
 //　　　ゲームモードクラス                                       
@@ -58,19 +61,38 @@ bool CModeGame::Init(void)
 	this->m_Xorshift = new CXorshift();
 	m_Field = CField::Create(120, 120);
 	m_Player = CPlayer::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
-	m_Number = CNumber::Create(0);
-	m_SceneModelEnemy = CSceneModel::Create("Data\\Model\\bones_allK.x");
+	m_nMoney = 800;
+	m_Number = CNumber::Create(m_nMoney);
+	m_Number->SetPosition(D3DXVECTOR3(960.0f, 0.0f, -1.0f));
+	m_SceneModelEnemy = CSceneModel::Create("Data\\Model\\ufo.x");
 	m_SceneModelEnemy->m_bDraw = false;
 	m_SceneModelBuliding = CSceneModel::Create("Data\\Model\\building001.x");
 	m_SceneModelBuliding->m_bDraw = false;
 	m_Enemy = CEnemy::Create();
 	m_Bulid = CEnemy::Create();
+	
+	
 
 	//敵
-	m_Enemy->Generate(ENEMY_TYPES_ZAKU,D3DXVECTOR3(0.0f, 2.0f, 20.0f), m_SceneModelEnemy, D3DXVECTOR3(1.0f, 1.0f, 1.0f));
+	m_Enemy->Generate(ENEMY_TYPES_ZAKU, D3DXVECTOR3(0.0f, 2.0f, 20.0f), m_SceneModelEnemy, D3DXVECTOR3(0.5f, 0.5f, 0.5f));
+	m_Enemy->Generate(ENEMY_TYPES_ZAKU, D3DXVECTOR3(36.0f, 2.0f, 42.0f), m_SceneModelEnemy, D3DXVECTOR3(0.5f, 0.5f, 0.5f));
+	m_Enemy->Generate(ENEMY_TYPES_ZAKU, D3DXVECTOR3(-26.0f, 2.0f, 20.0f), m_SceneModelEnemy, D3DXVECTOR3(0.5f, 0.5f, 0.5f));
+	m_Enemy->Generate(ENEMY_TYPES_ZAKU, D3DXVECTOR3(30.0f, 2.0f, -20.0f), m_SceneModelEnemy, D3DXVECTOR3(0.5f, 0.5f, 0.5f));
+	m_Enemy->Generate(ENEMY_TYPES_ZAKU, D3DXVECTOR3(15.0f, 2.0f, -60.0f), m_SceneModelEnemy, D3DXVECTOR3(0.5f, 0.5f, 0.5f));
+	m_Enemy->Generate(ENEMY_TYPES_ZAKU, D3DXVECTOR3(-44.0f, 2.0f, -70.0f), m_SceneModelEnemy, D3DXVECTOR3(0.5f, 0.5f, 0.5f));
+	m_Enemy->Generate(ENEMY_TYPES_ZAKU, D3DXVECTOR3(56.0f, 2.0f, 80.0f), m_SceneModelEnemy, D3DXVECTOR3(0.5f, 0.5f, 0.5f));
+	m_Enemy->Generate(ENEMY_TYPES_ZAKU, D3DXVECTOR3(22.0f, 2.0f, 45.0f), m_SceneModelEnemy, D3DXVECTOR3(0.5f, 0.5f, 0.5f));
 	m_nEnemyCount = 1;
 	//建物
-	m_Bulid->Generate(ENEMY_TYPES_BULIDING, D3DXVECTOR3(-10.0f, 2.0f, 20.0f), m_SceneModelBuliding, D3DXVECTOR3(0.025f, 0.025f, 0.025f));
+	m_Bulid->Generate(ENEMY_TYPES_BULIDING, D3DXVECTOR3(-10.0f, 1.0f, 20.0f), m_SceneModelBuliding, D3DXVECTOR3(0.025f, 0.025f, 0.025f));
+	m_Bulid->Generate(ENEMY_TYPES_BULIDING, D3DXVECTOR3(-10.0f, 1.0f, 22.0f), m_SceneModelBuliding, D3DXVECTOR3(0.025f, 0.025f, 0.025f));
+	m_Bulid->Generate(ENEMY_TYPES_BULIDING, D3DXVECTOR3(-8.0f, 1.0f, 20.0f), m_SceneModelBuliding, D3DXVECTOR3(0.025f, 0.025f, 0.025f));
+	m_Bulid->Generate(ENEMY_TYPES_BULIDING, D3DXVECTOR3(-8.0f, 1.0f, 22.0f), m_SceneModelBuliding, D3DXVECTOR3(0.025f, 0.025f, 0.025f));
+	m_Bulid->Generate(ENEMY_TYPES_BULIDING, D3DXVECTOR3(-6.0f, 1.0f, 20.0f), m_SceneModelBuliding, D3DXVECTOR3(0.025f, 0.025f, 0.025f));
+	m_Bulid->Generate(ENEMY_TYPES_BULIDING, D3DXVECTOR3(-6.0f, 1.0f, 22.0f), m_SceneModelBuliding, D3DXVECTOR3(0.025f, 0.025f, 0.025f));
+	m_Bulid->Generate(ENEMY_TYPES_BULIDING, D3DXVECTOR3(-4.0f, 1.0f, 20.0f), m_SceneModelBuliding, D3DXVECTOR3(0.025f, 0.025f, 0.025f));
+	m_Bulid->Generate(ENEMY_TYPES_BULIDING, D3DXVECTOR3(-4.0f, 1.0f, 22.0f), m_SceneModelBuliding, D3DXVECTOR3(0.025f, 0.025f, 0.025f));
+
 
 	m_ScenePolygon = CScenePolygon::Create();
 	m_ScenePolygon->SetScale(D3DXVECTOR3(40.0f, 1.0f, 0.125f));
@@ -109,7 +131,7 @@ void CModeGame::Uninit(void)
 //=================================================================================================
 void CModeGame::Update(void)
 {
-	D3DXVECTOR3 veTempVector3(0.0f,0.0f,0.0f);
+	D3DXVECTOR3 veTempVector3(0.0f, 0.0f, 0.0f);
 	//レーザー部分
 	m_ScenePolygon->SetPosition(CPlayer::GetPlayerPos());
 	m_ScenePolygon->SetPositionY(2.2f);
@@ -136,7 +158,7 @@ void CModeGame::Update(void)
 				{
 					//ザグ
 				case ENEMY_TYPES_ZAKU:
-					CManager::SetMode(new CModeGameOver());
+					CManager::SetMode(new CModeGameOver(m_nMoney));
 					break;
 					//建物
 				case ENEMY_TYPES_BULIDING:
@@ -144,6 +166,7 @@ void CModeGame::Update(void)
 					CEnemy::Destory(nCountX);
 					m_SceneBillBoard->SetScale(D3DXVECTOR3(0.5f, 0.5f, 0.5f));
 					CParticle::Create(m_SceneBillBoard, vePos, 5.0f, 100, 90);
+					m_nMoney -= 100;
 					break;
 				default:break;
 				}
@@ -156,7 +179,7 @@ void CModeGame::Update(void)
 				{
 
 				}*/
-				
+
 			}
 			for (int nCount = 0;nCount < BULLET_NUM;nCount++)
 			{
@@ -184,9 +207,10 @@ void CModeGame::Update(void)
 								//リザルトシーン判定
 								if (m_nEnemyCount <= 0)
 								{
-									CManager::SetMode(new CModeResult());
+									CManager::SetMode(new CModeResult(m_nMoney));
 								}
 							}
+							m_nMoney +=30;
 							break;
 							//建物
 						case ENEMY_TYPES_BULIDING:
@@ -202,6 +226,7 @@ void CModeGame::Update(void)
 								m_SceneBillBoard->SetScale(D3DXVECTOR3(0.5f, 0.5f, 0.5f));
 								CParticle::Create(m_SceneBillBoard, vePos, 5.0f, 100, 90);
 							}
+							m_nMoney -= 100;
 							break;
 						default:break;
 						}
@@ -225,6 +250,7 @@ void CModeGame::Update(void)
 	{
 		m_Number->SetNumber(m_Number->GetNumber() + 1);
 	}
+	m_Number->SetNumber(m_nMoney);
 }
 
 //=================================================================================================
@@ -298,6 +324,8 @@ bool CModeResult::Init(void)
 	this->m_Camera = new CCamera();
 	this->m_Light = new CLight();
 	m_Scene2D = CScene2D::Create(2, "Data\\Texture\\Result.png", 1, 1);
+	m_Money = CNumber::Create(m_nMoney);
+	m_Money->SetPosition(D3DXVECTOR3(500.0f, 60.0f, -1.0f));
 	return true;
 }
 
@@ -340,6 +368,8 @@ bool CModeGameOver::Init(void)
 	this->m_Camera = new CCamera();
 	this->m_Light = new CLight();
 	m_Scene2D = CScene2D::Create(2, "Data\\Texture\\GameOver.png", 1, 1);
+	m_Money = CNumber::Create(m_nMoney);
+	m_Money->SetPosition(D3DXVECTOR3(500.0f, 60.0f, -1.0f));
 	return true;
 }
 

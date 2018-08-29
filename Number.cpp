@@ -106,6 +106,12 @@ void CNumber::Update(void)
 			break;
 		}
 	}
+	for (nCount = 0;nCount < m_nDig; nCount++)
+	{
+		Scene2DNumber[nCount]->SetPosition(D3DXVECTOR3(m_vePosition.x + ((float)nCount * 60.0f),
+			m_vePosition.y,
+			-1.0f));
+	}
 }
 
 //=================================================================================================

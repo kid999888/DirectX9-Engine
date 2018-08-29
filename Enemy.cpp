@@ -117,7 +117,7 @@ void CEnemy::Generate(ENEMY_TYPES_ID EnemyType, D3DXVECTOR3 vePosition, CSceneMo
 			{
 			//ÉUÉOÇÃê∂ê¨
 			case ENEMY_TYPES_ZAKU:
-				m_Enemy[nCount].nLife = 5;
+				m_Enemy[nCount].nLife = 3;
 				break;
 			//åöï®ÇÃê∂ê¨
 			case ENEMY_TYPES_BULIDING:

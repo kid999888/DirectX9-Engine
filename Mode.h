@@ -37,6 +37,7 @@ typedef enum
 	MODE_GAME,				//ゲームモード
 	MODE_RESULT,			//リザルトモード
 	MODE_GAMEOVER,			//ゲームオーバーモード
+	MODE_FADE,				//ゲームオーバーモード
 	MODE_MAX				//使えないモード
 }MODE_ID;
 
@@ -64,13 +65,14 @@ public:
 	{
 		m_nClipNum = 0;
 		m_nClipNumLimit = 10;
+		m_nMoney = 0;
 	};
 	~CModeGame(void) {};
 	bool Init(void);												//ゲームモードクラス初期処理
 	void Uninit(void);												//ゲームモードクラス終了処理
 	void Update(void);												//ゲームモードクラス更新処理
 	void Draw(void);												//ゲームモードクラス描画処理
-	void ReLoad(void);
+	void ReLoad(void);												//
 	static CCamera* GetMainCamera(void) { return m_Camera; };		//カメラのアドレスを取得
 	static CField* GetField(void) { return m_Field; };				//フィールドのアドレスを取得
 	static CPlayer* GetMainPlayer(void) { return m_Player; };		//プレーヤーのアドレスを取得
@@ -93,6 +95,7 @@ private:
 	int m_nEnemyCount;												//敵記数
 	int m_nClipNum;													//
 	int m_nClipNumLimit;											//
+	int m_nMoney;													//
 
 };
 
@@ -118,6 +121,10 @@ private:
 class CModeResult : public CMode
 {
 public:
+	CModeResult(int nMoney)
+	{
+		m_nMoney = nMoney;
+	};
 	bool Init(void);												//リザルトモードクラス初期処理
 	void Uninit(void);												//リザルトモードクラス終了処理
 	void Update(void);												//リザルトモードクラス更新処理
@@ -126,6 +133,8 @@ private:
 	static CCamera* m_Camera;										//カメラのアドレスポインタを声明
 	static CLight* m_Light;											//ライトのアドレスポインタを声明
 	static CScene2D* m_Scene2D;										//2D画像のアドレスポインタを声明
+	static CNumber* m_Money;
+	int m_nMoney;
 };
 
 //=================================================================================================
@@ -134,6 +143,10 @@ private:
 class CModeGameOver : public CMode
 {
 public:
+	CModeGameOver(int nMoney)
+	{
+		m_nMoney = nMoney;
+	};
 	bool Init(void);												//リザルトモードクラス初期処理
 	void Uninit(void);												//リザルトモードクラス終了処理
 	void Update(void);												//リザルトモードクラス更新処理
@@ -142,6 +155,24 @@ private:
 	static CCamera* m_Camera;										//カメラのアドレスポインタを声明
 	static CLight* m_Light;											//ライトのアドレスポインタを声明
 	static CScene2D* m_Scene2D;										//2D画像のアドレスポインタを声明
+	static CNumber* m_Money;
+	int m_nMoney;
 };
+
+//=================================================================================================
+//　　　フェイドモードクラス                                       
+//=================================================================================================
+/*class CModeFade : public CMode
+{
+public:
+	bool Init(void);												//フェイドモードクラス初期処理
+	void Uninit(void);												//フェイドモードクラス終了処理
+	void Update(void);												//フェイドモードクラス更新処理
+	void Draw(void);												//フェイドモードクラス描画処理
+private:
+	static CCamera* m_Camera;										//カメラのアドレスポインタを声明
+	static CLight* m_Light;											//ライトのアドレスポインタを声明
+	static CScene2D* m_Scene2D;										//2D画像のアドレスポインタを声明
+};*/
 
 #endif

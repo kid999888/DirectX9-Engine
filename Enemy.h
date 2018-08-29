@@ -54,8 +54,9 @@ public:
 	void Uninit(void);												//敵終了処理
 	void Update(void);												//敵更新処理
 	void Draw(void);												//敵描画処理
-	static CEnemy * Create(void);						//敵のインスタンス生成
-	static void Generate(ENEMY_TYPES_ID EnemyType, D3DXVECTOR3 vePosition, CSceneModel* pSceneModel, D3DXVECTOR3 veScale);					//新しい敵を生成
+	static CEnemy * Create(void);									//敵のインスタンス生成
+	static void Generate(ENEMY_TYPES_ID EnemyType, D3DXVECTOR3 vePosition,
+		CSceneModel* pSceneModel, D3DXVECTOR3 veScale);				//新しい敵を生成
 	static void Destory(int nNum);									//敵を廃棄する
 	static void SetEnemyLife(int nNum, int nLife);					//敵HPを設定
 	static ENEMY GetEnemyManager(int nNum)							//ナンバーの敵の情報をくれ
