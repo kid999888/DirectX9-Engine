@@ -46,6 +46,10 @@ CLight* CModeGameOver::m_Light = NULL;
 CScene2D* CModeGameOver::m_Scene2D = NULL;
 CNumber *CModeGameOver::m_Money = NULL;
 
+CCamera* CModeFade::m_Camera = NULL;
+CLight* CModeFade::m_Light = NULL;
+CScene2D* CModeFade::m_Scene2D = NULL;
+
 //=================================================================================================
 //　　　ゲームモードクラス                                       
 //=================================================================================================
@@ -312,7 +316,7 @@ void CModeTitle::Update(void)
 {
 	if (CInputMouse::GetLeftTrigger())
 	{
-		CManager::SetMode(new CModeGame());
+		CManager::SetMode(new CModeFade());
 	}
 }
 
@@ -406,6 +410,39 @@ void CModeGameOver::Update(void)
 }
 
 void CModeGameOver::Draw(void)
+{
+	m_Camera->Update();
+	m_Light->Update();
+}
+
+bool CModeFade::Init(void)
+{
+	m_ModeId = MODE_FADE;
+	this->m_Camera = new CCamera();
+	this->m_Light = new CLight();
+	m_Scene2D = CScene2D::Create(2, "Data\\Texture\\sosaku.png", 1, 1);
+	return true;
+}
+
+void CModeFade::Uninit(void)
+{
+	delete this->m_Camera;
+	this->m_Camera = nullptr;
+	delete this->m_Light;
+	this->m_Light = nullptr;
+	//シーンオブジェクトの解放
+	CScene::ReleaseAll();
+}
+
+void CModeFade::Update(void)
+{
+	if (CInputMouse::GetLeftTrigger())
+	{
+		CManager::SetMode(new CModeGame());
+	}
+}
+
+void CModeFade::Draw(void)
 {
 	m_Camera->Update();
 	m_Light->Update();
