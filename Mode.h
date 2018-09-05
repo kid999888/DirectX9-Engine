@@ -138,7 +138,7 @@ private:
 };
 
 //=================================================================================================
-//　　　リザルトモードクラス                                       
+//　　　ゲームオーバーモードクラス                                       
 //=================================================================================================
 class CModeGameOver : public CMode
 {
@@ -147,10 +147,10 @@ public:
 	{
 		m_nMoney = nMoney;
 	};
-	bool Init(void);												//リザルトモードクラス初期処理
-	void Uninit(void);												//リザルトモードクラス終了処理
-	void Update(void);												//リザルトモードクラス更新処理
-	void Draw(void);												//リザルトモードクラス描画処理
+	bool Init(void);												//ゲームオーバーモードクラス初期処理
+	void Uninit(void);												//ゲームオーバーモードクラス終了処理
+	void Update(void);												//ゲームオーバーモードクラス更新処理
+	void Draw(void);												//ゲームオーバーモードクラス描画処理
 private:
 	static CCamera* m_Camera;										//カメラのアドレスポインタを声明
 	static CLight* m_Light;											//ライトのアドレスポインタを声明
@@ -160,15 +160,15 @@ private:
 };
 
 //=================================================================================================
-//　　　フェイドモードクラス                                       
+//　　　トレーニングモードクラス                                       
 //=================================================================================================
-class CModeFade : public CMode
+class CModeTraining : public CMode
 {
 public:
-	bool Init(void);												//フェイドモードクラス初期処理
-	void Uninit(void);												//フェイドモードクラス終了処理
-	void Update(void);												//フェイドモードクラス更新処理
-	void Draw(void);												//フェイドモードクラス描画処理
+	bool Init(void);												//トレーニングモードクラス初期処理
+	void Uninit(void);												//トレーニングモードクラス終了処理
+	void Update(void);												//トレーニングモードクラス更新処理
+	void Draw(void);												//トレーニングモードクラス描画処理
 private:
 	static CCamera* m_Camera;										//カメラのアドレスポインタを声明
 	static CLight* m_Light;											//ライトのアドレスポインタを声明

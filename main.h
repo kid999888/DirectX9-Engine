@@ -13,6 +13,7 @@
 #include<d3d9.h>
 #include<d3dx9.h>
 #include<windows.h>
+#include "sound.h"
 #if defined(DEBUG)
 #include"Renderer.h"
 #include "./GUI/imgui.h"

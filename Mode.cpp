@@ -46,9 +46,9 @@ CLight* CModeGameOver::m_Light = NULL;
 CScene2D* CModeGameOver::m_Scene2D = NULL;
 CNumber *CModeGameOver::m_Money = NULL;
 
-CCamera* CModeFade::m_Camera = NULL;
-CLight* CModeFade::m_Light = NULL;
-CScene2D* CModeFade::m_Scene2D = NULL;
+CCamera* CModeTraining::m_Camera = NULL;
+CLight* CModeTraining::m_Light = NULL;
+CScene2D* CModeTraining::m_Scene2D = NULL;
 
 //=================================================================================================
 //　　　ゲームモードクラス                                       
@@ -60,6 +60,7 @@ CScene2D* CModeFade::m_Scene2D = NULL;
 bool CModeGame::Init(void)
 {
 	m_ModeId = MODE_GAME;
+	PlaySound(SOUND_LABEL_BGM_GAME);
 	this->m_Camera = new CCamera();
 	this->m_Light = new CLight();
 	this->m_Xorshift = new CXorshift();
@@ -129,6 +130,7 @@ bool CModeGame::Init(void)
 //=================================================================================================
 void CModeGame::Uninit(void)
 {
+	StopSound(SOUND_LABEL_BGM_GAME);
 	delete this->m_Camera;
 	this->m_Camera = nullptr;
 	delete this->m_Light;
@@ -290,6 +292,7 @@ void CModeGame::Draw(void)
 bool CModeTitle::Init(void)
 {
 	m_ModeId = MODE_TITLE;
+	PlaySound(SOUND_LABEL_BGM_TITLE);
 	this->m_Camera = new CCamera();
 	this->m_Light = new CLight();
 	m_Scene2D = CScene2D::Create(2, "Data\\Texture\\Title.png", 1, 1);
@@ -301,6 +304,7 @@ bool CModeTitle::Init(void)
 //=================================================================================================
 void CModeTitle::Uninit(void)
 {
+	StopSound(SOUND_LABEL_BGM_TITLE);
 	delete this->m_Camera;
 	this->m_Camera = nullptr;
 	delete this->m_Light;
@@ -316,7 +320,7 @@ void CModeTitle::Update(void)
 {
 	if (CInputMouse::GetLeftTrigger())
 	{
-		CManager::SetMode(new CModeFade());
+		CManager::SetMode(new CModeTraining());
 	}
 }
 
@@ -380,6 +384,10 @@ void CModeResult::Draw(void)
 	m_Light->Update();
 }
 
+//=================================================================================================
+//　　　トレーニングモードクラス                                       
+//=================================================================================================
+
 bool CModeGameOver::Init(void)
 {
 	m_ModeId = MODE_GAMEOVER;
@@ -415,7 +423,11 @@ void CModeGameOver::Draw(void)
 	m_Light->Update();
 }
 
-bool CModeFade::Init(void)
+//=================================================================================================
+//　　　トレーニングモードクラス                                       
+//=================================================================================================
+
+bool CModeTraining::Init(void)
 {
 	m_ModeId = MODE_FADE;
 	this->m_Camera = new CCamera();
@@ -424,7 +436,7 @@ bool CModeFade::Init(void)
 	return true;
 }
 
-void CModeFade::Uninit(void)
+void CModeTraining::Uninit(void)
 {
 	delete this->m_Camera;
 	this->m_Camera = nullptr;
@@ -434,7 +446,7 @@ void CModeFade::Uninit(void)
 	CScene::ReleaseAll();
 }
 
-void CModeFade::Update(void)
+void CModeTraining::Update(void)
 {
 	if (CInputMouse::GetLeftTrigger())
 	{
@@ -442,7 +454,7 @@ void CModeFade::Update(void)
 	}
 }
 
-void CModeFade::Draw(void)
+void CModeTraining::Draw(void)
 {
 	m_Camera->Update();
 	m_Light->Update();

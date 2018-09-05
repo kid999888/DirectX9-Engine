@@ -121,8 +121,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	DWORD dwFPSLastTime = 0;                                   //前のフレームの時間
 
 
-
-
+	//音声処理
+	InitSound(g_hWnd);
 	//初期処理
 	if (!CManager::Init(g_hWnd, TRUE))
 	{
@@ -137,6 +137,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	g_pInputMouse->Init(hInstance, g_hWnd);
 	g_pInputJoypad = new CInputJoypad;
 	g_pInputJoypad->Init(hInstance, g_hWnd);
+	
 
 #if defined(DEBUG)
 	//DebugGUI初期処理
@@ -200,6 +201,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	delete g_pInputMouse;
 	g_pInputJoypad->Uninit();
 	delete g_pInputJoypad;
+	UninitSound();
 
 	//終了 戻り値設定
 	return (int)msg.wParam;

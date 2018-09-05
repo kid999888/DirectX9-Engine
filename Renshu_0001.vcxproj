@@ -179,6 +179,7 @@
     <ClCompile Include="SceneBillBoard.cpp" />
     <ClCompile Include="SceneModel.cpp" />
     <ClCompile Include="ScenePolygon.cpp" />
+    <ClCompile Include="Sound.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bullet.h" />
@@ -211,6 +212,7 @@
     <ClInclude Include="SceneBillBoard.h" />
     <ClInclude Include="SceneModel.h" />
     <ClInclude Include="ScenePolygon.h" />
+    <ClInclude Include="Sound.h" />
     <ClInclude Include="Xorshift.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
