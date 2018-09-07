@@ -26,7 +26,8 @@ D3DXMATRIX CCamera::m_mtxView;
 CCamera::CCamera()
 {
 	//ƒJƒƒ‰ˆÊ’u‚Ì‰Šú‰»
-	m_eye = D3DXVECTOR3(7.0f, 14.0f, -10.0f);
+	m_eye = D3DXVECTOR3(14.0f, 28.0f, -25.0f);
+	/*m_eye = D3DXVECTOR3(7.0f, 14.0f, -10.0f);*/
 	m_at = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	m_up = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
 }

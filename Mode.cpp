@@ -10,6 +10,8 @@
 #include"Collision.h"
 #include<math.h>
 
+#include "Motion.h"
+
 #if defined(DEBUG)
 #include"DebugGUI.h"
 #endif//defined(DEBUG)
@@ -76,6 +78,7 @@ bool CModeGame::Init(void)
 	m_Enemy = CEnemy::Create();
 	m_Bulid = CEnemy::Create();
 	
+	CMotion::Create();
 	
 
 	//“G
