@@ -5,8 +5,8 @@
 //                                                        
 //=================================================================================================
 #pragma once
-#include"Scene.h"
-#include"SceneModel.h"
+#include "Scene.h"
+#include "SceneModel.h"
 
 struct PART
 {

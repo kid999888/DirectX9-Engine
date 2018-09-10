@@ -6,12 +6,12 @@
 //=================================================================================================
 #ifndef _CPLAYER_H_                                                 //2重インクルード防止のマクロ定義
 #define _CPLAYER_H_
-#include"Scene.h"
-#include"SceneModel.h"
+#include "Scene.h"
+#include "SceneModel.h"
 
 
-#include"Camera.h"
-#include"Bullet.h"
+#include "Camera.h"
+#include "Bullet.h"
 #include<vector>
 using namespace std;
 

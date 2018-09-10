@@ -7,8 +7,8 @@
 #ifndef _NUMBER_H_
 #define _NUMBER_H_
 
-#include"Scene.h"
-#include"Scene2D.h"
+#include "Scene.h"
+#include "Scene2D.h"
 
 class CNumber : public CScene
 {

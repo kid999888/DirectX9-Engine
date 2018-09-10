@@ -6,7 +6,7 @@
 //=================================================================================================
 #ifndef _CAMERA_H_                                                 //2重インクルード防止のマクロ定義
 #define _CAMERA_H_
-#include"main.h"
+#include "main.h"
 //=================================================================================================
 //　　　マクロ定義                                        
 //=================================================================================================
@@ -20,11 +20,11 @@ public:
 	CCamera();											//カメラクラスコンストラクタ
 	~CCamera();											//カメラクラスデストラクタ
 	void Update(void);									//カメラクラス更新処理
-	static void SetCameraPos(D3DXVECTOR3 veEyePos);		//カメラ位置の設定
-	static void SetCameraAtPos(D3DXVECTOR3 veAtPos);	//カメラ注視点の設定
-	static D3DXVECTOR3 GetCameraPos(void)				//カメラ位置の取得
+	void SetCameraPos(D3DXVECTOR3 veEyePos);			//カメラ位置の設定
+	void SetCameraAtPos(D3DXVECTOR3 veAtPos);			//カメラ注視点の設定
+	D3DXVECTOR3 GetCameraPos(void)				//カメラ位置の取得
 	{ return m_eye; };									
-	static D3DXVECTOR3 GetCameraAtPos(void)				//カメラ注視点の取得
+	D3DXVECTOR3 GetCameraAtPos(void)				//カメラ注視点の取得
 	{ return m_at; };
 	static D3DXMATRIX GetCameraProjection(void)			//カメラプロジェクション行列の取得
 	{

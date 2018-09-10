@@ -15,7 +15,7 @@
 #include<windows.h>
 #include "sound.h"
 #if defined(DEBUG)
-#include"Renderer.h"
+#include "Renderer.h"
 #include "./GUI/imgui.h"
 #include "./GUI/imgui_impl_dx9.h"
 #endif//defined(DEBUG)

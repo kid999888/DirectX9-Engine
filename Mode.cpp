@@ -4,16 +4,14 @@
 //      Author:王暁晨(AT-13A-281 04)　2018.07.03      
 //                                                        
 //=================================================================================================
-#include"Mode.h"
-#include"Manager.h"
-#include"input.h"
-#include"Collision.h"
+#include "Mode.h"
+#include "Manager.h"
+#include "input.h"
+#include "Collision.h"
 #include<math.h>
 
-#include "Motion.h"
-
 #if defined(DEBUG)
-#include"DebugGUI.h"
+#include "DebugGUI.h"
 #endif//defined(DEBUG)
 
 //=================================================================================================
@@ -52,6 +50,9 @@ CCamera* CModeTraining::m_Camera = NULL;
 CLight* CModeTraining::m_Light = NULL;
 CScene2D* CModeTraining::m_Scene2D = NULL;
 
+CCamera* CModeMotionEditing::m_Camera = NULL;
+CLight* CModeMotionEditing::m_Light = NULL;
+
 //=================================================================================================
 //　　　ゲームモードクラス                                       
 //=================================================================================================
@@ -64,6 +65,8 @@ bool CModeGame::Init(void)
 	m_ModeId = MODE_GAME;
 	PlaySound(SOUND_LABEL_BGM_GAME);
 	this->m_Camera = new CCamera();
+	m_Camera->SetCameraPos(D3DXVECTOR3(7.0f, 14.0f, -10.0f));
+	m_Camera->SetCameraAtPos(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 	this->m_Light = new CLight();
 	this->m_Xorshift = new CXorshift();
 	m_Field = CField::Create(120, 120);
@@ -323,7 +326,7 @@ void CModeTitle::Update(void)
 {
 	if (CInputMouse::GetLeftTrigger())
 	{
-		CManager::SetMode(new CModeTraining());
+		CManager::SetMode(new CModeMotionEditing());
 	}
 }
 
@@ -432,7 +435,7 @@ void CModeGameOver::Draw(void)
 
 bool CModeTraining::Init(void)
 {
-	m_ModeId = MODE_FADE;
+	m_ModeId = MODE_TRAINING;
 	this->m_Camera = new CCamera();
 	this->m_Light = new CLight();
 	m_Scene2D = CScene2D::Create(2, "Data\\Texture\\sosaku.png", 1, 1);
@@ -458,6 +461,41 @@ void CModeTraining::Update(void)
 }
 
 void CModeTraining::Draw(void)
+{
+	m_Camera->Update();
+	m_Light->Update();
+}
+
+//=================================================================================================
+//　　　モーション編集モードクラス                                       
+//=================================================================================================
+
+bool CModeMotionEditing::Init(void)
+{
+	m_ModeId = MODE_MOTION_EDITING;
+	this->m_Camera = new CCamera();
+	m_Camera->SetCameraPos(D3DXVECTOR3(0.0f, 12.0f, -10.0f));
+	m_Camera->SetCameraAtPos(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+	this->m_Light = new CLight();
+	CGrid::Create();
+	return true;
+}
+
+void CModeMotionEditing::Uninit(void)
+{
+	delete this->m_Camera;
+	this->m_Camera = nullptr;
+	delete this->m_Light;
+	this->m_Light = nullptr;
+	//シーンオブジェクトの解放
+	CScene::ReleaseAll();
+}
+
+void CModeMotionEditing::Update(void)
+{
+}
+
+void CModeMotionEditing::Draw(void)
 {
 	m_Camera->Update();
 	m_Light->Update();

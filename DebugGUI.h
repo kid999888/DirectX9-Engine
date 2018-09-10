@@ -7,11 +7,11 @@
 #if defined(DEBUG)
 #ifndef _DEBUGGUI_H_                                                 //2重インクルード防止のマクロ定義
 #define _DEBUGGUI_H_
-#include"main.h"
-#include"Player.h"
-#include"Camera.h"
-#include"Manager.h"
-#include"input.h"
+#include "main.h"
+#include "Player.h"
+#include "Camera.h"
+#include "Manager.h"
+#include "input.h"
 
 //=================================================================================================
 //　　　DirectX初期化クラス                                      

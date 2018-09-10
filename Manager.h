@@ -7,9 +7,9 @@
 #ifndef _MANAGER_H_                                                 //2重インクルード防止のマクロ定義
 #define _MANAGER_H_
 
-#include"main.h"
-#include"Renderer.h"
-#include"Mode.h"
+#include "main.h"
+#include "Renderer.h"
+#include "Mode.h"
 
 //=================================================================================================
 //　　　マネージャークラス                                       

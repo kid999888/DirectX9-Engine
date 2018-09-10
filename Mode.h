@@ -7,25 +7,27 @@
 #ifndef _MODE_H_                                                 //2重インクルード防止のマクロ定義
 #define _MODE_H_
 
-#include"main.h"
-#include"Renderer.h"
-#include"Camera.h"
-#include"Light.h"
-#include"Xorshift.h"
-#include"Material.h"
-#include"Scene.h"
-#include"Scene2D.h"
-#include"Scene3D.h"
-#include"SceneModel.h"
-#include"ScenePolygon.h"
-#include"SceneBillBoard.h"
-#include"Field.h"
-#include"Player.h"
-#include"Number.h"
-#include"Particle.h"
-#include"Bullet.h"
-#include"Enemy.h"
-#include"Map.h"
+#include "main.h"
+#include "Renderer.h"
+#include "Camera.h"
+#include "Light.h"
+#include "Xorshift.h"
+#include "Material.h"
+#include "Scene.h"
+#include "Scene2D.h"
+#include "Scene3D.h"
+#include "SceneModel.h"
+#include "ScenePolygon.h"
+#include "SceneBillBoard.h"
+#include "Field.h"
+#include "Player.h"
+#include "Number.h"
+#include "Particle.h"
+#include "Bullet.h"
+#include "Enemy.h"
+#include "Map.h"
+#include "Motion.h"
+#include "Grid.h"
 
 //=================================================================================================
 //　　　構造体定義                                         
@@ -37,7 +39,8 @@ typedef enum
 	MODE_GAME,				//ゲームモード
 	MODE_RESULT,			//リザルトモード
 	MODE_GAMEOVER,			//ゲームオーバーモード
-	MODE_FADE,				//ゲームオーバーモード
+	MODE_TRAINING,			//トレーニングモード
+	MODE_MOTION_EDITING,	//モーション編集モード
 	MODE_MAX				//使えないモード
 }MODE_ID;
 
@@ -173,6 +176,22 @@ private:
 	static CCamera* m_Camera;										//カメラのアドレスポインタを声明
 	static CLight* m_Light;											//ライトのアドレスポインタを声明
 	static CScene2D* m_Scene2D;										//2D画像のアドレスポインタを声明
+};
+
+//=================================================================================================
+//　　　モーション編集モードクラス                                       
+//=================================================================================================
+class CModeMotionEditing : public CMode
+{
+public:
+	bool Init(void);												//トレーニングモードクラス初期処理
+	void Uninit(void);												//トレーニングモードクラス終了処理
+	void Update(void);												//トレーニングモードクラス更新処理
+	void Draw(void);												//トレーニングモードクラス描画処理
+private:
+	static CCamera* m_Camera;										//カメラのアドレスポインタを声明
+	static CLight* m_Light;											//ライトのアドレスポインタを声明
+	CGrid* m_Grid;													//グリッドのアドレスポインタを声明
 };
 
 #endif
