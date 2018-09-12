@@ -36,6 +36,7 @@ public:
 
 private:
 	static bool m_bshow_demo_window;			//Demoウィンドウのフラッグを声明する
+	static bool m_bshow_Motion_window;			//Demoウィンドウのフラッグを声明する
 	static CPlayer* m_pPlayer;					//プレーヤーのアドレスを声明する
 	static CCamera* m_pCamera;					//カメラのアドレスを声明する
 	static CField * m_pField;					//フィールドのアドレスを声明する

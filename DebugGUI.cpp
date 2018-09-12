@@ -10,11 +10,13 @@
 //=================================================================================================
 #include "DebugGUI.h"
 #include "Mode.h"
+#include "Motion.h"
 
 //=================================================================================================
 //　　　実体定義
 //=================================================================================================
 bool CDebugGUI::m_bshow_demo_window = false;
+bool CDebugGUI::m_bshow_Motion_window = false;
 CPlayer* CDebugGUI::m_pPlayer = nullptr;
 CCamera* CDebugGUI::m_pCamera = nullptr;
 CField* CDebugGUI::m_pField = nullptr;
@@ -26,6 +28,7 @@ bool CDebugGUI::Init(void)
 {
 	//ImGUI処理
 	m_bshow_demo_window = false;
+	m_bshow_Motion_window = false;
 
 	return true;
 }
@@ -104,6 +107,42 @@ void CDebugGUI::UpdateWindow(void)
 			ImGui::Text("Camera At Position:");
 			ImGui::SameLine();
 			ImGui::Text("(%f,%f,%f)", m_pCamera->GetCameraAtPos().x, m_pCamera->GetCameraAtPos().y, m_pCamera->GetCameraAtPos().z);
+
+			ImGui::Checkbox("Motion Editing Window", &m_bshow_Motion_window);
+
+
+			if (m_bshow_Motion_window)
+			{
+				ImGui::PushStyleColor(ImGuiCol_TitleBgActive, ImVec4(0.0f, 0.7f, 0.2f, 1.0f));
+				ImGui::PushStyleColor(ImGuiCol_TitleBg, ImVec4(0.0f, 0.3f, 0.1f, 1.0f));
+				ImGui::SetNextWindowPos(ImVec2(860, 20), ImGuiSetCond_Once);
+				ImGui::SetNextWindowSize(ImVec2(400, 600), ImGuiSetCond_Once);
+				ImGui::Begin("Motion Editing Window", &m_bshow_Motion_window);
+
+				if (ImGui::CollapsingHeader("PostEffect"))
+				{
+
+				}
+
+				for (int nCount = 0;nCount < 10;nCount++)
+				{
+					ImGui::Text("Part[%d] Position:", nCount);
+					ImGui::SameLine();
+					ImGui::Text("(%f,%f,%f)", CMotion::GetPart(nCount).Position.x, CMotion::GetPart(nCount).Position.y, CMotion::GetPart(nCount).Position.z);
+				}
+				for (int nCount = 0;nCount < 10;nCount++)
+				{
+					ImGui::Text("Part[%d] Rotation:", nCount);
+					ImGui::SameLine();
+					ImGui::Text("(%f,%f,%f)", CMotion::GetPart(nCount).Rotation.x, CMotion::GetPart(nCount).Rotation.y, CMotion::GetPart(nCount).Rotation.z);
+				}
+				if (ImGui::Button("Close Me"))
+					m_bshow_Motion_window = false;
+				ImGui::End();
+
+				ImGui::PopStyleColor();
+				ImGui::PopStyleColor();
+			}
 			break;
 		default:
 			break;

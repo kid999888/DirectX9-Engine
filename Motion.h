@@ -18,6 +18,18 @@ struct PART
 	D3DXMATRIX Matrix;
 	PART *Parent;
 };
+
+struct KEY
+{
+	D3DXVECTOR3 Position;
+	D3DXVECTOR3 Rotation;
+};
+struct KEY_FRAME
+{
+	int Frame;
+	KEY key[10];
+};
+
 class CMotion : public CScene
 {
 public:
@@ -33,8 +45,11 @@ public:
 	void Update(void);									//モーション更新処理
 	void Draw(void);									//モーション描画処理
 	static CMotion * Create(void);						//モーションのインスタンス生成
-	static PART GetPart(int nCount);							//パート情報に取得する
+	static PART GetPart(int nCount);					//パート情報に取得する
 private:
 	static PART m_Part[10];
+	KEY_FRAME *m_KeyFrame;
+	int m_Key;
+	int m_Frame;
 };
 

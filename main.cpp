@@ -103,8 +103,6 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	GetClientRect(g_hWnd, &g_UserRectSize);
 	g_UserRectSize.left = g_fStartWidth - wr.left;
 	g_UserRectSize.top = g_fStartHeight - wr.top;
-	
-	
 
 	//ウィンド表示
 	ShowWindow(g_hWnd, nCmdShow);
