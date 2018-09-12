@@ -81,7 +81,7 @@ bool CModeGame::Init(void)
 	m_Enemy = CEnemy::Create();
 	m_Bulid = CEnemy::Create();
 	
-	CMotion::Create();
+
 	
 
 	//“G
@@ -474,10 +474,12 @@ bool CModeMotionEditing::Init(void)
 {
 	m_ModeId = MODE_MOTION_EDITING;
 	this->m_Camera = new CCamera();
-	m_Camera->SetCameraPos(D3DXVECTOR3(0.0f, 12.0f, -10.0f));
+	m_Camera->SetCameraPos(D3DXVECTOR3(0.0f, 16.0f, -24.0f));
 	m_Camera->SetCameraAtPos(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 	this->m_Light = new CLight();
+	m_Light->SetDir(D3DXVECTOR3(-1.0f, -1.0f, 1.0f));
 	CGrid::Create();
+	CMotion::Create();
 	return true;
 }
 

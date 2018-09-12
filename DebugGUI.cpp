@@ -92,6 +92,19 @@ void CDebugGUI::UpdateWindow(void)
 			ImGui::SameLine();
 			ImGui::Text("(%f,%f,%f)", m_pCamera->GetCameraAtPos().x, m_pCamera->GetCameraAtPos().y, m_pCamera->GetCameraAtPos().z);
 			break;
+		case MODE_GAMEOVER:
+			break;
+		case MODE_TRAINING:
+			break;
+		case MODE_MOTION_EDITING:
+			ImGui::Text("Camera Position:");
+			ImGui::SameLine();
+			ImGui::Text("(%f,%f,%f)", m_pCamera->GetCameraPos().x, m_pCamera->GetCameraPos().y, m_pCamera->GetCameraPos().z);
+
+			ImGui::Text("Camera At Position:");
+			ImGui::SameLine();
+			ImGui::Text("(%f,%f,%f)", m_pCamera->GetCameraAtPos().x, m_pCamera->GetCameraAtPos().y, m_pCamera->GetCameraAtPos().z);
+			break;
 		default:
 			break;
 		}

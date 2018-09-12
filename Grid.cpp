@@ -85,8 +85,8 @@ void CGrid::Draw(void)
 	//FVFの設定
 	pDevice->SetFVF(FVF_VERTEX_GRID);
 
-	//ライトON
-	pDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
+	//ライトOFF
+	pDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
 
 	//各種行列の設定
 	pDevice->SetTransform(D3DTS_WORLD, &m_mtxWorld);

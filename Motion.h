@@ -25,15 +25,16 @@ public:
 	{
 		m_veScale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
 		m_veRotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-		m_vePosition = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
+		m_vePosition = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	};
 	~CMotion();
-	bool Init(void);									//プレーヤー初期処理
-	void Uninit(void);									//プレーヤー終了処理
-	void Update(void);									//プレーヤー更新処理
-	void Draw(void);									//プレーヤー描画処理
-	static CMotion * Create(void);			//プレーヤーのインスタンス生成
+	bool Init(void);									//モーション初期処理
+	void Uninit(void);									//モーション終了処理
+	void Update(void);									//モーション更新処理
+	void Draw(void);									//モーション描画処理
+	static CMotion * Create(void);						//モーションのインスタンス生成
+	static PART GetPart(int nCount);							//パート情報に取得する
 private:
-	PART m_Part[10];
+	static PART m_Part[10];
 };
 
