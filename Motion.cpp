@@ -1,4 +1,5 @@
 #include "Motion.h"
+#include "input.h"
 
 PART CMotion::m_Part[10] = {};
 
@@ -48,8 +49,43 @@ KEY_FRAME g_KeyFrameWalk[3] =
 			{ D3DXVECTOR3(-1.0f, 0.0f, 0.0f),D3DXVECTOR3(0.0f, 0.0f, 0.0f) },	//8
 			{ D3DXVECTOR3(0.0f, -2.0f, 0.0f),D3DXVECTOR3(0.0f, 0.0f, 0.0f) }	//9
 		} 
-	},
+	}
 };
+
+KEY_FRAME g_KeyFrameRun[2] =
+{
+	{ 300,
+		{
+			//ˆÊ’u							//‰ñ“]	
+			{ D3DXVECTOR3(0.0f, 5.0f, 0.0f),D3DXVECTOR3(0.0f, 0.0f, 0.0f) },	//0
+			{ D3DXVECTOR3(0.0f, 3.0f,0.0f),D3DXVECTOR3(0.0f, 0.0f, 0.0f) },		//1
+			{ D3DXVECTOR3(1.0f, 2.4f, 0.0f),D3DXVECTOR3(0.0f, 0.0f, 0.0f) },	//2
+			{ D3DXVECTOR3(2.0f, 0.0f, 0.0f),D3DXVECTOR3(0.0f, 0.0f, 0.0f) },	//3
+			{ D3DXVECTOR3(-1.0f, 2.4f, 0.0f),D3DXVECTOR3(0.0f, 0.0f, 0.0f) },	//4
+			{ D3DXVECTOR3(-2.0f, 0.0f, 0.0f),D3DXVECTOR3(0.0f, 0.0f, 0.0f) },	//5
+			{ D3DXVECTOR3(1.0f, 0.0f, 0.0f),D3DXVECTOR3(0.0f, 0.0f, 0.0f) },	//6
+			{ D3DXVECTOR3(0.0f, -2.0f, 0.0f),D3DXVECTOR3(0.0f, 0.0f, 0.0f) },	//7
+			{ D3DXVECTOR3(-1.0f, 0.0f, 0.0f),D3DXVECTOR3(0.0f, 0.0f, 0.0f) },	//8
+			{ D3DXVECTOR3(0.0f, -2.0f, 0.0f),D3DXVECTOR3(0.0f, 0.0f, 0.0f) }	//9
+		} 
+	},
+	{ 300,
+		{
+			//ˆÊ’u							//‰ñ“]	
+			{ D3DXVECTOR3(0.0f, 5.0f, 0.0f),D3DXVECTOR3(0.0f, 0.0f, 0.0f) },	//0
+			{ D3DXVECTOR3(0.0f, 3.0f,0.0f),D3DXVECTOR3(0.0f, 0.0f, 0.0f) },		//1
+			{ D3DXVECTOR3(1.0f, 2.4f, 0.0f),D3DXVECTOR3(0.0f, 0.0f, 0.0f) },	//2
+			{ D3DXVECTOR3(2.0f, 0.0f, 0.0f),D3DXVECTOR3(0.0f, 0.0f, 0.0f) },	//3
+			{ D3DXVECTOR3(-1.0f, 2.4f, 0.0f),D3DXVECTOR3(0.0f, 0.0f, 0.0f) },	//4
+			{ D3DXVECTOR3(-2.0f, 0.0f, 0.0f),D3DXVECTOR3(0.0f, 0.0f, 0.0f) },	//5
+			{ D3DXVECTOR3(1.0f, 0.0f, 0.0f),D3DXVECTOR3(0.0f, 0.0f, 0.0f) },	//6
+			{ D3DXVECTOR3(0.0f, -2.0f, 0.0f),D3DXVECTOR3(0.0f, 0.0f, 0.0f) },	//7
+			{ D3DXVECTOR3(-1.0f, 0.0f, 0.0f),D3DXVECTOR3(0.0f, 0.0f, 0.0f) },	//8
+			{ D3DXVECTOR3(0.0f, -2.0f, 0.0f),D3DXVECTOR3(0.0f, 0.0f, 0.0f) }	//9
+		} 
+	}
+};
+
 
 CMotion::~CMotion()
 {
@@ -223,6 +259,30 @@ void CMotion::Update(void)
 	{
 		m_Key = 0;
 		m_Frame = 0;
+	}
+
+	if (CInputKeyboard::GetKeyPress(DIK_Q))
+	{
+		m_KeyFrame = g_KeyFrameWalk;
+		m_Key = 0;
+		m_Frame = 0;
+		for (int nCount = 0;nCount < 10;nCount++)
+		{
+			m_Part[nCount].Position = m_KeyFrame[0].key[nCount].Position;
+			m_Part[nCount].Rotation = m_KeyFrame[0].key[nCount].Rotation;
+		}
+	}
+
+	if (CInputKeyboard::GetKeyPress(DIK_E))
+	{
+		m_KeyFrame = g_KeyFrameRun;
+		m_Key = 0;
+		m_Frame = 0;
+		for (int nCount = 0;nCount < 10;nCount++)
+		{
+			m_Part[nCount].Position = m_KeyFrame[0].key[nCount].Position;
+			m_Part[nCount].Rotation = m_KeyFrame[0].key[nCount].Rotation;
+		}
 	}
 }
 

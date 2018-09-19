@@ -119,23 +119,17 @@ void CDebugGUI::UpdateWindow(void)
 				ImGui::SetNextWindowSize(ImVec2(400, 600), ImGuiSetCond_Once);
 				ImGui::Begin("Motion Editing Window", &m_bshow_Motion_window);
 
-				if (ImGui::CollapsingHeader("PostEffect"))
-				{
-
-				}
-
 				for (int nCount = 0;nCount < 10;nCount++)
 				{
-					ImGui::Text("Part[%d] Position:", nCount);
+					ImGui::Text("Part[%d]", nCount);
+					ImGui::Text("Position:");
 					ImGui::SameLine();
 					ImGui::Text("(%f,%f,%f)", CMotion::GetPart(nCount).Position.x, CMotion::GetPart(nCount).Position.y, CMotion::GetPart(nCount).Position.z);
-				}
-				for (int nCount = 0;nCount < 10;nCount++)
-				{
-					ImGui::Text("Part[%d] Rotation:", nCount);
+					ImGui::Text("Rotation:");
 					ImGui::SameLine();
 					ImGui::Text("(%f,%f,%f)", CMotion::GetPart(nCount).Rotation.x, CMotion::GetPart(nCount).Rotation.y, CMotion::GetPart(nCount).Rotation.z);
 				}
+
 				if (ImGui::Button("Close Me"))
 					m_bshow_Motion_window = false;
 				ImGui::End();
