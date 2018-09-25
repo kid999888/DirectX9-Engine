@@ -476,6 +476,8 @@ bool CModeMotionEditing::Init(void)
 	this->m_Camera = new CCamera();
 	m_Camera->SetCameraPos(D3DXVECTOR3(0.0f, 16.0f, -24.0f));
 	m_Camera->SetCameraAtPos(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+	//視点操作フラッグ
+	m_Camera->CameraViewFlag(true);
 	this->m_Light = new CLight();
 	m_Light->SetDir(D3DXVECTOR3(-1.0f, -1.0f, 1.0f));
 	CGrid::Create();

@@ -270,7 +270,7 @@ IMGUI_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hwnd, UINT msg, WPARAM wPa
     case WM_MOUSEMOVE:
         io.MousePos.x = (signed short)(lParam);
 		//‰¼C³WS_POPUP‚ÌŽž‚O‚É‚È‚éA•’i‚Í15
-        io.MousePos.y = (signed short)(lParam >> 16) + 15;
+        io.MousePos.y = (signed short)(lParam >> 16) + 7;
         return 0;
     case WM_KEYDOWN:
     case WM_SYSKEYDOWN:

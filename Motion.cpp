@@ -52,7 +52,7 @@ KEY_FRAME g_KeyFrameWalk[3] =
 	}
 };
 
-KEY_FRAME g_KeyFrameRun[2] =
+KEY_FRAME g_KeyFrameRun[3] =
 {
 	{ 300,
 		{
@@ -62,6 +62,21 @@ KEY_FRAME g_KeyFrameRun[2] =
 			{ D3DXVECTOR3(1.0f, 2.4f, 0.0f),D3DXVECTOR3(0.0f, 0.0f, 0.0f) },	//2
 			{ D3DXVECTOR3(2.0f, 0.0f, 0.0f),D3DXVECTOR3(0.0f, 0.0f, 0.0f) },	//3
 			{ D3DXVECTOR3(-1.0f, 2.4f, 0.0f),D3DXVECTOR3(0.0f, 0.0f, 0.0f) },	//4
+			{ D3DXVECTOR3(-2.0f, 0.0f, 0.0f),D3DXVECTOR3(0.0f, 0.0f, 0.0f) },	//5
+			{ D3DXVECTOR3(1.0f, 0.0f, 0.0f),D3DXVECTOR3(0.0f, 0.0f, 0.0f) },	//6
+			{ D3DXVECTOR3(0.0f, -2.0f, 0.0f),D3DXVECTOR3(0.0f, 0.0f, 0.0f) },	//7
+			{ D3DXVECTOR3(-1.0f, 0.0f, 0.0f),D3DXVECTOR3(0.0f, 0.0f, 0.0f) },	//8
+			{ D3DXVECTOR3(0.0f, -2.0f, 0.0f),D3DXVECTOR3(0.0f, 0.0f, 0.0f) }	//9
+		} 
+	},
+	{ 300,
+		{
+			//à íu							//âÒì]	
+			{ D3DXVECTOR3(0.0f, 5.0f, 0.0f),D3DXVECTOR3(0.0f, 0.0f, 0.0f) },	//0
+			{ D3DXVECTOR3(0.0f, 3.0f,0.0f),D3DXVECTOR3(0.0f, 0.0f, 0.0f) },		//1
+			{ D3DXVECTOR3(1.0f, 2.4f, 0.0f),D3DXVECTOR3(0.0f, 45.0f, 0.0f) },	//2
+			{ D3DXVECTOR3(2.0f, 0.0f, 0.0f),D3DXVECTOR3(0.0f, 0.0f, 0.0f) },	//3
+			{ D3DXVECTOR3(-1.0f, 2.4f, 0.0f),D3DXVECTOR3(0.0f, -45.0f, 0.0f) },	//4
 			{ D3DXVECTOR3(-2.0f, 0.0f, 0.0f),D3DXVECTOR3(0.0f, 0.0f, 0.0f) },	//5
 			{ D3DXVECTOR3(1.0f, 0.0f, 0.0f),D3DXVECTOR3(0.0f, 0.0f, 0.0f) },	//6
 			{ D3DXVECTOR3(0.0f, -2.0f, 0.0f),D3DXVECTOR3(0.0f, 0.0f, 0.0f) },	//7
@@ -195,34 +210,18 @@ bool CMotion::Init(void)
 	m_Part[8].Parent = &m_Part[0];
 	m_Part[9].Parent = &m_Part[8];
 
-	m_Part[0].Position = D3DXVECTOR3(0.0f, 5.0f, 0.0f);
-	m_Part[0].Rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	m_Part[1].Position = D3DXVECTOR3(0.0f, 3.0f, 0.0f);
-	m_Part[1].Rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-
-	m_Part[2].Position = D3DXVECTOR3(1.0f, 2.4f, 0.0f);
-	m_Part[2].Rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	m_Part[3].Position = D3DXVECTOR3(2.0f, 0.0f, 0.0f);
-	m_Part[3].Rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-
-	m_Part[4].Position = D3DXVECTOR3(-1.0f, 2.4f, 0.0f);
-	m_Part[4].Rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	m_Part[5].Position = D3DXVECTOR3(-2.0f, 0.0f, 0.0f);
-	m_Part[5].Rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-
-	m_Part[6].Position = D3DXVECTOR3(1.0f, 0.0f, 0.0f);
-	m_Part[6].Rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	m_Part[7].Position = D3DXVECTOR3(0.0f, -2.0f, 0.0f);
-	m_Part[7].Rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-
-	m_Part[8].Position = D3DXVECTOR3(-1.0f, 0.0f, 0.0f);
-	m_Part[8].Rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	m_Part[9].Position = D3DXVECTOR3(0.0f, -2.0f, 0.0f);
-	m_Part[9].Rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-
+	//ÉÇÅ[ÉVÉáÉìèÓïÒÇì«Ç›çûÇﬁ
 	m_KeyFrame = g_KeyFrameWalk;
+
+	for (int nCount = 0;nCount < 10;nCount++)
+	{
+		m_Part[nCount].Position = m_KeyFrame[0].key[nCount].Position;
+		m_Part[nCount].Rotation = m_KeyFrame[0].key[nCount].Rotation;
+	}
+
 	m_Key = 0;
 	m_Frame = 0;
+	m_bPlay = false;
 
 
 	return true;
@@ -249,7 +248,10 @@ void CMotion::Update(void)
 		m_Part[nCount].Position = curPos * (1.0f - rate) + nextPos * rate;
 		m_Part[nCount].Rotation = curRot * (1.0f - rate) + nextRot * rate;
 	}
-	m_Frame++;
+	if (m_bPlay)
+	{
+		m_Frame++;
+	}
 	if (m_Frame >= m_KeyFrame[m_Key].Frame)
 	{
 		m_Key++;
@@ -261,7 +263,7 @@ void CMotion::Update(void)
 		m_Frame = 0;
 	}
 
-	if (CInputKeyboard::GetKeyPress(DIK_Q))
+	if (CInputKeyboard::GetKeyPress(DIK_1))
 	{
 		m_KeyFrame = g_KeyFrameWalk;
 		m_Key = 0;
@@ -273,7 +275,7 @@ void CMotion::Update(void)
 		}
 	}
 
-	if (CInputKeyboard::GetKeyPress(DIK_E))
+	if (CInputKeyboard::GetKeyPress(DIK_2))
 	{
 		m_KeyFrame = g_KeyFrameRun;
 		m_Key = 0;
@@ -283,6 +285,11 @@ void CMotion::Update(void)
 			m_Part[nCount].Position = m_KeyFrame[0].key[nCount].Position;
 			m_Part[nCount].Rotation = m_KeyFrame[0].key[nCount].Rotation;
 		}
+	}
+
+	if (CInputKeyboard::GetKeyRelease(DIK_SPACE))
+	{
+		m_bPlay = !m_bPlay;
 	}
 }
 

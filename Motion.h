@@ -48,8 +48,15 @@ public:
 	static PART GetPart(int nCount);					//ƒp[ƒgî•ñ‚Éæ“¾‚·‚é
 private:
 	static PART m_Part[10];
+	bool m_bPlay;
 	KEY_FRAME *m_KeyFrame;
 	int m_Key;
 	int m_Frame;
+	KEY_FRAME *m_NextKeyFrame;
+	int m_NextKey;
+	int m_NextFrame;
+
+	int m_BlendFrame;
+	float m_fBlendRate;
 };
 
