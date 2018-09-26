@@ -54,7 +54,7 @@ KEY_FRAME g_KeyFrameWalk[3] =
 
 KEY_FRAME g_KeyFrameRun[3] =
 {
-	{ 300,
+	{ 100,
 		{
 			//位置							//回転	
 			{ D3DXVECTOR3(0.0f, 5.0f, 0.0f),D3DXVECTOR3(0.0f, 0.0f, 0.0f) },	//0
@@ -69,7 +69,7 @@ KEY_FRAME g_KeyFrameRun[3] =
 			{ D3DXVECTOR3(0.0f, -2.0f, 0.0f),D3DXVECTOR3(0.0f, 0.0f, 0.0f) }	//9
 		} 
 	},
-	{ 300,
+	{ 100,
 		{
 			//位置							//回転	
 			{ D3DXVECTOR3(0.0f, 5.0f, 0.0f),D3DXVECTOR3(0.0f, 0.0f, 0.0f) },	//0
@@ -212,6 +212,7 @@ bool CMotion::Init(void)
 
 	//モーション情報を読み込む
 	m_KeyFrame = g_KeyFrameWalk;
+	m_NextKeyFrame = g_KeyFrameWalk;
 
 	for (int nCount = 0;nCount < 10;nCount++)
 	{
@@ -221,6 +222,9 @@ bool CMotion::Init(void)
 
 	m_Key = 0;
 	m_Frame = 0;
+
+	m_NextKey = m_Key + 1;
+	m_NextFrame = m_Frame + 1;
 	m_bPlay = false;
 
 
@@ -242,48 +246,66 @@ void CMotion::Update(void)
 	{
 		float rate = (float)m_Frame / m_KeyFrame[m_Key].Frame;
 		curPos = m_KeyFrame[m_Key].key[nCount].Position;
-		nextPos = m_KeyFrame[m_Key + 1].key[nCount].Position;
+		nextPos = m_NextKeyFrame[m_NextKey].key[nCount].Position;
 		curRot = m_KeyFrame[m_Key].key[nCount].Rotation;
-		nextRot = m_KeyFrame[m_Key + 1].key[nCount].Rotation;
+		nextRot = m_NextKeyFrame[m_NextKey].key[nCount].Rotation;
 		m_Part[nCount].Position = curPos * (1.0f - rate) + nextPos * rate;
 		m_Part[nCount].Rotation = curRot * (1.0f - rate) + nextRot * rate;
 	}
 	if (m_bPlay)
 	{
-		m_Frame++;
+		m_Frame = m_NextFrame;
+		m_NextFrame++;
 	}
 	if (m_Frame >= m_KeyFrame[m_Key].Frame)
 	{
-		m_Key++;
+		m_KeyFrame = m_NextKeyFrame;
+		m_Key = m_NextKey;
+		m_NextKey = m_Key + 1;
 		m_Frame = 0;
+		m_NextFrame = m_Frame + 1;
 	}
 	if (m_Key >= 2)
 	{
 		m_Key = 0;
 		m_Frame = 0;
+		m_NextKey = m_Key + 1;
+		m_NextFrame = m_Frame + 1;
 	}
 
-	if (CInputKeyboard::GetKeyPress(DIK_1))
+	if (CInputKeyboard::GetKeyTrigger(DIK_1))
 	{
-		m_KeyFrame = g_KeyFrameWalk;
-		m_Key = 0;
-		m_Frame = 0;
-		for (int nCount = 0;nCount < 10;nCount++)
+		if (m_KeyFrame != g_KeyFrameWalk)
 		{
-			m_Part[nCount].Position = m_KeyFrame[0].key[nCount].Position;
-			m_Part[nCount].Rotation = m_KeyFrame[0].key[nCount].Rotation;
+			m_KeyFrame = g_KeyFrameWalk;
+			m_Key = 0;
+			m_Frame = 0;
+			m_NextKeyFrame = g_KeyFrameWalk;
+			m_NextKey = m_Key + 1;
+			m_NextFrame = m_Frame + 1;
+			for (int nCount = 0;nCount < 10;nCount++)
+			{
+				m_Part[nCount].Position = m_KeyFrame[0].key[nCount].Position;
+				m_Part[nCount].Rotation = m_KeyFrame[0].key[nCount].Rotation;
+			}
 		}
 	}
 
-	if (CInputKeyboard::GetKeyPress(DIK_2))
+	if (CInputKeyboard::GetKeyTrigger(DIK_2))
 	{
-		m_KeyFrame = g_KeyFrameRun;
-		m_Key = 0;
-		m_Frame = 0;
-		for (int nCount = 0;nCount < 10;nCount++)
+		if (m_KeyFrame != g_KeyFrameRun)
 		{
-			m_Part[nCount].Position = m_KeyFrame[0].key[nCount].Position;
-			m_Part[nCount].Rotation = m_KeyFrame[0].key[nCount].Rotation;
+			m_KeyFrame = g_KeyFrameRun;
+			m_Key = 0;
+			m_Frame = 0;
+			m_NextKeyFrame = g_KeyFrameRun;
+			m_NextKey = m_Key + 1;
+			m_NextFrame = m_Frame + 1;
+			for (int nCount = 0;nCount < 10;nCount++)
+			{
+				m_Part[nCount].Position = m_KeyFrame[0].key[nCount].Position;
+				m_Part[nCount].Rotation = m_KeyFrame[0].key[nCount].Rotation;
+			}
 		}
 	}
 
