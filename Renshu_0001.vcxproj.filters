@@ -16,6 +16,9 @@
     <Filter Include="GUI">
       <UniqueIdentifier>{3fb3ffd8-68da-41d7-a05e-bc0a67e90f1f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="HLSL">
+      <UniqueIdentifier>{1e6f594d-3ab8-4cc1-a44f-b972e580cdff}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -212,5 +215,10 @@
     <ClInclude Include="Grid.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="HLSL\DirectionalLight.fx">
+      <Filter>HLSL</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

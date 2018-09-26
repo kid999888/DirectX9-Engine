@@ -68,6 +68,7 @@ bool CModeGame::Init(void)
 	m_Camera->SetCameraPos(D3DXVECTOR3(7.0f, 14.0f, -10.0f));
 	m_Camera->SetCameraAtPos(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 	this->m_Light = new CLight();
+	m_Light->Init();
 	this->m_Xorshift = new CXorshift();
 	m_Field = CField::Create(120, 120);
 	m_Player = CPlayer::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
@@ -152,6 +153,11 @@ void CModeGame::Uninit(void)
 //=================================================================================================
 void CModeGame::Update(void)
 {
+	LPD3DXEFFECT pEffect = CRenderer::GetD3DEffect();
+
+	//視点を渡す
+	pEffect->SetVector("g_eye", (D3DXVECTOR4*)&m_Camera->GetCameraPos());
+
 	D3DXVECTOR3 veTempVector3(0.0f, 0.0f, 0.0f);
 	//レーザー部分
 	m_ScenePolygon->SetPosition(CPlayer::GetPlayerPos());
@@ -301,6 +307,7 @@ bool CModeTitle::Init(void)
 	PlaySound(SOUND_LABEL_BGM_TITLE);
 	this->m_Camera = new CCamera();
 	this->m_Light = new CLight();
+	m_Light->Init();
 	m_Scene2D = CScene2D::Create(2, "Data\\Texture\\Title.png", 1, 1);
 	return true;
 }
@@ -326,7 +333,7 @@ void CModeTitle::Update(void)
 {
 	if (CInputMouse::GetLeftTrigger())
 	{
-		CManager::SetMode(new CModeMotionEditing());
+		CManager::SetMode(new CModeGame());
 	}
 }
 

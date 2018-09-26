@@ -15,6 +15,7 @@
 //=================================================================================================
 LPDIRECT3D9 CRenderer::m_pD3D = NULL;
 LPDIRECT3DDEVICE9 CRenderer::m_pD3DDevice = NULL;
+LPD3DXEFFECT CRenderer::m_pEffect = NULL;
 #if defined(DEBUG)
 D3DPRESENT_PARAMETERS CRenderer::m_d3dpp;
 #endif//defined(DEBUG)
@@ -166,6 +167,22 @@ void CRenderer::DrawEnd(void)
 LPDIRECT3DDEVICE9 CRenderer::GetD3DDevice(void)
 {
 	return m_pD3DDevice;
+}
+
+//=================================================================================================
+//　　　D3DEffectの伝達                                    
+//=================================================================================================
+LPD3DXEFFECT CRenderer::GetD3DEffect(void)
+{
+	return m_pEffect;
+}
+
+//=================================================================================================
+//　　　D3DXEFFECTの設定                                    
+//=================================================================================================
+void CRenderer::SetD3DEffect(LPD3DXEFFECT D3DEffect)
+{
+	m_pEffect = D3DEffect;
 }
 
 #if defined(DEBUG)

@@ -71,6 +71,7 @@ CCamera::~CCamera()
 void CCamera::Update(void)
 {
 	LPDIRECT3DDEVICE9 pDevice = CRenderer::GetD3DDevice();
+	LPD3DXEFFECT pEffect = CRenderer::GetD3DEffect();
 
 	// ƒrƒ…[•ÏŠ·s—ñì¬
 	D3DXMatrixLookAtLH(&m_mtxView, &m_eye, &m_at, &m_up);

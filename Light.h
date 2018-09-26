@@ -19,7 +19,9 @@ class CLight
 public:
 	CLight();													//ライトクラスコンストラクタ
 	~CLight();													//ライトクラスデストラクタ
+	bool Init(void);											//ライトクラス初期化
 	void Update(void);											//ライトクラス更新処理
+	void Draw(void);											//ライトクラス描画処理
 	void SetDir(D3DXVECTOR3 vecDir);							//ライト方向設定
 	void SetAmbient(float r, float g, float b, float a);		//環境光（影に現れる色）色の設定
 	void SetDiffuse(float r, float g, float b, float a);		//拡散光（光のメイン色）色の設定
@@ -27,5 +29,6 @@ public:
 
 private:
 	D3DLIGHT9 m_Light;											//DirectXのライト情報
+	D3DXVECTOR4 m_lightDir;										
 };
 #endif
