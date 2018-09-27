@@ -41,6 +41,7 @@ typedef enum
 	MODE_GAMEOVER,			//ゲームオーバーモード
 	MODE_TRAINING,			//トレーニングモード
 	MODE_MOTION_EDITING,	//モーション編集モード
+	MODE_TEST,				//テストモード
 	MODE_MAX				//使えないモード
 }MODE_ID;
 
@@ -192,6 +193,21 @@ private:
 	static CCamera* m_Camera;										//カメラのアドレスポインタを声明
 	static CLight* m_Light;											//ライトのアドレスポインタを声明
 	CGrid* m_Grid;													//グリッドのアドレスポインタを声明
+};
+
+//=================================================================================================
+//　　　テストモードクラス                                       
+//=================================================================================================
+class CModeTest : public CMode
+{
+public:
+	bool Init(void);												//トレーニングモードクラス初期処理
+	void Uninit(void);												//トレーニングモードクラス終了処理
+	void Update(void);												//トレーニングモードクラス更新処理
+	void Draw(void);												//トレーニングモードクラス描画処理
+private:
+	static CCamera* m_Camera;										//カメラのアドレスポインタを声明
+	static CLight* m_Light;											//ライトのアドレスポインタを声明
 };
 
 #endif

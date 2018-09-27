@@ -53,6 +53,9 @@ CScene2D* CModeTraining::m_Scene2D = NULL;
 CCamera* CModeMotionEditing::m_Camera = NULL;
 CLight* CModeMotionEditing::m_Light = NULL;
 
+CCamera* CModeTest::m_Camera = NULL;
+CLight* CModeTest::m_Light = NULL;
+
 //=================================================================================================
 //　　　ゲームモードクラス                                       
 //=================================================================================================
@@ -153,11 +156,6 @@ void CModeGame::Uninit(void)
 //=================================================================================================
 void CModeGame::Update(void)
 {
-	LPD3DXEFFECT pEffect = CRenderer::GetD3DEffect();
-
-	//視点を渡す
-	pEffect->SetVector("g_eye", (D3DXVECTOR4*)&m_Camera->GetCameraPos());
-
 	D3DXVECTOR3 veTempVector3(0.0f, 0.0f, 0.0f);
 	//レーザー部分
 	m_ScenePolygon->SetPosition(CPlayer::GetPlayerPos());
@@ -507,6 +505,43 @@ void CModeMotionEditing::Update(void)
 }
 
 void CModeMotionEditing::Draw(void)
+{
+	m_Camera->Update();
+	m_Light->Update();
+}
+
+//=================================================================================================
+//　　　テストモードクラス                                       
+//=================================================================================================
+bool CModeTest::Init(void)
+{
+	m_ModeId = MODE_TEST;
+	this->m_Camera = new CCamera();
+	m_Camera->SetCameraPos(D3DXVECTOR3(0.0f, 16.0f, -24.0f));
+	m_Camera->SetCameraAtPos(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+	//視点操作フラッグ
+	m_Camera->CameraViewFlag(true);
+	this->m_Light = new CLight();
+	m_Light->Init();
+	/*m_Light->SetDir(D3DXVECTOR3(-1.0f, -1.0f, 1.0f));*/
+	return true;
+}
+
+void CModeTest::Uninit(void)
+{
+	delete this->m_Camera;
+	this->m_Camera = nullptr;
+	delete this->m_Light;
+	this->m_Light = nullptr;
+	//シーンオブジェクトの解放
+	CScene::ReleaseAll();
+}
+
+void CModeTest::Update(void)
+{
+}
+
+void CModeTest::Draw(void)
 {
 	m_Camera->Update();
 	m_Light->Update();
