@@ -66,7 +66,7 @@ CLight* CModeTest::m_Light = NULL;
 bool CModeGame::Init(void)
 {
 	m_ModeId = MODE_GAME;
-	PlaySound(SOUND_LABEL_BGM_GAME);
+	PlaySound(SOUND_LABEL_BGM_TITLE);
 	this->m_Camera = new CCamera();
 	m_Camera->SetCameraPos(D3DXVECTOR3(7.0f, 14.0f, -10.0f));
 	m_Camera->SetCameraAtPos(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
@@ -140,7 +140,7 @@ bool CModeGame::Init(void)
 //=================================================================================================
 void CModeGame::Uninit(void)
 {
-	StopSound(SOUND_LABEL_BGM_GAME);
+	StopSound(SOUND_LABEL_BGM_TITLE);
 	delete this->m_Camera;
 	this->m_Camera = nullptr;
 	delete this->m_Light;
@@ -302,7 +302,7 @@ void CModeGame::Draw(void)
 bool CModeTitle::Init(void)
 {
 	m_ModeId = MODE_TITLE;
-	PlaySound(SOUND_LABEL_BGM_TITLE);
+	PlaySound(SOUND_LABEL_BGM_GAME);
 	this->m_Camera = new CCamera();
 	this->m_Light = new CLight();
 	m_Light->Init();
@@ -315,7 +315,7 @@ bool CModeTitle::Init(void)
 //=================================================================================================
 void CModeTitle::Uninit(void)
 {
-	StopSound(SOUND_LABEL_BGM_TITLE);
+	StopSound(SOUND_LABEL_BGM_GAME);
 	delete this->m_Camera;
 	this->m_Camera = nullptr;
 	delete this->m_Light;
