@@ -16,8 +16,6 @@
 //=================================================================================================
 //　　　実体定義
 //=================================================================================================
-CSceneModel* CBullet::m_pBullet = NULL;
-BULLET CBullet::m_Bullet[BULLET_NUM];
 
 //=================================================================================================
 //　　　バレットデストラクタ                                        
@@ -93,13 +91,10 @@ void CBullet::Draw(void)
 //=================================================================================================
 //　　　バレットのインスタンス生成
 //=================================================================================================
-CBullet * CBullet::Create(CSceneModel* pBullet)
+CBullet * CBullet::Create(void)
 {
 	CBullet *Bullet = new CBullet(1);
 	Bullet->Init();
-	Load(pBullet);
-	m_pBullet->SetScale(D3DXVECTOR3(0.3f, 0.3f, 0.3f));
-	m_pBullet->SetPosition(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 	return Bullet;
 }
 
@@ -109,6 +104,8 @@ CBullet * CBullet::Create(CSceneModel* pBullet)
 void CBullet::Load(CSceneModel* pBullet)
 {
 	m_pBullet = pBullet;
+	m_pBullet->SetScale(D3DXVECTOR3(0.3f, 0.3f, 0.3f));
+	m_pBullet->SetPosition(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 }
 
 //=================================================================================================
