@@ -73,7 +73,7 @@ bool CLight::Init(void)
 		//シェーダーを読み込む
 		HRESULT hr;
 		hr = D3DXCreateEffectFromFile(pDevice, "HLSL\\directionalLight.fx", NULL, NULL,
-			D3DXSHADER_DEBUG | D3DXSHADER_SKIPOPTIMIZATION, NULL, &pEffect, NULL);
+			D3DXSHADER__DEBUG | D3DXSHADER_SKIPOPTIMIZATION, NULL, &pEffect, NULL);
 
 		if (FAILED(hr))
 		{

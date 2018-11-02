@@ -14,11 +14,11 @@
 #include<d3dx9.h>
 #include<windows.h>
 #include "sound.h"
-#if defined(DEBUG)
+#if defined(_DEBUG)
 #include "Renderer.h"
 #include "./GUI/imgui.h"
 #include "./GUI/imgui_impl_dx9.h"
-#endif//defined(DEBUG)
+#endif//defined(_DEBUG)
 
 //=================================================================================================
 //　　　マクロ定義                                        

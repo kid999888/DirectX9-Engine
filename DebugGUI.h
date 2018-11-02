@@ -4,9 +4,9 @@
 //      Author:王暁晨(AT-13A-281 04)　2018.06.13      
 //                                                        
 //=================================================================================================
-#if defined(DEBUG)
-#ifndef _DEBUGGUI_H_                                                 //2重インクルード防止のマクロ定義
-#define _DEBUGGUI_H_
+#if defined(_DEBUG)
+#ifndef __DEBUGGUI_H_                                                 //2重インクルード防止のマクロ定義
+#define __DEBUGGUI_H_
 #include "main.h"
 #include "Player.h"
 #include "Camera.h"
@@ -43,4 +43,4 @@ private:
 
 };
 #endif
-#endif//defined(DEBUG)
+#endif//defined(_DEBUG)

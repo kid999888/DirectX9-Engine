@@ -89,16 +89,16 @@ private:
 	CField * m_Field;												//フィールドのアドレスポインタを声明
 	CPlayer * m_Player;												//プレーヤーのアドレスポインタを声明
 	CEnemy* m_Enemy;												//
-	static CLight *m_Light;											//ライトのアドレスポインタを声明
-	static CXorshift* m_Xorshift;									//
-	static CSceneModel * m_SceneModelEnemy;							//敵モデリングのアドレスポインタを声明
-	static CSceneModel * m_SceneModelBuliding;						//モデリングのアドレスポインタを声明
-	static CNumber * m_Number;										//スコア数字のアドレスポインタを声明
-	static CScenePolygon  * m_ScenePolygon;							//3Dポリゴンのアドレスポインタを声明
-	static CSceneBillBoard  * m_SceneBillBoard;						//ビルボードのアドレスポインタを声明
-	static CSceneModel* m_SceneModel;								//
-	static CBullet* m_Bullet;										//
-	static CEnemy* m_Bulid;											//
+	CLight *m_Light;											//ライトのアドレスポインタを声明
+	CXorshift* m_Xorshift;									//
+	CSceneModel * m_SceneModelEnemy;							//敵モデリングのアドレスポインタを声明
+	CSceneModel * m_SceneModelBuliding;						//モデリングのアドレスポインタを声明
+	CNumber * m_Number;										//スコア数字のアドレスポインタを声明
+	CScenePolygon  * m_ScenePolygon;							//3Dポリゴンのアドレスポインタを声明
+	CSceneBillBoard  * m_SceneBillBoard;						//ビルボードのアドレスポインタを声明
+	CSceneModel* m_SceneModel;								//
+	CBullet* m_Bullet;										//
+	CEnemy* m_Bulid;											//
 	int m_nEnemyCount;												//敵記数
 	int m_nClipNum;													//
 	int m_nClipNumLimit;											//
@@ -144,10 +144,10 @@ public:
 	void Draw(void);												//リザルトモードクラス描画処理
 	CCamera* GetMainCamera(void) { return m_Camera; };				//カメラのアドレスを取得
 private:
-	static CCamera* m_Camera;										//カメラのアドレスポインタを声明
-	static CLight* m_Light;											//ライトのアドレスポインタを声明
-	static CScene2D* m_Scene2D;										//2D画像のアドレスポインタを声明
-	static CNumber* m_Money;
+	CCamera* m_Camera;										//カメラのアドレスポインタを声明
+	CLight* m_Light;											//ライトのアドレスポインタを声明
+	CScene2D* m_Scene2D;										//2D画像のアドレスポインタを声明
+	CNumber* m_Money;
 	int m_nMoney;
 };
 
@@ -167,10 +167,10 @@ public:
 	void Draw(void);												//ゲームオーバーモードクラス描画処理
 	CCamera* GetMainCamera(void) { return m_Camera; };				//カメラのアドレスを取得
 private:
-	static CCamera* m_Camera;										//カメラのアドレスポインタを声明
-	static CLight* m_Light;											//ライトのアドレスポインタを声明
-	static CScene2D* m_Scene2D;										//2D画像のアドレスポインタを声明
-	static CNumber* m_Money;
+	CCamera* m_Camera;										//カメラのアドレスポインタを声明
+	CLight* m_Light;											//ライトのアドレスポインタを声明
+	CScene2D* m_Scene2D;										//2D画像のアドレスポインタを声明
+	CNumber* m_Money;
 	int m_nMoney;
 };
 
@@ -186,9 +186,9 @@ public:
 	void Draw(void);												//トレーニングモードクラス描画処理
 	CCamera* GetMainCamera(void) { return m_Camera; };				//カメラのアドレスを取得
 private:
-	static CCamera* m_Camera;										//カメラのアドレスポインタを声明
-	static CLight* m_Light;											//ライトのアドレスポインタを声明
-	static CScene2D* m_Scene2D;										//2D画像のアドレスポインタを声明
+	CCamera* m_Camera;										//カメラのアドレスポインタを声明
+	CLight* m_Light;											//ライトのアドレスポインタを声明
+	CScene2D* m_Scene2D;										//2D画像のアドレスポインタを声明
 };
 
 //=================================================================================================
@@ -203,8 +203,8 @@ public:
 	void Draw(void);												//トレーニングモードクラス描画処理
 	CCamera* GetMainCamera(void) { return m_Camera; };				//カメラのアドレスを取得
 private:
-	static CCamera* m_Camera;										//カメラのアドレスポインタを声明
-	static CLight* m_Light;											//ライトのアドレスポインタを声明
+	CCamera* m_Camera;										//カメラのアドレスポインタを声明
+	CLight* m_Light;											//ライトのアドレスポインタを声明
 	CGrid* m_Grid;													//グリッドのアドレスポインタを声明
 };
 
@@ -220,8 +220,8 @@ public:
 	void Draw(void);												//トレーニングモードクラス描画処理
 	CCamera* GetMainCamera(void) { return m_Camera; };				//カメラのアドレスを取得
 private:
-	static CCamera* m_Camera;										//カメラのアドレスポインタを声明
-	static CLight* m_Light;											//ライトのアドレスポインタを声明
+	CCamera* m_Camera;										//カメラのアドレスポインタを声明
+	CLight* m_Light;											//ライトのアドレスポインタを声明
 };
 
 #endif

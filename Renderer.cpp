@@ -16,9 +16,9 @@
 LPDIRECT3D9 CRenderer::m_pD3D = NULL;
 LPDIRECT3DDEVICE9 CRenderer::m_pD3DDevice = NULL;
 LPD3DXEFFECT CRenderer::m_pEffect = NULL;
-#if defined(DEBUG)
+#if defined(_DEBUG)
 D3DPRESENT_PARAMETERS CRenderer::m_d3dpp;
-#endif//defined(DEBUG)
+#endif//defined(_DEBUG)
 
 //=================================================================================================
 //　　　DirectX初期化クラス初期処理                                     
@@ -77,7 +77,7 @@ bool CRenderer::Init(HWND hWnd, BOOL bWindow)
 			}
 		}
 	}
-#if defined(DEBUG)
+#if defined(_DEBUG)
 	//DirectXプレゼンテーションパラメータのcopy
 	memcpy(&m_d3dpp, &d3dpp, sizeof(d3dpp));
 
@@ -108,7 +108,7 @@ bool CRenderer::Init(HWND hWnd, BOOL bWindow)
 	//io.Fonts->AddFontFromFileTTF("../../misc/fonts/ProggyTiny.ttf", 10.0f);
 	//ImFont* font = io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\msmincho.ttf", 18.0f, NULL, io.Fonts->GetGlyphRangesJapanese());
 	//IM_ASSERT(font != NULL);
-#endif//defined(DEBUG)
+#endif//defined(_DEBUG)
 
 	return true;
 }
@@ -118,11 +118,11 @@ bool CRenderer::Init(HWND hWnd, BOOL bWindow)
 //=================================================================================================
 void CRenderer::Uninit(void)
 {
-#if defined(DEBUG)
+#if defined(_DEBUG)
 	//ImGui終了処理
 	ImGui_ImplDX9_Shutdown();
 	ImGui::DestroyContext();
-#endif//defined(DEBUG)
+#endif//defined(_DEBUG)
 
 	//DirectXデバイス終了処理
 	SAFE_RELEASE(m_pD3DDevice);
@@ -145,7 +145,7 @@ void CRenderer::DrawBegin(void)
 //=================================================================================================
 void CRenderer::DrawEnd(void)
 {
-#if defined(DEBUG)
+#if defined(_DEBUG)
 	HRESULT hr;
 	//Presentの終了処理
 	hr = m_pD3DDevice->Present(NULL, NULL, NULL, NULL);
@@ -156,9 +156,9 @@ void CRenderer::DrawEnd(void)
 		m_pD3DDevice->Reset(&m_d3dpp);
 		ImGui_ImplDX9_CreateDeviceObjects();
 	}
-#else//defined(DEBUG)
+#else//defined(_DEBUG)
 	m_pD3DDevice->Present(NULL, NULL, NULL, NULL);
-#endif//defined(DEBUG)
+#endif//defined(_DEBUG)
 }
 
 //=================================================================================================
@@ -185,7 +185,7 @@ void CRenderer::SetD3DEffect(LPD3DXEFFECT D3DEffect)
 	m_pEffect = D3DEffect;
 }
 
-#if defined(DEBUG)
+#if defined(_DEBUG)
 //=================================================================================================
 //　　　D3DPARAMETERSの伝達                                   
 //=================================================================================================
@@ -202,4 +202,4 @@ void CRenderer::SetBackBuffer(LPARAM lParam)
 	m_d3dpp.BackBufferWidth = LOWORD(lParam);
 	m_d3dpp.BackBufferHeight = HIWORD(lParam);
 }
-#endif//defined(DEBUG)
+#endif//defined(_DEBUG)

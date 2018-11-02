@@ -10,43 +10,9 @@
 #include "Collision.h"
 #include<math.h>
 
-#if defined(DEBUG)
+#if defined(_DEBUG)
 #include "DebugGUI.h"
-#endif//defined(DEBUG)
-
-//=================================================================================================
-//　　　実体定義       
-//=================================================================================================
-CLight *CModeGame::m_Light = NULL;
-CXorshift* CModeGame::m_Xorshift = NULL;
-CSceneModel *CModeGame::m_SceneModelEnemy = NULL;
-CSceneModel *CModeGame::m_SceneModelBuliding = NULL;
-CNumber *CModeGame::m_Number = NULL;
-CScenePolygon* CModeGame::m_ScenePolygon = NULL;
-CSceneBillBoard* CModeGame::m_SceneBillBoard = NULL;
-CSceneModel* CModeGame::m_SceneModel = NULL;
-CBullet* CModeGame::m_Bullet = NULL;
-CEnemy* CModeGame::m_Bulid = NULL;
-
-CCamera *CModeResult::m_Camera = NULL;
-CLight *CModeResult::m_Light = NULL;
-CScene2D *CModeResult::m_Scene2D = NULL;
-CNumber *CModeResult::m_Money = NULL;
-
-CCamera* CModeGameOver::m_Camera = NULL;
-CLight* CModeGameOver::m_Light = NULL;
-CScene2D* CModeGameOver::m_Scene2D = NULL;
-CNumber *CModeGameOver::m_Money = NULL;
-
-CCamera* CModeTraining::m_Camera = NULL;
-CLight* CModeTraining::m_Light = NULL;
-CScene2D* CModeTraining::m_Scene2D = NULL;
-
-CCamera* CModeMotionEditing::m_Camera = NULL;
-CLight* CModeMotionEditing::m_Light = NULL;
-
-CCamera* CModeTest::m_Camera = NULL;
-CLight* CModeTest::m_Light = NULL;
+#endif//defined(_DEBUG)
 
 //=================================================================================================
 //　　　ゲームモードクラス                                       
@@ -119,11 +85,11 @@ bool CModeGame::Init(void)
 	m_SceneModel->m_bDraw = false;
 	m_Bullet = CBullet::Create(m_SceneModel);
 	CMap::Create();
-#if defined(DEBUG)
+#if defined(_DEBUG)
 	CDebugGUI::SetMainCamera(m_Camera);
 	CDebugGUI::SetField(m_Field);
 	CDebugGUI::SetPlayer(m_Player);
-#endif//defined(DEBUG)
+#endif//defined(_DEBUG)
 	return true;
 }
 

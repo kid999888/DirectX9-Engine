@@ -32,10 +32,10 @@ float g_fStartWidth = 0.0f;
 float g_fStartHeight = 0.0f;
 RECT g_UserRectSize;
 static HWND g_hWnd;
-#if defined(DEBUG)
+#if defined(_DEBUG)
 //ImGUI実体コントローラー
 extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
-#endif//defined(DEBUG)
+#endif//defined(_DEBUG)
 
 //=================================================================================================
 //　　　構造体定義                                         
@@ -137,10 +137,10 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	g_pInputJoypad->Init(hInstance, g_hWnd);
 	
 
-#if defined(DEBUG)
+#if defined(_DEBUG)
 	//DebugGUI初期処理
 	CDebugGUI::Init();
-#endif//defined(DEBUG)
+#endif//defined(_DEBUG)
 
 	timeBeginPeriod(1);											//分解能を設定
 
@@ -168,10 +168,10 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 			{
 				dwFPSLastTime = dwCurrentTime;
 
-#if defined(DEBUG)
+#if defined(_DEBUG)
 				//ImGUI処理
 				CDebugGUI::UpdateWindow();
-#endif//defined(DEBUG)
+#endif//defined(_DEBUG)
 
 				//更新処理
 				CManager::Update();
@@ -207,15 +207,15 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
-#if defined(DEBUG)
+#if defined(_DEBUG)
 	//ImGuiのWindowsandler生成
 	if (ImGui_ImplWin32_WndProcHandler(hWnd, uMsg, wParam, lParam))
 		return true;
-#endif//defined(DEBUG)
+#endif//defined(_DEBUG)
 
 	switch (uMsg)
 	{
-#if defined(DEBUG)
+#if defined(_DEBUG)
 	case WM_SIZE:
 		if (CRenderer::GetD3DDevice() != NULL && wParam != SIZE_MINIMIZED)
 		{
@@ -227,7 +227,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			ImGui_ImplDX9_CreateDeviceObjects();
 		}
 		return 0;
-#endif//defined(DEBUG)
+#endif//defined(_DEBUG)
 	case WM_DESTROY: PostQuitMessage(0);										//ウインドウを閉じてのメッセージ
 		break;
 	case WM_KEYDOWN:
