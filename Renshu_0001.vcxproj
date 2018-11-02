@@ -169,6 +169,7 @@
     <ClCompile Include="Manager.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Material.cpp" />
+    <ClCompile Include="MeshEffect.cpp" />
     <ClCompile Include="Mode.cpp" />
     <ClCompile Include="Motion.cpp" />
     <ClCompile Include="Number.cpp" />
@@ -204,6 +205,7 @@
     <ClInclude Include="Manager.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Material.h" />
+    <ClInclude Include="MeshEffect.h" />
     <ClInclude Include="Mode.h" />
     <ClInclude Include="Motion.h" />
     <ClInclude Include="Number.h" />

@@ -28,7 +28,7 @@ CSceneModel::~CSceneModel()
 //=================================================================================================
 bool CSceneModel::Init(void)
 {
-
+	//D3DDeviceÇÃì]ëó
 	LPDIRECT3DDEVICE9 pDevice = CRenderer::GetD3DDevice();
 	//ÉÅÉìÉoÅ[ïœêîèâä˙âª 
 	m_pMesh = NULL;
@@ -36,7 +36,6 @@ bool CSceneModel::Init(void)
 	m_pMaterial = NULL;
 	m_nMaterialPointNum = 0;
 	D3DXQuaternionIdentity(&m_Quaternion);
-	
 
 	LPD3DXBUFFER pAdjacencyBuffer;
 	HRESULT hr;
@@ -134,7 +133,6 @@ void CSceneModel::Uninit(void)
 		SAFE_RELEASE(m_pTexture[nCount]);
 	}
 	SAFE_DELETE_ARRAY(m_pTexture);
-	
 }
 
 //=================================================================================================

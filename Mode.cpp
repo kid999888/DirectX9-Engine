@@ -32,10 +32,6 @@ CBullet* CModeGame::m_Bullet = NULL;
 CEnemy* CModeGame::m_Enemy = NULL;
 CEnemy* CModeGame::m_Bulid = NULL;
 
-CCamera *CModeTitle::m_Camera = NULL;
-CLight *CModeTitle::m_Light = NULL;
-CScene2D *CModeTitle::m_Scene2D = NULL;
-
 CCamera *CModeResult::m_Camera = NULL;
 CLight *CModeResult::m_Light = NULL;
 CScene2D *CModeResult::m_Scene2D = NULL;

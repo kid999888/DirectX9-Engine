@@ -114,9 +114,9 @@ public:
 	void Update(void);												//タートルモードクラス更新処理
 	void Draw(void);												//タートルモードクラス描画処理
 private:
-	static CCamera* m_Camera;										//カメラのアドレスポインタを声明
-	static CLight* m_Light;											//ライトのアドレスポインタを声明
-	static CScene2D* m_Scene2D;										//2D画像のアドレスポインタを声明
+	CCamera* m_Camera;										//カメラのアドレスポインタを声明
+	CLight* m_Light;											//ライトのアドレスポインタを声明
+	CScene2D* m_Scene2D;										//2D画像のアドレスポインタを声明
 };
 
 //=================================================================================================
