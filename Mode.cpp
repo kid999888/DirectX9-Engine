@@ -17,11 +17,8 @@
 //=================================================================================================
 //　　　実体定義       
 //=================================================================================================
-CCamera *CModeGame::m_Camera = NULL;
 CLight *CModeGame::m_Light = NULL;
 CXorshift* CModeGame::m_Xorshift = NULL;
-CField *CModeGame::m_Field = NULL;
-CPlayer *CModeGame::m_Player = NULL;
 CSceneModel *CModeGame::m_SceneModelEnemy = NULL;
 CSceneModel *CModeGame::m_SceneModelBuliding = NULL;
 CNumber *CModeGame::m_Number = NULL;
@@ -29,7 +26,6 @@ CScenePolygon* CModeGame::m_ScenePolygon = NULL;
 CSceneBillBoard* CModeGame::m_SceneBillBoard = NULL;
 CSceneModel* CModeGame::m_SceneModel = NULL;
 CBullet* CModeGame::m_Bullet = NULL;
-CEnemy* CModeGame::m_Enemy = NULL;
 CEnemy* CModeGame::m_Bulid = NULL;
 
 CCamera *CModeResult::m_Camera = NULL;
@@ -70,7 +66,7 @@ bool CModeGame::Init(void)
 	m_Light->Init();
 	this->m_Xorshift = new CXorshift();
 	m_Field = CField::Create(120, 120);
-	m_Player = CPlayer::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+	m_Player = CPlayer::Create(this,D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 	m_nMoney = 800;
 	m_Number = CNumber::Create(m_nMoney);
 	m_Number->SetPosition(D3DXVECTOR3(960.0f, 0.0f, -1.0f));

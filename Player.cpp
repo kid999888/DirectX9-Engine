@@ -32,6 +32,20 @@ D3DXVECTOR3 CPlayer::m_vePosition = D3DXVECTOR3(0.0f,0.0f,0.0f);
 //=================================================================================================
 //　　　構造体定義                                         
 //=================================================================================================
+CPlayer::CPlayer(CMode* Mode, int nPriority) : CScene(nPriority)
+{
+	m_CurrentMode = Mode;
+	m_veScale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
+	m_veRotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	m_vePosition = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	m_vePlayerFront = D3DXVECTOR3(m_vePosition.x, m_vePosition.y, (m_vePosition.z - 1.0f));
+	m_vePlayerMousePoint = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	m_fMoveSpeed = 0.2f;
+	m_fRotYSpeed = 5.0f;
+	m_fRotOnce = 0.0f;
+	m_fRotYExactly = 0;
+	m_pTexture = nullptr;
+};
 
 //=================================================================================================
 //　　　プレーヤーデストラクタ                                        
@@ -47,7 +61,7 @@ bool CPlayer::Init(void)
 {
 	m_pPlayer = CSceneModel::Create("Data\\Model\\roboModel.x");
 	m_pPlayer->SetPosition(m_vePosition);
-	m_Camera = CModeGame::GetMainCamera();
+	m_Camera = m_CurrentMode->GetMainCamera();
 	//プレーヤーの座標をモデリングに転送
 	m_pPlayer->SetPosition(m_vePosition);
 	//プレーヤーの軸回転値をモデリングに転送
@@ -68,7 +82,7 @@ void CPlayer::Uninit(void)
 //=================================================================================================
 void CPlayer::Update(void)
 {
-	CField *field = CModeGame::GetField();
+	CField *field = m_CurrentMode->GetField();
 	
 
 	/*if (m_veRotation.y > m_fRotYExactly)
@@ -193,9 +207,9 @@ void CPlayer::Draw(void)
 //=================================================================================================
 //　　　プレーヤーのインスタンス生成                                         
 //=================================================================================================
-CPlayer * CPlayer::Create(D3DXVECTOR3 vePosition)
+CPlayer * CPlayer::Create(CMode* Mode, D3DXVECTOR3 vePosition)
 {
-	CPlayer *Player = new CPlayer(1);
+	CPlayer *Player = new CPlayer(Mode,1);
 	Player->m_vePosition = vePosition;
 	Player->Init();
 	return Player;

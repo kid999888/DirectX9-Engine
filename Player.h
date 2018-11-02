@@ -8,12 +8,14 @@
 #define _CPLAYER_H_
 #include "Scene.h"
 #include "SceneModel.h"
+#include "Mode.h"
 
 
 #include "Camera.h"
 #include "Bullet.h"
 #include<vector>
 using namespace std;
+class CMode;
 
 //=================================================================================================
 //　　　フィールドクラス                                       
@@ -21,25 +23,13 @@ using namespace std;
 class CPlayer : public CScene
 {
 public:
-	CPlayer(int nPriority) : CScene(nPriority)
-	{
-		m_veScale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
-		m_veRotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-		m_vePosition = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-		m_vePlayerFront = D3DXVECTOR3(m_vePosition.x, m_vePosition.y, (m_vePosition.z - 1.0f));
-		m_vePlayerMousePoint = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-		m_fMoveSpeed = 0.2f;
-		m_fRotYSpeed = 5.0f;
-		m_fRotOnce = 0.0f;
-		m_fRotYExactly = 0;
-		m_pTexture = nullptr;
-	};													//プレーヤーコンストラクタ
+	CPlayer(CMode* Mode,int nPriority);		//プレーヤーコンストラクタ
 	~CPlayer();											//プレーヤーデストラクタ
 	bool Init(void);									//プレーヤー初期処理
 	void Uninit(void);									//プレーヤー終了処理
 	void Update(void);									//プレーヤー更新処理
 	void Draw(void);									//プレーヤー描画処理
-	static CPlayer * Create(D3DXVECTOR3 vePosition);	//プレーヤーのインスタンス生成
+	static CPlayer * Create(CMode* Mode, D3DXVECTOR3 vePosition);	//プレーヤーのインスタンス生成
 	static D3DXVECTOR3 GetPlayerPos(void)				
 	{
 		return m_vePosition;
@@ -54,6 +44,7 @@ public:
 	}
 
 private:
+	CMode* m_CurrentMode;
 	CSceneModel * m_pPlayer;							//プレーヤーのモデリング管理するアドレスを声明
 	//CBullet m_pBullet;								//管理するアドレスを声明
 	//vector<CBullet*> m_vBullet;						//管理するアドレスを声明
