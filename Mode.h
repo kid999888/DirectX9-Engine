@@ -63,7 +63,7 @@ public:
 	MODE_ID m_ModeId;										//モードID
 	MODE_ID GetModeId(void) { return this->m_ModeId; };		//モードIDの取得
 	virtual CCamera* GetMainCamera(void) = 0;
-	virtual CField* GetField(void) = 0;
+	virtual CField* GetField(void) { return nullptr; };
 };
 
 //=================================================================================================
@@ -85,10 +85,10 @@ public:
 	void Draw(void);												//ゲームモードクラス描画処理										//
 	
 private:
-	CCamera *m_Camera;										//カメラのアドレスポインタを声明
-	CField * m_Field;										//フィールドのアドレスポインタを声明
-	CPlayer * m_Player;										//プレーヤーのアドレスポインタを声明
-	CEnemy* m_Enemy;										//
+	CCamera *m_Camera;												//カメラのアドレスポインタを声明
+	CField * m_Field;												//フィールドのアドレスポインタを声明
+	CPlayer * m_Player;												//プレーヤーのアドレスポインタを声明
+	CEnemy* m_Enemy;												//
 	static CLight *m_Light;											//ライトのアドレスポインタを声明
 	static CXorshift* m_Xorshift;									//
 	static CSceneModel * m_SceneModelEnemy;							//敵モデリングのアドレスポインタを声明
@@ -107,7 +107,7 @@ public:
 	CCamera * GetMainCamera(void) { return m_Camera; };		//カメラのアドレスを取得
 	CField* GetField(void) { return m_Field; };				//フィールドのアドレスを取得
 	CPlayer* GetMainPlayer(void) { return m_Player; };		//プレーヤーのアドレスを取得
-	CEnemy* GetMainEnemy(void) { return m_Enemy; };		//プレーヤーのアドレスを取得
+	CEnemy* GetMainEnemy(void) { return m_Enemy; };			//プレーヤーのアドレスを取得
 
 };
 
@@ -122,7 +122,6 @@ public:
 	void Update(void);												//タートルモードクラス更新処理
 	void Draw(void);												//タートルモードクラス描画処理
 	CCamera* GetMainCamera(void) { return m_Camera; };				//カメラのアドレスを取得
-	CField* GetField(void) { return nullptr; };				//フィールドのアドレスを取得
 private:
 	CCamera* m_Camera;										//カメラのアドレスポインタを声明
 	CLight* m_Light;											//ライトのアドレスポインタを声明
@@ -144,7 +143,6 @@ public:
 	void Update(void);												//リザルトモードクラス更新処理
 	void Draw(void);												//リザルトモードクラス描画処理
 	CCamera* GetMainCamera(void) { return m_Camera; };				//カメラのアドレスを取得
-	CField* GetField(void) { return nullptr; };				//フィールドのアドレスを取得
 private:
 	static CCamera* m_Camera;										//カメラのアドレスポインタを声明
 	static CLight* m_Light;											//ライトのアドレスポインタを声明
@@ -168,7 +166,6 @@ public:
 	void Update(void);												//ゲームオーバーモードクラス更新処理
 	void Draw(void);												//ゲームオーバーモードクラス描画処理
 	CCamera* GetMainCamera(void) { return m_Camera; };				//カメラのアドレスを取得
-	CField* GetField(void) { return nullptr; };				//フィールドのアドレスを取得
 private:
 	static CCamera* m_Camera;										//カメラのアドレスポインタを声明
 	static CLight* m_Light;											//ライトのアドレスポインタを声明
@@ -188,7 +185,6 @@ public:
 	void Update(void);												//トレーニングモードクラス更新処理
 	void Draw(void);												//トレーニングモードクラス描画処理
 	CCamera* GetMainCamera(void) { return m_Camera; };				//カメラのアドレスを取得
-	CField* GetField(void) { return nullptr; };				//フィールドのアドレスを取得
 private:
 	static CCamera* m_Camera;										//カメラのアドレスポインタを声明
 	static CLight* m_Light;											//ライトのアドレスポインタを声明
@@ -206,7 +202,6 @@ public:
 	void Update(void);												//トレーニングモードクラス更新処理
 	void Draw(void);												//トレーニングモードクラス描画処理
 	CCamera* GetMainCamera(void) { return m_Camera; };				//カメラのアドレスを取得
-	CField* GetField(void) { return nullptr; };				//フィールドのアドレスを取得
 private:
 	static CCamera* m_Camera;										//カメラのアドレスポインタを声明
 	static CLight* m_Light;											//ライトのアドレスポインタを声明
@@ -224,7 +219,6 @@ public:
 	void Update(void);												//トレーニングモードクラス更新処理
 	void Draw(void);												//トレーニングモードクラス描画処理
 	CCamera* GetMainCamera(void) { return m_Camera; };				//カメラのアドレスを取得
-	CField* GetField(void) { return nullptr; };				//フィールドのアドレスを取得
 private:
 	static CCamera* m_Camera;										//カメラのアドレスポインタを声明
 	static CLight* m_Light;											//ライトのアドレスポインタを声明

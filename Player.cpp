@@ -84,6 +84,8 @@ void CPlayer::Update(void)
 {
 	CField *field = m_CurrentMode->GetField();
 	
+	
+	
 
 	/*if (m_veRotation.y > m_fRotYExactly)
 	{
@@ -188,8 +190,11 @@ void CPlayer::Update(void)
 	
 	m_vePlayerFront = veMousePosToXZ;
 
-	//フィール衝突判定
-	m_vePosition.y = (CCollision::GetFieldHeight(field->GetFiledPos(), m_vePosition, field->GetBlockNumX(), field->GetBlockNumZ()) + 0.5f);
+	if (m_CurrentMode->m_ModeId == MODE_GAME)
+	{
+		//フィール衝突判定
+		m_vePosition.y = (CCollision::GetFieldHeight(field->GetFiledPos(), m_vePosition, field->GetBlockNumX(), field->GetBlockNumZ()) + 0.5f);
+	}
 
 	//プレーヤーの座標をモデリングに転送
 	m_pPlayer->SetPosition(m_vePosition);
