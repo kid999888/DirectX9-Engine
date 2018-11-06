@@ -29,14 +29,7 @@ typedef struct
 class CParticle : public CScene
 {
 public:
-	CParticle(int nPriority) : CScene(nPriority)						//パーティクルコンストラクタ
-	{
-		m_veScale = D3DXVECTOR3(0.3f, 0.3f, 0.3f);
-		m_veRotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-		m_vePosition = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-		m_fSpeed = 1.0f;
-		m_nLifeLimit = 100;
-	};
+	CParticle(int nPriority);										//パーティクルコンストラクタ
 	~CParticle();													//パーティクルデストラクタ
 	bool Init(void);												//パーティクル初期処理
 	void Uninit(void);												//パーティクル終了処理
