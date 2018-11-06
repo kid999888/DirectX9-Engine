@@ -10,6 +10,7 @@
 #include "main.h"
 #include "Player.h"
 #include "Camera.h"
+#include "Motion.h"
 #include "Manager.h"
 #include "input.h"
 
@@ -33,6 +34,10 @@ public:
 	{
 		m_pField = pField; 
 	};
+	static void SetMotion(CMotion* pMotion)		//
+	{
+		m_Motion = pMotion;
+	};
 
 private:
 	static bool m_bshow_demo_window;			//Demoウィンドウのフラッグを声明する
@@ -40,6 +45,7 @@ private:
 	static CPlayer* m_pPlayer;					//プレーヤーのアドレスを声明する
 	static CCamera* m_pCamera;					//カメラのアドレスを声明する
 	static CField * m_pField;					//フィールドのアドレスを声明する
+	static CMotion* m_Motion;								//
 
 };
 #endif

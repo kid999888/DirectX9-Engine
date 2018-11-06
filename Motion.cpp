@@ -8,8 +8,6 @@
 #include "input.h"
 #include "Renderer.h"
 
-PART CMotion::m_Part[10] = {};
-
 KEY_FRAME g_KeyFrameWalk[3] =
 {
 	{ 300,

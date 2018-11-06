@@ -10,7 +10,6 @@
 //=================================================================================================
 #include "DebugGUI.h"
 #include "Mode.h"
-#include "Motion.h"
 
 //=================================================================================================
 //　　　実体定義
@@ -20,6 +19,7 @@ bool CDebugGUI::m_bshow_Motion_window = false;
 CPlayer* CDebugGUI::m_pPlayer = nullptr;
 CCamera* CDebugGUI::m_pCamera = nullptr;
 CField* CDebugGUI::m_pField = nullptr;
+CMotion* CDebugGUI::m_Motion = nullptr;
 
 //=================================================================================================
 //　　　DebugGUIクラス初期処理         
@@ -124,10 +124,10 @@ void CDebugGUI::UpdateWindow(void)
 					ImGui::Text("Part[%d]", nCount);
 					ImGui::Text("Position:");
 					ImGui::SameLine();
-					ImGui::Text("(%f,%f,%f)", CMotion::GetPart(nCount).Position.x, CMotion::GetPart(nCount).Position.y, CMotion::GetPart(nCount).Position.z);
+					ImGui::Text("(%f,%f,%f)", m_Motion->GetPart(nCount).Position.x, m_Motion->GetPart(nCount).Position.y, m_Motion->GetPart(nCount).Position.z);
 					ImGui::Text("Rotation:");
 					ImGui::SameLine();
-					ImGui::Text("(%f,%f,%f)", CMotion::GetPart(nCount).Rotation.x, CMotion::GetPart(nCount).Rotation.y, CMotion::GetPart(nCount).Rotation.z);
+					ImGui::Text("(%f,%f,%f)", m_Motion->GetPart(nCount).Rotation.x, m_Motion->GetPart(nCount).Rotation.y, m_Motion->GetPart(nCount).Rotation.z);
 				}
 
 				if (ImGui::Button("Close Me"))

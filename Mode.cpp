@@ -444,8 +444,11 @@ bool CModeMotionEditing::Init(void)
 	m_Camera->CameraViewFlag(true);
 	this->m_Light = new CLight();
 	m_Light->SetDir(D3DXVECTOR3(-1.0f, -1.0f, 1.0f));
-	CGrid::Create();
-	CMotion::Create();
+	m_Grid = CGrid::Create();
+	m_Motion = CMotion::Create();
+#if defined(_DEBUG)
+	CDebugGUI::SetMotion(m_Motion);
+#endif//defined(_DEBUG)
 	return true;
 }
 
