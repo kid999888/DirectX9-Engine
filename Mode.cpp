@@ -85,7 +85,7 @@ bool CModeGame::Init(void)
 	m_SceneModel->m_bDraw = false;
 	m_Bullet = CBullet::Create();
 	m_Bullet->Load(m_SceneModel);
-	CMap::Create();
+	CMap::Create(m_Enemy);
 #if defined(_DEBUG)
 	CDebugGUI::SetMainCamera(m_Camera);
 	CDebugGUI::SetField(m_Field);
@@ -133,12 +133,12 @@ void CModeGame::Update(void)
 	D3DXVECTOR3 vePos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	for (int nCountX = 0;nCountX < ENEMY_NUM;nCountX++)
 	{
-		if (CEnemy::GetEnemyManager(nCountX).status != 0)
+		if (m_Enemy->GetEnemyManager(nCountX).status != 0)
 		{
 			//敵とプレーヤーの当たり
-			if (CCollision::BallJudgement(CEnemy::GetEnemyManager(nCountX).vePos, CPlayer::GetPlayerPos(), 1.0f, 1.0f))
+			if (CCollision::BallJudgement(m_Enemy->GetEnemyManager(nCountX).vePos, CPlayer::GetPlayerPos(), 1.0f, 1.0f))
 			{
-				switch (CEnemy::GetEnemyManager(nCountX).EnemyType)
+				switch (m_Enemy->GetEnemyManager(nCountX).EnemyType)
 				{
 					//ザグ
 				case ENEMY_TYPES_ZAKU:
@@ -146,8 +146,8 @@ void CModeGame::Update(void)
 					break;
 					//建物
 				case ENEMY_TYPES_BULIDING:
-					vePos = CEnemy::GetEnemyManager(nCountX).vePos;
-					CEnemy::Destory(nCountX);
+					vePos = m_Enemy->GetEnemyManager(nCountX).vePos;
+					m_Enemy->Destory(nCountX);
 					m_SceneBillBoard->SetScale(D3DXVECTOR3(0.5f, 0.5f, 0.5f));
 					CParticle::Create(m_SceneBillBoard, vePos, 5.0f, 100, 90);
 					m_nMoney -= 100;
@@ -170,20 +170,20 @@ void CModeGame::Update(void)
 				//敵とプレーヤーバレットの当たり
 				if (m_Bullet->GetBulletManager(nCount).status != 0)
 				{
-					if (CCollision::BallJudgement(CEnemy::GetEnemyManager(nCountX).vePos, m_Bullet->GetBulletManager(nCount).vePos, 0.8f, 0.3f))
+					if (CCollision::BallJudgement(m_Enemy->GetEnemyManager(nCountX).vePos, m_Bullet->GetBulletManager(nCount).vePos, 0.8f, 0.3f))
 					{
-						switch (CEnemy::GetEnemyManager(nCountX).EnemyType)
+						switch (m_Enemy->GetEnemyManager(nCountX).EnemyType)
 						{
 							//ザグ
 						case ENEMY_TYPES_ZAKU:
-							CEnemy::SetEnemyLife(nCountX, CEnemy::GetEnemyManager(nCountX).nLife - 1);
+							m_Enemy->SetEnemyLife(nCountX, m_Enemy->GetEnemyManager(nCountX).nLife - 1);
 							m_Bullet->Destory(nCount);
 							m_SceneBillBoard->SetScale(D3DXVECTOR3(0.2f, 0.2f, 0.2f));
-							CParticle::Create(m_SceneBillBoard, CEnemy::GetEnemyManager(nCountX).vePos, 1.0f, 100, 90);
-							if (CEnemy::GetEnemyManager(nCountX).nLife <= 0)
+							CParticle::Create(m_SceneBillBoard, m_Enemy->GetEnemyManager(nCountX).vePos, 1.0f, 100, 90);
+							if (m_Enemy->GetEnemyManager(nCountX).nLife <= 0)
 							{
-								vePos = CEnemy::GetEnemyManager(nCountX).vePos;
-								CEnemy::Destory(nCountX);
+								vePos = m_Enemy->GetEnemyManager(nCountX).vePos;
+								m_Enemy->Destory(nCountX);
 								m_Bullet->Destory(nCount);
 								m_nEnemyCount -= 1;
 								m_SceneBillBoard->SetScale(D3DXVECTOR3(0.5f, 0.5f, 0.5f));
@@ -198,14 +198,14 @@ void CModeGame::Update(void)
 							break;
 							//建物
 						case ENEMY_TYPES_BULIDING:
-							CEnemy::SetEnemyLife(nCountX, CEnemy::GetEnemyManager(nCountX).nLife - 1);
+							m_Enemy->SetEnemyLife(nCountX, m_Enemy->GetEnemyManager(nCountX).nLife - 1);
 							m_Bullet->Destory(nCount);
 							m_SceneBillBoard->SetScale(D3DXVECTOR3(0.2f, 0.2f, 0.2f));
-							CParticle::Create(m_SceneBillBoard, CEnemy::GetEnemyManager(nCountX).vePos, 1.0f, 100, 90);
-							if (CEnemy::GetEnemyManager(nCountX).nLife <= 0)
+							CParticle::Create(m_SceneBillBoard, m_Enemy->GetEnemyManager(nCountX).vePos, 1.0f, 100, 90);
+							if (m_Enemy->GetEnemyManager(nCountX).nLife <= 0)
 							{
-								vePos = CEnemy::GetEnemyManager(nCountX).vePos;
-								CEnemy::Destory(nCountX);
+								vePos = m_Enemy->GetEnemyManager(nCountX).vePos;
+								m_Enemy->Destory(nCountX);
 								m_Bullet->Destory(nCount);
 								m_SceneBillBoard->SetScale(D3DXVECTOR3(0.5f, 0.5f, 0.5f));
 								CParticle::Create(m_SceneBillBoard, vePos, 5.0f, 100, 90);

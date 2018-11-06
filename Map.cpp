@@ -11,10 +11,14 @@
 #include "Map.h"
 #include "Math.h"
 
-
-CScene2D* CMap::m_pScene2DMap = nullptr;
-CScene2D* CMap::m_pScene2DBlock = nullptr;
-CEnemy* CMap::m_pEnemy = nullptr;
+CMap::CMap(CEnemy* pEnemy, int nPriority) : CScene(nPriority)
+{
+	m_veScale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
+	m_veRotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	m_vePosition = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	m_bDraw = true;
+	m_pEnemy = pEnemy;
+}
 
 CMap::~CMap()
 {
@@ -50,12 +54,12 @@ void CMap::Draw(void)
 	
 	for (int nCount = 0;nCount < ENEMY_NUM;nCount++)
 	{
-		if (CEnemy::GetEnemyManager(nCount).status != 0)
+		if (m_pEnemy->GetEnemyManager(nCount).status != 0)
 		{
 
-			m_pScene2DBlock->SetPositionX(188.0f + ((CEnemy::GetEnemyManager(nCount).vePos.x - CPlayer::GetPlayerPos().x) / 0.25f));
+			m_pScene2DBlock->SetPositionX(188.0f + ((m_pEnemy->GetEnemyManager(nCount).vePos.x - CPlayer::GetPlayerPos().x) / 0.25f));
 			float nX = m_pScene2DBlock->GetPositionX();
-			m_pScene2DBlock->SetPositionY(132.0f + (-(CEnemy::GetEnemyManager(nCount).vePos.z - CPlayer::GetPlayerPos().z) / 0.25f));
+			m_pScene2DBlock->SetPositionY(132.0f + (-(m_pEnemy->GetEnemyManager(nCount).vePos.z - CPlayer::GetPlayerPos().z) / 0.25f));
 			float nY = m_pScene2DBlock->GetPositionY();
 			m_pScene2DBlock->Draw();
 		}
@@ -63,9 +67,9 @@ void CMap::Draw(void)
 
 }
 
-CMap * CMap::Create(void)
+CMap * CMap::Create(CEnemy* pEnemy)
 {
-	CMap *Map = new CMap(1);
+	CMap *Map = new CMap(pEnemy,1);
 	Map->Init();
 	return Map;
 }

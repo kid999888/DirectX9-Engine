@@ -55,17 +55,17 @@ public:
 	void Update(void);												//“GXVˆ—
 	void Draw(void);												//“G•`‰æˆ—
 	static CEnemy * Create(void);									//“G‚ÌƒCƒ“ƒXƒ^ƒ“ƒX¶¬
-	static void Generate(ENEMY_TYPES_ID EnemyType, D3DXVECTOR3 vePosition,
+	void Generate(ENEMY_TYPES_ID EnemyType, D3DXVECTOR3 vePosition,
 		CSceneModel* pSceneModel, D3DXVECTOR3 veScale);				//V‚µ‚¢“G‚ğ¶¬
-	static void Destory(int nNum);									//“G‚ğ”pŠü‚·‚é
-	static void SetEnemyLife(int nNum, int nLife);					//“GHP‚ğİ’è
-	static ENEMY GetEnemyManager(int nNum)							//ƒiƒ“ƒo[‚Ì“G‚Ìî•ñ‚ğ‚­‚ê
+	void Destory(int nNum);									//“G‚ğ”pŠü‚·‚é
+	void SetEnemyLife(int nNum, int nLife);					//“GHP‚ğİ’è
+	ENEMY GetEnemyManager(int nNum)							//ƒiƒ“ƒo[‚Ì“G‚Ìî•ñ‚ğ‚­‚ê
 	{
 		return m_Enemy[nNum];
 	};
 private:
-	static ENEMY m_Enemy[ENEMY_NUM];								//“Gî•ñ‚ÌŠÇ—
-	static D3DXVECTOR3 GetMovePattern(int nNum);					//“GˆÚ“®ƒpƒ^[ƒ“
+	ENEMY m_Enemy[ENEMY_NUM];								//“Gî•ñ‚ÌŠÇ—
+	D3DXVECTOR3 GetMovePattern(int nNum);					//“GˆÚ“®ƒpƒ^[ƒ“
 };
 
 #endif
