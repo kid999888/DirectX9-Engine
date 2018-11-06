@@ -50,11 +50,11 @@ public:
 	{ return m_eye; };									
 	D3DXVECTOR3 GetCameraAtPos(void)					//カメラ注視点の取得
 	{ return m_at; };
-	static D3DXMATRIX GetCameraProjection(void)			//カメラプロジェクション行列の取得
+	D3DXMATRIX GetCameraProjection(void)				//カメラプロジェクション行列の取得
 	{
 		return m_mtxProjection;
 	};
-	static D3DXMATRIX GetCameraView(void)				//カメラビュー行列の取得
+	D3DXMATRIX GetCameraView(void)						//カメラビュー行列の取得
 	{
 		return m_mtxView;
 	};
@@ -64,13 +64,13 @@ public:
 	}
 
 private:
-	static D3DXVECTOR3 m_eye;							//カメラ場所を声明
-	static D3DXVECTOR3 m_at;							//カメラ注視点を声明
-	static D3DXVECTOR3 m_up;							//上の場所を声明
-	static D3DXVECTOR3 m_rot;							//カメラの向き
-	static D3DXMATRIX m_mtxView;						//ビュー行列
-	static D3DXMATRIX m_mtxProjection;					//プロジェクション行列
-	static bool m_bViewChange;							//視点操作フラッグ
+	D3DXVECTOR3 m_eye;							//カメラ場所を声明
+	D3DXVECTOR3 m_at;							//カメラ注視点を声明
+	D3DXVECTOR3 m_up;							//上の場所を声明
+	D3DXVECTOR3 m_rot;							//カメラの向き
+	D3DXMATRIX m_mtxView;						//ビュー行列
+	D3DXMATRIX m_mtxProjection;					//プロジェクション行列
+	bool m_bViewChange;							//視点操作フラッグ
 	float m_fLengthInterval;							// 視点から注視点までの距離
 	float m_fLengthIntervalXZ;							// 視点から注視点までの距離(XZ平面)
 	void ViewChange(void);								//視点操作

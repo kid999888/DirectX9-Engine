@@ -78,7 +78,7 @@ bool CModeGame::Init(void)
 
 	m_ScenePolygon = CScenePolygon::Create();
 	m_ScenePolygon->SetScale(D3DXVECTOR3(40.0f, 1.0f, 0.125f));
-	m_SceneBillBoard = CSceneBillBoard::Create();
+	m_SceneBillBoard = CSceneBillBoard::Create(m_Camera);
 	m_SceneBillBoard->m_bDraw = false;
 	m_SceneModel = CSceneModel::Create("Data\\Model\\Ball.x");
 	m_SceneModel->SetScale(D3DXVECTOR3(0.3f, 0.3f, 0.3f));
@@ -266,6 +266,9 @@ bool CModeTitle::Init(void)
 	this->m_Light = new CLight();
 	m_Light->Init();
 	m_Scene2D = CScene2D::Create(2, "Data\\Texture\\Title.png", 1, 1);
+#if defined(_DEBUG)
+	CDebugGUI::SetMainCamera(m_Camera);
+#endif//defined(_DEBUG)
 	return true;
 }
 
@@ -318,6 +321,9 @@ bool CModeResult::Init(void)
 	m_Scene2D = CScene2D::Create(2, "Data\\Texture\\Result.png", 1, 1);
 	m_Money = CNumber::Create(m_nMoney);
 	m_Money->SetPosition(D3DXVECTOR3(500.0f, 60.0f, -1.0f));
+#if defined(_DEBUG)
+	CDebugGUI::SetMainCamera(m_Camera);
+#endif//defined(_DEBUG)
 	return true;
 }
 
@@ -366,6 +372,9 @@ bool CModeGameOver::Init(void)
 	m_Scene2D = CScene2D::Create(2, "Data\\Texture\\GameOver.png", 1, 1);
 	m_Money = CNumber::Create(m_nMoney);
 	m_Money->SetPosition(D3DXVECTOR3(500.0f, 60.0f, -1.0f));
+#if defined(_DEBUG)
+	CDebugGUI::SetMainCamera(m_Camera);
+#endif//defined(_DEBUG)
 	return true;
 }
 
@@ -403,6 +412,9 @@ bool CModeTraining::Init(void)
 	this->m_Camera = new CCamera();
 	this->m_Light = new CLight();
 	m_Scene2D = CScene2D::Create(2, "Data\\Texture\\sosaku.png", 1, 1);
+#if defined(_DEBUG)
+	CDebugGUI::SetMainCamera(m_Camera);
+#endif//defined(_DEBUG)
 	return true;
 }
 
@@ -486,6 +498,9 @@ bool CModeTest::Init(void)
 	this->m_Light = new CLight();
 	m_Light->Init();
 	/*m_Light->SetDir(D3DXVECTOR3(-1.0f, -1.0f, 1.0f));*/
+#if defined(_DEBUG)
+	CDebugGUI::SetMainCamera(m_Camera);
+#endif//defined(_DEBUG)
 	return true;
 }
 

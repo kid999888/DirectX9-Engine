@@ -161,7 +161,7 @@ void CPlayer::Update(void)
 	D3DXVECTOR3 veMousePosToXZ(0.0f,0.0f,0.0f);
 	
 	CCollision::CalcScreenToXZ(&veMousePosToXZ, CInputMouse::GetPosUserScreen()->x, CInputMouse::GetPosUserScreen()->y,
-	GetUserWindowsSize().right, GetUserWindowsSize().bottom, &CCamera::GetCameraView(), &CCamera::GetCameraProjection());
+	GetUserWindowsSize().right, GetUserWindowsSize().bottom, &m_CurrentMode->GetMainCamera()->GetCameraView(), &m_CurrentMode->GetMainCamera()->GetCameraProjection());
 	m_vePlayerMousePoint = veMousePosToXZ;
 	m_vePlayerMousePoint.y = 0.0f;
 	veMousePosToXZ = veMousePosToXZ - m_vePosition;

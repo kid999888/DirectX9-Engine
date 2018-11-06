@@ -178,7 +178,7 @@ float CCollision::GetSqDistancePoint2Segment(const D3DXVECTOR3 & point, const D3
 //		戻り値：	出力のオブジェクト3次座標（float）
 //		説明　：	XZ平面とスクリーン座標の交点算出関数
 //=============================================================================================
-D3DXVECTOR3 * CCollision::CalcScreenToXZ(D3DXVECTOR3 * pout, int Sx, int Sy, int Screen_w, int Screen_h, D3DXMATRIX * View, D3DXMATRIX * Prj)
+D3DXVECTOR3 * CCollision::CalcScreenToXZ(D3DXVECTOR3 * pout, int Sx, int Sy, int Screen_w, int Screen_h, D3DXMATRIX* View, D3DXMATRIX* Prj)
 {
 	D3DXVECTOR3 nearpos;
 	D3DXVECTOR3 farpos;

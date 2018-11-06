@@ -15,13 +15,6 @@
 //=================================================================================================
 //　　　実体定義
 //=================================================================================================
-D3DXVECTOR3 CCamera::m_eye = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-D3DXVECTOR3 CCamera::m_at = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-D3DXVECTOR3 CCamera::m_up = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-D3DXVECTOR3 CCamera::m_rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-D3DXMATRIX CCamera::m_mtxProjection;
-D3DXMATRIX CCamera::m_mtxView;
-bool CCamera::m_bViewChange = false;
 
 //=================================================================================================
 //　　　カメラクラスコンストラクタ                                    

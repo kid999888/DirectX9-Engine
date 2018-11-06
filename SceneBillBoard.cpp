@@ -31,6 +31,17 @@ typedef struct
 	D3DXVECTOR2 texcoord;       //テクスチャ座標
 }VERTEX_BILLBOARD;
 
+CSceneBillBoard::CSceneBillBoard(CCamera* pCamera,int nPriority) : CScene(nPriority)
+{
+	m_pCamera = pCamera;
+	m_veScale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
+	m_veRotation = D3DXVECTOR3(-90.0f, 0.0f, 0.0f);
+	m_vePosition = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	m_pTexture = nullptr;
+	m_pVertexBuffer = NULL;
+	m_pIndexBuffer = NULL;
+}
+
 //=================================================================================================
 //　　　ビルボードクラスデストラクタ                                       
 //=================================================================================================
@@ -151,7 +162,7 @@ void CSceneBillBoard::Uninit(void)
 void CSceneBillBoard::Update(void)
 {
 	D3DXMATRIX mtxView;
-	mtxView = CCamera::GetCameraView();
+	mtxView = m_pCamera->GetCameraView();
 	D3DXMatrixTranspose(&m_mtxTranspose, &mtxView);
 	m_mtxTranspose._41 = 0.0f;
 	m_mtxTranspose._42 = 0.0f;
@@ -237,9 +248,9 @@ void CSceneBillBoard::Draw(void)
 //=================================================================================================
 //　　　ビルボードのインスタンス生成
 //=================================================================================================
-CSceneBillBoard * CSceneBillBoard::Create(void)
+CSceneBillBoard * CSceneBillBoard::Create(CCamera* pCamera)
 {
-	CSceneBillBoard *SceneBillBoard = new CSceneBillBoard(1);
+	CSceneBillBoard *SceneBillBoard = new CSceneBillBoard(pCamera,1);
 	SceneBillBoard->Init();
 	return SceneBillBoard;
 }
