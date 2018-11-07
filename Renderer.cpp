@@ -49,7 +49,7 @@ bool CRenderer::Init(HWND hWnd, BOOL bWindow)
 	d3dpp.BackBufferCount = 1;											//前のものと後ろのもの交換する
 	d3dpp.SwapEffect = D3DSWAPEFFECT_DISCARD;							//スワップ・エフェクト
 	d3dpp.EnableAutoDepthStencil = TRUE;								//3D描画モード
-	d3dpp.AutoDepthStencilFormat = D3DFMT_D16;							//
+	d3dpp.AutoDepthStencilFormat = D3DFMT_D24S8;						//
 	d3dpp.Windowed = bWindow;											//ウインドウモードを指定
 	d3dpp.FullScreen_RefreshRateInHz = D3DPRESENT_RATE_DEFAULT;			//Full screen のFPSコントロール
 	d3dpp.PresentationInterval = D3DPRESENT_INTERVAL_DEFAULT;			//描画FPS固定
@@ -136,7 +136,7 @@ void CRenderer::DrawBegin(void)
 {
 	//描画初期化
 	m_pD3DDevice->Clear(
-		0, NULL, (D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER), D3DCOLOR_RGBA(32, 64, 192, 100), 1.0f, 0    //色は白と黒選択ないほうが
+		0, NULL, (D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER | D3DCLEAR_STENCIL), D3DCOLOR_RGBA(32, 64, 192, 100), 1.0f, 0    //色は白と黒選択ないほうが
 	);
 }
 

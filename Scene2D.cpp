@@ -129,6 +129,8 @@ void CScene2D::Draw(void)
 
 	pDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
 
+	
+
 	//FVF(今から使用する頂点情報)の設定
 	pDevice->SetFVF(FVF_VERTEX_2D);
 
@@ -140,6 +142,8 @@ void CScene2D::Draw(void)
 	pDevice->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
 
 	pDevice->SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_LINEAR);
+
+	
 
 	pDevice->DrawPrimitive(                 //重要
 		D3DPT_TRIANGLEFAN, 0,			    //描画のモード

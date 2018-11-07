@@ -71,23 +71,50 @@ bool CSceneModel::Init(void)
 	//Xモデルにマテリアル複製
 	m_Material->MatCopy(pMaterial->MatD3D);
 
-	int nCount = 0;
-	for (nCount = 0; nCount < m_nMaterialNum;nCount++)
-	{
-		pDevice->SetMaterial(&pMaterial->MatD3D);
-		hr = D3DXCreateTextureFromFile(
-			pDevice,
-			pMaterial->pTextureFilename,
-			&m_pTexture[nCount]);
 
-		if (FAILED(hr))
+
+	if (pMaterial->pTextureFilename != NULL)
+	{
+		int nCount = 0;
+		for (nCount = 0; nCount < m_nMaterialNum;nCount++)
 		{
-			MessageBox(NULL, "3Dモデリングテクスチャが読み込めない。", "エラー", MB_OK);					//テクスチャが読み込めエラーメッセージ
-			return false;
+			pDevice->SetMaterial(&pMaterial->MatD3D);
+			hr = D3DXCreateTextureFromFile(
+				pDevice,
+				pMaterial->pTextureFilename,
+				&m_pTexture[nCount]);
+
+			if (FAILED(hr))
+			{
+				MessageBox(NULL, "3Dモデリングテクスチャが読み込めない。", "エラー", MB_OK);					//テクスチャが読み込めエラーメッセージ
+				return false;
+			}
+			pMaterial++;
 		}
-		pMaterial++;
+		m_nMaterialPointNum = m_nMaterialPointNum + m_nMaterialNum;
 	}
-	m_nMaterialPointNum = m_nMaterialPointNum + m_nMaterialNum;
+	else
+	{
+		int nCount = 0;
+		for (nCount = 0; nCount < m_nMaterialNum;nCount++)
+		{
+			pDevice->SetMaterial(&pMaterial->MatD3D);
+			hr = D3DXCreateTextureFromFile(
+				pDevice,
+				"data\\Texture\\Ball.png",
+				&m_pTexture[nCount]);
+
+			if (FAILED(hr))
+			{
+				MessageBox(NULL, "3Dモデリングテクスチャが読み込めない。", "エラー", MB_OK);					//テクスチャが読み込めエラーメッセージ
+				return false;
+			}
+			pMaterial++;
+		}
+		m_nMaterialPointNum = m_nMaterialPointNum + m_nMaterialNum;
+	}
+
+	
 
 	LPD3DXMESH pTempMesh;
 
@@ -188,12 +215,13 @@ void CSceneModel::Draw(void)
 	int nCount = 0;
 	for (nCount = 0;nCount < m_nMaterialNum;nCount++)
 	{
-		//テクスチャ貼り付ける
-		pDevice->SetTexture(0, m_pTexture[nCount]);
-		//マテリアル設定（テクスチャ含む）
-		m_pMesh->DrawSubset(nCount);
+		
+			//テクスチャ貼り付ける
+			pDevice->SetTexture(0, m_pTexture[nCount]);
+			//マテリアル設定（テクスチャ含む）
+			m_pMesh->DrawSubset(nCount);
+		
 	}
-	
 }
 
 //=================================================================================================

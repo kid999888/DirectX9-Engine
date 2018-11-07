@@ -19,6 +19,7 @@
 #include "SceneModel.h"
 #include "ScenePolygon.h"
 #include "SceneBillBoard.h"
+#include "SceneShadow.h"
 #include "Field.h"
 #include "Player.h"
 #include "Number.h"
@@ -221,8 +222,12 @@ public:
 	void Draw(void);												//トレーニングモードクラス描画処理
 	CCamera* GetMainCamera(void) { return m_Camera; };				//カメラのアドレスを取得
 private:
-	CCamera* m_Camera;										//カメラのアドレスポインタを声明
-	CLight* m_Light;											//ライトのアドレスポインタを声明
+	CCamera* m_Camera;												//カメラのアドレスポインタを声明
+	CLight* m_Light;												//ライトのアドレスポインタを声明
+	CField * m_Field;												//フィールドのアドレスポインタを声明
+	CSceneModel* m_Model;											//
+	CSceneShadow* m_Shadow;											//
 };
+
 
 #endif

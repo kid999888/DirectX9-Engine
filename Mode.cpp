@@ -293,7 +293,7 @@ void CModeTitle::Update(void)
 {
 	if (CInputMouse::GetLeftTrigger())
 	{
-		CManager::SetMode(new CModeTraining());
+		CManager::SetMode(new CModeTest());
 	}
 }
 
@@ -498,6 +498,11 @@ bool CModeTest::Init(void)
 	this->m_Light = new CLight();
 	m_Light->Init();
 	/*m_Light->SetDir(D3DXVECTOR3(-1.0f, -1.0f, 1.0f));*/
+	m_Field = CField::Create(2, 2,true);
+	m_Model = CSceneModel::Create("Data\\Model\\cylinder.x");
+	m_Model->SetScale(D3DXVECTOR3(0.5f, 0.5f, 0.5f));
+	m_Model->SetPositionY(1.0f);
+	m_Shadow = CSceneShadow::Create();
 #if defined(_DEBUG)
 	CDebugGUI::SetMainCamera(m_Camera);
 #endif//defined(_DEBUG)

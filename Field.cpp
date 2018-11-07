@@ -132,20 +132,39 @@ bool CField::Init(void)
 	}
 	//Vector配列inDataの消す
 	vaInData.clear();
-
-	nCount = 0;
-	for (nZ = 0;nZ < nCy;nZ++)
+	if (m_bNeat)
 	{
-		for (nX = 0;nX < nCx;nX++)
+		nCount = 0;
+		for (nZ = 0;nZ < nCy;nZ++)
 		{
-			m_pvMeshFiledPos[nCount] = {
-				D3DXVECTOR3(fStartX + (fSizeX * nX), fStartY, fStartZ - (fSizeZ * nZ)), D3DXVECTOR3(0.0f, 1.0f, 0.0f), D3DCOLOR_RGBA(255, 255, 255, 255), D3DXVECTOR2((fSizeX * nX),(fSizeZ * nZ))
-			};
-			m_pvMeshFiledPos[nCount].pos.y = vaFieldHeight[nX][nZ];
+			for (nX = 0;nX < nCx;nX++)
+			{
+				m_pvMeshFiledPos[nCount] = {
+					D3DXVECTOR3(fStartX + (fSizeX * nX), fStartY, fStartZ - (fSizeZ * nZ)), D3DXVECTOR3(0.0f, 1.0f, 0.0f), D3DCOLOR_RGBA(255, 255, 255, 255), D3DXVECTOR2((fSizeX * nX),(fSizeZ * nZ))
+				};
+				m_pvMeshFiledPos[nCount].pos.y = 0.0f;
 
-			nCount++;
+				nCount++;
+			}
 		}
 	}
+	else
+	{
+		nCount = 0;
+		for (nZ = 0;nZ < nCy;nZ++)
+		{
+			for (nX = 0;nX < nCx;nX++)
+			{
+				m_pvMeshFiledPos[nCount] = {
+					D3DXVECTOR3(fStartX + (fSizeX * nX), fStartY, fStartZ - (fSizeZ * nZ)), D3DXVECTOR3(0.0f, 1.0f, 0.0f), D3DCOLOR_RGBA(255, 255, 255, 255), D3DXVECTOR2((fSizeX * nX),(fSizeZ * nZ))
+				};
+				m_pvMeshFiledPos[nCount].pos.y = vaFieldHeight[nX][nZ];
+
+				nCount++;
+			}
+		}
+	}
+	
 
 	//Vector配列vaFieldHeightの消す
 	vaFieldHeight.clear();
@@ -385,6 +404,8 @@ void CField::Draw(void)
 	//ライトON
 	pDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
 
+	
+
 	//ワールド行列の設定
 	pDevice->SetTransform(D3DTS_WORLD, &m_mtxWorld);
 
@@ -418,9 +439,9 @@ void CField::Draw(void)
 //=================================================================================================
 //　　　3Dキューブクラスのインスタンス生成                                   
 //=================================================================================================
-CField * CField::Create(int nNumX, int nNumZ)
+CField * CField::Create(int nNumX, int nNumZ, bool bNeat)
 {
-	CField *Field = new CField(2, nNumX, nNumZ);
+	CField *Field = new CField(2, nNumX, nNumZ, bNeat);
 	Field->Init();
 	return Field;
 }

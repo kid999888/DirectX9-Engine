@@ -26,7 +26,7 @@ typedef struct
 class CField: public CScene
 {
 public:
-	CField(int nPriority,int nNumX, int nNumZ) : CScene(nPriority)
+	CField(int nPriority,int nNumX, int nNumZ,bool bNeat = false) : CScene(nPriority)
 	{
 		m_veScale = D3DXVECTOR3(2.0f, 1.0f, 2.0f);
 		m_veRotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
@@ -38,13 +38,14 @@ public:
 		m_nNumX = nNumX;
 		m_nNumZ = nNumZ;
 		m_bDraw = true;
+		m_bNeat = bNeat;
 	};														//フィールドコンストラクタ
 	~CField();												//フィールドデストラクタ
 	bool Init(void);										//フィールド初期処理
 	void Uninit(void);										//フィールド終了処理
 	void Update(void);										//フィールド更新処理
 	void Draw(void);										//フィールド描画処理
-	static CField * Create(int nNumX, int nNumZ);			//フィールドのインスタンス生成
+	static CField * Create(int nNumX, int nNumZ, bool bNeat = false);			//フィールドのインスタンス生成
 	int GetBlockNumX(void)									//フィールドX方向ブロック数を取得
 	{
 		return m_nNumX;
@@ -68,6 +69,7 @@ private:
 	int m_nNumX;											//フィールドのXブロック数
 	int m_nNumZ;											//フィールドのZブロック数
 	float m_fheightScale;									//ファイル高度情報縮小係数
+	bool m_bNeat;											//
 };
 
 #endif
