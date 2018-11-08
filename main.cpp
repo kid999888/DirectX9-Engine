@@ -91,8 +91,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 		(WS_OVERLAPPEDWINDOW ^ WS_MAXIMIZEBOX) ^ WS_THICKFRAME,							//ウィンドスタイル    // WS_POPUP //fullscreen //(WS_OVERLAPPEDWINDOW ^ WS_MAXIMIZEBOX) ^ WS_THICKFRAME
 		g_fStartWidth,									//ウィンドの左上座標X
 		g_fStartHeight,                                  //ウィンドの左上座標Y
-		SCREEN_WIDTH,									//フレイムを含めたウィンドの幅
-		SCREEN_HEIGHT,                                   //フレイムを含めたウィンドの高さ
+		/*SCREEN_WIDTH*/wr.right - wr.left,									//フレイムを含めたウィンドの幅
+		/*SCREEN_HEIGHT*/wr.bottom - wr.top,                                   //フレイムを含めたウィンドの高さ
 		NULL,											//親がない
 		NULL,											//メニューがない
 		hInstance,

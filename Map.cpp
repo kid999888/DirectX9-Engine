@@ -22,6 +22,7 @@ CMap::CMap(CEnemy* pEnemy, int nPriority) : CScene(nPriority)
 
 CMap::~CMap()
 {
+
 }
 
 bool CMap::Init(void)
