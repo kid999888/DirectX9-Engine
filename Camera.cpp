@@ -112,6 +112,15 @@ void CCamera::ViewChange(void)
 	fValueZ = CInputMouse::GetAxisZ();
 
 
+	if (CInputKeyboard::GetKeyPress(DIK_0))
+	{
+		m_eye = D3DXVECTOR3(0.0f, 0.0f, -10.0f);
+		m_at = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+		m_up = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
+		m_rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	}
+
+
 	// ÉLÅ[ëÄçÏ
 	if (CInputKeyboard::GetKeyPress(DIK_LEFT))
 	{
@@ -318,7 +327,7 @@ void CCamera::ViewChange(void)
 				m_rot.y -= PI * fValueX * VALUE_ROTATE_MOUSE;
 				if (m_rot.y < -PI)
 				{
-					m_rot.y += PI * 2.0f;
+					m_rot.y -= PI * 2.0f;
 				}
 
 				m_eye.x = m_at.x - sinf(m_rot.y) * m_fLengthIntervalXZ;
@@ -329,7 +338,7 @@ void CCamera::ViewChange(void)
 				m_rot.y -= PI * fValueX * VALUE_ROTATE_MOUSE;
 				if (m_rot.y > PI)
 				{
-					m_rot.y -= PI * 2.0f;
+					m_rot.y += PI * 2.0f;
 				}
 
 				m_eye.x = m_at.x - sinf(m_rot.y) * m_fLengthIntervalXZ;

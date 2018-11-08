@@ -18,6 +18,7 @@ bool CSceneShadow::Init(void)
 	m_Model = CSceneModel::Create("Data\\Model\\cylinder.x");
 	m_Model->m_bDraw = false;
 	m_Model->SetScale(D3DXVECTOR3(0.5f, 0.5f, 0.5f));
+	m_Model->SetRotationZ(45.0f);
 	m_Model->SetPositionY(-1.0f);
 	m_ShadowShade = CScene2D::Create(2, "Data\\Texture\\null.png", 1, 1);
 	m_ShadowShade->m_bDraw = false;

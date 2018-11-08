@@ -497,10 +497,11 @@ bool CModeTest::Init(void)
 	m_Camera->CameraViewFlag(true);
 	this->m_Light = new CLight();
 	m_Light->Init();
-	/*m_Light->SetDir(D3DXVECTOR3(-1.0f, -1.0f, 1.0f));*/
+	m_Light->SetDir(D3DXVECTOR3(0.0f, -1.0f, 0.0f));
 	m_Field = CField::Create(2, 2,true);
 	m_Model = CSceneModel::Create("Data\\Model\\cylinder.x");
 	m_Model->SetScale(D3DXVECTOR3(0.5f, 0.5f, 0.5f));
+	m_Model->SetRotationZ(45.0f);
 	m_Model->SetPositionY(1.0f);
 	m_Shadow = CSceneShadow::Create();
 #if defined(_DEBUG)
