@@ -32,6 +32,19 @@ typedef struct
 
 }VERTEX_2D;
 
+CScene2D::CScene2D(int nPriority, std::string stFileName, int nNx, int nNy): CScene(nPriority)
+{
+	m_veScale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
+	m_vePosition = D3DXVECTOR3(0.0f, 0.0f, -1.0f);
+	m_nTextureNumber.x = 0;
+	m_nTextureNumber.y = 0;
+	m_npTLimitNum.x = nNx;
+	m_npTLimitNum.y = nNy;
+	m_pTexture = nullptr;
+	m_pVertexBuffer = NULL;
+	stFileNameModel = stFileName;
+};
+
 //=================================================================================================
 //　　　2Dポリゴンデストラクタ                                     
 //=================================================================================================

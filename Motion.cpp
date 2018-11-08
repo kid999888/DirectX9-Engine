@@ -107,6 +107,13 @@ KEY_FRAME g_KeyFrameRun[3] =
 };
 
 
+CMotion::CMotion(int nPriority) : CScene(nPriority)
+{
+	m_veScale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
+	m_veRotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	m_vePosition = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+};
+
 CMotion::~CMotion()
 {
 }

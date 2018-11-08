@@ -293,7 +293,7 @@ void CModeTitle::Update(void)
 {
 	if (CInputMouse::GetLeftTrigger())
 	{
-		CManager::SetMode(new CModeTest());
+		CManager::SetMode(new CModeGame());
 	}
 }
 

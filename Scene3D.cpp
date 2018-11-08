@@ -31,6 +31,16 @@ typedef struct
 	D3DXVECTOR2 texcoord;       //テクスチャ座標
 }VERTEX_3D;
 
+CScene3D::CScene3D(int nPriority) : CScene(nPriority)
+{
+	m_veScale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
+	m_veRotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	m_vePosition = D3DXVECTOR3(0.0f, 2.0f, 10.0f);
+	m_pTexture = nullptr;
+	m_pVertexBuffer = NULL;
+	m_pIndexBuffer = NULL;
+}
+
 //=================================================================================================
 //　　　3Dキューブクラスデストラクタ                                     
 //=================================================================================================

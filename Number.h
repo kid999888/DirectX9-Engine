@@ -13,14 +13,7 @@
 class CNumber : public CScene
 {
 public:
-	CNumber(int nPriority,int nNumber) : CScene(nPriority)
-	{
-		m_vePosition = D3DXVECTOR3(0.0f, 0.0f,-1.0f);
-		m_nNumber = nNumber;
-		m_nDig = 0;
-		m_nDigX = 5;
-		m_bZero = true;
-	};												//数字表示のコンストラクタ
+	CNumber(int nPriority, int nNumber);			//数字表示のコンストラクタ
 	~CNumber();										//数字表示のデストラクタ
 	bool Init(void);								//数字表示初期処理
 	void Uninit(void);								//数字表示終了処理

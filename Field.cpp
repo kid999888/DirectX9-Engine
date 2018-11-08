@@ -32,6 +32,20 @@ using namespace std;
 //　　　グローバル変数                                    
 //=================================================================================================
 
+CField::CField(int nPriority, int nNumX, int nNumZ, bool bNeat) : CScene(nPriority)
+{
+	m_veScale = D3DXVECTOR3(2.0f, 1.0f, 2.0f);
+	m_veRotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	m_vePosition = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	m_pTexture = nullptr;
+	m_pVertexBuffer = NULL;
+	m_pIndexBuffer = NULL;
+	m_fheightScale = 0.005f;
+	m_nNumX = nNumX;
+	m_nNumZ = nNumZ;
+	m_bDraw = true;
+	m_bNeat = bNeat;
+};
 //=================================================================================================
 //　　　3Dキューブクラスデストラクタ                                     
 //=================================================================================================

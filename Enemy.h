@@ -42,13 +42,7 @@ typedef struct
 class CEnemy : public CScene
 {
 public:
-	CEnemy(int nPriority) : CScene(nPriority)						//敵コンストラクタ
-	{
-		m_veScale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
-		m_veRotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-		m_vePosition = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-		m_bDraw = true;
-	};
+	CEnemy(int nPriority);														//敵コンストラクタ
 	~CEnemy();														//敵デストラクタ
 	bool Init(void);												//敵初期処理
 	void Uninit(void);												//敵終了処理

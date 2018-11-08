@@ -25,13 +25,7 @@ typedef struct
 class CBullet : public CScene
 {
 public:
-	CBullet(int nPriority) : CScene(nPriority)						//バレットコンストラクタ
-	{
-		m_veScale = D3DXVECTOR3(0.15f, 0.15f, 0.15f);
-		m_veRotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-		m_vePosition = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-		m_bDraw = true;
-	};												
+	CBullet(int nPriority);									//バレットコンストラクタ											
 	~CBullet();														//バレットデストラクタ
 	bool Init(void);												//バレット初期処理
 	void Uninit(void);												//バレット終了処理

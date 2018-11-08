@@ -14,15 +14,7 @@
 class CScene3D : public CScene
 {
 public:
-	CScene3D(int nPriority) : CScene(nPriority) 
-	{
-		m_veScale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
-		m_veRotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-		m_vePosition = D3DXVECTOR3(0.0f, 2.0f, 10.0f);
-		m_pTexture = nullptr;
-		m_pVertexBuffer = NULL;
-		m_pIndexBuffer = NULL;
-	};														//3Dキューブクラスコンストラクタ
+	CScene3D(int nPriority);								//3Dキューブクラスコンストラクタ
 	~CScene3D();											//3Dキューブクラスデストラクタ
 	bool Init(void);										//3Dキューブクラス初期処理
 	void Uninit(void);										//3Dキューブクラス終了処理

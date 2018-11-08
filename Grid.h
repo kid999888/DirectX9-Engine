@@ -29,12 +29,7 @@ typedef struct
 class CGrid :public CScene
 {
 public:
-	CGrid(int nPriority) : CScene(nPriority)
-	{
-		m_veScale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
-		m_veRotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-		m_vePosition = D3DXVECTOR3(0.0f, 0.0f, 10.0f);
-	};
+	CGrid(int nPriority);
 	~CGrid();
 	bool Init(void);										//グリッド描画クラス初期処理
 	void Uninit(void);										//グリッド描画ラス終了処理

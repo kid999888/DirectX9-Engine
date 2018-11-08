@@ -33,12 +33,7 @@ struct KEY_FRAME
 class CMotion : public CScene
 {
 public:
-	CMotion(int nPriority) : CScene(nPriority) 
-	{
-		m_veScale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
-		m_veRotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-		m_vePosition = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	};
+	CMotion(int nPriority);
 	~CMotion();
 	bool Init(void);									//モーション初期処理
 	void Uninit(void);									//モーション終了処理
