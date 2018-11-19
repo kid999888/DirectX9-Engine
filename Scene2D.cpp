@@ -43,7 +43,7 @@ CScene2D::CScene2D(int nPriority, std::string stFileName, int nNx, int nNy): CSc
 	m_pTexture = nullptr;
 	m_pVertexBuffer = NULL;
 	stFileNameModel = stFileName;
-};
+}
 
 //=================================================================================================
 //　　　2Dポリゴンデストラクタ                                     
@@ -164,6 +164,54 @@ void CScene2D::Draw(void)
 	
 	//アルファブレンドOFF
 	pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
+}
+
+void CScene2D::DrawWithOutTexture(int nAlpha = 255)
+{
+	LPDIRECT3DDEVICE9 pDevice = CRenderer::GetD3DDevice();
+
+	CreateVertexAffine(D3DCOLOR_RGBA(255, 255, 255, nAlpha), m_nTextureNumber.x, m_nTextureNumber.y);
+
+	//設定のアルファで設定する
+	pDevice->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_MODULATE);
+	pDevice->SetTextureStageState(0, D3DTSS_ALPHAARG0, D3DTA_TEXTURE);
+	pDevice->SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_DIFFUSE);
+
+	pDevice->SetStreamSource(0, m_pVertexBuffer, 0, sizeof(VERTEX_2D));
+
+	//レンダーステートの設定
+	//αブレンドを行う
+	//SRC...今から描くもの、つまりポリゴンに描画されている部分
+	//DEST...すでに描画されている画面の部分
+	//SRC_RGB * SRC_α +DEST_RGB * ( 1 - SRC_α )
+	pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+
+	pDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);                   //
+
+	pDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+
+	
+
+	//FVF(今から使用する頂点情報)の設定
+	pDevice->SetFVF(FVF_VERTEX_2D);
+
+	pDevice->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
+
+	pDevice->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
+
+	pDevice->SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_LINEAR);
+
+	//ZバッファOFF
+	pDevice->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
+
+	pDevice->DrawPrimitive(                 //重要
+		D3DPT_TRIANGLEFAN, 0,			    //描画のモード
+		2);                                  //ポリゴン数
+
+											 //アルファブレンドOFF
+	pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
+	//ZバッファON
+	pDevice->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
 }
 
 //=================================================================================================

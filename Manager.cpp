@@ -14,6 +14,7 @@
 //　　　実体定義       
 //=================================================================================================
 CMode *CManager::m_Mode = nullptr;
+CScene2D* CManager::m_Scene2D = nullptr;
 
 //=================================================================================================
 //　　　マネージャークラス初期処理         
@@ -22,7 +23,8 @@ bool CManager::Init( HWND hWnd, BOOL bWindow)
 {
 	//DirectX初期化クラス初期処理
 	CRenderer::Init(hWnd, bWindow);
-
+	m_Scene2D = CScene2D::Create(4, "Data\\Texture\\Null.png",1,1);
+	m_Scene2D->m_bDraw = false;
 	SetMode(new CModeTitle());
 
 	return true;
@@ -62,7 +64,7 @@ void CManager::Draw(void)
 	//ImGuiDirectX描画前の処理
 	ImGui::EndFrame();
 #endif//defined(_DEBUG)
-
+	CRenderer::GetD3DDevice()->SetRenderTarget(0, CRenderer::GetBlurSurface1());
 	//DirectX初期化クラス描画開始処理 
 	CRenderer::DrawBegin();
 
@@ -73,6 +75,10 @@ void CManager::Draw(void)
 		m_Mode->Draw();
 		//シーンオブジェクトの描画
 		CScene::DrawAll();
+		CRenderer::GetD3DDevice()->SetTexture(0, CRenderer::GetBlurTexture2());
+		m_Scene2D->SetScaleX(1.05f);
+		m_Scene2D->SetScaleY(1.05f);
+		m_Scene2D->DrawWithOutTexture(240);
 		//Presentの終了処理
 		CRenderer::GetD3DDevice()->EndScene();
 
@@ -82,6 +88,17 @@ void CManager::Draw(void)
 		ImGui_ImplDX9_RenderDrawData(ImGui::GetDrawData());
 #endif//defined(_DEBUG)
 
+	}
+	CRenderer::GetD3DDevice()->SetRenderTarget(0, CRenderer::GetBackBufferSurface());
+	//DirectX初期化クラス描画開始処理 (フィードバックバッファ)
+	CRenderer::DrawBegin();
+	//Direct3Dによる描画の開始
+	if (SUCCEEDED(CRenderer::GetD3DDevice()->BeginScene()))
+	{
+		CRenderer::GetD3DDevice()->SetTexture(0, CRenderer::GetBlurTexture1());
+		m_Scene2D->SetScaleX(1.0f);
+		m_Scene2D->SetScaleY(1.0f);
+		m_Scene2D->DrawWithOutTexture(255);
 	}
 	//DirectX初期化クラス描画終了処理 
 	CRenderer::DrawEnd();

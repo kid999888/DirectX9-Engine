@@ -16,6 +16,11 @@
 LPDIRECT3D9 CRenderer::m_pD3D = NULL;
 LPDIRECT3DDEVICE9 CRenderer::m_pD3DDevice = NULL;
 LPD3DXEFFECT CRenderer::m_pEffect = NULL;
+LPDIRECT3DTEXTURE9 CRenderer::m_BlurTexture1 = NULL;
+LPDIRECT3DSURFACE9 CRenderer::m_BlurSurface1 = NULL;
+LPDIRECT3DTEXTURE9 CRenderer::m_BlurTexture2 = NULL;
+LPDIRECT3DSURFACE9 CRenderer::m_BlurSurface2 = NULL;
+LPDIRECT3DSURFACE9 CRenderer::m_BackBufferSurface = NULL;
 #if defined(_DEBUG)
 D3DPRESENT_PARAMETERS CRenderer::m_d3dpp;
 #endif//defined(_DEBUG)
@@ -110,6 +115,13 @@ bool CRenderer::Init(HWND hWnd, BOOL bWindow)
 	//IM_ASSERT(font != NULL);
 #endif//defined(_DEBUG)
 
+	//フィードバックブラー設定
+	D3DXCreateTexture(m_pD3DDevice, 1280, 720, 1,D3DUSAGE_RENDERTARGET, D3DFMT_A8B8G8R8,D3DPOOL_DEFAULT,&m_BlurTexture1);
+	m_BlurTexture1->GetSurfaceLevel(0, &m_BlurSurface1);
+	D3DXCreateTexture(m_pD3DDevice, 1300, 750, 1, D3DUSAGE_RENDERTARGET, D3DFMT_A8B8G8R8, D3DPOOL_DEFAULT, &m_BlurTexture2);
+	m_BlurTexture2->GetSurfaceLevel(0, &m_BlurSurface2);
+	m_pD3DDevice->GetRenderTarget(0,&m_BackBufferSurface);
+
 	return true;
 }
 
@@ -145,6 +157,16 @@ void CRenderer::DrawBegin(void)
 //=================================================================================================
 void CRenderer::DrawEnd(void)
 {
+	//フィードバックブラー設定
+	LPDIRECT3DTEXTURE9 texture;
+	texture = m_BlurTexture1;
+	m_BlurTexture1 = m_BlurTexture2;
+	m_BlurTexture2 = texture;
+
+	LPDIRECT3DSURFACE9 Surface;
+	Surface = m_BlurSurface1;
+	m_BlurSurface1 = m_BlurSurface2;
+	m_BlurSurface2 = Surface;
 #if defined(_DEBUG)
 	HRESULT hr;
 	//Presentの終了処理

@@ -21,6 +21,7 @@ public:
 	void Uninit(void);														//2Dポリゴン終了処理
 	void Update(void);														//2Dポリゴン更新処理
 	void Draw(void);														//2Dポリゴン描画処理
+	void DrawWithOutTexture(int nAlpha);											//2Dポリゴン描画処理(テクスチャ設定なし)
 	static CScene2D * Create(int nPriority, std::string stFileName, int nNx, int nNy);		//2Dポリゴンのインスタンス生成
 	void SetTextureNum(int nX, int nY);										//2Dポリゴンのテクスチャナンバーの設定
 	int Get2DObjectHeight(void)												//テクスチャの高度を取得
@@ -33,6 +34,7 @@ public:
 	};
 
 private:
+	int m_nAlpha;															//
 	Point2DI m_nTextureNumber;												//2Dポリゴンの現在UV（枚数）
 	Point2DI m_npTLimitNum;													//2DポリゴンのUV分け
 	D3DXIMAGE_INFO m_D3DTextureInfo;										//テクスチャ情報の管理メモ帳
