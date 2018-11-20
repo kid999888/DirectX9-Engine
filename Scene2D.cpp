@@ -201,17 +201,12 @@ void CScene2D::DrawWithOutTexture(int nAlpha = 255)
 
 	pDevice->SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_LINEAR);
 
-	//ZバッファOFF
-	pDevice->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
-
 	pDevice->DrawPrimitive(                 //重要
 		D3DPT_TRIANGLEFAN, 0,			    //描画のモード
 		2);                                  //ポリゴン数
 
-											 //アルファブレンドOFF
+	//アルファブレンドOFF
 	pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
-	//ZバッファON
-	pDevice->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
 }
 
 //=================================================================================================

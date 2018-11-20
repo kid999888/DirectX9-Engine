@@ -75,10 +75,12 @@ void CManager::Draw(void)
 		m_Mode->Draw();
 		//シーンオブジェクトの描画
 		CScene::DrawAll();
+		CRenderer::GetD3DDevice()->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 		CRenderer::GetD3DDevice()->SetTexture(0, CRenderer::GetBlurTexture2());
 		m_Scene2D->SetScaleX(1.05f);
 		m_Scene2D->SetScaleY(1.05f);
 		m_Scene2D->DrawWithOutTexture(240);
+		CRenderer::GetD3DDevice()->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
 		//Presentの終了処理
 		CRenderer::GetD3DDevice()->EndScene();
 
@@ -91,15 +93,17 @@ void CManager::Draw(void)
 	}
 	CRenderer::GetD3DDevice()->SetRenderTarget(0, CRenderer::GetBackBufferSurface());
 	//DirectX初期化クラス描画開始処理 (フィードバックバッファ)
-	CRenderer::DrawBegin();
+	/*CRenderer::DrawBegin();*/
 	//Direct3Dによる描画の開始
-	if (SUCCEEDED(CRenderer::GetD3DDevice()->BeginScene()))
-	{
+	/*if (SUCCEEDED(CRenderer::GetD3DDevice()->BeginScene()))
+	{*/
+		CRenderer::GetD3DDevice()->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 		CRenderer::GetD3DDevice()->SetTexture(0, CRenderer::GetBlurTexture1());
 		m_Scene2D->SetScaleX(1.0f);
 		m_Scene2D->SetScaleY(1.0f);
 		m_Scene2D->DrawWithOutTexture(255);
-	}
+		CRenderer::GetD3DDevice()->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
+	//}
 	//DirectX初期化クラス描画終了処理 
 	CRenderer::DrawEnd();
 }
