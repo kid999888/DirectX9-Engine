@@ -27,6 +27,7 @@ public:
 private:
 	static CMode* m_Mode;											//ƒQ[ƒ€ƒ‚[ƒh
 	static CScene2D* m_Scene2D;
+	static bool m_bBlur;
 };
 
 #endif

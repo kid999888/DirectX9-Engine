@@ -118,7 +118,7 @@ bool CRenderer::Init(HWND hWnd, BOOL bWindow)
 	//フィードバックブラー設定
 	D3DXCreateTexture(m_pD3DDevice, 1280, 720, 1,D3DUSAGE_RENDERTARGET, D3DFMT_A8B8G8R8,D3DPOOL_DEFAULT,&m_BlurTexture1);
 	m_BlurTexture1->GetSurfaceLevel(0, &m_BlurSurface1);
-	D3DXCreateTexture(m_pD3DDevice, 1300, 750, 1, D3DUSAGE_RENDERTARGET, D3DFMT_A8B8G8R8, D3DPOOL_DEFAULT, &m_BlurTexture2);
+	D3DXCreateTexture(m_pD3DDevice, 1280, 720, 1, D3DUSAGE_RENDERTARGET, D3DFMT_A8B8G8R8, D3DPOOL_DEFAULT, &m_BlurTexture2);
 	m_BlurTexture2->GetSurfaceLevel(0, &m_BlurSurface2);
 	m_pD3DDevice->GetRenderTarget(0,&m_BackBufferSurface);
 
