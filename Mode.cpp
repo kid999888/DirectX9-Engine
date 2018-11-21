@@ -41,6 +41,7 @@ bool CModeGame::Init(void)
 	m_SceneModelBuliding = CSceneModel::Create("Data\\Model\\building001.x");
 	m_SceneModelBuliding->m_bDraw = false;
 	m_Enemy = CEnemy::Create();
+	m_Enemy->SetPlayer(m_Player);
 	m_Bulid = CEnemy::Create();
 	
 
@@ -85,7 +86,8 @@ bool CModeGame::Init(void)
 	m_SceneModel->m_bDraw = false;
 	m_Bullet = CBullet::Create();
 	m_Bullet->Load(m_SceneModel);
-	CMap::Create(m_Enemy);
+	m_Map = CMap::Create(m_Enemy);
+	m_Map->SetPlayer(m_Player);
 #if defined(_DEBUG)
 	CDebugGUI::SetMainCamera(m_Camera);
 	CDebugGUI::SetField(m_Field);
@@ -117,7 +119,7 @@ void CModeGame::Update(void)
 {
 	D3DXVECTOR3 veTempVector3(0.0f, 0.0f, 0.0f);
 	//レーザー部分
-	m_ScenePolygon->SetPosition(CPlayer::GetPlayerPos());
+	m_ScenePolygon->SetPosition(m_Player->GetPosition());
 	m_ScenePolygon->SetPositionY(2.2f);
 	m_ScenePolygon->SetRotationY(m_Player->GetRotationY() + 90.0f);
 	if (CInputMouse::GetRightPress() == true)
@@ -136,7 +138,7 @@ void CModeGame::Update(void)
 		if (m_Enemy->GetEnemyManager(nCountX).status != 0)
 		{
 			//敵とプレーヤーの当たり
-			if (CCollision::BallJudgement(m_Enemy->GetEnemyManager(nCountX).vePos, CPlayer::GetPlayerPos(), 1.0f, 1.0f))
+			if (CCollision::BallJudgement(m_Enemy->GetEnemyManager(nCountX).vePos, m_Player->GetPosition(), 1.0f, 1.0f))
 			{
 				switch (m_Enemy->GetEnemyManager(nCountX).EnemyType)
 				{
@@ -230,7 +232,7 @@ void CModeGame::Update(void)
 
 	if (CInputMouse::GetLeftTrigger())
 	{
-		veTempVector3 = CPlayer::GetPlayerPos();
+		veTempVector3 = m_Player->GetPosition();
 		veTempVector3.y += 1.5f;
 		m_Bullet->Shoot(veTempVector3, m_Player->GetPlayerMouse());
 	}
