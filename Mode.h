@@ -34,6 +34,7 @@ class CCamera;
 class CField;
 class CPlayer;
 class CEnemy;
+class CMap;
 
 //=================================================================================================
 //　　　構造体定義                                         
@@ -100,6 +101,7 @@ private:
 	CSceneModel* m_SceneModel;								//
 	CBullet* m_Bullet;										//
 	CEnemy* m_Bulid;											//
+	CMap* m_Map;
 	int m_nEnemyCount;												//敵記数
 	int m_nClipNum;													//
 	int m_nClipNumLimit;											//

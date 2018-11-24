@@ -47,7 +47,7 @@ void CScene::UpdateAll(void)
 	{
 		for (nCount = 0;nCount < 30;nCount++)
 		{
-			if (m_Scene[nCountPriority][nCount] != NULL)
+			if (m_Scene[nCountPriority][nCount] != NULL && m_Scene[nCountPriority][nCount]->m_bUpdate == true)
 			{
 				m_Scene[nCountPriority][nCount]->Update();
 			}

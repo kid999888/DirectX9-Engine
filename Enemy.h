@@ -10,7 +10,7 @@
 #include "Scene3D.h"
 #include "SceneModel.h"
 #include "Player.h"
-
+class CPlayer;
 //=================================================================================================
 //　　　構造体定義                                         
 //=================================================================================================
@@ -57,9 +57,11 @@ public:
 	{
 		return m_Enemy[nNum];
 	};
+	void SetPlayer(CPlayer* Player);
 private:
 	ENEMY m_Enemy[ENEMY_NUM];								//敵情報の管理
 	D3DXVECTOR3 GetMovePattern(int nNum);					//敵移動パターン
+	CPlayer* m_Player;
 };
 
 #endif

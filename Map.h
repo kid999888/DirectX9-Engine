@@ -10,6 +10,7 @@
 #include "Scene2D.h"
 #include "Enemy.h"
 #include "Player.h"
+class CPlayer;
 class CEnemy;
 
 //=================================================================================================
@@ -25,9 +26,11 @@ public:
 	void Update(void);												//マップ更新処理
 	void Draw(void);												//マップ描画処理
 	static CMap * Create(CEnemy* pEnemy);										//マップのインスタンス生成
+	void SetPlayer(CPlayer* Player);
 private:
 	CScene2D* m_pScene2DMap;									//マップ実体管理するアドレス
 	CScene2D* m_pScene2DBlock;								//マップオブジェクト管理するアドレス
+	CPlayer* m_Player;
 	CEnemy* m_pEnemy;										//
 };
 

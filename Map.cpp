@@ -58,9 +58,9 @@ void CMap::Draw(void)
 		if (m_pEnemy->GetEnemyManager(nCount).status != 0)
 		{
 
-			m_pScene2DBlock->SetPositionX(188.0f + ((m_pEnemy->GetEnemyManager(nCount).vePos.x - CPlayer::GetPlayerPos().x) / 0.25f));
+			m_pScene2DBlock->SetPositionX(188.0f + ((m_pEnemy->GetEnemyManager(nCount).vePos.x - m_Player->GetPosition().x) / 0.25f));
 			float nX = m_pScene2DBlock->GetPositionX();
-			m_pScene2DBlock->SetPositionY(132.0f + (-(m_pEnemy->GetEnemyManager(nCount).vePos.z - CPlayer::GetPlayerPos().z) / 0.25f));
+			m_pScene2DBlock->SetPositionY(132.0f + (-(m_pEnemy->GetEnemyManager(nCount).vePos.z - m_Player->GetPosition().z) / 0.25f));
 			float nY = m_pScene2DBlock->GetPositionY();
 			m_pScene2DBlock->Draw();
 		}
@@ -73,4 +73,9 @@ CMap * CMap::Create(CEnemy* pEnemy)
 	CMap *Map = new CMap(pEnemy,1);
 	Map->Init();
 	return Map;
+}
+
+void CMap::SetPlayer(CPlayer * Player)
+{
+	m_Player = Player;
 }

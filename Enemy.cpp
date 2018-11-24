@@ -156,6 +156,11 @@ void CEnemy::SetEnemyLife(int nNum, int nLife)
 	m_Enemy[nNum].nLife = nLife;
 }
 
+void CEnemy::SetPlayer(CPlayer * Player)
+{
+	m_Player = Player;
+}
+
 //=================================================================================================
 //　　　敵移動パターン
 //=================================================================================================
@@ -170,11 +175,11 @@ D3DXVECTOR3 CEnemy::GetMovePattern(int nNum)
 	case ENEMY_TYPES_ZAKU:
 		if (m_Enemy[nNum].status != 0)
 		{
-			if (CCollision::BallJudgement(m_Enemy[nNum].vePos, CPlayer::GetPlayerPos(), 10.0f, 1.0f))
+			if (CCollision::BallJudgement(m_Enemy[nNum].vePos, m_Player->GetPosition(), 10.0f, 1.0f))
 			{
 				Vec0 = m_Enemy[nNum].vePos;
 				Vec0.y = 0.0f;
-				Vec1 = CPlayer::GetPlayerPos();
+				Vec1 = m_Player->GetPosition();
 				Vec1.y = 0.0f;
 				Vec = Vec1 - Vec0;
 				D3DXVec3Normalize(&Vec, &Vec);
