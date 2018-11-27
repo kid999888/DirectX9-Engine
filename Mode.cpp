@@ -295,7 +295,7 @@ void CModeTitle::Update(void)
 {
 	if (CInputMouse::GetLeftTrigger())
 	{
-		CManager::SetMode(new CModeGame());
+		CManager::SetMode(new CModeTest());
 	}
 }
 
@@ -506,6 +506,7 @@ bool CModeTest::Init(void)
 	m_Model->SetRotationZ(45.0f);
 	m_Model->SetPositionY(1.0f);
 	m_Shadow = CSceneShadow::Create();
+	CLifeBar::Create();
 #if defined(_DEBUG)
 	CDebugGUI::SetMainCamera(m_Camera);
 #endif//defined(_DEBUG)

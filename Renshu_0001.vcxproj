@@ -164,6 +164,7 @@
     <ClCompile Include="GUI\imgui_draw.cpp" />
     <ClCompile Include="GUI\imgui_impl_dx9.cpp" />
     <ClCompile Include="input.cpp" />
+    <ClCompile Include="LifeBar.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Manager.cpp" />
@@ -178,6 +179,7 @@
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Scene2D.cpp" />
+    <ClCompile Include="Scene2DUV.cpp" />
     <ClCompile Include="Scene3D.cpp" />
     <ClCompile Include="SceneBillBoard.cpp" />
     <ClCompile Include="SceneModel.cpp" />
@@ -201,6 +203,7 @@
     <ClInclude Include="GUI\stb_textedit.h" />
     <ClInclude Include="GUI\stb_truetype.h" />
     <ClInclude Include="input.h" />
+    <ClInclude Include="LifeBar.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="Manager.h" />
@@ -215,6 +218,7 @@
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Scene2D.h" />
+    <ClInclude Include="Scene2DUV.h" />
     <ClInclude Include="Scene3D.h" />
     <ClInclude Include="SceneBillBoard.h" />
     <ClInclude Include="SceneModel.h" />

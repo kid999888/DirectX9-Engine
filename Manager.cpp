@@ -24,10 +24,13 @@ bool CManager::Init( HWND hWnd, BOOL bWindow)
 {
 	//DirectX初期化クラス初期処理
 	CRenderer::Init(hWnd, bWindow);
-	m_Scene2D = CScene2D::Create(4, "Data\\Texture\\Null.png",1,1);
-	m_Scene2D->m_bDraw = false;
 	SetMode(new CModeTitle());
 	m_bBlur = false;
+	if (m_bBlur)
+	{
+		m_Scene2D = CScene2D::Create(3, "Data\\Texture\\Null.png", 1, 1);
+		m_Scene2D->m_bDraw = false;
+	}
 
 	return true;
 }
@@ -44,6 +47,12 @@ void CManager::Uninit(void)
 	CScene::ReleaseAll();
 	//DirectX初期化クラス終了処理
 	CRenderer::Uninit();
+	if (m_Scene2D != nullptr)
+	{
+		m_Scene2D->Uninit();
+		delete m_Scene2D;
+		m_Scene2D = nullptr;
+	}
 }
 
 //=================================================================================================
@@ -92,6 +101,20 @@ void CManager::Draw(void)
 		//Presentの終了処理
 		CRenderer::GetD3DDevice()->EndScene();
 
+		if (m_bBlur)
+		{
+			CRenderer::GetD3DDevice()->SetRenderTarget(0, CRenderer::GetBackBufferSurface());
+			CRenderer::GetD3DDevice()->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
+			CRenderer::GetD3DDevice()->SetTexture(0, CRenderer::GetBlurTexture1());
+			m_Scene2D->SetScaleX(1.0f);
+			m_Scene2D->SetScaleY(1.0f);
+			m_Scene2D->DrawWithOutTexture(255);
+			CRenderer::GetD3DDevice()->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
+			//Presentの終了処理
+			CRenderer::GetD3DDevice()->EndScene();
+		}
+		
+
 #if defined(_DEBUG)
 		//ImGui処理
 		ImGui::Render();
@@ -99,16 +122,7 @@ void CManager::Draw(void)
 #endif//defined(_DEBUG)
 
 	}
-	if (m_bBlur)
-	{
-		CRenderer::GetD3DDevice()->SetRenderTarget(0, CRenderer::GetBackBufferSurface());
-		CRenderer::GetD3DDevice()->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
-		CRenderer::GetD3DDevice()->SetTexture(0, CRenderer::GetBlurTexture1());
-		m_Scene2D->SetScaleX(1.0f);
-		m_Scene2D->SetScaleY(1.0f);
-		m_Scene2D->DrawWithOutTexture(255);
-		CRenderer::GetD3DDevice()->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
-	}
+	
 	//DirectX初期化クラス描画終了処理 
 	CRenderer::DrawEnd();
 }

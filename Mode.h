@@ -29,6 +29,7 @@
 #include "Map.h"
 #include "Motion.h"
 #include "Grid.h"
+#include "LifeBar.h"
 
 class CCamera;
 class CField;
@@ -229,6 +230,7 @@ private:
 	CField * m_Field;												//フィールドのアドレスポインタを声明
 	CSceneModel* m_Model;											//
 	CSceneShadow* m_Shadow;											//
+	
 };
 
 

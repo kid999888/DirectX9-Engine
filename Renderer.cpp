@@ -139,6 +139,13 @@ void CRenderer::Uninit(void)
 	//DirectXデバイス終了処理
 	SAFE_RELEASE(m_pD3DDevice);
 	SAFE_RELEASE(m_pD3D);
+
+	//
+	SAFE_RELEASE(m_BlurTexture1);
+	SAFE_RELEASE(m_BlurSurface1);
+	SAFE_RELEASE(m_BlurTexture2);
+	SAFE_RELEASE(m_BlurSurface2);
+	SAFE_RELEASE(m_BackBufferSurface);
 }
 
 //=================================================================================================
