@@ -36,7 +36,6 @@ CScene2DUV::CScene2DUV(int nPriority, std::string stFileName): CScene(nPriority)
 {
 	m_veScale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
 	m_vePosition = D3DXVECTOR3(0.0f, 0.0f, -1.0f);
-	m_rUV = {(long)0.0f,(long)0.0f,(long)1.0f,(long)1.0f};
 	m_fU0 = 0.0f;
 	m_fV0 = 0.0f;
 	m_fU1 = 1.0f;

@@ -23,7 +23,11 @@ public:
 	void Draw(void);														//2Dポリゴン描画処理
 	void DrawWithOutTexture(int nAlpha);											//2Dポリゴン描画処理(テクスチャ設定なし)
 	static CScene2DUV * Create(int nPriority, std::string stFileName);		//2Dポリゴンのインスタンス生成
-	void SetTextureUV(float U0, float V0, float U1, float V1);										//2Dポリゴンのテクスチャナンバーの設定
+	void SetTextureUV(float U0, float V0, float U1, float V1);				//2DポリゴンのテクスチャUVの設定
+	float GetU0(void) { return m_fU0; };
+	float GetV0(void) { return m_fV0; };
+	float GetU1(void) { return m_fU1; };
+	float GetV1(void) { return m_fV1; };
 	int Get2DObjectHeight(void)												//テクスチャの高度を取得
 	{
 		return m_D3DTextureInfo.Height;
@@ -39,7 +43,6 @@ private:
 	LPDIRECT3DVERTEXBUFFER9 m_pVertexBuffer;								//頂点バッファ管理するメモ帳
 	void CreateVertexAffine(D3DCOLOR color);				//頂点バッファ処理
 	std::string stFileNameModel;											//ファイルパスの管理メモ帳
-	RECT m_rUV;
 	float m_fU0;
 	float m_fV0;
 	float m_fU1;
