@@ -239,6 +239,9 @@
     <ClInclude Include="Scene2DUV.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="LifeBarBillBoard.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="HLSL\DirectionalLight.fx">

@@ -79,7 +79,7 @@ bool CModeGame::Init(void)
 
 	m_ScenePolygon = CScenePolygon::Create();
 	m_ScenePolygon->SetScale(D3DXVECTOR3(40.0f, 1.0f, 0.125f));
-	m_SceneBillBoard = CSceneBillBoard::Create(m_Camera);
+	m_SceneBillBoard = CSceneBillBoard::Create(m_Camera, "Data\\Texture\\Circle.png");
 	m_SceneBillBoard->m_bDraw = false;
 	m_SceneModel = CSceneModel::Create("Data\\Model\\Ball.x");
 	m_SceneModel->SetScale(D3DXVECTOR3(0.3f, 0.3f, 0.3f));
@@ -135,7 +135,7 @@ void CModeGame::Update(void)
 	D3DXVECTOR3 vePos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	for (int nCountX = 0;nCountX < ENEMY_NUM;nCountX++)
 	{
-		if (m_Enemy->GetEnemyManager(nCountX).status != 0)
+		if (m_Enemy->GetEnemyManager(nCountX).status != 0 && m_Enemy != NULL)
 		{
 			//“G‚ÆƒvƒŒ[ƒ„[‚Ì“–‚½‚è
 			if (CCollision::BallJudgement(m_Enemy->GetEnemyManager(nCountX).vePos, m_Player->GetPosition(), 1.0f, 1.0f))
@@ -295,7 +295,7 @@ void CModeTitle::Update(void)
 {
 	if (CInputMouse::GetLeftTrigger())
 	{
-		CManager::SetMode(new CModeTest());
+		CManager::SetMode(new CModeTraining());
 	}
 }
 
@@ -507,6 +507,7 @@ bool CModeTest::Init(void)
 	m_Model->SetPositionY(1.0f);
 	m_Shadow = CSceneShadow::Create();
 	CLifeBar::Create();
+
 #if defined(_DEBUG)
 	CDebugGUI::SetMainCamera(m_Camera);
 #endif//defined(_DEBUG)

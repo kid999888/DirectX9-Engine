@@ -8,7 +8,7 @@
 //=================================================================================================
 //　　　ヘッダファイル
 //=================================================================================================
-#include "SceneBillBoard.h"
+#include "SceneBillBoardUV.h"
 #include "Renderer.h"
 #include "Camera.h"
 
@@ -31,7 +31,7 @@ typedef struct
 	D3DXVECTOR2 texcoord;       //テクスチャ座標
 }VERTEX_BILLBOARD;
 
-CSceneBillBoard::CSceneBillBoard(CCamera* pCamera,int nPriority, std::string stFileName) : CScene(nPriority)
+CSceneBillBoardUV::CSceneBillBoardUV(CCamera* pCamera,int nPriority, std::string stFileName) : CScene(nPriority)
 {
 	m_pCamera = pCamera;
 	m_veScale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
@@ -40,27 +40,31 @@ CSceneBillBoard::CSceneBillBoard(CCamera* pCamera,int nPriority, std::string stF
 	m_pTexture = nullptr;
 	m_pVertexBuffer = NULL;
 	m_pIndexBuffer = NULL;
+	m_fU0 = 0.0f;
+	m_fV0 = 0.0f;
+	m_fU1 = 1.0f;
+	m_fV1 = 1.0f;
 	stFileNameModel = stFileName;
 }
 
 //=================================================================================================
 //　　　ビルボードクラスデストラクタ                                       
 //=================================================================================================
-CSceneBillBoard::~CSceneBillBoard()
+CSceneBillBoardUV::~CSceneBillBoardUV()
 {
 }
 
 //=================================================================================================
 //　　　ビルボードクラス初期処理             
 //=================================================================================================
-bool CSceneBillBoard::Init(void)
+bool CSceneBillBoardUV::Init(void)
 {
 	HRESULT hr[2];
 	LPDIRECT3DDEVICE9 pDevice = CRenderer::GetD3DDevice();
 
 	hr[0] = D3DXCreateTextureFromFile(
 		pDevice,
-		TEXTUREFILENAME000,
+		stFileNameModel.c_str(),
 		&m_pTexture);
 
 	if (FAILED(hr[0]))
@@ -68,6 +72,9 @@ bool CSceneBillBoard::Init(void)
 		MessageBox(NULL, "エラー", "テクスチャが読み込めない。", MB_OK);
 		return false;
 	}
+
+	//テクスチャの情報を読み込む
+	hr[0] = D3DXGetImageInfoFromFile(stFileNameModel.c_str(), &m_D3DTextureInfo);
 
 	static WORD index[] = {
 		0,1,2,
@@ -149,7 +156,7 @@ bool CSceneBillBoard::Init(void)
 //=================================================================================================
 //　　　ビルボードクラス終了処理
 //=================================================================================================
-void CSceneBillBoard::Uninit(void)
+void CSceneBillBoardUV::Uninit(void)
 {
 	SAFE_RELEASE(m_pVertexBuffer);
 	SAFE_RELEASE(m_pIndexBuffer);
@@ -160,7 +167,7 @@ void CSceneBillBoard::Uninit(void)
 //=================================================================================================
 //　　　ビルボードクラス更新処理
 //=================================================================================================
-void CSceneBillBoard::Update(void)
+void CSceneBillBoardUV::Update(void)
 {
 	D3DXMATRIX mtxView;
 	mtxView = m_pCamera->GetCameraView();
@@ -176,9 +183,11 @@ void CSceneBillBoard::Update(void)
 //=================================================================================================
 //　　　ビルボードクラス描画処理
 //=================================================================================================
-void CSceneBillBoard::Draw(void)
+void CSceneBillBoardUV::Draw(void)
 {
 	LPDIRECT3DDEVICE9 pDevice = CRenderer::GetD3DDevice();
+
+	CreateVertexAffine(D3DCOLOR_RGBA(255, 255, 255, 255));
 
 	//拡大縮小行列を作る
 	D3DXMatrixScaling(&m_mtxWorldS, m_veScale.x, m_veScale.y, m_veScale.z);
@@ -249,9 +258,110 @@ void CSceneBillBoard::Draw(void)
 //=================================================================================================
 //　　　ビルボードのインスタンス生成
 //=================================================================================================
-CSceneBillBoard * CSceneBillBoard::Create(CCamera* pCamera, std::string stFileName)
+CSceneBillBoardUV * CSceneBillBoardUV::Create(CCamera* pCamera, std::string stFileName)
 {
-	CSceneBillBoard *SceneBillBoard = new CSceneBillBoard(pCamera, 1, stFileName);
-	SceneBillBoard->Init();
-	return SceneBillBoard;
+	CSceneBillBoardUV *SceneBillBoardUV = new CSceneBillBoardUV(pCamera,1, stFileName);
+	SceneBillBoardUV->Init();
+	return SceneBillBoardUV;
+}
+
+void CSceneBillBoardUV::SetTextureUV(float U0, float V0, float U1, float V1)
+{
+	m_fU0 = U0;
+	m_fV0 = V0;
+	m_fU1 = U1;
+	m_fV1 = V1;
+}
+
+void CSceneBillBoardUV::CreateVertexAffine(D3DCOLOR color)
+{
+	LPDIRECT3DDEVICE9 pDevice = CRenderer::GetD3DDevice();
+
+	float dx = m_vePosition.x;
+	float dy = m_vePosition.y;
+
+	int tw = m_D3DTextureInfo.Width;
+	int th = m_D3DTextureInfo.Height;
+
+	int dw = m_D3DTextureInfo.Width * m_fU1;
+	int dh = m_D3DTextureInfo.Height * m_fV1;
+
+	dw *= m_veScale.x;
+	dh *= m_veScale.y;
+
+	float u0 = m_fU0;
+	float v0 = m_fV0;
+	float u1 = m_fU1;
+	float v1 = m_fV1;
+
+	static WORD index[] = {
+		0,1,2,
+		2,3,0,
+	};
+
+	//頂点の作成
+	VERTEX_BILLBOARD v[] = {
+		{ D3DXVECTOR3(dx - (dw / 2.0f) - 0.5f,0.5f,dy + (dh / 2.0f) - 0.5f),D3DXVECTOR3(0.0f, 1.0f, 0.0f),color,D3DXVECTOR2(m_fU0,m_fV0) },		//0
+		{ D3DXVECTOR3(dx + (dw / 2.0f) - 0.5f,0.5f,dy + (dh / 2.0f) - 0.5f),D3DXVECTOR3(0.0f, 1.0f, 0.0f),color,D3DXVECTOR2(m_fU1,m_fV0) },		//1
+		{ D3DXVECTOR3(dx + (dw / 2.0f) - 0.5f,0.5f,dy - (dh / 2.0f) - 0.5f),D3DXVECTOR3(0.0f, 1.0f, 0.0f),color,D3DXVECTOR2(m_fU1,m_fV1) },		//2
+		{ D3DXVECTOR3(dx - (dw / 2.0f) - 0.5f,0.5f,dy - (dh / 2.0f) - 0.5f),D3DXVECTOR3(0.0f, 1.0f, 0.0f),color ,D3DXVECTOR2(m_fU0,m_fV1) },		//3
+	};
+
+	HRESULT hr;
+	//頂点Vertexバッファを作る
+	hr = pDevice->CreateVertexBuffer(
+		sizeof(VERTEX_BILLBOARD) * 4,						//頂点情報領域確保
+		D3DUSAGE_WRITEONLY,							//使用用途(書き込んでだけ)
+		FVF_VERTEX_BILLBOARD,								//FVF、０でも大丈夫
+		D3DPOOL_MANAGED,							//頂点バッファの管理方法(Deviceに管理する)
+		&m_pVertexBuffer,							//管理者のメモ帳場所
+		NULL);
+
+	//頂点バッファNULLチェック
+	if (FAILED(hr))
+	{
+		MessageBox(NULL, "頂点バッファが作れない", "エラー", MB_OK);							//頂点バッファエラーメッセージ
+		return;
+	}
+
+	VERTEX_BILLBOARD* pV;
+	m_pVertexBuffer->Lock(0, 0,						//頂点バッファロック(始まる、領域、voidのポイントポイント（つまり擬似アドレス）) 
+		(void**)&pV,								//頂点バッファロック(voidのポイントポイント（つまり擬似アドレス）) 
+		D3DLOCK_DISCARD);
+
+	//頂点情報をpVに書き入れる
+	//①今までの配列を使用…PVにVの内容コピーする。（memcpy使用して）
+	memcpy(&pV[0], &v[0], sizeof(VERTEX_BILLBOARD) * 4);
+
+	//②直接書く
+
+	m_pVertexBuffer->Unlock();
+
+	//インデックスバッファを作る
+	hr = pDevice->CreateIndexBuffer(
+		sizeof(WORD) * 6,							//ワールド行列情報領域確保
+		D3DUSAGE_WRITEONLY,							//使用用途(書き込んでだけ)
+		D3DFMT_INDEX16,								//FMT,DWORDの場合はD3DFMT_INDEX32
+		D3DPOOL_MANAGED,							//頂点バッファの管理方法(Deviceに管理する)
+		&m_pIndexBuffer,							//インデックスバッファ管理するメモ帳
+		NULL);
+
+	//インデックスバッファNULLチェック
+	if (FAILED(hr))
+	{
+		MessageBox(NULL, "インデックスバッファが作れない", "エラー", MB_OK);							//頂点バッファエラーメッセージ
+		return ;
+	}
+
+	LPWORD pIndex;
+	m_pIndexBuffer->Lock(0, 0,						//頂点バッファロック(始まる、領域、voidのポイントポイント（つまり擬似アドレス）) 
+		(void**)&pIndex,							//頂点バッファロック(voidのポイントポイント（つまり擬似アドレス）) 
+		D3DLOCK_DISCARD);
+
+	//インデックスをpIndexに書き入れる
+	//①今までの配列を使用…PVにVの内容コピーする。（memcpy使用して）
+	memcpy(&pIndex[0], &index[0], sizeof(WORD) * 6);
+	//②直接書く
+
+	m_pIndexBuffer->Unlock();
 }

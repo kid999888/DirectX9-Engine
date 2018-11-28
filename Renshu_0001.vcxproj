@@ -204,6 +204,7 @@
     <ClInclude Include="GUI\stb_truetype.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="LifeBar.h" />
+    <ClInclude Include="LifeBarBillBoard.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="Manager.h" />

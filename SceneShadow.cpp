@@ -1,4 +1,5 @@
 #include "SceneShadow.h"
+#include "Renderer.h"
 
 
 CSceneShadow::CSceneShadow(int nPriority) : CScene(nPriority)
