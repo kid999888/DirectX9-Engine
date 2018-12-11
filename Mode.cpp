@@ -145,6 +145,7 @@ void CModeGame::Update(void)
 					//ƒUƒO
 				case ENEMY_TYPES_ZAKU:
 					CManager::SetMode(new CModeGameOver(m_nMoney));
+					return;
 					break;
 					//Œš•¨
 				case ENEMY_TYPES_BULIDING:
@@ -165,6 +166,10 @@ void CModeGame::Update(void)
 				{
 
 				}*/
+
+			}
+			if (m_Bullet != NULL)
+			{
 
 			}
 			for (int nCount = 0;nCount < BULLET_NUM;nCount++)
@@ -194,6 +199,7 @@ void CModeGame::Update(void)
 								if (m_nEnemyCount <= 0)
 								{
 									CManager::SetMode(new CModeResult(m_nMoney));
+									return;
 								}
 							}
 							m_nMoney +=40;
@@ -295,7 +301,7 @@ void CModeTitle::Update(void)
 {
 	if (CInputMouse::GetLeftTrigger())
 	{
-		CManager::SetMode(new CModeTraining());
+		CManager::SetMode(new CModeTest());
 	}
 }
 
