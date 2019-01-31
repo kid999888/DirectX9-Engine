@@ -26,13 +26,13 @@ typedef struct
 class CField: public CScene
 {
 public:
-	CField(int nPriority, int nNumX, int nNumZ, bool bNeat = false);														//フィールドコンストラクタ
+	CField(int nPriority, int nNumX, int nNumZ, float fScaleX, float fScaleZ, bool bNeat = false);														//フィールドコンストラクタ
 	~CField();												//フィールドデストラクタ
 	bool Init(void);										//フィールド初期処理
 	void Uninit(void);										//フィールド終了処理
 	void Update(void);										//フィールド更新処理
 	void Draw(void);										//フィールド描画処理
-	static CField * Create(int nNumX, int nNumZ, bool bNeat = false);			//フィールドのインスタンス生成
+	static CField * Create(int nNumX, int nNumZ, float fScaleX, float fScaleZ, bool bNeat = false);			//フィールドのインスタンス生成
 	int GetBlockNumX(void)									//フィールドX方向ブロック数を取得
 	{
 		return m_nNumX;

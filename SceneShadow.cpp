@@ -14,7 +14,7 @@ CSceneShadow::~CSceneShadow()
 
 bool CSceneShadow::Init(void)
 {
-	m_Field = CField::Create(2, 2, true);
+	m_Field = CField::Create(2, 2, 2.0f, 2.0f, true);
 	m_Field->m_bDraw = false;
 	m_Model = CSceneModel::Create("Data\\Model\\cylinder.x");
 	m_Model->m_bDraw = false;

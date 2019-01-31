@@ -31,8 +31,8 @@ bool CModeGame::Init(void)
 	this->m_Light = new CLight();
 	m_Light->Init();
 	this->m_Xorshift = new CXorshift();
-	m_Field = CField::Create(120, 120);
-	m_Player = CPlayer::Create(this,D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+	m_Field = CField::Create(120, 120, 2.0f, 2.0f);
+	m_Player = CPlayer::Create(this, D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 	m_nMoney = 800;
 	m_Number = CNumber::Create(m_nMoney);
 	m_Number->SetPosition(D3DXVECTOR3(960.0f, 0.0f, -1.0f));
@@ -43,9 +43,9 @@ bool CModeGame::Init(void)
 	m_Enemy = CEnemy::Create();
 	m_Enemy->SetPlayer(m_Player);
 	m_Bulid = CEnemy::Create();
-	
 
-	
+
+
 
 	//“G
 	m_Enemy->Generate(ENEMY_TYPES_ZAKU, D3DXVECTOR3(0.0f, 2.0f, 20.0f), m_SceneModelEnemy, D3DXVECTOR3(0.5f, 0.5f, 0.5f));
@@ -202,7 +202,7 @@ void CModeGame::Update(void)
 									return;
 								}
 							}
-							m_nMoney +=40;
+							m_nMoney += 40;
 							break;
 							//Œš•¨
 						case ENEMY_TYPES_BULIDING:
@@ -506,11 +506,12 @@ bool CModeTest::Init(void)
 	this->m_Light = new CLight();
 	m_Light->Init();
 	m_Light->SetDir(D3DXVECTOR3(0.0f, -1.0f, 0.0f));
-	m_Field = CField::Create(2, 2,true);
+	m_Field = CField::Create(2, 2, 2.0f, 2.0f, true);
 	m_Model = CSceneModel::Create("Data\\Model\\cylinder.x");
 	m_Model->SetScale(D3DXVECTOR3(0.5f, 0.5f, 0.5f));
 	m_Model->SetRotationZ(45.0f);
 	m_Model->SetPositionY(1.0f);
+	m_ModelSkyBox = CSceneModel::Create("Data\\Model\\sky.x");
 	m_Shadow = CSceneShadow::Create();
 	CLifeBar::Create();
 

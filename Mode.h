@@ -230,6 +230,7 @@ private:
 	CField * m_Field;												//フィールドのアドレスポインタを声明
 	CSceneModel* m_Model;											//
 	CSceneShadow* m_Shadow;											//
+	CSceneModel* m_ModelSkyBox;											//
 	
 };
 

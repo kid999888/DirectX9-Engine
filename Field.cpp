@@ -9,11 +9,11 @@
 //　　　ヘッダファイル           
 //=================================================================================================
 #include "Field.h"
-#include<d3d9.h>
-#include<d3dx9.h>
-#include<vector>
-#include<fstream>
-#include<tchar.h>
+#include <d3d9.h>
+#include <d3dx9.h>
+#include <vector>
+#include <fstream>
+#include <tchar.h>
 #include "Renderer.h"
 #include "input.h"
 
@@ -32,9 +32,9 @@ using namespace std;
 //　　　グローバル変数                                    
 //=================================================================================================
 
-CField::CField(int nPriority, int nNumX, int nNumZ, bool bNeat) : CScene(nPriority)
+CField::CField(int nPriority, int nNumX, int nNumZ, float fScaleX, float fScaleZ, bool bNeat) : CScene(nPriority)
 {
-	m_veScale = D3DXVECTOR3(2.0f, 1.0f, 2.0f);
+	m_veScale = D3DXVECTOR3(fScaleX, 1.0f, fScaleZ);
 	m_veRotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	m_vePosition = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	m_pTexture = nullptr;
@@ -105,9 +105,9 @@ bool CField::Init(void)
 		}
 	}
 
-	
 
-	
+
+
 
 	//高度図を読み方む
 	ifstream InFile;
@@ -178,7 +178,7 @@ bool CField::Init(void)
 			}
 		}
 	}
-	
+
 
 	//Vector配列vaFieldHeightの消す
 	vaFieldHeight.clear();
@@ -287,7 +287,7 @@ bool CField::Init(void)
 
 	//頂点Vertexバッファを作る
 	hr[0] = pDevice->CreateVertexBuffer(
-		sizeof(VERTEX_3D) * m_nFiledPosNumber,						//頂点情報領域確保
+		sizeof(VERTEX_3D) * m_nFiledPosNumber,		//頂点情報領域確保
 		D3DUSAGE_WRITEONLY,							//使用用途(書き込んでだけ)
 		FVF_VERTEX_3D,								//FVF、０でも大丈夫
 		D3DPOOL_MANAGED,							//頂点バッファの管理方法(Deviceに管理する)
@@ -296,7 +296,7 @@ bool CField::Init(void)
 
 	//インデックスバッファを作る
 	hr[1] = pDevice->CreateIndexBuffer(
-		sizeof(WORD) * m_nFiledIndexNumber,							//ワールド行列情報領域確保
+		sizeof(WORD) * m_nFiledIndexNumber,			//ワールド行列情報領域確保
 		D3DUSAGE_WRITEONLY,							//使用用途(書き込んでだけ)
 		D3DFMT_INDEX16,								//FMT,DWORDの場合はD3DFMT_INDEX32
 		D3DPOOL_MANAGED,							//頂点バッファの管理方法(Deviceに管理する)
@@ -418,7 +418,7 @@ void CField::Draw(void)
 	//ライトON
 	pDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
 
-	
+
 
 	//ワールド行列の設定
 	pDevice->SetTransform(D3DTS_WORLD, &m_mtxWorld);
@@ -453,9 +453,9 @@ void CField::Draw(void)
 //=================================================================================================
 //　　　3Dキューブクラスのインスタンス生成                                   
 //=================================================================================================
-CField * CField::Create(int nNumX, int nNumZ, bool bNeat)
+CField * CField::Create(int nNumX, int nNumZ, float fScaleX, float fScaleZ, bool bNeat)
 {
-	CField *Field = new CField(2, nNumX, nNumZ, bNeat);
+	CField *Field = new CField(2, nNumX, nNumZ, fScaleX, fScaleZ, bNeat);
 	Field->Init();
 	return Field;
 }
