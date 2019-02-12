@@ -43,6 +43,7 @@ CPlayer::CPlayer(CMode* Mode, int nPriority) : CScene(nPriority)
 	m_fRotOnce = 0.0f;
 	m_fRotYExactly = 0;
 	m_pTexture = nullptr;
+	_nHp = 100;
 };
 
 //=================================================================================================
@@ -133,27 +134,39 @@ void CPlayer::Update(void)
 	//ˆÚ“®ˆ—
 	if (CInputKeyboard::GetKeyPress(DIK_A))
 	{
-		m_vePosition += v3Left * m_fMoveSpeed;
-		m_Camera->SetCameraPos(m_Camera->GetCameraPos() + (v3Left * m_fMoveSpeed));
-		m_Camera->SetCameraAtPos(m_Camera->GetCameraAtPos() + (v3Left * m_fMoveSpeed));
+		if (m_vePosition.x > -90.0f)
+		{
+			m_vePosition += v3Left * m_fMoveSpeed;
+			m_Camera->SetCameraPos(m_Camera->GetCameraPos() + (v3Left * m_fMoveSpeed));
+			m_Camera->SetCameraAtPos(m_Camera->GetCameraAtPos() + (v3Left * m_fMoveSpeed));
+		}
 	}
 	if (CInputKeyboard::GetKeyPress(DIK_D))
 	{
-		m_vePosition += v3Right * m_fMoveSpeed;
-		m_Camera->SetCameraPos(m_Camera->GetCameraPos() + (v3Right  * m_fMoveSpeed));
-		m_Camera->SetCameraAtPos(m_Camera->GetCameraAtPos() + (v3Right  * m_fMoveSpeed));
+		if (m_vePosition.x < 90.0f)
+		{
+			m_vePosition += v3Right * m_fMoveSpeed;
+			m_Camera->SetCameraPos(m_Camera->GetCameraPos() + (v3Right  * m_fMoveSpeed));
+			m_Camera->SetCameraAtPos(m_Camera->GetCameraAtPos() + (v3Right  * m_fMoveSpeed));
+		}
 	}
 	if (CInputKeyboard::GetKeyPress(DIK_W))
 	{
-		m_vePosition += v3In * m_fMoveSpeed;
-		m_Camera->SetCameraPos(m_Camera->GetCameraPos() + (v3In * m_fMoveSpeed));
-		m_Camera->SetCameraAtPos(m_Camera->GetCameraAtPos() + (v3In  * m_fMoveSpeed));
+		if (m_vePosition.z < 90.0f)
+		{
+			m_vePosition += v3In * m_fMoveSpeed;
+			m_Camera->SetCameraPos(m_Camera->GetCameraPos() + (v3In * m_fMoveSpeed));
+			m_Camera->SetCameraAtPos(m_Camera->GetCameraAtPos() + (v3In  * m_fMoveSpeed));
+		}
 	}
 	if (CInputKeyboard::GetKeyPress(DIK_S))
 	{
-		m_vePosition += v3Out * m_fMoveSpeed;
-		m_Camera->SetCameraPos(m_Camera->GetCameraPos() + (v3Out * m_fMoveSpeed));
-		m_Camera->SetCameraAtPos(m_Camera->GetCameraAtPos() + (v3Out  * m_fMoveSpeed));
+		if (m_vePosition.z > -90.0f)
+		{
+			m_vePosition += v3Out * m_fMoveSpeed;
+			m_Camera->SetCameraPos(m_Camera->GetCameraPos() + (v3Out * m_fMoveSpeed));
+			m_Camera->SetCameraAtPos(m_Camera->GetCameraAtPos() + (v3Out  * m_fMoveSpeed));
+		}
 	}
 
 	D3DXVECTOR3 veMousePosToXZ(0.0f,0.0f,0.0f);

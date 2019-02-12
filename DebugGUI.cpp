@@ -139,6 +139,13 @@ void CDebugGUI::UpdateWindow(void)
 			}
 			break;
 		default:
+			ImGui::Text("Camera Position:");
+			ImGui::SameLine();
+			ImGui::Text("(%f,%f,%f)", m_pCamera->GetCameraPos().x, m_pCamera->GetCameraPos().y, m_pCamera->GetCameraPos().z);
+
+			ImGui::Text("Camera At Position:");
+			ImGui::SameLine();
+			ImGui::Text("(%f,%f,%f)", m_pCamera->GetCameraAtPos().x, m_pCamera->GetCameraAtPos().y, m_pCamera->GetCameraAtPos().z);
 			break;
 		}
 		

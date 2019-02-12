@@ -34,7 +34,7 @@ bool CMap::Init(void)
 	m_pScene2DBlock = CScene2D::Create(3, "Data\\Texture\\Ball.png", 1, 1);
 	m_pScene2DBlock->m_bDraw = false;
 	m_pScene2DBlock->SetPosition(D3DXVECTOR3(0.0f, 0.0f, -1.0f));
-	m_pScene2DBlock->SetScale(D3DXVECTOR3(0.0625f, 0.0625f, 1.0f));
+	m_pScene2DBlock->SetScale(D3DXVECTOR3(0.125f, 0.125f, 1.0f));
 	return true;
 }
 

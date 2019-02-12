@@ -19,18 +19,22 @@
 //=================================================================================================
 //　　　カメラクラスコンストラクタ                                    
 //=================================================================================================
-CCamera::CCamera()
+CCamera::CCamera(int nPriority, D3DXVECTOR3 veCameraPos, D3DXVECTOR3 veCameraAt, bool bViewFlag) : CScene(nPriority)
 {
+	m_Type = SCENE_TYPE_CAMERA;
+	m_bDraw = false;
 	//カメラ位置の初期化
 	m_eye = D3DXVECTOR3(0.0f, 0.0f, -10.0f);
 	m_at = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	m_eye = veCameraPos;
+	m_at = veCameraAt;
 	m_up = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
 	m_rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	m_fLengthInterval = 0.0f;
 	m_fLengthIntervalXZ = 0.0f;
 
 	//視点操作フラッグ
-	CameraViewFlag(false);
+	CameraViewFlag(bViewFlag);
 
 	float fLengthXZ;
 
@@ -86,6 +90,13 @@ void CCamera::Update(void)
 	}
 	
 	
+}
+
+CCamera * CCamera::Create(D3DXVECTOR3 veCameraPos, D3DXVECTOR3 veCameraAt, bool bViewFlag)
+{
+	CCamera *Camera = new CCamera(0, veCameraPos, veCameraAt, bViewFlag);
+	Camera->Init();
+	return Camera;
 }
 
 //=================================================================================================

@@ -34,6 +34,7 @@ using namespace std;
 
 CField::CField(int nPriority, int nNumX, int nNumZ, float fScaleX, float fScaleZ, bool bNeat) : CScene(nPriority)
 {
+	m_Type = SCENE_TYPE_FIELD;
 	m_veScale = D3DXVECTOR3(fScaleX, 1.0f, fScaleZ);
 	m_veRotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	m_vePosition = D3DXVECTOR3(0.0f, 0.0f, 0.0f);

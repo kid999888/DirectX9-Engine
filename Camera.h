@@ -7,6 +7,7 @@
 #ifndef _CAMERA_H_                                                 //2重インクルード防止のマクロ定義
 #define _CAMERA_H_
 #include "main.h"
+#include "Scene.h"
 //=================================================================================================
 //　　　マクロ定義                                        
 //=================================================================================================
@@ -38,12 +39,16 @@
 //=================================================================================================
 //　　　3Dポリゴンクラス                                       
 //=================================================================================================
-class CCamera
+class CCamera : public CScene
 {
 public:
-	CCamera();											//カメラクラスコンストラクタ
+	CCamera(int nPriority, D3DXVECTOR3 veCameraPos, D3DXVECTOR3 veCameraAt, bool bViewFlag = false);											//カメラクラスコンストラクタ
 	~CCamera();											//カメラクラスデストラクタ
+	bool Init(void) { return true; };					//初期処理
+	void Uninit(void) {};								//終了処理
 	void Update(void);									//カメラクラス更新処理
+	void Draw(void) {};									//描画処理
+	static CCamera * Create(D3DXVECTOR3 veCameraPos, D3DXVECTOR3 veCameraAt, bool bViewFlag);		//2Dポリゴンのインスタンス生成
 	void SetCameraPos(D3DXVECTOR3 veEyePos);			//カメラ位置の設定
 	void SetCameraAtPos(D3DXVECTOR3 veAtPos);			//カメラ注視点の設定
 	D3DXVECTOR3 GetCameraPos(void)						//カメラ位置の取得

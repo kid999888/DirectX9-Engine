@@ -18,7 +18,8 @@ public:
 	void Uninit(void) {};															//終了処理
 	void Update(void);																//更新処理
 	void Draw(void) {};																//
-	static CPerformance * Create(PERFORMANCE_ID PerformanceMode, CScene* PerformanceObject, D3DXVECTOR3 vePosEnd, int nFrameCount);		//2Dポリゴンのインスタンス生成
+	static CPerformance * Create(PERFORMANCE_ID PerformanceMode, CScene* PerformanceObject, D3DXVECTOR3 vePosEnd, int nFrameCount);		//インスタンス生成
+	bool GetFinishFlag(void) { return _bFinish; };
 private:
 	PERFORMANCE_ID _PerformanceMode;
 	D3DXVECTOR3 _pveObjectPos;
@@ -26,5 +27,6 @@ private:
 	unsigned int _nFrameCount;
 	unsigned int _nFrameCountNow;
 	CScene* _PerformanceObject;
+	bool _bFinish;
 };
 

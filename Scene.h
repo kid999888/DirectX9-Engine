@@ -15,11 +15,28 @@
 enum SCENE_TYPE
 {
 	SCENE_TYPE_NONE,
-	SCENE_TYPE_2D,
-	SCENE_TYPE_3D,
-	SCENE_TYPE_PLAYER,
-	SCENE_TYPE_ENEMY,
 	SCENE_TYPE_BULLET,
+	SCENE_TYPE_CAMERA,
+	SCENE_TYPE_ENEMY,
+	SCENE_TYPE_FIELD,
+	SCENE_TYPE_GRID,
+	SCENE_TYPE_LIFEBAR,
+	SCENE_TYPE_LIFEBARBILLBOARD,
+	SCENE_TYPE_MAP,
+	SCENE_TYPE_MESHEFFECT,
+	SCENE_TYPE_MOTION,
+	SCENE_TYPE_NUMBER,
+	SCENE_TYPE_PARTICLE,
+	SCENE_TYPE_PERFORMANCE,
+	SCENE_TYPE_PLAYER,
+	SCENE_TYPE_2D,
+	SCENE_TYPE_2DUV,
+	SCENE_TYPE_3D,
+	SCENE_TYPE_BILLBOARD,
+	SCENE_TYPE_MODEL,
+	SCENE_TYPE_POLYGON,
+	SCENE_TYPE_SHADOW,
+	SCENE_TYPE_NUMMAX,
 };
 
 //=================================================================================================
@@ -66,7 +83,7 @@ public:
 	static void UpdateAll(void);						//オブジェクト全体更新処理
 	static void DrawAll(void);							//オブジェクト全体描画処理	
 	static void ReleaseAll(void);						//オブジェクトの全体リリース処理
-	static CScene *m_Scene[3][30];						//シーンの管理メンバー関数
+	static CScene *m_Scene[3][100];						//シーンの管理メンバー関数
 	bool m_bUpdate = true;								//オブジェクト更新判断変数
 	bool m_bDraw = true;								//オブジェクト描画判断変数
 	SCENE_TYPE m_Type;

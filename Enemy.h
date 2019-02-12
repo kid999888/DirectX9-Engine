@@ -53,6 +53,7 @@ public:
 		CSceneModel* pSceneModel, D3DXVECTOR3 veScale);				//V‚µ‚¢“G‚ğ¶¬
 	void Destory(int nNum);									//“G‚ğ”pŠü‚·‚é
 	void SetEnemyLife(int nNum, int nLife);					//“GHP‚ğİ’è
+	void SetEnemyPosition(int nNum, D3DXVECTOR3 vePos);					//“GHP‚ğİ’è
 	ENEMY GetEnemyManager(int nNum)							//ƒiƒ“ƒo[‚Ì“G‚Ìî•ñ‚ğ‚­‚ê
 	{
 		return m_Enemy[nNum];

@@ -38,6 +38,8 @@ public:
 	{
 		return m_vePlayerMousePoint;
 	}
+	int GetPlayerHp(void) {return _nHp;};
+	void SetPlayerHp(int nHp) { _nHp = nHp; };
 
 private:
 	CMode* m_CurrentMode;
@@ -49,6 +51,7 @@ private:
 	float m_fRotYSpeed;									//回転スビート
 	float m_fRotOnce;									//プレーヤー一回回転角度
 	int m_fRotYExactly;									//回転限界
+	int _nHp;
 };
 
 #endif

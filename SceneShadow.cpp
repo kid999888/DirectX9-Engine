@@ -4,7 +4,7 @@
 
 CSceneShadow::CSceneShadow(int nPriority) : CScene(nPriority)
 {
-
+	m_Type = SCENE_TYPE_SHADOW;
 }
 
 

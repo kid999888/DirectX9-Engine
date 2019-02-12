@@ -130,6 +130,8 @@ private:
 	CCamera* m_Camera;										//カメラのアドレスポインタを声明
 	CLight* m_Light;											//ライトのアドレスポインタを声明
 	CScene2D* m_Scene2D;										//2D画像のアドレスポインタを声明
+	CSceneModel* m_Model;											//
+	CSceneModel* m_ModelSkyBox;										//
 };
 
 //=================================================================================================
@@ -230,7 +232,7 @@ private:
 	CField * m_Field;												//フィールドのアドレスポインタを声明
 	CSceneModel* m_Model;											//
 	CSceneShadow* m_Shadow;											//
-	CSceneModel* m_ModelSkyBox;											//
+	CSceneModel* m_ModelSkyBox;										//
 	
 };
 
