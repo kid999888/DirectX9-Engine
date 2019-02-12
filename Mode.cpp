@@ -9,6 +9,7 @@
 #include "input.h"
 #include "Collision.h"
 #include<math.h>
+#include "Performance.h"
 
 #if defined(_DEBUG)
 #include "DebugGUI.h"
@@ -514,6 +515,10 @@ bool CModeTest::Init(void)
 	m_ModelSkyBox = CSceneModel::Create("Data\\Model\\sky.x");
 	m_Shadow = CSceneShadow::Create();
 	CLifeBar::Create();
+
+	D3DXVECTOR3 veMoved = m_Model->GetPosition();
+	veMoved.x = veMoved.x + 10.0f;
+	CPerformance::Create(PERFORMANCE_MOVE, m_Model, veMoved, 60);
 
 #if defined(_DEBUG)
 	CDebugGUI::SetMainCamera(m_Camera);

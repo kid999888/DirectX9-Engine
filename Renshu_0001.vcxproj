@@ -175,6 +175,7 @@
     <ClCompile Include="Motion.cpp" />
     <ClCompile Include="Number.cpp" />
     <ClCompile Include="Particle.cpp" />
+    <ClCompile Include="Performance.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Scene.cpp" />
@@ -215,6 +216,7 @@
     <ClInclude Include="Motion.h" />
     <ClInclude Include="Number.h" />
     <ClInclude Include="Particle.h" />
+    <ClInclude Include="Performance.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Scene.h" />
@@ -226,6 +228,7 @@
     <ClInclude Include="ScenePolygon.h" />
     <ClInclude Include="SceneShadow.h" />
     <ClInclude Include="Sound.h" />
+    <ClInclude Include="Types.h" />
     <ClInclude Include="Xorshift.h" />
   </ItemGroup>
   <ItemGroup>
