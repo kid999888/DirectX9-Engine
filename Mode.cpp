@@ -47,15 +47,18 @@ bool CModeGame::Init(void)
 
 
 	//“G
-	/*m_Enemy->Generate(ENEMY_TYPES_ZAKU, D3DXVECTOR3(0.0f, 2.0f, 20.0f), m_SceneModelEnemy, D3DXVECTOR3(0.5f, 0.5f, 0.5f));
+	m_Enemy->Generate(ENEMY_TYPES_ZAKU, D3DXVECTOR3(0.0f, 2.0f, 20.0f), m_SceneModelEnemy, D3DXVECTOR3(0.5f, 0.5f, 0.5f));
 	m_Enemy->Generate(ENEMY_TYPES_ZAKU, D3DXVECTOR3(36.0f, 2.0f, 42.0f), m_SceneModelEnemy, D3DXVECTOR3(0.5f, 0.5f, 0.5f));
 	m_Enemy->Generate(ENEMY_TYPES_ZAKU, D3DXVECTOR3(-26.0f, 2.0f, 20.0f), m_SceneModelEnemy, D3DXVECTOR3(0.5f, 0.5f, 0.5f));
 	m_Enemy->Generate(ENEMY_TYPES_ZAKU, D3DXVECTOR3(30.0f, 2.0f, -20.0f), m_SceneModelEnemy, D3DXVECTOR3(0.5f, 0.5f, 0.5f));
 	m_Enemy->Generate(ENEMY_TYPES_ZAKU, D3DXVECTOR3(15.0f, 2.0f, -60.0f), m_SceneModelEnemy, D3DXVECTOR3(0.5f, 0.5f, 0.5f));
 	m_Enemy->Generate(ENEMY_TYPES_ZAKU, D3DXVECTOR3(-44.0f, 2.0f, -70.0f), m_SceneModelEnemy, D3DXVECTOR3(0.5f, 0.5f, 0.5f));
-	m_Enemy->Generate(ENEMY_TYPES_ZAKU, D3DXVECTOR3(56.0f, 2.0f, 80.0f), m_SceneModelEnemy, D3DXVECTOR3(0.5f, 0.5f, 0.5f));*/
+	m_Enemy->Generate(ENEMY_TYPES_ZAKU, D3DXVECTOR3(56.0f, 2.0f, 80.0f), m_SceneModelEnemy, D3DXVECTOR3(0.5f, 0.5f, 0.5f));
 	m_Enemy->Generate(ENEMY_TYPES_ZAKU, D3DXVECTOR3(22.0f, 2.0f, 45.0f), m_SceneModelEnemy, D3DXVECTOR3(0.5f, 0.5f, 0.5f));
-	m_nEnemyCount = 8;
+	m_nEnemyCount = 7;
+	m_NumberEnemyCount = CNumber::Create(m_nEnemyCount);
+	m_NumberEnemyCount->SetPosition(D3DXVECTOR3(480.0f, 0.0f, -1.0f));
+
 	//Œš•¨
 	m_Bulid->Generate(ENEMY_TYPES_BULIDING, D3DXVECTOR3(-10.0f, 2.0f, 20.0f), m_SceneModelBuliding, D3DXVECTOR3(0.025f, 0.025f, 0.025f));
 	m_Bulid->Generate(ENEMY_TYPES_BULIDING, D3DXVECTOR3(-10.0f, 2.0f, 22.0f), m_SceneModelBuliding, D3DXVECTOR3(0.025f, 0.025f, 0.025f));
@@ -246,6 +249,7 @@ void CModeGame::Update(void)
 		m_Number->SetNumber(m_Number->GetNumber() + 1);
 	}
 	m_Number->SetNumber(m_nMoney);
+	m_NumberEnemyCount->SetNumber(m_nEnemyCount);
 }
 
 //=================================================================================================
@@ -484,8 +488,8 @@ void CModeMotionEditing::Draw(void)
 bool CModeTest::Init(void)
 {
 	m_ModeId = MODE_TEST;
-	/*this->m_Camera = CCamera::Create(D3DXVECTOR3(0.0f, 16.0f, -24.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), true);*/
-	this->m_Camera = CCamera::Create(D3DXVECTOR3(0.075f, 3.61f, -7.86f), D3DXVECTOR3(0.0f, 8.0f, 0.0f), true);
+	this->m_Camera = CCamera::Create(D3DXVECTOR3(0.0f, 16.0f, -24.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), true);
+	/*this->m_Camera = CCamera::Create(D3DXVECTOR3(0.075f, 3.61f, -7.86f), D3DXVECTOR3(0.0f, 8.0f, 0.0f), true);*/
 	this->m_Light = new CLight();
 	m_Light->Init();
 	m_Light->SetDir(D3DXVECTOR3(0.0f, -1.0f, 0.0f));
@@ -495,12 +499,11 @@ bool CModeTest::Init(void)
 	/*m_Model->SetRotationZ(45.0f);
 	m_Model->SetPositionY(1.0f);*/
 	m_ModelSkyBox = CSceneModel::Create("Data\\Model\\sky.x");
-	m_Shadow = CSceneShadow::Create();
 	CLifeBar::Create();
 
 	D3DXVECTOR3 veMoved = m_Model->GetPosition();
 	veMoved.x = veMoved.x + 10.0f;
-	/*CPerformance::Create(PERFORMANCE_MOVE, m_Model, veMoved, 60);*/
+	CPerformance::Create(PERFORMANCE_MOVE, m_Model, veMoved, 60);
 
 #if defined(_DEBUG)
 	CDebugGUI::SetMainCamera(m_Camera);

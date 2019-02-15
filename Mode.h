@@ -97,12 +97,14 @@ private:
 	CSceneModel * m_SceneModelEnemy;							//敵モデリングのアドレスポインタを声明
 	CSceneModel * m_SceneModelBuliding;						//モデリングのアドレスポインタを声明
 	CNumber * m_Number;										//スコア数字のアドレスポインタを声明
+	CNumber * m_NumberEnemyCount;										//スコア数字のアドレスポインタを声明
 	CScenePolygon  * m_ScenePolygon;							//3Dポリゴンのアドレスポインタを声明
 	CSceneBillBoard  * m_SceneBillBoard;						//ビルボードのアドレスポインタを声明
 	CSceneModel* m_SceneModel;								//
 	CBullet* m_Bullet;										//
 	CEnemy* m_Bulid;											//
 	CMap* m_Map;
+	CSceneShadow* m_Shadow;
 	int m_nEnemyCount;												//敵記数
 	int m_nClipNum;													//
 	int m_nClipNumLimit;											//

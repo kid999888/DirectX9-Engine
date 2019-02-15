@@ -9,6 +9,18 @@ typedef enum
 	PERFORMANCE_MOVE,			//移動演出型
 	PERFORMANCE_MAX			//使えない演出型
 }PERFORMANCE_ID;
+
+//=================================================================================================
+//　　　構造体定義                                         
+//=================================================================================================
+//typedef struct
+//{
+//	int nActNum;				//状態
+//	D3DXVECTOR3 vePos;			//移動したい位置
+//	int nFrameCount;			//
+//	
+//}PARTICLE;
+
 class CPerformance : public CScene
 {
 public:
