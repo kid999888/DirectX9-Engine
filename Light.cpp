@@ -108,14 +108,14 @@ void CLight::Update(void)
 	D3DXMatrixIdentity(&m);
 	static D3DXMATRIX mLightRot = m;
 	
-	fRot += 0.01f;
+	/*fRot += 0.01f;
 	D3DXVECTOR3 LigtDir;
 	LigtDir.x = m_lightDir.x;
 	LigtDir.y = m_lightDir.y;
 	LigtDir.z = m_lightDir.z;
 
 	MatRotate(&LigtDir, fRot);
-	SetDir(LigtDir);
+	SetDir(LigtDir);*/
 
 	//‰ñ“]
 	/*{

@@ -29,8 +29,9 @@ bool CModeGame::Init(void)
 	this->m_Camera = CCamera::Create(D3DXVECTOR3(7.0f, 14.0f, -10.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), false);
 	this->m_Light = new CLight();
 	m_Light->Init();
+	m_Light->SetDir(D3DXVECTOR3(1.0f, -1.0f, 1.0f));
 	this->m_Xorshift = new CXorshift();
-	m_Field = CField::Create(100, 100, 2.0f, 2.0f, false);
+	m_Field = CField::Create(125, 125, 2.0f, 2.0f, false);
 	m_Player = CPlayer::Create(this, D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 	m_nMoney = 800;
 	m_Number = CNumber::Create(m_nMoney);
@@ -47,15 +48,15 @@ bool CModeGame::Init(void)
 
 
 	//敵
-	/*m_Enemy->Generate(ENEMY_TYPES_ZAKU, D3DXVECTOR3(0.0f, 2.0f, 20.0f), m_SceneModelEnemy, D3DXVECTOR3(0.5f, 0.5f, 0.5f));
-	m_Enemy->Generate(ENEMY_TYPES_ZAKU, D3DXVECTOR3(36.0f, 2.0f, 42.0f), m_SceneModelEnemy, D3DXVECTOR3(0.5f, 0.5f, 0.5f));
+	m_Enemy->Generate(ENEMY_TYPES_ZAKU, D3DXVECTOR3(0.0f, 2.0f, 20.0f), m_SceneModelEnemy, D3DXVECTOR3(0.5f, 0.5f, 0.5f));
+	/*m_Enemy->Generate(ENEMY_TYPES_ZAKU, D3DXVECTOR3(36.0f, 2.0f, 42.0f), m_SceneModelEnemy, D3DXVECTOR3(0.5f, 0.5f, 0.5f));
 	m_Enemy->Generate(ENEMY_TYPES_ZAKU, D3DXVECTOR3(-26.0f, 2.0f, 20.0f), m_SceneModelEnemy, D3DXVECTOR3(0.5f, 0.5f, 0.5f));
 	m_Enemy->Generate(ENEMY_TYPES_ZAKU, D3DXVECTOR3(30.0f, 2.0f, -20.0f), m_SceneModelEnemy, D3DXVECTOR3(0.5f, 0.5f, 0.5f));
 	m_Enemy->Generate(ENEMY_TYPES_ZAKU, D3DXVECTOR3(15.0f, 2.0f, -60.0f), m_SceneModelEnemy, D3DXVECTOR3(0.5f, 0.5f, 0.5f));
 	m_Enemy->Generate(ENEMY_TYPES_ZAKU, D3DXVECTOR3(-44.0f, 2.0f, -70.0f), m_SceneModelEnemy, D3DXVECTOR3(0.5f, 0.5f, 0.5f));
 	m_Enemy->Generate(ENEMY_TYPES_ZAKU, D3DXVECTOR3(56.0f, 2.0f, 80.0f), m_SceneModelEnemy, D3DXVECTOR3(0.5f, 0.5f, 0.5f));*/
 	m_Enemy->Generate(ENEMY_TYPES_ZAKU, D3DXVECTOR3(22.0f, 2.0f, 45.0f), m_SceneModelEnemy, D3DXVECTOR3(0.5f, 0.5f, 0.5f));
-	m_nEnemyCount = 7;
+	m_nEnemyCount = 1;
 	m_NumberEnemyCount = CNumber::Create(m_nEnemyCount);
 	m_NumberEnemyCount->SetPosition(D3DXVECTOR3(480.0f, 0.0f, -1.0f));
 
@@ -312,7 +313,7 @@ void CModeTitle::Update(void)
 {
 	if (CInputMouse::GetLeftTrigger())
 	{
-		CManager::SetMode(new CModeGame());
+		CManager::SetMode(new CModeTraining());
 	}
 }
 
@@ -334,6 +335,7 @@ void CModeTitle::Draw(void)
 bool CModeResult::Init(void)
 {
 	m_ModeId = MODE_RESULT;
+	PlaySound(SOUND_LABEL_BGM_RESULT);
 	this->m_Camera = CCamera::Create(D3DXVECTOR3(0.0f, 0.0f, -10.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), false);
 	this->m_Light = new CLight();
 	m_Scene2D = CScene2D::Create(2, "Data\\Texture\\Result.png", 1, 1);
@@ -350,6 +352,7 @@ bool CModeResult::Init(void)
 //=================================================================================================
 void CModeResult::Uninit(void)
 {
+	StopSound(SOUND_LABEL_BGM_RESULT);
 	delete this->m_Light;
 	this->m_Light = nullptr;
 	//シーンオブジェクトの解放
@@ -382,6 +385,7 @@ void CModeResult::Draw(void)
 bool CModeGameOver::Init(void)
 {
 	m_ModeId = MODE_GAMEOVER;
+	PlaySound(SOUND_LABEL_BGM_GAMEOVER);
 	this->m_Camera = CCamera::Create(D3DXVECTOR3(0.0f, 0.0f, -10.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), false);
 	this->m_Light = new CLight();
 	m_Scene2D = CScene2D::Create(2, "Data\\Texture\\GameOver.png", 1, 1);
@@ -395,6 +399,7 @@ bool CModeGameOver::Init(void)
 
 void CModeGameOver::Uninit(void)
 {
+	StopSound(SOUND_LABEL_BGM_GAMEOVER);
 	delete this->m_Light;
 	this->m_Light = nullptr;
 	//シーンオブジェクトの解放
@@ -500,7 +505,7 @@ bool CModeTest::Init(void)
 	/*this->m_Camera = CCamera::Create(D3DXVECTOR3(0.075f, 3.61f, -7.86f), D3DXVECTOR3(0.0f, 8.0f, 0.0f), true);*/
 	this->m_Light = new CLight();
 	m_Light->Init();
-	m_Light->SetDir(D3DXVECTOR3(0.0f, -1.0f, 0.0f));
+	m_Light->SetDir(D3DXVECTOR3(1.0f, -1.0f, 1.0f));
 	m_Field = CField::Create(20, 20, 2.0f, 2.0f, false);
 	m_Model = CSceneModel::Create("Data\\Model\\roboModel.x");
 	m_Model->SetPositionY(1.0f);

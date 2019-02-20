@@ -38,7 +38,9 @@ SOUNDPARAM g_aParam[SOUND_LABEL_MAX] =
 	{ "Data\\Audio\\Music\\Battle.wav", -1 },		// BGMタイトル
 	{ "Data\\Audio\\Music\\TitleBGM.wav", -1 },		// BGMゲーム
 	{ "Data\\Audio\\Sound\\Shoot.wav", 0 },			// 弾発射音
-	{ "Data\\Audio\\Sound\\Bom.wav", 0 }			// 爆発音
+	{ "Data\\Audio\\Sound\\Bom.wav", 0 },			// 爆発音
+	{ "Data\\Audio\\Music\\GameOver.wav", -1 },			// BGMゲームオーバー
+	{ "Data\\Audio\\Music\\Result.wav", -1 }			// BGMリザード
 };
 
 //=============================================================================
