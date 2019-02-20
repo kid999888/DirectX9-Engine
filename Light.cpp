@@ -18,6 +18,7 @@
 //=================================================================================================
 CLight::CLight()
 {
+	fRot = 0.0f;
 	{
 		ZeroMemory(&m_Light, sizeof(m_Light));
 
@@ -25,7 +26,7 @@ CLight::CLight()
 		m_Light.Type = D3DLIGHT_DIRECTIONAL;
 
 		//ライトの方向
-		D3DXVECTOR3 vecDir(-1.0f, -1.0f, 1.0f);							//ライトベクトル
+		D3DXVECTOR3 vecDir(0.0f, -1.0f, 0.0f);							//ライトベクトル
 		D3DXVec3Normalize((D3DXVECTOR3*)&m_Light.Direction, &vecDir);
 
 		//拡散光（光のメイン色）色の設定
@@ -106,6 +107,15 @@ void CLight::Update(void)
 	D3DXMATRIX m;
 	D3DXMatrixIdentity(&m);
 	static D3DXMATRIX mLightRot = m;
+	
+	fRot += 0.01f;
+	D3DXVECTOR3 LigtDir;
+	LigtDir.x = m_lightDir.x;
+	LigtDir.y = m_lightDir.y;
+	LigtDir.z = m_lightDir.z;
+
+	MatRotate(&LigtDir, fRot);
+	SetDir(LigtDir);
 
 	//回転
 	/*{
@@ -225,4 +235,15 @@ void CLight::SetSpecular(float r, float g, float b, float a)
 	m_Light.Specular.g = g;
 	m_Light.Specular.b = b;
 	m_Light.Specular.a = a;
+}
+
+void CLight::MatRotate(D3DXVECTOR3 * Vect, float rt)
+{
+	D3DXMATRIX   mat;
+
+	// 変換マトリックスの作成
+	D3DXMatrixIdentity(&mat);
+	mat._11 = cos(rt);   mat._13 = -sin(rt);
+	mat._31 = sin(rt);   mat._33 = cos(rt);
+	D3DXVec3TransformNormal(Vect, Vect, &mat);
 }

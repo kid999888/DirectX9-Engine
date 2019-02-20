@@ -105,11 +105,7 @@ bool CField::Init(void)
 			vaFieldHeight[nX][nZ] = 0.0f;
 		}
 	}
-
-
-
-
-
+	
 	//高度図を読み方む
 	ifstream InFile;
 	InFile.open(NOISEFILENAME000, ios::binary);				//二進の方式にデータを読み込む
@@ -185,12 +181,13 @@ bool CField::Init(void)
 	vaFieldHeight.clear();
 
 
-	//法線の凹凸として自動計算
-	for (nZ = 1;nZ < (nCy - 1);nZ++)
+	//法線の凹凸として自動計算(元)
+	/*for (nZ = 1;nZ < (nCy - 1);nZ++)
 	{
 		for (nX = 1;nX < (nCx - 1);nX++)
 		{
 			D3DXVECTOR3 vx, nx, vz, nz, n;
+			D3DXVECTOR3 vx0, nx0, vz0, nz0, n0;
 			vx = m_pvMeshFiledPos[nZ * nCx + (nX + 1)].pos - m_pvMeshFiledPos[nZ * nCx + (nX - 1)].pos;
 			nx.x = -vx.y;
 			nx.y = vx.x;
@@ -204,41 +201,80 @@ bool CField::Init(void)
 			n = nx + nz;
 
 			D3DXVec3Normalize(&n, &n);
-			m_pvMeshFiledPos[nZ * nCx + (nX + 1)].fs = n;
-		}
-	}
 
-	/*for (nZ = 1;nZ < (nCy - 1);nZ++)
-	{
-		for (nX = 1;nX < (nCx - 1);nX++)
-		{
-			D3DXVECTOR3 vx, vx0, nx, nx0, vz, vz0, nz, nz0, n;
-			vx = m_pvMeshFiledPos[nZ * nCx + (nX + 1)].pos - m_pvMeshFiledPos[nZ * nCx + (nX - 1)].pos;
-			nx.x = -vx.y;
-			nx.y = vx.x;
-			nx.z = 0.0f;
-
-			vx0 = m_pvMeshFiledPos[nZ * nCx + (nX - 1)].pos - m_pvMeshFiledPos[nZ * nCx + (nX + 1)].pos;
-			nx0.x = -vx.y;
-			nx0.y = -vx.x;
-			nx0.z = 0.0f;
-
-			vz = m_pvMeshFiledPos[nX * nCy + (nZ + 1)].pos - m_pvMeshFiledPos[nX * nCy + (nZ - 1)].pos;
-			nz.x = 0.0f;
-			nz.y = vz.z;
-			nz.z = vz.y;
-
-			vz0 = m_pvMeshFiledPos[nX * nCy + (nZ - 1)].pos - m_pvMeshFiledPos[nX * nCy + (nZ + 1)].pos;
-			nz0.x = 0.0f;
-			nz0.y = -vz.z;
-			nz0.z = vz.y;
-
-			n = nx + nz + nx0 + nz0;
-
-			D3DXVec3Normalize(&n, &n);
 			m_pvMeshFiledPos[nZ * nCx + (nX + 1)].fs = n;
 		}
 	}*/
+
+	D3DXVECTOR3 veA, veB;
+	D3DXVECTOR3 veN00, veN01, veN02, veN03, veN04, veN05, veN06;
+	D3DXVECTOR3 veNTemp0, veNTemp1, veNTemp2, veN;
+	//法線の凹凸として自動計算(新しい)
+	for (nZ = 1;nZ < (nCy - 1);nZ++)
+	{
+		for (nX = 1;nX < (nCx - 1);nX++)
+		{
+			veA = m_pvMeshFiledPos[nZ * nCx + (nX - 1)].pos - m_pvMeshFiledPos[(nZ - 1) * nCx + (nX - 1)].pos;
+
+			veB = m_pvMeshFiledPos[(nZ - 1) * nCx + (nX - 1)].pos - m_pvMeshFiledPos[nZ * nCx + nX].pos;
+
+			D3DXVec3Cross(&veN00, &veA, &veB);
+			D3DXVec3Normalize(&veN00, &veN00);
+
+			veA = m_pvMeshFiledPos[(nZ - 1) * nCx + (nX - 1)].pos - m_pvMeshFiledPos[(nZ - 1) * nCx + nX].pos;
+
+			veB = m_pvMeshFiledPos[(nZ - 1) * nCx + nX].pos - m_pvMeshFiledPos[nZ * nCx + nX].pos;
+
+			D3DXVec3Cross(&veN01, &veA, &veB);
+			D3DXVec3Normalize(&veN01, &veN01);
+
+			veA = m_pvMeshFiledPos[(nZ - 1) * nCx + nX].pos - m_pvMeshFiledPos[nZ * nCx + (nX + 1)].pos;
+
+			veB = m_pvMeshFiledPos[nZ * nCx + (nX + 1)].pos - m_pvMeshFiledPos[nZ * nCx + nX].pos;
+
+			D3DXVec3Cross(&veN02, &veA, &veB);
+			D3DXVec3Normalize(&veN02, &veN02);
+
+			veA = m_pvMeshFiledPos[nZ * nCx + (nX + 1)].pos - m_pvMeshFiledPos[(nZ + 1) * nCx + (nX + 1)].pos;
+
+			veB = m_pvMeshFiledPos[(nZ + 1) * nCx + (nX + 1)].pos - m_pvMeshFiledPos[nZ * nCx + nX].pos;
+
+			D3DXVec3Cross(&veN03, &veA, &veB);
+			D3DXVec3Normalize(&veN03, &veN03);
+
+			veA = m_pvMeshFiledPos[(nZ + 1) * nCx + (nX + 1)].pos - m_pvMeshFiledPos[(nZ + 1) * nCx + nX].pos;
+
+			veB = m_pvMeshFiledPos[(nZ + 1) * nCx + nX].pos - m_pvMeshFiledPos[nZ * nCx + nX].pos;
+
+			D3DXVec3Cross(&veN04, &veA, &veB);
+			D3DXVec3Normalize(&veN04, &veN04);
+
+			veA = m_pvMeshFiledPos[(nZ + 1) * nCx + nX].pos - m_pvMeshFiledPos[nZ * nCx + (nX - 1)].pos;
+
+			veB = m_pvMeshFiledPos[nZ * nCx + (nX - 1)].pos - m_pvMeshFiledPos[nZ * nCx + nX].pos;
+
+			D3DXVec3Cross(&veN05, &veA, &veB);
+			D3DXVec3Normalize(&veN05, &veN05);
+
+			veNTemp0 = veN00 + veN03;
+			D3DXVec3Normalize(&veNTemp0, &veNTemp0);
+
+			veNTemp1 = veN01 + veN04;
+			D3DXVec3Normalize(&veNTemp1, &veNTemp1);
+
+			veNTemp2 = veN02 + veN05;
+			D3DXVec3Normalize(&veNTemp2, &veNTemp2);
+
+			veN = veNTemp0 + veNTemp1;
+			D3DXVec3Normalize(&veN, &veN);
+
+			veN = veN + veNTemp2;
+			D3DXVec3Normalize(&veN, &veN);
+
+			m_pvMeshFiledPos[nZ * nCx + (nX + 1)].fs = veN;
+		}
+	}
+
 
 	//2X2のインデックス
 	/*static WORD index[] = {

@@ -25,9 +25,10 @@ public:
 	void SetAmbient(float r, float g, float b, float a);		//環境光（影に現れる色）色の設定
 	void SetDiffuse(float r, float g, float b, float a);		//拡散光（光のメイン色）色の設定
 	void SetSpecular(float r, float g, float b, float a);		//反射光の設定
-
+	void MatRotate(D3DXVECTOR3 * Vect, float rt);
 private:
 	D3DLIGHT9 m_Light;											//DirectXのライト情報
-	D3DXVECTOR4 m_lightDir;										
+	D3DXVECTOR4 m_lightDir;
+	float fRot;
 };
 #endif
