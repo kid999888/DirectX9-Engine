@@ -262,7 +262,16 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="HLSL\DirectionalLight.fx">
+    <None Include="HLSL\DirectionalLight.fx" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="HLSL\Basic2DRendering.hlsl">
+      <Filter>HLSL</Filter>
+    </FxCompile>
+    <FxCompile Include="HLSL\BasicRendering.hlsl">
+      <Filter>HLSL</Filter>
+    </FxCompile>
+    <FxCompile Include="HLSL\BasicRenderingWithoutLight.hlsl">
       <Filter>HLSL</Filter>
     </FxCompile>
   </ItemGroup>

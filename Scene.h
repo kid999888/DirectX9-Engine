@@ -39,6 +39,9 @@ enum SCENE_TYPE
 	SCENE_TYPE_NUMMAX,
 };
 
+#define SCENE_LAYER				(5)				//
+#define SCENE_OBJECT_NUUM		(100)			//
+
 //=================================================================================================
 //　　　オブジェクト処理クラス                                       
 //=================================================================================================
@@ -83,7 +86,7 @@ public:
 	static void UpdateAll(void);						//オブジェクト全体更新処理
 	static void DrawAll(void);							//オブジェクト全体描画処理	
 	static void ReleaseAll(void);						//オブジェクトの全体リリース処理
-	static CScene *m_Scene[3][100];						//シーンの管理メンバー関数
+	static CScene *m_Scene[SCENE_LAYER][SCENE_OBJECT_NUUM];						//シーンの管理メンバー関数
 	bool m_bUpdate = true;								//オブジェクト更新判断変数
 	bool m_bDraw = true;								//オブジェクト描画判断変数
 	SCENE_TYPE m_Type;

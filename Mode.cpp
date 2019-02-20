@@ -30,7 +30,7 @@ bool CModeGame::Init(void)
 	this->m_Light = new CLight();
 	m_Light->Init();
 	this->m_Xorshift = new CXorshift();
-	m_Field = CField::Create(200, 200, 2.0f, 2.0f, false);
+	m_Field = CField::Create(100, 100, 2.0f, 2.0f, false);
 	m_Player = CPlayer::Create(this, D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 	m_nMoney = 800;
 	m_Number = CNumber::Create(m_nMoney);
@@ -90,6 +90,11 @@ bool CModeGame::Init(void)
 	m_Bullet->Load(m_SceneModel);
 	m_Map = CMap::Create(m_Enemy);
 	m_Map->SetPlayer(m_Player);
+
+	m_Shadow = CSceneShadow::Create(m_Field);
+	m_Shadow->SetPositionX(m_Player->GetPositionX());
+	m_Shadow->SetPositionZ(m_Player->GetPositionZ());
+
 #if defined(_DEBUG)
 	CDebugGUI::SetMainCamera(m_Camera);
 	CDebugGUI::SetField(m_Field);
@@ -250,6 +255,9 @@ void CModeGame::Update(void)
 	}
 	m_Number->SetNumber(m_nMoney);
 	m_NumberEnemyCount->SetNumber(m_nEnemyCount);
+
+	m_Shadow->SetPositionX(m_Player->GetPositionX());
+	m_Shadow->SetPositionZ(m_Player->GetPositionZ());
 }
 
 //=================================================================================================
@@ -493,17 +501,20 @@ bool CModeTest::Init(void)
 	this->m_Light = new CLight();
 	m_Light->Init();
 	m_Light->SetDir(D3DXVECTOR3(0.0f, -1.0f, 0.0f));
-	m_Field = CField::Create(2, 2, 2.0f, 2.0f, true);
+	m_Field = CField::Create(20, 20, 2.0f, 2.0f, false);
 	m_Model = CSceneModel::Create("Data\\Model\\roboModel.x");
-	m_Model->SetScale(D3DXVECTOR3(1.0f, 1.0f, 1.0f));
-	/*m_Model->SetRotationZ(45.0f);
-	m_Model->SetPositionY(1.0f);*/
-	m_ModelSkyBox = CSceneModel::Create("Data\\Model\\sky.x");
-	CLifeBar::Create();
+	m_Model->SetPositionY(1.0f);
+	/*m_Model->SetScale(D3DXVECTOR3(1.0f, 1.0f, 1.0f));
+	m_Model->SetRotationZ(45.0f);
+	*/
 
-	D3DXVECTOR3 veMoved = m_Model->GetPosition();
+	m_Shadow = CSceneShadow::Create(m_Field);
+
+	m_ModelSkyBox = CSceneModel::Create("Data\\Model\\sky.x");
+
+	/*D3DXVECTOR3 veMoved = m_Model->GetPosition();
 	veMoved.x = veMoved.x + 10.0f;
-	CPerformance::Create(PERFORMANCE_MOVE, m_Model, veMoved, 60);
+	CPerformance::Create(PERFORMANCE_MOVE, m_Model, veMoved, 60);*/
 
 #if defined(_DEBUG)
 	CDebugGUI::SetMainCamera(m_Camera);

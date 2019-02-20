@@ -2,9 +2,11 @@
 #include "Renderer.h"
 
 
-CSceneShadow::CSceneShadow(int nPriority) : CScene(nPriority)
+CSceneShadow::CSceneShadow(int nPriority, CField* pField) : CScene(nPriority)
 {
 	m_Type = SCENE_TYPE_SHADOW;
+	m_Field = pField;
+
 }
 
 
@@ -14,13 +16,11 @@ CSceneShadow::~CSceneShadow()
 
 bool CSceneShadow::Init(void)
 {
-	m_Field = CField::Create(2, 2, 2.0f, 2.0f, true);
-	m_Field->m_bDraw = false;
-	m_Model = CSceneModel::Create("Data\\Model\\cylinder.x");
+	m_Model = CSceneModel::Create("Data\\Model\\ufo.x");
 	m_Model->m_bDraw = false;
 	m_Model->SetScale(D3DXVECTOR3(0.5f, 0.5f, 0.5f));
-	m_Model->SetRotationZ(45.0f);
 	m_Model->SetPositionY(-1.0f);
+	this->SetPositionY(-1.0f);
 	m_ShadowShade = CScene2D::Create(2, "Data\\Texture\\Shadow.png", 1, 1);
 	m_ShadowShade->m_bDraw = false;
 	return true;
@@ -48,6 +48,8 @@ void CSceneShadow::Draw(void)
 	pDevice->SetRenderState(D3DRS_STENCILREF, 1);
 	pDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 
+	m_Model->SetPosition(this->GetPosition());
+
 	m_Model->Draw();
 	//ステンシルバッファ設定
 	pDevice->SetRenderState(D3DRS_STENCILPASS, D3DSTENCILOP_DECR);
@@ -65,9 +67,9 @@ void CSceneShadow::Draw(void)
 	pDevice->SetRenderState(D3DRS_STENCILENABLE, FALSE);
 }
 
-CSceneShadow * CSceneShadow::Create(void)
+CSceneShadow * CSceneShadow::Create(CField* pField)
 {
-	CSceneShadow *SceneShadow = new CSceneShadow(2);
+	CSceneShadow *SceneShadow = new CSceneShadow(2, pField);
 	SceneShadow->Init();
 	return SceneShadow;
 }

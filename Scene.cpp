@@ -13,7 +13,7 @@
 //=================================================================================================
 //　　　実体定義
 //=================================================================================================
-CScene *CScene::m_Scene[3][100] = { NULL };
+CScene *CScene::m_Scene[SCENE_LAYER][SCENE_OBJECT_NUUM] = { NULL };
 
 //=================================================================================================
 //　　　ヘッダファイル           
@@ -21,7 +21,7 @@ CScene *CScene::m_Scene[3][100] = { NULL };
 CScene::CScene(int nPriorty)
 {
 	int nCount = 0;
-	for (nCount = 0;nCount < 100;nCount++)
+	for (nCount = 0;nCount < SCENE_OBJECT_NUUM;nCount++)
 	{
 		if (m_Scene[nPriorty][nCount] == NULL)
 		{
@@ -43,9 +43,9 @@ void CScene::UpdateAll(void)
 {
 	int nCount = 0;
 	int nCountPriority = 0;
-	for (nCountPriority = 0;nCountPriority < 3;nCountPriority++)
+	for (nCountPriority = 0;nCountPriority < SCENE_LAYER;nCountPriority++)
 	{
-		for (nCount = 0;nCount < 100;nCount++)
+		for (nCount = 0;nCount < SCENE_OBJECT_NUUM;nCount++)
 		{
 			if (m_Scene[nCountPriority][nCount] != NULL && m_Scene[nCountPriority][nCount]->m_bUpdate == true)
 			{
@@ -62,9 +62,9 @@ void CScene::DrawAll(void)
 {
 	int nCount = 0;
 	int nCountPriority = 0;
-	for (nCountPriority = 0;nCountPriority < 3;nCountPriority++)
+	for (nCountPriority = 0;nCountPriority < SCENE_LAYER;nCountPriority++)
 	{
-		for (nCount = 0;nCount < 100;nCount++)
+		for (nCount = 0;nCount < SCENE_OBJECT_NUUM;nCount++)
 		{
 			if (m_Scene[nCountPriority][nCount] != NULL && m_Scene[nCountPriority][nCount]->m_bDraw == true)
 			{
@@ -81,9 +81,9 @@ void CScene::ReleaseAll(void)
 {
 	int nCount = 0;
 	int nCountPriority = 0;
-	for (nCountPriority = 0;nCountPriority < 3;nCountPriority++)
+	for (nCountPriority = 0;nCountPriority < SCENE_LAYER;nCountPriority++)
 	{
-		for (nCount = 0;nCount < 100;nCount++)
+		for (nCount = 0;nCount < SCENE_OBJECT_NUUM;nCount++)
 		{
 			if (m_Scene[nCountPriority][nCount] != NULL)
 			{
@@ -100,9 +100,9 @@ void CScene::Release(void)
 {
 	int nCount = 0;
 	int nCountPriority = 0;
-	for (nCountPriority = 0;nCountPriority < 3;nCountPriority++)
+	for (nCountPriority = 0;nCountPriority < SCENE_LAYER;nCountPriority++)
 	{
-		for (nCount = 0;nCount < 100;nCount++)
+		for (nCount = 0;nCount < SCENE_OBJECT_NUUM;nCount++)
 		{
 			if (m_Scene[nCountPriority][nCount] == this)
 			{
