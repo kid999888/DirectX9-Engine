@@ -288,6 +288,7 @@ bool CModeTitle::Init(void)
 	m_Model = CSceneModel::Create("Data\\Model\\roboModel.x");
 	m_Model->SetScale(D3DXVECTOR3(1.0f, 1.0f, 1.0f));
 	m_ModelSkyBox = CSceneModel::Create("Data\\Model\\sky.x");
+	m_fCameraRot = 0.0f;
 #if defined(_DEBUG)
 	CDebugGUI::SetMainCamera(m_Camera);
 #endif//defined(_DEBUG)
@@ -311,6 +312,8 @@ void CModeTitle::Uninit(void)
 //=================================================================================================
 void CModeTitle::Update(void)
 {
+	m_fCameraRot += 0.005f;
+	m_Camera->SetCameraPos(D3DXVECTOR3(cosf(m_fCameraRot) * 7.86f, m_Camera->GetCameraPos().y, sinf(m_fCameraRot) * 7.86f));
 	if (CInputMouse::GetLeftTrigger())
 	{
 		CManager::SetMode(new CModeTraining());

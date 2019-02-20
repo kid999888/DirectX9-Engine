@@ -134,6 +134,7 @@ private:
 	CScene2D* m_Scene2D;										//2D画像のアドレスポインタを声明
 	CSceneModel* m_Model;											//
 	CSceneModel* m_ModelSkyBox;										//
+	float m_fCameraRot;
 };
 
 //=================================================================================================
