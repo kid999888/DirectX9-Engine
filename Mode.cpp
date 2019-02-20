@@ -49,14 +49,24 @@ bool CModeGame::Init(void)
 
 	//“G
 	m_Enemy->Generate(ENEMY_TYPES_ZAKU, D3DXVECTOR3(0.0f, 2.0f, 20.0f), m_SceneModelEnemy, D3DXVECTOR3(0.5f, 0.5f, 0.5f));
-	/*m_Enemy->Generate(ENEMY_TYPES_ZAKU, D3DXVECTOR3(36.0f, 2.0f, 42.0f), m_SceneModelEnemy, D3DXVECTOR3(0.5f, 0.5f, 0.5f));
+	m_Enemy->Generate(ENEMY_TYPES_ZAKU, D3DXVECTOR3(36.0f, 2.0f, 42.0f), m_SceneModelEnemy, D3DXVECTOR3(0.5f, 0.5f, 0.5f));
 	m_Enemy->Generate(ENEMY_TYPES_ZAKU, D3DXVECTOR3(-26.0f, 2.0f, 20.0f), m_SceneModelEnemy, D3DXVECTOR3(0.5f, 0.5f, 0.5f));
 	m_Enemy->Generate(ENEMY_TYPES_ZAKU, D3DXVECTOR3(30.0f, 2.0f, -20.0f), m_SceneModelEnemy, D3DXVECTOR3(0.5f, 0.5f, 0.5f));
 	m_Enemy->Generate(ENEMY_TYPES_ZAKU, D3DXVECTOR3(15.0f, 2.0f, -60.0f), m_SceneModelEnemy, D3DXVECTOR3(0.5f, 0.5f, 0.5f));
 	m_Enemy->Generate(ENEMY_TYPES_ZAKU, D3DXVECTOR3(-44.0f, 2.0f, -70.0f), m_SceneModelEnemy, D3DXVECTOR3(0.5f, 0.5f, 0.5f));
-	m_Enemy->Generate(ENEMY_TYPES_ZAKU, D3DXVECTOR3(56.0f, 2.0f, 80.0f), m_SceneModelEnemy, D3DXVECTOR3(0.5f, 0.5f, 0.5f));*/
+	m_Enemy->Generate(ENEMY_TYPES_ZAKU, D3DXVECTOR3(56.0f, 2.0f, 80.0f), m_SceneModelEnemy, D3DXVECTOR3(0.5f, 0.5f, 0.5f));
 	m_Enemy->Generate(ENEMY_TYPES_ZAKU, D3DXVECTOR3(22.0f, 2.0f, 45.0f), m_SceneModelEnemy, D3DXVECTOR3(0.5f, 0.5f, 0.5f));
-	m_nEnemyCount = 1;
+
+	m_Enemy->Generate(ENEMY_TYPES_ZAKU, D3DXVECTOR3(0.0f, 2.0f, 20.0f), m_SceneModelEnemy, D3DXVECTOR3(0.5f, 0.5f, 0.5f));
+	m_Enemy->Generate(ENEMY_TYPES_ZAKU, D3DXVECTOR3(36.0f, 2.0f, 42.0f), m_SceneModelEnemy, D3DXVECTOR3(0.5f, 0.5f, 0.5f));
+	m_Enemy->Generate(ENEMY_TYPES_ZAKU, D3DXVECTOR3(-26.0f, 2.0f, 20.0f), m_SceneModelEnemy, D3DXVECTOR3(0.5f, 0.5f, 0.5f));
+	m_Enemy->Generate(ENEMY_TYPES_ZAKU, D3DXVECTOR3(30.0f, 2.0f, -20.0f), m_SceneModelEnemy, D3DXVECTOR3(0.5f, 0.5f, 0.5f));
+	m_Enemy->Generate(ENEMY_TYPES_ZAKU, D3DXVECTOR3(15.0f, 2.0f, -60.0f), m_SceneModelEnemy, D3DXVECTOR3(0.5f, 0.5f, 0.5f));
+	m_Enemy->Generate(ENEMY_TYPES_ZAKU, D3DXVECTOR3(-44.0f, 2.0f, -70.0f), m_SceneModelEnemy, D3DXVECTOR3(0.5f, 0.5f, 0.5f));
+	m_Enemy->Generate(ENEMY_TYPES_ZAKU, D3DXVECTOR3(56.0f, 2.0f, 80.0f), m_SceneModelEnemy, D3DXVECTOR3(0.5f, 0.5f, 0.5f));
+	m_Enemy->Generate(ENEMY_TYPES_ZAKU, D3DXVECTOR3(22.0f, 2.0f, 45.0f), m_SceneModelEnemy, D3DXVECTOR3(0.5f, 0.5f, 0.5f));
+
+	m_nEnemyCount = 16;
 	m_NumberEnemyCount = CNumber::Create(m_nEnemyCount);
 	m_NumberEnemyCount->SetPosition(D3DXVECTOR3(480.0f, 0.0f, -1.0f));
 
@@ -70,14 +80,14 @@ bool CModeGame::Init(void)
 	m_Bulid->Generate(ENEMY_TYPES_BULIDING, D3DXVECTOR3(-4.0f, 2.0f, 20.0f), m_SceneModelBuliding, D3DXVECTOR3(0.025f, 0.025f, 0.025f));
 	m_Bulid->Generate(ENEMY_TYPES_BULIDING, D3DXVECTOR3(-4.0f, 2.0f, 22.0f), m_SceneModelBuliding, D3DXVECTOR3(0.025f, 0.025f, 0.025f));
 
-	m_Bulid->Generate(ENEMY_TYPES_BULIDING, D3DXVECTOR3(10.0f, 2.0f, 20.0f), m_SceneModelBuliding, D3DXVECTOR3(0.025f, 0.025f, 0.025f));
-	m_Bulid->Generate(ENEMY_TYPES_BULIDING, D3DXVECTOR3(10.0f, 2.0f, 22.0f), m_SceneModelBuliding, D3DXVECTOR3(0.025f, 0.025f, 0.025f));
-	m_Bulid->Generate(ENEMY_TYPES_BULIDING, D3DXVECTOR3(8.0f, 2.0f, 20.0f), m_SceneModelBuliding, D3DXVECTOR3(0.025f, 0.025f, 0.025f));
-	m_Bulid->Generate(ENEMY_TYPES_BULIDING, D3DXVECTOR3(8.0f, 2.0f, 22.0f), m_SceneModelBuliding, D3DXVECTOR3(0.025f, 0.025f, 0.025f));
-	m_Bulid->Generate(ENEMY_TYPES_BULIDING, D3DXVECTOR3(6.0f, 2.0f, 20.0f), m_SceneModelBuliding, D3DXVECTOR3(0.025f, 0.025f, 0.025f));
-	m_Bulid->Generate(ENEMY_TYPES_BULIDING, D3DXVECTOR3(6.0f, 2.0f, 22.0f), m_SceneModelBuliding, D3DXVECTOR3(0.025f, 0.025f, 0.025f));
-	m_Bulid->Generate(ENEMY_TYPES_BULIDING, D3DXVECTOR3(4.0f, 2.0f, 20.0f), m_SceneModelBuliding, D3DXVECTOR3(0.025f, 0.025f, 0.025f));
-	m_Bulid->Generate(ENEMY_TYPES_BULIDING, D3DXVECTOR3(4.0f, 2.0f, 22.0f), m_SceneModelBuliding, D3DXVECTOR3(0.025f, 0.025f, 0.025f));
+	m_Bulid->Generate(ENEMY_TYPES_BULIDING, D3DXVECTOR3(-10.0f, 2.0f, 20.0f), m_SceneModelBuliding, D3DXVECTOR3(0.025f, 0.025f, 0.025f));
+	m_Bulid->Generate(ENEMY_TYPES_BULIDING, D3DXVECTOR3(10.0f, 2.0f, -22.0f), m_SceneModelBuliding, D3DXVECTOR3(0.025f, 0.025f, 0.025f));
+	m_Bulid->Generate(ENEMY_TYPES_BULIDING, D3DXVECTOR3(8.0f, 2.0f, -20.0f), m_SceneModelBuliding, D3DXVECTOR3(0.025f, 0.025f, 0.025f));
+	m_Bulid->Generate(ENEMY_TYPES_BULIDING, D3DXVECTOR3(-8.0f, 2.0f, 22.0f), m_SceneModelBuliding, D3DXVECTOR3(0.025f, 0.025f, 0.025f));
+	m_Bulid->Generate(ENEMY_TYPES_BULIDING, D3DXVECTOR3(6.0f, 2.0f, -20.0f), m_SceneModelBuliding, D3DXVECTOR3(0.025f, 0.025f, 0.025f));
+	m_Bulid->Generate(ENEMY_TYPES_BULIDING, D3DXVECTOR3(-6.0f, 2.0f, 22.0f), m_SceneModelBuliding, D3DXVECTOR3(0.025f, 0.025f, 0.025f));
+	m_Bulid->Generate(ENEMY_TYPES_BULIDING, D3DXVECTOR3(4.0f, 2.0f, -20.0f), m_SceneModelBuliding, D3DXVECTOR3(0.025f, 0.025f, 0.025f));
+	m_Bulid->Generate(ENEMY_TYPES_BULIDING, D3DXVECTOR3(-4.0f, 2.0f, 22.0f), m_SceneModelBuliding, D3DXVECTOR3(0.025f, 0.025f, 0.025f));
 
 
 	m_ScenePolygon = CScenePolygon::Create();
@@ -189,7 +199,7 @@ void CModeGame::Update(void)
 						{
 							//ƒUƒO
 						case ENEMY_TYPES_ZAKU:
-							m_Enemy->SetEnemyLife(nCountX, m_Enemy->GetEnemyManager(nCountX).nLife - 1);
+							m_Enemy->SetEnemyLife(nCountX, m_Enemy->GetEnemyManager(nCountX).nLife - 4);
 							m_Bullet->Destory(nCount);
 							m_SceneBillBoard->SetScale(D3DXVECTOR3(0.2f, 0.2f, 0.2f));
 							CParticle::Create(m_SceneBillBoard, m_Enemy->GetEnemyManager(nCountX).vePos, 1.0f, 100, 90);
