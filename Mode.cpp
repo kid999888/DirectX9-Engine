@@ -33,7 +33,7 @@ bool CModeGame::Init(void)
 	this->m_Xorshift = new CXorshift();
 	m_Field = CField::Create(125, 125, 2.0f, 2.0f, false);
 	m_Player = CPlayer::Create(this, D3DXVECTOR3(0.0f, 0.0f, 0.0f));
-	m_nMoney = 800;
+	m_nMoney = 0;
 	m_Number = CNumber::Create(m_nMoney);
 	m_Number->SetPosition(D3DXVECTOR3(960.0f, 0.0f, -1.0f));
 	m_SceneModelEnemy = CSceneModel::Create("Data\\Model\\ufo.x");
@@ -290,7 +290,7 @@ bool CModeTitle::Init(void)
 {
 	m_ModeId = MODE_TITLE;
 	PlaySound(SOUND_LABEL_BGM_GAME);
-	this->m_Camera = CCamera::Create(D3DXVECTOR3(0.075f, 3.61f, -7.86f), D3DXVECTOR3(0.0f, 8.0f, 0.0f), true);
+	this->m_Camera = CCamera::Create(D3DXVECTOR3(0.075f, 3.61f, -7.86f), D3DXVECTOR3(0.0f, 8.0f, 0.0f), false);
 	this->m_Light = new CLight();
 	m_Light->Init();
 	m_Scene2D = CScene2D::Create(2, "Data\\Texture\\TitleName.png", 1, 1);

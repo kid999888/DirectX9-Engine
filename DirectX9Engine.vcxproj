@@ -232,9 +232,11 @@
     <ClInclude Include="Xorshift.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="HLSL\DirectionalLight.fx">
+    <FxCompile Include="HLSL\DirectionalLight.fx">
       <FileType>Document</FileType>
-    </None>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="HLSL\Basic2DRendering.hlsl">
