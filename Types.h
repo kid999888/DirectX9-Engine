@@ -23,6 +23,17 @@
 #include <map>
 #include <set>
 
+#pragma comment (lib, "Winmm.lib")
+#pragma comment (lib, "d3d9.lib")
+#pragma comment (lib, "d3dx9.lib")
+#pragma comment (lib, "d3dx9d.lib")
+#pragma comment (lib, "dinput8.lib")
+#pragma comment (lib, "d3d11.lib")
+#pragma comment (lib, "d3dx11.lib")
+#pragma comment (lib, "dxgi.lib")
+#pragma comment (lib, "d3dcompiler.lib")
+
+
 //=============================================================================
 //　　　便利ツール
 //=============================================================================
