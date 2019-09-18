@@ -542,20 +542,18 @@ bool CModeTest::Init(void)
 	this->m_Light = new CLight();
 	m_Light->Init();
 	m_Light->SetDir(D3DXVECTOR3(1.0f, -1.0f, 1.0f));
-	/*m_Field = CField::Create(20, 20, 2.0f, 2.0f, false);*/
-	m_Model = CSceneModel::Create("Data\\Model\\ufo.x");
-	m_Model->SetPositionY(1.0f);
-	/*m_Model->SetScale(D3DXVECTOR3(1.0f, 1.0f, 1.0f));
-	m_Model->SetRotationZ(45.0f);
-	*/
-
-	/*m_Shadow = CSceneShadow::Create(m_Field);*/
-
+	m_Field = CField::Create(20, 20, 2.0f, 2.0f, true);
 	m_ModelSkyBox = CSceneModel::Create("Data\\Model\\sky.x");
-
+	/*m_Model = CSceneModel::Create("Data\\Model\\ufo.x");
+	m_Model->SetPositionY(1.0f);*/
+	/*m_Model->SetScale(D3DXVECTOR3(1.0f, 1.0f, 1.0f));
+	m_Model->SetRotationZ(45.0f);*/
+	/*m_Shadow = CSceneShadow::Create(m_Field);*/
 	/*D3DXVECTOR3 veMoved = m_Model->GetPosition();
 	veMoved.x = veMoved.x + 10.0f;
 	CPerformance::Create(PERFORMANCE_MOVE, m_Model, veMoved, 60);*/
+
+	m_ExplosionBB = CExplosionBB::Create(2, m_Camera);
 
 #if defined(_DEBUG)
 	CDebugGUI::SetMainCamera(m_Camera);

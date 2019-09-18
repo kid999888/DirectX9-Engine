@@ -30,6 +30,7 @@
 #include "Motion.h"
 #include "Grid.h"
 #include "LifeBar.h"
+#include "ExplosionBB.h"
 
 class CCamera;
 class CField;
@@ -238,6 +239,7 @@ private:
 	CSceneModel* m_Model;											//
 	CSceneShadow* m_Shadow;											//
 	CSceneModel* m_ModelSkyBox;										//
+	CExplosionBB* m_ExplosionBB;									//
 	
 };
 

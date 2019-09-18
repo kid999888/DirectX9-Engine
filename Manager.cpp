@@ -30,7 +30,7 @@ bool CManager::Init( HWND hWnd, BOOL bWindow)
 {
 	//DirectX‰Šú‰»ƒNƒ‰ƒX‰Šúˆ—
 	CRenderer::Init(hWnd, bWindow);
-	SetMode(new CModeGame());
+	SetMode(new CModeTest());
 	m_bBlur = false;
 	if (m_bBlur)
 	{

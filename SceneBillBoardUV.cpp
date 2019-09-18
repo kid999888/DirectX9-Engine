@@ -283,8 +283,8 @@ void CSceneBillBoardUV::CreateVertexAffine(D3DCOLOR color)
 	int tw = m_D3DTextureInfo.Width;
 	int th = m_D3DTextureInfo.Height;
 
-	int dw = m_D3DTextureInfo.Width * m_fU1;
-	int dh = m_D3DTextureInfo.Height * m_fV1;
+	int dw = m_D3DTextureInfo.Width * (m_fU1 - m_fU0);
+	int dh = m_D3DTextureInfo.Height * (m_fV1 - m_fV0);
 
 	dw *= m_veScale.x;
 	dh *= m_veScale.y;
