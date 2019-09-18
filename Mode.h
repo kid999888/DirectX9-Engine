@@ -106,6 +106,7 @@ private:
 	CEnemy* m_Bulid;											//
 	CMap* m_Map;
 	CSceneShadow* m_Shadow;
+	bool m_bPause;													//
 	int m_nEnemyCount;												//“G‹L”
 	int m_nClipNum;													//
 	int m_nClipNumLimit;											//
