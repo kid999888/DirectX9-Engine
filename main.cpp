@@ -278,7 +278,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		if (LOWORD(lParam) == HTCLIENT)
 		{
 			//SetCursor(NULL);								//マウスの消す
-			CRenderer::GetD3DDevice()->ShowCursor(true);	//falseはマウスを表示されない
+			if (CRenderer::GetD3DDevice() != NULL)
+			{
+				CRenderer::GetD3DDevice()->ShowCursor(true);	//falseはマウスを表示されない
+			}
+			
 
 			return true;
 		}

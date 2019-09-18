@@ -48,7 +48,7 @@ bool CModeGame::Init(void)
 
 
 	//“G
-	m_Enemy->Generate(ENEMY_TYPES_ZAKU, D3DXVECTOR3(0.0f, 2.0f, 20.0f), m_SceneModelEnemy, D3DXVECTOR3(0.5f, 0.5f, 0.5f));
+	/*m_Enemy->Generate(ENEMY_TYPES_ZAKU, D3DXVECTOR3(0.0f, 2.0f, 20.0f), m_SceneModelEnemy, D3DXVECTOR3(0.5f, 0.5f, 0.5f));
 	m_Enemy->Generate(ENEMY_TYPES_ZAKU, D3DXVECTOR3(36.0f, 2.0f, 42.0f), m_SceneModelEnemy, D3DXVECTOR3(0.5f, 0.5f, 0.5f));
 	m_Enemy->Generate(ENEMY_TYPES_ZAKU, D3DXVECTOR3(-26.0f, 2.0f, 20.0f), m_SceneModelEnemy, D3DXVECTOR3(0.5f, 0.5f, 0.5f));
 	m_Enemy->Generate(ENEMY_TYPES_ZAKU, D3DXVECTOR3(30.0f, 2.0f, -20.0f), m_SceneModelEnemy, D3DXVECTOR3(0.5f, 0.5f, 0.5f));
@@ -64,7 +64,7 @@ bool CModeGame::Init(void)
 	m_Enemy->Generate(ENEMY_TYPES_ZAKU, D3DXVECTOR3(15.0f, 2.0f, -60.0f), m_SceneModelEnemy, D3DXVECTOR3(0.5f, 0.5f, 0.5f));
 	m_Enemy->Generate(ENEMY_TYPES_ZAKU, D3DXVECTOR3(-44.0f, 2.0f, -70.0f), m_SceneModelEnemy, D3DXVECTOR3(0.5f, 0.5f, 0.5f));
 	m_Enemy->Generate(ENEMY_TYPES_ZAKU, D3DXVECTOR3(56.0f, 2.0f, 80.0f), m_SceneModelEnemy, D3DXVECTOR3(0.5f, 0.5f, 0.5f));
-	m_Enemy->Generate(ENEMY_TYPES_ZAKU, D3DXVECTOR3(22.0f, 2.0f, 45.0f), m_SceneModelEnemy, D3DXVECTOR3(0.5f, 0.5f, 0.5f));
+	m_Enemy->Generate(ENEMY_TYPES_ZAKU, D3DXVECTOR3(22.0f, 2.0f, 45.0f), m_SceneModelEnemy, D3DXVECTOR3(0.5f, 0.5f, 0.5f));*/
 
 	m_nEnemyCount = 16;
 	m_NumberEnemyCount = CNumber::Create(m_nEnemyCount);
@@ -91,7 +91,7 @@ bool CModeGame::Init(void)
 
 
 	m_ScenePolygon = CScenePolygon::Create();
-	m_ScenePolygon->SetScale(D3DXVECTOR3(40.0f, 1.0f, 0.125f));
+	m_ScenePolygon->SetScale(D3DXVECTOR3(40.0f, 1.0f, 1.25f));
 	m_SceneBillBoard = CSceneBillBoard::Create(m_Camera, "Data\\Texture\\Circle.png");
 	m_SceneBillBoard->m_bDraw = false;
 	m_SceneModel = CSceneModel::Create("Data\\Model\\Ball.x");

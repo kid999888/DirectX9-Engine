@@ -18,7 +18,7 @@
 //FVFの宣言
 #define FVF_VERTEX_POLYGON ( D3DFVF_XYZ | D3DFVF_NORMAL | D3DFVF_DIFFUSE | D3DFVF_TEX1)    //3Dポリゴンの頂点情報
 //テクスチャファイルパス
-#define TEXTUREFILENAME000	        "Data\\Texture\\Laser.png"	
+#define TEXTUREFILENAME000	        "Data\\Texture\\Lazer0.png"	
 
 //=================================================================================================
 //　　　構造体定義                                         
@@ -74,10 +74,10 @@ bool CScenePolygon::Init(void)
 
 	//頂点の作成
 	VERTEX_POLYGON v[] = {
-		{ D3DXVECTOR3(-0.5f,0.5f,0.5f),D3DXVECTOR3(0.0f, 1.0f, 0.0f),D3DCOLOR_RGBA(255, 0, 0, 128),D3DXVECTOR2(0.0f,0.0f) },		//0
-		{ D3DXVECTOR3(0.5f,0.5f,0.5f),D3DXVECTOR3(0.0f, 1.0f, 0.0f),D3DCOLOR_RGBA(255, 0, 0, 128) ,D3DXVECTOR2(1.0f,0.0f) },		//1
-		{ D3DXVECTOR3(0.5f,0.5f,-0.5f),D3DXVECTOR3(0.0f, 1.0f, 0.0f),D3DCOLOR_RGBA(255, 0, 0, 128),D3DXVECTOR2(1.0f,1.0f) },		//2
-		{ D3DXVECTOR3(-0.5f,0.5f,-0.5f),D3DXVECTOR3(0.0f, 1.0f, 0.0f),D3DCOLOR_RGBA(255, 0, 0, 128) ,D3DXVECTOR2(0.0f,1.0f) },		//3
+		{ D3DXVECTOR3(-0.5f,0.5f,0.5f),D3DXVECTOR3(0.0f, 1.0f, 0.0f),D3DCOLOR_RGBA(255, 255, 255, 255),D3DXVECTOR2(0.0f,0.0f) },		//0
+		{ D3DXVECTOR3(0.5f,0.5f,0.5f),D3DXVECTOR3(0.0f, 1.0f, 0.0f),D3DCOLOR_RGBA(255, 255, 255, 255) ,D3DXVECTOR2(1.0f,0.0f) },		//1
+		{ D3DXVECTOR3(0.5f,0.5f,-0.5f),D3DXVECTOR3(0.0f, 1.0f, 0.0f),D3DCOLOR_RGBA(255, 255, 255, 255),D3DXVECTOR2(1.0f,1.0f) },		//2
+		{ D3DXVECTOR3(-0.5f,0.5f,-0.5f),D3DXVECTOR3(0.0f, 1.0f, 0.0f),D3DCOLOR_RGBA(255, 255, 255, 255) ,D3DXVECTOR2(0.0f,1.0f) },		//3
 	};
 
 	//頂点Vertexバッファを作る
