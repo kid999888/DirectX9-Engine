@@ -91,7 +91,7 @@ bool CModeGame::Init(void)
 
 
 	m_ScenePolygon = CScenePolygon::Create();
-	m_ScenePolygon->SetScale(D3DXVECTOR3(40.0f, 1.0f, 1.25f));
+	m_ScenePolygon->SetScale(D3DXVECTOR3(40.0f, 1.0f, 0.0625f));
 	m_SceneBillBoard = CSceneBillBoard::Create(m_Camera, "Data\\Texture\\Circle.png");
 	m_SceneBillBoard->m_bDraw = false;
 	m_SceneModel = CSceneModel::Create("Data\\Model\\Ball.x");
@@ -136,7 +136,7 @@ void CModeGame::Update(void)
 	D3DXVECTOR3 veTempVector3(0.0f, 0.0f, 0.0f);
 	//ƒŒ[ƒU[•”•ª
 	m_ScenePolygon->SetPosition(m_Player->GetPosition());
-	m_ScenePolygon->SetPositionY(2.2f);
+	m_ScenePolygon->SetPositionY(m_Player->GetPosition().y + 1.2f);
 	m_ScenePolygon->SetRotationY(m_Player->GetRotationY() + 90.0f);
 	if (CInputMouse::GetRightPress() == true)
 	{

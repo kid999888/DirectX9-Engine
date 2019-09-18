@@ -18,7 +18,7 @@
 //FVFの宣言
 #define FVF_VERTEX_POLYGON ( D3DFVF_XYZ | D3DFVF_NORMAL | D3DFVF_DIFFUSE | D3DFVF_TEX1)    //3Dポリゴンの頂点情報
 //テクスチャファイルパス
-#define TEXTUREFILENAME000	        "Data\\Texture\\Lazer0.png"	
+#define TEXTUREFILENAME000	        "Data\\Texture\\Lazer2.png"	
 
 //=================================================================================================
 //　　　構造体定義                                         
