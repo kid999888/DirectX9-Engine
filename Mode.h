@@ -98,8 +98,9 @@ private:
 	CSceneModel * m_SceneModelBuliding;						//モデリングのアドレスポインタを声明
 	CNumber * m_Number;										//スコア数字のアドレスポインタを声明
 	CNumber * m_NumberEnemyCount;										//スコア数字のアドレスポインタを声明
-	CScenePolygon  * m_ScenePolygon;							//3Dポリゴンのアドレスポインタを声明
+	CScenePolygon  * m_PolygonLazer;							//3Dポリゴンのアドレスポインタを声明
 	CSceneBillBoard  * m_SceneBillBoard;						//ビルボードのアドレスポインタを声明
+	CScene2D* m_UFOIcon;									//
 	CSceneModel* m_SceneModel;								//
 	CBullet* m_Bullet;										//
 	CEnemy* m_Bulid;											//

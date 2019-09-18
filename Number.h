@@ -13,13 +13,13 @@
 class CNumber : public CScene
 {
 public:
-	CNumber(int nPriority, int nNumber);			//数字表示のコンストラクタ
-	~CNumber();										//数字表示のデストラクタ
-	bool Init(void);								//数字表示初期処理
-	void Uninit(void);								//数字表示終了処理
-	void Update(void);								//数字表示更新処理
-	void Draw(void);								//数字表示描画処理
-	static CNumber * Create(int nNum);				//数字表示のインスタンス生成
+	CNumber(int nPriority, int nNumber, int nDigLimit);			//数字表示のコンストラクタ
+	~CNumber();													//数字表示のデストラクタ
+	bool Init(void);											//数字表示初期処理
+	void Uninit(void);											//数字表示終了処理
+	void Update(void);											//数字表示更新処理
+	void Draw(void);											//数字表示描画処理
+	static CNumber * Create(int nNum, int nDigLimit = 5);				//数字表示のインスタンス生成
 	void SetNumber(int nNum)						//数字の設定
 	{
 		m_nNumber = nNum;

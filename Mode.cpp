@@ -33,9 +33,7 @@ bool CModeGame::Init(void)
 	this->m_Xorshift = new CXorshift();
 	m_Field = CField::Create(125, 125, 2.0f, 2.0f, false);
 	m_Player = CPlayer::Create(this, D3DXVECTOR3(0.0f, 0.0f, 0.0f));
-	m_nMoney = 0;
-	m_Number = CNumber::Create(m_nMoney);
-	m_Number->SetPosition(D3DXVECTOR3(960.0f, 0.0f, -1.0f));
+	
 	m_SceneModelEnemy = CSceneModel::Create("Data\\Model\\ufo.x");
 	m_SceneModelEnemy->m_bDraw = false;
 	m_SceneModelBuliding = CSceneModel::Create("Data\\Model\\building001.x");
@@ -44,6 +42,22 @@ bool CModeGame::Init(void)
 	m_Enemy->SetPlayer(m_Player);
 	m_Bulid = CEnemy::Create();
 
+	D3DXVECTOR3 veUFOIconPos = D3DXVECTOR3(500.0f, 20.0f, -1.0f);
+
+	//UFOアイコン
+	m_UFOIcon = CScene2D::Create(2, "Data\\Texture\\UFOIcon.png", 1, 1);
+	m_UFOIcon->SetPosition(D3DXVECTOR3(veUFOIconPos.x, veUFOIconPos.y, veUFOIconPos.z));
+	m_UFOIcon->SetScale(D3DXVECTOR3(0.6f, 0.6f, 0.6f));
+
+	//残敵数
+	m_nEnemyCount = 16;
+	m_NumberEnemyCount = CNumber::Create(m_nEnemyCount, 2);
+	m_NumberEnemyCount->SetPosition(D3DXVECTOR3(veUFOIconPos.x + 80.0f, veUFOIconPos.y + 15.0f, veUFOIconPos.z));
+
+	//スコア
+	m_nMoney = 0;
+	m_Number = CNumber::Create(m_nMoney);
+	m_Number->SetPosition(D3DXVECTOR3(960.0f, 20.0f, -1.0f));
 
 
 
@@ -66,9 +80,7 @@ bool CModeGame::Init(void)
 	m_Enemy->Generate(ENEMY_TYPES_ZAKU, D3DXVECTOR3(56.0f, 2.0f, 80.0f), m_SceneModelEnemy, D3DXVECTOR3(0.5f, 0.5f, 0.5f));
 	m_Enemy->Generate(ENEMY_TYPES_ZAKU, D3DXVECTOR3(22.0f, 2.0f, 45.0f), m_SceneModelEnemy, D3DXVECTOR3(0.5f, 0.5f, 0.5f));*/
 
-	m_nEnemyCount = 16;
-	m_NumberEnemyCount = CNumber::Create(m_nEnemyCount);
-	m_NumberEnemyCount->SetPosition(D3DXVECTOR3(480.0f, 0.0f, -1.0f));
+	
 
 	//建物
 	m_Bulid->Generate(ENEMY_TYPES_BULIDING, D3DXVECTOR3(-10.0f, 2.0f, 20.0f), m_SceneModelBuliding, D3DXVECTOR3(0.025f, 0.025f, 0.025f));
@@ -90,8 +102,8 @@ bool CModeGame::Init(void)
 	m_Bulid->Generate(ENEMY_TYPES_BULIDING, D3DXVECTOR3(-4.0f, 2.0f, 22.0f), m_SceneModelBuliding, D3DXVECTOR3(0.025f, 0.025f, 0.025f));
 
 
-	m_ScenePolygon = CScenePolygon::Create();
-	m_ScenePolygon->SetScale(D3DXVECTOR3(40.0f, 1.0f, 0.0625f));
+	m_PolygonLazer = CScenePolygon::Create();
+	m_PolygonLazer->SetScale(D3DXVECTOR3(40.0f, 1.0f, 0.0625f));
 	m_SceneBillBoard = CSceneBillBoard::Create(m_Camera, "Data\\Texture\\Circle.png");
 	m_SceneBillBoard->m_bDraw = false;
 	m_SceneModel = CSceneModel::Create("Data\\Model\\Ball.x");
@@ -135,16 +147,16 @@ void CModeGame::Update(void)
 {
 	D3DXVECTOR3 veTempVector3(0.0f, 0.0f, 0.0f);
 	//レーザー部分
-	m_ScenePolygon->SetPosition(m_Player->GetPosition());
-	m_ScenePolygon->SetPositionY(m_Player->GetPosition().y + 1.2f);
-	m_ScenePolygon->SetRotationY(m_Player->GetRotationY() + 90.0f);
+	m_PolygonLazer->SetPosition(m_Player->GetPosition());
+	m_PolygonLazer->SetPositionY(m_Player->GetPosition().y + 1.2f);
+	m_PolygonLazer->SetRotationY(m_Player->GetRotationY() + 90.0f);
 	if (CInputMouse::GetRightPress() == true)
 	{
-		m_ScenePolygon->m_bDraw = true;
+		m_PolygonLazer->m_bDraw = true;
 	}
 	else
 	{
-		m_ScenePolygon->m_bDraw = false;;
+		m_PolygonLazer->m_bDraw = false;
 	}
 
 	//
@@ -294,7 +306,7 @@ bool CModeTitle::Init(void)
 	this->m_Light = new CLight();
 	m_Light->Init();
 	m_Scene2D = CScene2D::Create(2, "Data\\Texture\\TitleName.png", 1, 1);
-	m_Scene2D->SetPosition(D3DXVECTOR3(320.0f,50.0f,0.0f));
+	m_Scene2D->SetPosition(D3DXVECTOR3(320.0f, 50.0f, 0.0f));
 	m_Model = CSceneModel::Create("Data\\Model\\roboModel.x");
 	m_Model->SetScale(D3DXVECTOR3(1.0f, 1.0f, 1.0f));
 	m_ModelSkyBox = CSceneModel::Create("Data\\Model\\sky.x");
@@ -519,14 +531,14 @@ bool CModeTest::Init(void)
 	this->m_Light = new CLight();
 	m_Light->Init();
 	m_Light->SetDir(D3DXVECTOR3(1.0f, -1.0f, 1.0f));
-	m_Field = CField::Create(20, 20, 2.0f, 2.0f, false);
-	m_Model = CSceneModel::Create("Data\\Model\\roboModel.x");
+	/*m_Field = CField::Create(20, 20, 2.0f, 2.0f, false);*/
+	m_Model = CSceneModel::Create("Data\\Model\\ufo.x");
 	m_Model->SetPositionY(1.0f);
 	/*m_Model->SetScale(D3DXVECTOR3(1.0f, 1.0f, 1.0f));
 	m_Model->SetRotationZ(45.0f);
 	*/
 
-	m_Shadow = CSceneShadow::Create(m_Field);
+	/*m_Shadow = CSceneShadow::Create(m_Field);*/
 
 	m_ModelSkyBox = CSceneModel::Create("Data\\Model\\sky.x");
 

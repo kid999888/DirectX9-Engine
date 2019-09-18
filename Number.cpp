@@ -18,12 +18,12 @@
 //　　　グローバル変数                                    
 //=================================================================================================
 
-CNumber::CNumber(int nPriority, int nNumber) : CScene(nPriority)
+CNumber::CNumber(int nPriority, int nNumber,int nDigLimit) : CScene(nPriority)
 {
 	m_vePosition = D3DXVECTOR3(0.0f, 0.0f, -1.0f);
 	m_nNumber = nNumber;
 	m_nDig = 0;
-	m_nDigX = 5;
+	m_nDigX = nDigLimit;
 	m_bZero = true;
 };
 
@@ -133,9 +133,9 @@ void CNumber::Draw(void)
 //=================================================================================================
 //　　　数字表示のインスタンス生成
 //=================================================================================================
-CNumber * CNumber::Create(int nNum)
+CNumber * CNumber::Create(int nNum,int nDigLimit)
 {
-	CNumber *Number = new CNumber(2, nNum);
+	CNumber *Number = new CNumber(2, nNum, nDigLimit);
 	Number->Init();
 	return Number;
 }
