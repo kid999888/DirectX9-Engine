@@ -19,6 +19,9 @@
     <Filter Include="Engine\Tool">
       <UniqueIdentifier>{aa398e9e-7357-4bfc-9b22-0103a871f3ea}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scene\Object\BasicPart">
+      <UniqueIdentifier>{d2164be9-96f2-4981-8d97-611d7a5f3e81}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GUI\imgui.cpp">
@@ -54,19 +57,10 @@
     <ClCompile Include="Camera.cpp">
       <Filter>Scene\Object</Filter>
     </ClCompile>
-    <ClCompile Include="Collision.cpp">
-      <Filter>Scene\Object</Filter>
-    </ClCompile>
     <ClCompile Include="Enemy.cpp">
       <Filter>Scene\Object</Filter>
     </ClCompile>
     <ClCompile Include="ExplosionBB.cpp">
-      <Filter>Scene\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Field.cpp">
-      <Filter>Scene\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Grid.cpp">
       <Filter>Scene\Object</Filter>
     </ClCompile>
     <ClCompile Include="LifeBar.cpp">
@@ -75,19 +69,7 @@
     <ClCompile Include="LifeBarBillBoard.cpp">
       <Filter>Scene\Object</Filter>
     </ClCompile>
-    <ClCompile Include="Light.cpp">
-      <Filter>Scene\Object</Filter>
-    </ClCompile>
     <ClCompile Include="Map.cpp">
-      <Filter>Scene\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Material.cpp">
-      <Filter>Scene\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="MeshEffect.cpp">
-      <Filter>Scene\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Motion.cpp">
       <Filter>Scene\Object</Filter>
     </ClCompile>
     <ClCompile Include="Number.cpp">
@@ -102,30 +84,6 @@
     <ClCompile Include="Player.cpp">
       <Filter>Scene\Object</Filter>
     </ClCompile>
-    <ClCompile Include="Scene2D.cpp">
-      <Filter>Scene\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene2DUV.cpp">
-      <Filter>Scene\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene3D.cpp">
-      <Filter>Scene\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneBillBoard.cpp">
-      <Filter>Scene\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneBillBoardUV.cpp">
-      <Filter>Scene\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneModel.cpp">
-      <Filter>Scene\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="ScenePolygon.cpp">
-      <Filter>Scene\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneShadow.cpp">
-      <Filter>Scene\Object</Filter>
-    </ClCompile>
     <ClCompile Include="DebugGUI.cpp">
       <Filter>Engine\Tool</Filter>
     </ClCompile>
@@ -134,6 +92,51 @@
     </ClCompile>
     <ClCompile Include="Sound.cpp">
       <Filter>Engine\Tool</Filter>
+    </ClCompile>
+    <ClCompile Include="Collision.cpp">
+      <Filter>Engine\Tool</Filter>
+    </ClCompile>
+    <ClCompile Include="Field.cpp">
+      <Filter>Scene\Object\BasicPart</Filter>
+    </ClCompile>
+    <ClCompile Include="Grid.cpp">
+      <Filter>Scene\Object\BasicPart</Filter>
+    </ClCompile>
+    <ClCompile Include="Light.cpp">
+      <Filter>Engine\Tool</Filter>
+    </ClCompile>
+    <ClCompile Include="Material.cpp">
+      <Filter>Engine\Tool</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshEffect.cpp">
+      <Filter>Scene\Object\BasicPart</Filter>
+    </ClCompile>
+    <ClCompile Include="Motion.cpp">
+      <Filter>Scene\Object\BasicPart</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene2D.cpp">
+      <Filter>Scene\Object\BasicPart</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene2DUV.cpp">
+      <Filter>Scene\Object\BasicPart</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene3D.cpp">
+      <Filter>Scene\Object\BasicPart</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneBillBoard.cpp">
+      <Filter>Scene\Object\BasicPart</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneBillBoardUV.cpp">
+      <Filter>Scene\Object\BasicPart</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneModel.cpp">
+      <Filter>Scene\Object\BasicPart</Filter>
+    </ClCompile>
+    <ClCompile Include="ScenePolygon.cpp">
+      <Filter>Scene\Object\BasicPart</Filter>
+    </ClCompile>
+    <ClCompile Include="Shadow.cpp">
+      <Filter>Scene\Object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -179,19 +182,10 @@
     <ClInclude Include="Camera.h">
       <Filter>Scene\Object</Filter>
     </ClInclude>
-    <ClInclude Include="Collision.h">
-      <Filter>Scene\Object</Filter>
-    </ClInclude>
     <ClInclude Include="Enemy.h">
       <Filter>Scene\Object</Filter>
     </ClInclude>
     <ClInclude Include="ExplosionBB.h">
-      <Filter>Scene\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Field.h">
-      <Filter>Scene\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Grid.h">
       <Filter>Scene\Object</Filter>
     </ClInclude>
     <ClInclude Include="LifeBar.h">
@@ -200,19 +194,7 @@
     <ClInclude Include="LifeBarBillBoard.h">
       <Filter>Scene\Object</Filter>
     </ClInclude>
-    <ClInclude Include="Light.h">
-      <Filter>Scene\Object</Filter>
-    </ClInclude>
     <ClInclude Include="Map.h">
-      <Filter>Scene\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Material.h">
-      <Filter>Scene\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="MeshEffect.h">
-      <Filter>Scene\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Motion.h">
       <Filter>Scene\Object</Filter>
     </ClInclude>
     <ClInclude Include="Number.h">
@@ -225,30 +207,6 @@
       <Filter>Scene\Object</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
-      <Filter>Scene\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene2D.h">
-      <Filter>Scene\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene2DUV.h">
-      <Filter>Scene\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene3D.h">
-      <Filter>Scene\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneBillBoard.h">
-      <Filter>Scene\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneBillBoardUV.h">
-      <Filter>Scene\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneModel.h">
-      <Filter>Scene\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="ScenePolygon.h">
-      <Filter>Scene\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneShadow.h">
       <Filter>Scene\Object</Filter>
     </ClInclude>
     <ClInclude Include="DebugGUI.h">
@@ -265,6 +223,51 @@
     </ClInclude>
     <ClInclude Include="Sound.h">
       <Filter>Engine\Tool</Filter>
+    </ClInclude>
+    <ClInclude Include="Collision.h">
+      <Filter>Engine\Tool</Filter>
+    </ClInclude>
+    <ClInclude Include="Field.h">
+      <Filter>Scene\Object\BasicPart</Filter>
+    </ClInclude>
+    <ClInclude Include="Grid.h">
+      <Filter>Scene\Object\BasicPart</Filter>
+    </ClInclude>
+    <ClInclude Include="Light.h">
+      <Filter>Engine\Tool</Filter>
+    </ClInclude>
+    <ClInclude Include="Material.h">
+      <Filter>Engine\Tool</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshEffect.h">
+      <Filter>Scene\Object\BasicPart</Filter>
+    </ClInclude>
+    <ClInclude Include="Motion.h">
+      <Filter>Scene\Object\BasicPart</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneBillBoardUV.h">
+      <Filter>Scene\Object\BasicPart</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene2D.h">
+      <Filter>Scene\Object\BasicPart</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene2DUV.h">
+      <Filter>Scene\Object\BasicPart</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene3D.h">
+      <Filter>Scene\Object\BasicPart</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneBillBoard.h">
+      <Filter>Scene\Object\BasicPart</Filter>
+    </ClInclude>
+    <ClInclude Include="ScenePolygon.h">
+      <Filter>Scene\Object\BasicPart</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneModel.h">
+      <Filter>Scene\Object\BasicPart</Filter>
+    </ClInclude>
+    <ClInclude Include="Shadow.h">
+      <Filter>Scene\Object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -19,7 +19,7 @@
 #include "SceneModel.h"
 #include "ScenePolygon.h"
 #include "SceneBillBoard.h"
-#include "SceneShadow.h"
+#include "Shadow.h"
 #include "Field.h"
 #include "Player.h"
 #include "Number.h"

@@ -189,7 +189,7 @@
     <ClCompile Include="SceneBillBoardUV.cpp" />
     <ClCompile Include="SceneModel.cpp" />
     <ClCompile Include="ScenePolygon.cpp" />
-    <ClCompile Include="SceneShadow.cpp" />
+    <ClCompile Include="Shadow.cpp" />
     <ClCompile Include="Sound.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -232,7 +232,7 @@
     <ClInclude Include="SceneBillBoardUV.h" />
     <ClInclude Include="SceneModel.h" />
     <ClInclude Include="ScenePolygon.h" />
-    <ClInclude Include="SceneShadow.h" />
+    <ClInclude Include="Shadow.h" />
     <ClInclude Include="Sound.h" />
     <ClInclude Include="Types.h" />
     <ClInclude Include="Xorshift.h" />
