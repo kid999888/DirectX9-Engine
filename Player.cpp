@@ -83,53 +83,6 @@ void CPlayer::Update(void)
 {
 	CField *field = m_CurrentMode->GetField();
 	
-	
-	
-
-	/*if (m_veRotation.y > m_fRotYExactly)
-	{
-		if (m_veRotation.y - m_fRotYExactly < 180.f)
-		{
-			m_veRotation.y -= m_fRotYSpeed;
-			m_fRotOnce = -m_fRotYSpeed;
-		}
-		else
-		{
-			m_veRotation.y += m_fRotYSpeed;
-			m_fRotOnce = m_fRotYSpeed;
-		}
-	}
-	else if (m_veRotation.y < m_fRotYExactly)
-	{
-		if (m_fRotYExactly - m_veRotation.y < 180.f)
-		{
-			m_veRotation.y += m_fRotYSpeed;
-			m_fRotOnce = m_fRotYSpeed;
-		}
-		else
-		{
-			m_veRotation.y -= m_fRotYSpeed;
-			m_fRotOnce = -m_fRotYSpeed;
-		}
-	}*/
-
-	/*for (int nCount = 0;nCount < m_vBullet.size(); nCount++)
-	{
-		if (m_vBullet[nCount]->GeTBullerLife() <= 0)
-		{
-			m_vBullet[nCount]->Uninit();
-			delete m_vBullet[nCount];
-		}
-	}*/
-
-	/*if (m_veRotation.y > 360.f)
-	{
-		m_veRotation.y -= 360.f;
-	}
-	if (m_veRotation.y < 0.0f)
-	{
-		m_veRotation.y += 360.f;
-	}*/
 
 	//ˆÚ“®ˆ—
 	if (CInputKeyboard::GetKeyPress(DIK_A))

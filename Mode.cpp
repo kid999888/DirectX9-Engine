@@ -26,12 +26,13 @@ bool CModeGame::Init(void)
 {
 	m_ModeId = MODE_GAME;
 	PlaySound(SOUND_LABEL_BGM_TITLE);
-	this->m_Camera = CCamera::Create(D3DXVECTOR3(7.0f, 14.0f, -10.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), false);
+	this->m_Camera = CCamera::Create(D3DXVECTOR3(0.0f, 28.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), false);
+	//(7.0f, 14.0f, -10.0f)
 	this->m_Light = new CLight();
 	m_Light->Init();
 	m_Light->SetDir(D3DXVECTOR3(1.0f, -1.0f, 1.0f));
 	this->m_Xorshift = new CXorshift();
-	m_Field = CField::Create(125, 125, 2.0f, 2.0f, false);
+	m_Field = CField::Create(125, 125, 2.0f, 2.0f, true);
 	m_Player = CPlayer::Create(this, D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 	
 	m_SceneModelEnemy = CSceneModel::Create("Data\\Model\\ufo.x");
@@ -68,7 +69,7 @@ bool CModeGame::Init(void)
 		m_Player->m_bUpdate = false;
 		m_Enemy->m_bUpdate = false;
 	}*/
-
+	m_Enemy->m_bUpdate = false;
 
 	//敵
 	m_Enemy->Generate(ENEMY_TYPES_ZAKU, D3DXVECTOR3(0.0f, 2.0f, 20.0f), m_SceneModelEnemy, D3DXVECTOR3(0.5f, 0.5f, 0.5f));
@@ -226,6 +227,7 @@ void CModeGame::Update(void)
 							m_Bullet->Destory(nCount);
 							m_SceneBillBoard->SetScale(D3DXVECTOR3(0.2f, 0.2f, 0.2f));
 							CParticle::Create(m_SceneBillBoard, m_Enemy->GetEnemyManager(nCountX).vePos, 1.0f, 100, 90);
+							CExplosionBB::Create(2, m_Camera, m_Enemy->GetEnemyManager(nCountX).vePos);
 							if (m_Enemy->GetEnemyManager(nCountX).nLife <= 0)
 							{
 								vePos = m_Enemy->GetEnemyManager(nCountX).vePos;
@@ -233,8 +235,8 @@ void CModeGame::Update(void)
 								m_Bullet->Destory(nCount);
 								m_nEnemyCount -= 1;
 								m_SceneBillBoard->SetScale(D3DXVECTOR3(0.5f, 0.5f, 0.5f));
-								CParticle::Create(m_SceneBillBoard, vePos, 5.0f, 100, 90);
-
+								//CParticle::Create(m_SceneBillBoard, vePos, 5.0f, 100, 90);
+								
 								//リザルトシーン判定
 								if (m_nEnemyCount <= 0)
 								{
@@ -552,8 +554,8 @@ bool CModeTest::Init(void)
 	/*D3DXVECTOR3 veMoved = m_Model->GetPosition();
 	veMoved.x = veMoved.x + 10.0f;
 	CPerformance::Create(PERFORMANCE_MOVE, m_Model, veMoved, 60);*/
-
-	m_ExplosionBB = CExplosionBB::Create(2, m_Camera);
+	m_ExplosionBB = CExplosionBB::Create(1, m_Camera, D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+	
 
 #if defined(_DEBUG)
 	CDebugGUI::SetMainCamera(m_Camera);

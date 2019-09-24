@@ -7,18 +7,19 @@
 #pragma once
 #include "Scene.h"
 #include "SceneBillBoardUV.h"
+#include "SceneBillBoard.h"
 class CExplosionBB :
 	public CScene
 {
 public:
 	CExplosionBB(int nPriority, CCamera* pCamera);
 	~CExplosionBB();
-	bool Init(CCamera* pCamera);												//パーティクル初期処理
+	bool Init(CCamera* pCamera, D3DXVECTOR3 vePos);												//パーティクル初期処理
 	void Uninit(void);												//パーティクル終了処理
 	void Update(void);												//パーティクル更新処理
 	void Draw(void);												//パーティクル描画処理
 	bool GetStaus(void) { return bFinish; }							//
-	static CExplosionBB * Create(int nPriority, CCamera* pCamera);
+	static CExplosionBB * Create(int nPriority, CCamera* pCamera, D3DXVECTOR3 vePos);
 private:
 	CSceneBillBoardUV* ExplosionBB;
 	bool bFinish;

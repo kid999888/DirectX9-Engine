@@ -20,13 +20,14 @@ CExplosionBB::CExplosionBB(int nPriority, CCamera* pCamera) : CScene(nPriority)
 	m_patternNum = 0;
 	m_patternH = 0;
 	m_patternV = 0;
+	
 }
 
 CExplosionBB::~CExplosionBB()
 {
 }
 
-bool CExplosionBB::Init(CCamera* pCamera)
+bool CExplosionBB::Init(CCamera* pCamera, D3DXVECTOR3 vePos)
 {
 	ExplosionBB = CSceneBillBoardUV::Create(pCamera, "Data\\Texture\\bakuhatsu.png");
 
@@ -34,7 +35,9 @@ bool CExplosionBB::Init(CCamera* pCamera)
 
 	ExplosionBB->SetScale(D3DXVECTOR3(0.2f, 0.2f, 0.2f));
 
-	ExplosionBB->SetPositionY(2.0f);
+	vePos.x *= 0.83f;
+
+	ExplosionBB->SetPosition(vePos);
 
 	return false;
 }
@@ -70,9 +73,9 @@ void CExplosionBB::Draw(void)
 {
 }
 
-CExplosionBB * CExplosionBB::Create(int nPriority, CCamera* pCamera)
+CExplosionBB * CExplosionBB::Create(int nPriority, CCamera* pCamera, D3DXVECTOR3 vePos)
 {
 	CExplosionBB *Objects = new CExplosionBB(2, pCamera);
-	Objects->Init(pCamera);
+	Objects->Init(pCamera, vePos);
 	return Objects;
 }
